@@ -1,0 +1,449 @@
+﻿<div class="page-wrapper">
+    <div class="left-content">
+        <div class="policy-detail-wrapper">
+            @{
+                await Html.RenderPartialAsync("_PolicyInfo");
+            }
+
+            @{
+                await Html.RenderPartialAsync("_VehicleInfo");
+            }
+                     
+            @{
+                await Html.RenderPartialAsync("_ClaimInfo");
+            }        
+            @{
+                await Html.RenderPartialAsync("_ClaimantInfo");
+            }
+
+
+
+
+            <div class="search-member">
+                <div class="search-heading-wrap">
+                    <div class="heading-card">
+                        <h2 class="heading">Claims List</h2>
+                    </div>
+                    <button class="button button-secondary" onclick="openAddVehicle()">Add Claim</button>
+                </div>
+
+            </div>
+ 
+        </div>
+
+        <div class="transaction-details">
+            <table class="universal-table">
+                <tr>
+                    <!-- <th>#</th> -->
+                    <th>Transaction ID</th>
+                    <th>Policy</th>
+                    <th>Transaction Date</th>
+                    <th>Type</th>
+                    <th>Endorsement</th>
+                    <th>Description</th>
+                    <th>Due Date</th>
+                    <th>Debit</th>
+                    <th>Credit</th>
+                    <th>Balance</th>
+                </tr>
+
+                <tr>
+                    <!-- <td></td> -->
+                    <td class="tran">#TR44372</td>
+                    <td>324234235</td>
+                    <td>12/12/12</td>
+                    <td>1321231</td>
+                    <td>2</td>
+                    <td>Increase endo</td>
+                    <td>12/12/16</td>
+                    <td class="tran">4342</td>
+                    <td class="tran">00</td>
+                    <td class="tran">134</td>
+                </tr>
+                <tr>
+                    <!-- <td></td> -->
+                    <td class="tran">#TR44372</td>
+                    <td>324234235</td>
+                    <td>12/12/12</td>
+                    <td>1321231</td>
+                    <td>2</td>
+                    <td>Increase endo</td>
+                    <td>12/12/16</td>
+                    <td class="tran">4342</td>
+                    <td class="tran">00</td>
+                    <td class="tran">134</td>
+                </tr>
+                <tr>
+                    <!-- <td></td> -->
+                    <td class="tran">#TR44372</td>
+                    <td>324234235</td>
+                    <td>12/12/12</td>
+                    <td>1321231</td>
+                    <td>2</td>
+                    <td>Increase endo</td>
+                    <td>12/12/16</td>
+                    <td class="tran">4342</td>
+                    <td class="tran">00</td>
+                    <td class="tran">134</td>
+                </tr>
+                <tr>
+                    <!-- <td></td> -->
+                    <td class="tran">#TR44372</td>
+                    <td>324234235</td>
+                    <td>12/12/12</td>
+                    <td>1321231</td>
+                    <td>2</td>
+                    <td>Increase endo</td>
+                    <td>12/12/16</td>
+                    <td class="tran">4342</td>
+                    <td class="tran">00</td>
+                    <td class="tran">134</td>
+                </tr>
+                <tr>
+                    <!-- <td></td> -->
+                    <td class="tran">#TR44372</td>
+                    <td>324234235</td>
+                    <td>12/12/12</td>
+                    <td>1321231</td>
+                    <td>2</td>
+                    <td>Increase endo</td>
+                    <td>12/12/16</td>
+                    <td class="tran">4342</td>
+                    <td class="tran">00</td>
+                    <td class="tran">134</td>
+                </tr>
+                <tr>
+                    <!-- <td></td> -->
+                    <td class="tran">#TR44372</td>
+                    <td>324234235</td>
+                    <td>12/12/12</td>
+                    <td>1321231</td>
+                    <td>2</td>
+                    <td>Increase endo</td>
+                    <td>12/12/16</td>
+                    <td class="tran">4342</td>
+                    <td class="tran">00</td>
+                    <td class="tran">134</td>
+                </tr>
+                <tr>
+                    <!-- <td></td> -->
+                    <td class="tran">#TR44372</td>
+                    <td>324234235</td>
+                    <td>12/12/12</td>
+                    <td>1321231</td>
+                    <td>2</td>
+                    <td>Increase endo</td>
+                    <td>12/12/16</td>
+                    <td class="tran">4342</td>
+                    <td class="tran">00</td>
+                    <td class="tran">134</td>
+                </tr>
+                <tr>
+                    <!-- <td></td> -->
+                    <td class="tran">#TR44372</td>
+                    <td>324234235</td>
+                    <td>12/12/12</td>
+                    <td>1321231</td>
+                    <td>2</td>
+                    <td>Increase endo</td>
+                    <td>12/12/16</td>
+                    <td class="tran">4342</td>
+                    <td class="tran">00</td>
+                    <td class="tran">134</td>
+                </tr>
+            </table>
+        </div>
+
+    </div>
+    <div class="right-sidebar false">
+        <div class="inner-wrapper">
+            <div class="membership-detail-wrapper">
+                <div class="membership-inner-wrapper">
+                    <div class="membership-header">
+                        <h2 class="heading-title">Steven Williams</h2>
+                        <p class="membership-id">Company Unified No.: 7009028932</p>
+                    </div>
+                    <div class="detail-tiles-wrapper">
+                        <div class="detail-tiles">
+                            <div class="tile-header">
+                                <div class="total-wrapper">
+                                    <h2 class="total">60</h2>
+                                    <p class="label-tag">Members</p>
+                                </div>
+                                <img src="/assets/icons/users.svg" class="policy-summary-icon" alt="">
+                            </div>
+                        </div>
+                        <div class="detail-tiles">
+                            <div class="tile-header">
+                                <div class="total-wrapper">
+                                    <h2 class="total">16</h2>
+                                    <p class="label-tag">Request</p>
+                                </div>
+                                <img src="/assets/icons/empty-file.svg" class="policy-summary-icon" alt="">
+                            </div>
+                        </div>
+                        <div class="detail-tiles">
+                            <div class="tile-header">
+                                <div class="total-wrapper">
+                                    <h2 class="total">-</h2>
+                                    <p class="label-tag">Interaction</p>
+                                </div>
+                                <img src="/assets/icons/empty-file.svg" class="policy-summary-icon" alt="">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- cancel policy driver no -->
+<div id="add-vehicle-m-modal" class="motor-modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <span onclick="Close('add-vehicle-m-modal')" class="close--dependent" style="cursor:pointer">&times;</span>
+            <h2>Vehicle Info</h2>
+            <p>Here you can add new Claim</p>
+        </div>
+        <div class="modal-body">
+            <div class="vehicleList">
+                <div class="vehicle-item">
+                    <div class="vehicle-header">
+                        <img src="/assets/motor/motor.svg" class="vehicle-icon" />
+                        <div class="vehicle-info">
+                            <span class="vehicle-name">BMW Cerato</span>
+                            <span class="vehicle-no">Plate Number : A B D - 2 4 3 0</span>
+                        </div>
+                    </div>
+                    <div class="vehicle-basic-body">
+                        <ul class="detail-list">
+                            <li class="detailed-item">
+                                <span class="detailed-icon-wrap">
+                                    <img src="/assets/icons/save.svg" alt="" class="item-icon">
+                                </span>
+                                <div class="item-content">
+                                    <span class="label">Make</span>
+                                    <h3 class="value">dahsdv</h3>
+                                </div>
+                            </li>
+                            <li class="detailed-item">
+                                <span class="detailed-icon-wrap">
+                                    <img src="/assets/icons/calendar.svg" alt="" class="item-icon">
+                                </span>
+                                <div class="item-content">
+                                    <span class="label">Model</span>
+                                    <h3 class="value">xuv888</h3>
+                                </div>
+                            </li>
+                            <li class="detailed-item">
+                                <span class="detailed-icon-wrap">
+                                    <img src="/assets/icons/calendar.svg" alt="" class="item-icon">
+                                </span>
+                                <div class="item-content">
+                                    <span class="label">Year of Manufacturing</span>
+                                    <h3 class="value">2014</h3>
+                                </div>
+                            </li>
+                            <li class="detailed-item">
+                                <span class="detailed-icon-wrap">
+                                    <img src="/assets/icons/calendar.svg" alt="" class="item-icon">
+                                </span>
+                                <div class="item-content">
+                                    <span class="label">Plate No</span>
+                                    <h3 class="value">UDC - 2345</h3>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <br />
+            <div class="tabs-wrapper">
+                <ul class="tabs-navigation-wrap">
+                    <li class="tab-navigation tab-custom-two active" id="tabTwoOne" onclick="selectTabsTwo('tabTwoOne','one_1')">
+                        <div class="tab-item-text">
+                            Claim Info
+                        </div>
+                    </li>
+                    <li class="tab-navigation tab-custom-two" id="tabTwoTwo" onclick="selectTabsTwo('tabTwoTwo','two_1')">
+                        <div class="tab-item-text">
+                            Claimants
+                        </div>
+                    </li>
+                    <li class="tab-navigation tab-custom-two" id="tabTwoThree" onclick="selectTabsTwo('tabTwoThree','three_1')">
+                        <div class="tab-item-text">
+                            Documents
+                        </div>
+                    </li>
+                </ul>
+                <div class="tabbs-content-wrapper">
+                    <div class="tab-items-container tabs-one-content-two active" id="one_1">
+                        <div class="modal-inner-body-wrap">
+                            <div class="vehicle-owner-grid">
+                                <label for="radio-card-v2-11" class="radio-card-v2">
+                                    <input type="radio" value="1" name="vehicle_card" id="radio-card-v2-11" checked />
+                                    <div class="card-content-wrapper">
+                                        <span class="check-icon"></span>
+                                        <div class="card-content">
+                                            <h4 class="title">Najm</h4>
+                                        </div>
+                                    </div>
+                                </label>
+                                <!-- /.radio-card -->
+
+                                <label for="radio-card-v2-12" class="radio-card-v2">
+                                    <input type="radio" value="2" name="vehicle_card" id="radio-card-v2-12" />
+                                    <div class="card-content-wrapper">
+                                        <span class="check-icon"></span>
+                                        <div class="card-content">
+                                            <h4 class="title">Basher</h4>
+                                        </div>
+                                    </div>
+                                </label>
+
+                                <label for="radio-card-v2-13" class="radio-card-v2">
+                                    <input type="radio" value="3" name="vehicle_card" id="radio-card-v2-13" />
+                                    <div class="card-content-wrapper">
+                                        <span class="check-icon"></span>
+                                        <div class="card-content">
+                                            <h4 class="title">Manual</h4>
+                                        </div>
+                                    </div>
+                                </label>
+                            </div>
+
+
+                            <div class="vehicle-owner-grid">
+                                <div class="form-container">
+                                    <span class="label">Najm Accident No</span>
+                                    <input class="form-controlar" placeholder="Najm Accident No" />
+                                </div>
+                                   <div class="form-container">
+                                    <span class="label">Morror No</span>
+                                    <input class="form-controlar" placeholder="Morror No" />
+                                </div>
+                                   <div class="form-container">
+                                    <span class="label">Taqdeer No</span>
+                                    <input class="form-controlar" placeholder="Taqdeer No" />
+                                </div>
+
+                            </div>
+                            <div class="vehicle-owner-grid">
+                                <div class="form-container">
+                                    <span class="label">Loss Date</span>
+                                    <input class="form-controlar" type="date" placeholder="Loss Date" />
+                                </div>
+                                <div class="form-container">
+                                    <span class="label">Notification Date</span>
+                                    <input class="form-controlar" type="date" placeholder="Notification Date" />
+                                </div>
+                                <div class="form-container">
+                                    <span class="label">Registration Date</span>
+                                    <input class="form-controlar" type="date" placeholder="Registration Date" />
+                                </div>
+
+                            </div>
+                            <div class="form-container ">
+                                <div class="form-group col-md-6">
+                                    <select class="form-controlar">
+                                        <option selected disabled>Select Bank</option>
+                                        <option value="one">Bank 1</option>
+                                        <option value="one">Bank 1</option>
+                                        <option value="one">Bank 1</option>
+                                        <option value="one">Bank 1</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <input class="form-controlar" placeholder="IBAN Number" />
+                                </div>
+                              
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-items-container tabs-one-content-two" id="two_1">
+
+                    </div>
+                    <div class="tab-items-container tabs-one-content-two" id="three_1">
+
+                    </div>
+                </div>
+            </div>
+
+            @*            <div class="modal-inner-body-wrap">
+                <div class="vehicle-owner-grid">
+                    <label for="radio-card-v2-1" class="radio-card-v2">
+                        <input type="radio" value="Yes" name="vehicle_Owner" id="radio-card-v2-1" checked />
+                        <div class="card-content-wrapper">
+                            <span class="check-icon"></span>
+                            <div class="card-content">
+                                <h4 class="title">Yes</h4>
+                            </div>
+                        </div>
+                    </label>
+                    <!-- /.radio-card -->
+
+                    <label for="radio-card-v2-2" class="radio-card-v2">
+                        <input type="radio" value="Yes" name="vehicle_Owner" id="radio-card-v2-2" />
+                        <div class="card-content-wrapper">
+                            <span class="check-icon"></span>
+                            <div class="card-content">
+                                <h4 class="title">No</h4>
+                            </div>
+                        </div>
+                    </label>
+                </div>
+                <div class="input-wrapper input-margin">
+                    <div class="form-container">
+                        <input class="form-controlar" placeholder="Vehicle Owner Id" />
+                    </div>
+                </div>
+
+                <p class="vehicle-add-title">What is the Vehicle Card Type</p>
+                <div class="vehicle-owner-grid">
+                    <label for="radio-card-v2-11" class="radio-card-v2">
+                        <input type="radio" value="Yes" name="vehicle_card" id="radio-card-v2-11" checked />
+                        <div class="card-content-wrapper">
+                            <span class="check-icon"></span>
+                            <div class="card-content">
+                                <h4 class="title">Registration Card</h4>
+                            </div>
+                        </div>
+                    </label>
+                    <!-- /.radio-card -->
+
+                    <label for="radio-card-v2-22" class="radio-card-v2">
+                        <input type="radio" value="Yes" name="vehicle_card" id="radio-card-v2-22" />
+                        <div class="card-content-wrapper">
+                            <span class="check-icon"></span>
+                            <div class="card-content">
+                                <h4 class="title">Custom Card</h4>
+                            </div>
+                        </div>
+                    </label>
+                </div>
+                <div class="input-wrapper input-margin">
+                    <div class="form-container">
+                        <input class="form-controlar" placeholder="Serial Number" />
+                    </div>
+                </div>
+                <div class="input-wrapper input-margin">
+                    <div class="form-container">
+                        <input class="form-controlar" placeholder="Custom Card No" />
+                    </div>
+                </div>
+                <div class="input-wrapper">
+                    <div class="form-container">
+                        <input class="form-controlar" placeholder="Manufacturing Year" />
+                    </div>
+                </div>
+            </div>*@
+            <div class="modal-footer">
+                <a href="/payment.html" class="button button-primary">Save Vehicle</a>
+            </div>
+        </div>
+    </div>
+</div>
+

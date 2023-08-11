@@ -1,0 +1,126 @@
+﻿@{
+    Layout = null;
+}
+
+        <div class="policy-wrapper">
+            <h2 class="heading">Documents Managment</h2>
+            <div class="search-member">
+                <div class="search-filter-wrapper">
+                 
+                  
+                        <select class="common-dropdown ">
+                            <option selected disabled value="">All Modules</option>
+                        <option value="@((int)MotorClaims.Models.Enums.DocumnetType.Claim)">@MotorClaims.Models.Enums.DocumnetType.Claim</option>
+                        <option value="@((int)MotorClaims.Models.Enums.DocumnetType.Claimant)">@MotorClaims.Models.Enums.DocumnetType.Claimant</option>
+                        <option value="@((int)MotorClaims.Models.Enums.DocumnetType.Fraud)">@MotorClaims.Models.Enums.DocumnetType.Fraud</option>
+                        <option value="@((int)MotorClaims.Models.Enums.DocumnetType.Reserve)">@MotorClaims.Models.Enums.DocumnetType.Reserve</option>
+                        <option value="@((int)MotorClaims.Models.Enums.DocumnetType.Payment)">@MotorClaims.Models.Enums.DocumnetType.Payment</option>
+                        </select>
+
+                        <div class="search-heading-wrap">
+
+                            <button class="button button-secondary">Search</button>
+                        </div>
+           
+                
+                </div>
+             
+            </div>
+        </div>
+
+        
+        <div class="transaction-details">
+            <div class="search-heading-wrap" style="float: right;margin-bottom: 5px;">
+
+                <button class="button button-secondary" onclick="UpdateDocument(0)">Add Document</button>
+            </div>
+            <table class="universal-table">
+                <tr>
+                    <!-- <th>#</th> -->
+                    <th>Document Name</th>
+                    <th>Module Name</th>
+                    <th>Priority</th>
+                    <th>Type</th>
+                </tr>
+
+                <tr>
+                    <!-- <td></td> -->
+                    <td class="tran" onclick="UpdateDocument(1)">#TR44372</td>
+                    <td>324234235</td>
+                    <td>12/12/12</td>
+                    <td>1321231</td>
+            
+              
+                </tr>
+                <tr>
+                    <!-- <td></td> -->
+                    <td class="tran">#TR44372</td>
+                    <td>324234235</td>
+                    <td>12/12/12</td>
+                    <td>1321231</td>
+                
+                  
+                </tr>
+                <tr>
+                    <!-- <td></td> -->
+                    <td class="tran">#TR44372</td>
+                    <td>324234235</td>
+                    <td>12/12/12</td>
+                    <td>1321231</td>
+                
+           
+                </tr>
+                <tr>
+                    <!-- <td></td> -->
+                    <td class="tran">#TR44372</td>
+                    <td>324234235</td>
+                    <td>12/12/12</td>
+                    <td>1321231</td>
+               
+             
+                </tr>
+                <tr>
+                    <!-- <td></td> -->
+                    <td class="tran">#TR44372</td>
+                    <td>324234235</td>
+                    <td>12/12/12</td>
+                    <td>1321231</td>
+                 
+                
+                </tr>
+                <tr>
+                    <!-- <td></td> -->
+                    <td class="tran">#TR44372</td>
+                    <td>324234235</td>
+                    <td>12/12/12</td>
+                    <td>1321231</td>
+               
+               
+                </tr>
+                <tr>
+                    <!-- <td></td> -->
+                    <td class="tran">#TR44372</td>
+                    <td>324234235</td>
+                    <td>12/12/12</td>
+                    <td>1321231</td>
+               
+        
+                </tr>
+                <tr>
+                    <!-- <td></td> -->
+                    <td class="tran">#TR44372</td>
+                    <td>324234235</td>
+                    <td>12/12/12</td>
+                    <td>1321231</td>
+             
+           
+                </tr>
+            </table>
+        </div>
+
+
+
+
+<div id="edit-Document-popup" class="edit-member-id-popup">
+ 
+</div>

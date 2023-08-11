@@ -1,0 +1,145 @@
+.request-list {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: (1fr)[3];
+      grid-template-columns: repeat(3, 1fr);
+  -webkit-column-gap: 1rem;
+          column-gap: 1rem;
+  row-gap: 1rem;
+}
+
+.heading-page .heading-title {
+  font-size: 2rem;
+}
+
+.your-request {
+  margin-top: 1.5rem;
+}
+
+.your-request .heading-card {
+  margin-bottom: 1.5rem;
+}
+
+.your-request .heading-card .heading {
+  font-size: 1.5rem;
+}
+
+.your-request .search-member {
+  margin-top: 2.5rem;
+}
+
+.request-card-v2-outer {
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.request-card-v2-outer .request-card-v2 {
+  background-color: #ffffff;
+  padding: 1rem;
+}
+
+.request-card-v2-outer .request-card-v2 .endorsement-type {
+  font-weight: 400;
+  font-size: 0.75rem;
+  line-height: 0.75rem;
+  color: #676f7c;
+  margin-bottom: 0.375rem;
+}
+
+.request-card-v2-outer .request-card-v2 .request-emp-name {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+
+.request-card-v2-outer .request-card-v2 .request-emp-name .name {
+  width: calc(100% - 2rem);
+}
+
+.request-card-v2-outer .request-card-v2 .request-details {
+  padding-bottom: 0.75rem;
+  font-weight: 400;
+  font-size: 0.75rem;
+  line-height: 0.75rem;
+  color: #1A1C1F;
+  border-bottom: 1px solid #1a1c1f1a;
+}
+
+.request-card-v2-outer .request-card-v2 .request-details .request-text {
+  -webkit-margin-end: 0.675rem;
+          margin-inline-end: 0.675rem;
+}
+
+.request-card-v2-outer .request-card-v2 .request-details .request-member-type {
+  opacity: 0.5;
+}
+
+.request-card-v2-outer .request-card-v2 .action-type {
+  padding-top: 0.75rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.request-card-v2-outer .request-card-v2 .action-type .action {
+  padding: 0.375rem 0.75rem;
+  border-radius: 100px;
+  font-weight: 400;
+  font-size: 0.75rem;
+  background-color: #FFF1E4;
+  color: #FF6D01;
+}
+
+.request-card-v2-outer .request-card-v2 .action-type .action.completed {
+  background-color: #F0FFF5;
+  color: #5DB364;
+}
+
+.request-card-v2-outer .request-card-v2 .action-type .action-date {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.request-card-v2-outer .request-card-v2 .action-type .action-date .calender {
+  -webkit-margin-end: 0.675rem;
+          margin-inline-end: 0.675rem;
+}
+
+.request-card-v2-outer .request-card-v2 .action-type .action-date .date {
+  font-weight: 400;
+  font-size: 0.75rem;
+  line-height: 0.75rem;
+  color: #455560;
+}
+
+.request-card-v2-outer .action {
+  padding: 0.675rem;
+  text-align: center;
+  background-color: #F8F6FF;
+  display: block;
+}
+
+.request-card-v2-outer .action .action-text {
+  font-weight: 400;
+  font-size: 0.75rem;
+  line-height: 0.75rem;
+  color: #795ceb;
+}
+/*# sourceMappingURL=request.css.map */

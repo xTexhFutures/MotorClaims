@@ -1,0 +1,176 @@
+@import './../theme';
+
+.main-layout {
+    display: flex;
+
+    .sidebar-wrapper {
+        width: 4.688rem;
+        background-color: $white;
+        position: fixed;
+        height: 100%;
+        z-index: 99999;
+
+        @media(max-width:767px) {
+            left: -100%;
+            transition: all ease-in-out 200ms;
+
+            &.open {
+                left: 0;
+                transition: all ease-in-out 200ms;
+            }
+
+            .backdrop {
+                position: fixed;
+                left: 4.688rem;
+                top: 0;
+                width: calc(100% - 4.688rem);
+                height: 100%;
+                background-color: rgba(0, 0, 0, 0.2);
+                z-index: 99;
+                display: flex;
+                justify-content: flex-end;
+                align-items: flex-start;
+                padding-inline-end: 1rem;
+                padding-top: 1rem;
+
+                .back-button-wrapper {
+                    box-shadow: 0px 4px 10px $boxShadowColor;
+                    padding: 0;
+                    border-radius: 50%;
+                }
+            }
+        }
+
+
+        .sidebar {
+            .sidebar-logo-wrapper {
+                width: 100%;
+                background-color: $defaultBackgroundColor;
+                padding: 0.5rem 0;
+                margin-bottom: 2.5rem;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+
+                .logo {
+                    width: 80%;
+                }
+            }
+
+            .navigation-wrapper {
+                .naigation-list {
+
+                    .navigation-item {
+                        .menu-item-wrapper {
+                            display: block;
+                            width: 2.625rem;
+                            height: 2.625rem;
+                            margin: 0 auto;
+                            margin-bottom: 1.188rem;
+                            border-radius: 50%;
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+
+                            .menu-icon {
+                                fill: $colorSecondaryVarient;
+                                width: 1.5rem;
+                            }
+
+                            &.active {
+                                background-color: $whiteVarient;
+
+                                .menu-icon {
+                                    fill: $primaryColor;
+                                }
+                            }
+
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .header-wrapper {
+        //display: none;
+        width: calc(100% - 4.688rem);
+        position: fixed;
+        top: 0;
+        right: 0;
+        background-color: $defaultBackgroundColor;
+        z-index: 9999;
+
+        @media(max-width: 767px) {
+            width: 100%;
+        }
+
+        &.rtl {
+            right: auto;
+            left: 0;
+        }
+    }
+
+    .content-wrapper {
+        width: calc(100% - 4.688rem);
+        margin-inline-start: auto;
+        height: 100%;
+
+        @media(max-width: 767px) {
+            width: 100%;
+            padding: 0 1rem;
+        }
+
+        .page-wrapper {
+            display: flex;
+            justify-content: space-between;
+            box-shadow: unset;
+            width: 100%;
+
+            @media(max-width: 767px) {
+                margin-top: 7rem;
+                display: block;
+            }
+
+
+            .right-sidebar {
+                width: 33.75rem;
+                height: calc(100vh);
+                position: fixed;
+                top: 0;
+                right: 0;
+                height: 100%;
+                background-color: $white;
+                padding-bottom: 7.5rem;
+                overflow: auto;
+
+                @media(max-width: 767px) {
+                    width: 100%;
+                    position: static;
+                    background-color: transparent;
+                    height: auto;
+                    display: none;
+                }
+
+                &.rtl {
+                    right: auto;
+                    left: 0;
+                }
+
+                .inner-wrapper {
+                    background-color: $white;
+                    padding: 0 2.5rem;
+                    margin-top: 7.5rem;
+                    overflow: hidden;
+
+                    @media(max-width:767px) {
+                        background-color: transparent;
+                        padding: 0;
+                        height: auto;
+                        margin-top: 1rem;
+                    }
+                }
+            }
+        }
+    }
+}

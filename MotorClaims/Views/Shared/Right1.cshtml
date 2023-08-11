@@ -1,0 +1,69 @@
+﻿@using CORE.DTOs.APIs.Business;
+@using CORE.DTOs.Authentications;
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.AspNetCore.Builder
+@using Microsoft.AspNetCore.Localization
+@using Microsoft.Extensions.Options
+@using Microsoft.AspNetCore.Http.Features
+@using System.Globalization
+
+@inject IViewLocalizer _localizer
+@{
+    Layout = null;
+    List<Users> users = new List<Users>();
+    users = Context.Session.getSessionData<List<Users>>("TeamMembers");
+}
+<div class="inner-wrapper">
+    <div class="membership-detail-wrapper">
+        <div class="membership-inner-wrapper">
+            <div class="membership-header">
+                <h2 class="heading-title" style="text-transform:uppercase;">@Model.UserName</h2>
+                @*<p class="membership-id">Company Unified No.: 7009028932</p>*@
+            </div>
+            <form method="post" asp-action="MedicalPolicy" asp-controller="Issuance">
+                <div class="detail-tiles-wrapper">
+                    @*  <div class="detail-tiles">*@
+                    @*        <div class="addEmployee">*@
+                    <button type="submit" class="button button-primary">
+                        @*              <div class="addEmployeeDesc" style="cursor:pointer">*@
+                        @_localizer["Add"].Value
+                        @* </div>*@
+                    </button>
+                    @*   </div>*@
+                    @*     </div>*@
+
+
+                </div>
+            </form>
+
+
+
+        </div>
+
+
+    </div>
+   
+   
+    @foreach (var item in users)
+    {
+            <div class="membership-detail-wrapper" style="cursor:pointer" onclick="ChangeLogin('@item.UserName')">
+
+          @*  <div class="membership-inner-wrapper">*@
+              @*  <div class="membership-header">*@
+                 
+           @*     </div>*@
+       @*     </div>*@
+              <span class="heading-title" style="text-transform:uppercase;">@item.UserName</span>
+        </div>
+    }
+   
+</div>
+
+
+<style>
+    .detail-tiles :hover {
+        color: #795ceb;
+    }
+</style>
+
+        

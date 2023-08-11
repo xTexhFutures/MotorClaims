@@ -1,0 +1,63 @@
+﻿@model int
+
+<div class="popup-body-wrapper">
+    <div class="popup-header">
+        <div class="popup-header-inner">
+            <h3 class="popup-title">Delegation</h3>
+            <div class="close-popup-icon" onclick="Close('edit-Delegation-popup')">
+                <img class="close-icon" src="/assets/icons/close.svg">
+            </div>
+        </div>
+        <p class="popup-description">Define Delegation Process</p>
+    </div>
+    <form method="post" asp-action="UpdateDelegation" asp-controller="Delegation">
+    <div class="popup-body">
+        <div class="detailed edit">
+            <div class="detailed-ele">
+
+                <div class="detailed-desc">
+
+                    <input id="txtId" name="Id" type="hidden" value="@Model">
+                    <!-- <h4 class="title">Nationality</h4> -->
+                    <div class="form-field-wrapper">
+                        <div class="form-input-wrapper">
+                            <input class="form-inputbox" id="txtDelegateFrom" name="DelegateFrom" type="text" required value="">
+                            <input  id="txthfDelegateFrom" name="hfDelegateFrom" type="hidden" >
+                            <label class="form-label non-icon" for="txtDelegateFrom">Delegate From</label>
+                        </div>
+                    </div>
+                    <div class="form-field-wrapper">
+                        <div class="form-input-wrapper">
+                            <input class="form-inputbox" id="txtDelegateTo" name="DelegateTo" type="text" required value="">
+                            <input id="txthfDelegateTo" name="hfDelegateTo" type="hidden">
+                            <label class="form-label non-icon" for="txtDelegateTo">Delegate To</label>
+                        </div>
+                    </div>
+                    <div class="form-field-wrapper">
+                        <div class="form-input-wrapper">
+                            <input class="form-inputbox calendar-input" id="txtFrom" name="From" type="text" required value="">
+                            <label class="form-label non-icon" for="txtFrom">From</label>
+                        </div>
+                    </div>
+                    <div class="form-field-wrapper">
+                        <div class="form-input-wrapper">
+                            <input class="form-inputbox calendar-input" id="txtTo" name="To" type="text" required value="">
+                            <label class="form-label non-icon" for="txtTo">To</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="popup-footer">
+        <button class="button button-secondary" type="button" onclick="Close('edit-Delegation-popup')">Cancel</button>
+        <button class="button button-secondary" type="submit">Submit</button>
+    </div>
+    </form>
+</div>
+
+                            <script>
+    $('#txtFrom').ForceDateEntry();
+    $('#txtTo').ForceDateEntry();
+                            </script>

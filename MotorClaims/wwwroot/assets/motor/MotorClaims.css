@@ -1,0 +1,31 @@
+﻿.support-icon {
+    width: 1rem;
+    -webkit-margin-end: 0.594rem;
+    margin-inline-end: 0.594rem;
+}
+
+
+.ellipsis{
+    text-overflow:ellipsis;
+    white-space:nowrap;
+    overflow:hidden;
+    min-width:130px;
+}
+
+.calendar-input {
+    background-image: url('../icons/calendar.svg');
+    background-position: right center;
+    background-repeat: no-repeat;
+}
+
+.popup-floating-content {
+    float: left;
+    padding: 8px;
+    font-size: 11px;
+}
+
+.right-border {
+    border-width: 0 1px 0 0;
+    border-style: dotted;
+    border-color: #999;
+}

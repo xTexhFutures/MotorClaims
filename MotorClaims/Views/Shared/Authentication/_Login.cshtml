@@ -1,0 +1,62 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.AspNetCore.Builder
+@using Microsoft.AspNetCore.Localization
+@using Microsoft.Extensions.Options
+@using Microsoft.AspNetCore.Http.Features
+@using System.Globalization
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@inject IViewLocalizer _localizer
+@{
+    Layout = "~/Views/Shared/_LayoutLogin.cshtml";
+}
+
+
+
+<input type="hidden" id="txtStatus" value="@ViewData["State"]"/> 
+<div class="auth-inner-wrapper">
+    <div class="auth-form-component">
+        <h2 class="auth-heading">@_localizer["WelcomeHeader"].Value</h2>
+        <form class="form-wrapper" method="post" asp-controller="Authenticator" asp-action="LoginUser">
+            <div class="form-field-wrapper">
+                <div class="form-input-wrapper">
+                    <img src="~/assets/Content/Images/Protected.svg" class="icon" />
+                    <input class="form-inputbox" id="txtUserName" name="UserName" type="text" maxlength="150" required />
+                    <label class="form-label" for="txtEmail">@_localizer["ExUsername"].Value</label>
+                </div>
+            </div>
+            <div class="form-field-wrapper">
+                <div class="form-input-wrapper">
+                    <img src="~/assets/Content/Images/Mail.svg" class="icon" />
+                    <input class="form-inputbox" id="txtPassword" autocomplete="off" name="Password" type="password" maxlength="150" required />
+                    <label class="form-label" for="txtPassword">@_localizer["Password"].Value</label>
+
+
+                </div>
+            </div>
+
+            <div class="submit-button-wrapper">
+                <button class="button button-primary" type="submit">@_localizer["Login"].Value</button>
+
+            </div>
+
+        </form>
+        <div class="forgot-password">
+
+            <a href="@Url.Action("ForgetPassword", "Authenticator")" class="forgot-password-link">@_localizer["ForgetPassword"].Value</a>
+        </div>
+    </div>
+</div>
+
+
+<script>
+$(function() {
+        if (('@ViewData["Error"]').length > 0) {
+            ErrorAlert('@ViewData["Error"]');
+        } 
+})
+</script>
+
+
+

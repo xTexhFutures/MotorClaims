@@ -1,0 +1,281 @@
+@import './../theme';
+
+.policy-carousel-wrapper {
+    padding-bottom: 3.375rem;
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid $boxShadowColor;
+    display: flex;
+    justify-content: space-between;
+
+    @media(max-width: 767px) {
+        margin: 0;
+        margin-top: 3rem;
+        margin-inline-start: 0;
+        margin-inline-end: 0;
+    }
+}
+
+.policy-wrapper {
+    .heading {
+        font-weight: 800;
+        font-size: 1.25rem;
+        line-height: 120%;
+        letter-spacing: -0.01em;
+        color: $defaultTextColor;
+        margin-bottom: 0.75rem;
+
+        @media(max-width:767px) {
+            font-size: 1.5rem;
+        }
+    }
+
+    &:last-child {
+        .policy-carousel-wrapper {
+            border-bottom: 0;
+        }
+    }
+}
+
+
+.resent-action-row {
+    display: flex;
+    justify-content: space-between;
+
+    @media(max-width:767px) {
+        flex-wrap: wrap;
+        margin-top: 3rem;
+    }
+
+    .resent-column {
+        width: calc(100% / 3 - 0.75rem);
+        justify-content: space-between;
+
+
+        @media(max-width:767px) {
+            width: 100%;
+            margin-bottom: 2rem;
+        }
+
+        .resent-list-items {
+            margin-top: 1.5rem;
+
+            .resent-list-item {
+                margin-bottom: 0.75rem;
+
+
+            }
+        }
+    }
+}
+
+// request card
+.request-card {
+    background: $white;
+    box-shadow: 0px 0.25rem 0.625rem $boxShadowColor;
+    border-radius: 0.5rem;
+    padding: 0 0.75rem 0.75rem 0.75rem;
+
+    .request-card-header {
+        padding: 0.75rem 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .timer-wrapper {
+            display: flex;
+            align-items: center;
+
+            .timer {
+                margin-inline-start: 0.5rem;
+            }
+
+            .timer-image {
+                width: 1rem;
+            }
+        }
+
+        .case-no {
+            font-weight: 400;
+            font-size: 0.75rem;
+            line-height: 0.75rem;
+            color: $colorSecondaryVarient;
+            margin-inline-start: 0.25rem;
+        }
+
+        .request-status {
+            border-radius: 6.25rem;
+            padding: 0.25rem 0.75rem;
+            font-weight: 400;
+            font-size: 0.75rem;
+            line-height: 0.75rem;
+
+            &.pending {
+                background: $defaultBackgroundColor;
+                color: $colorSecondaryVarient;
+            }
+
+            &.red {
+                background: $rejectedStatusBg;
+                color: $colorDanger;
+            }
+
+            &.green {
+                background: $grey;
+                color: $successColor;
+            }
+
+            &.orange {
+                color: $primaryColor;
+                background-color: $whiteVarient;
+            }
+        }
+    }
+
+    .request-body {
+        background: $defaultBackgroundColor;
+        border-radius: 0.25rem;
+        padding: 0.75rem;
+        display: flex;
+        align-items: center;
+
+        &.change-bg {
+            background: $whiteVarient;
+        }
+
+        .request-icon-wrapper {
+            width: 1.938rem;
+
+            .icon-request {
+                width: 100%;
+            }
+        }
+
+        .request-details {
+            width: calc(100% - 8.25rem);
+            margin-inline-start: 1rem;
+
+            .request-type {
+                font-weight: 400;
+                font-size: 0.75rem;
+                line-height: 140%;
+                color: $colorSecondaryVarient;
+
+            }
+
+            .request-person {
+                font-weight: 800;
+                font-size: 1rem;
+                line-height: 120%;
+                color: $defaultTextColor;
+
+            }
+
+            .request-person-type {
+                font-weight: 400;
+                font-size: 0.75rem;
+                line-height: 140%;
+                color: $colorSecondaryVarient;
+            }
+        }
+
+        .request-btn-wrapper {
+            margin-inline-start: auto;
+            width: 5.313rem;
+            display: flex;
+            justify-content: flex-end;
+            .button{
+                display: inline-block;
+            }
+        }
+    }
+
+    .request-footer {
+        display: flex;
+        justify-content: space-between;
+
+        .request-category {
+            display: flex;
+            align-items: center;
+            margin-top: 0.75rem;
+
+            .category-icon {
+                width: 0.625rem;
+                margin-inline-end: 0.313rem;
+                height: 0.688rem;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+
+                .icon-heart {
+                    max-width: 100%;
+                    max-height: 100%;
+                }
+            }
+
+            .category-text {
+                font-weight: 400;
+                font-size: 0.75rem;
+                line-height: 0.75rem;
+                color: $primaryColor;
+            }
+        }
+
+        .request-no-wrap {
+            display: flex;
+            align-items: center;
+            margin-top: 0.75rem;
+
+            .request-icon {
+                width: 0.625rem;
+                margin-inline-end: 0.313rem;
+                // height: 0.688rem;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+
+                .icon {
+                    max-width: 100%;
+                    max-height: 100%;
+                }
+            }
+
+            .request-no {
+                font-weight: 400;
+                font-size: 0.75rem;
+                line-height: 0.75rem;
+                color: $colorSecondaryVarient;
+
+            }
+        }
+    }
+}
+
+
+.resent-column {
+    &.margin-bottom {
+        margin-bottom: 2rem;
+    }
+
+    .resent-list-items {
+        &.margin-top {
+            margin-top: 1rem;
+        }
+
+        @media(max-width:767px) {
+            margin-top: 1.5rem;
+        }
+
+        .resent-list-item {
+            margin-bottom: 0.75rem;
+        }
+    }
+    .header-request-section{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        .view-link{
+            font-size: 0.75rem;
+            color: $primaryColor;
+        }
+    }
+}

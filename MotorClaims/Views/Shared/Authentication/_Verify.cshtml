@@ -1,0 +1,131 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.AspNetCore.Builder
+@using Microsoft.AspNetCore.Localization
+@using Microsoft.Extensions.Options
+@using Microsoft.AspNetCore.Http.Features
+@using System.Globalization
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@inject IViewLocalizer _localizer
+@{
+    Layout = "~/Views/Shared/_LayoutLogin.cshtml";
+}
+@model string
+
+<input type="hidden" id="txtError" value="@ViewData["State"]" />
+<div class="auth-inner-wrapper">
+    <div class="auth-form-component otp-wrap-container">
+        <h2 class="auth-heading">@_localizer["Verification"].Value</h2>
+        <div class="verify-content">
+            <p class="verificationContent">@_localizer["VerificationSMS"].Value </p>
+            <p class="number">XXXXXXX@(Model.Substring(6,3))</p>
+        </div>
+        <h5 class="code-heading">@_localizer["VerificationCode"].Value</h5>
+        <form class="form-wrapper" method="post" asp-action="VerifyOTP" asp-controller="Authenticator">
+            <div class="otpPinWrapper">
+                <div class="container-otp">
+                    <input type="text" id="digit-1" placeholder="0" autocomplete="off" required name="digit-1" class="otpPin otp-input-style OTPinput" data-next="digit-2" />
+                    <input type="text" id="digit-2" placeholder="0" autocomplete="off" required name="digit-2" class="otpPin otp-input-style OTPinput" data-next="digit-3" data-previous="digit-1" />
+                    <input type="text" id="digit-3" placeholder="0" autocomplete="off" required name="digit-3" class="otpPin otp-input-style OTPinput" data-next="digit-4" data-previous="digit-2" />
+                    <input type="text" id="digit-4" placeholder="0" autocomplete="off" required name="digit-4" class="otpPin otp-input-style OTPinput" data-next="digit-5" data-previous="digit-3" />
+
+
+                </div>
+            </div>
+            <div class="submit-button-wrapper">
+                <button class="button button-primary" type="submit">@_localizer["Verify"].Value</button>
+            </div>
+        </form>
+
+        <p class="resend-timer">@_localizer["resendcode"].Value &nbsp; &nbsp; &nbsp; <span id="timerLabel">02:00</span></p>
+        <form class="form-wrapper" method="post" asp-action="Resend" asp-controller="Authenticator">
+            <input type="hidden" name="ResendSource" value="@ViewData["ResendSource"]"/>
+            <p class="resend-option">@_localizer["NotRecievedCode"].Value  <button id="resend" href="#" class="primary-link" type="submit">@_localizer["Resend"].Value</button></p>
+    
+        </form>
+    </div>
+</div>
+
+<script>
+
+  
+    $(function() {
+        $('#digit-1').focus();
+        $("#resend").prop('disabled', true);
+
+        if (('@ViewData["Error"]').length > 0) {
+            ErrorAlert('@ViewData["Error"]');
+        } else {
+            SuccessAlert("Transaction has been completed successfully");
+        }
+    })
+
+    $('.container-otp').find('input').each(function() {
+        $(this).attr('maxlength', 1);
+        $(this).on('keyup', function(e) {
+            var parent = $($(this).parent());
+
+            if (e.keyCode === 8 || e.keyCode === 37) {
+                var prev = parent.find('input#' + $(this).data('previous'));
+
+                if (prev.length) {
+                    $(prev).select();
+                }
+            } else if ((e.keyCode >= 48 && e.keyCode <= 57) || (e.keyCode >= 65 && e.keyCode <= 90) || (e.keyCode >= 96 && e.keyCode <= 105) || e.keyCode === 39) {
+                var next = parent.find('input#' + $(this).data('next'));
+
+                if (next.length) {
+                    $(next).select();
+                } else {
+                    if (parent.data('autosubmit')) {
+                        parent.submit();
+                    }
+                }
+            }
+        });
+    });
+
+    function countdown() {
+        time = document.getElementById("timerLabel").innerHTML;
+        timeArray = time.split(':')
+        seconds = timeToSeconds(timeArray);
+        $("#resend").prop('disabled', true);
+        if (seconds == '') {
+            temp = document.getElementById('timerLabel');
+            temp.innerHTML = "00:00";
+            $("#resend").prop('disabled', false);
+            $('#resend').css('background', 'none');
+            return;
+        }
+        seconds--;
+        temp = document.getElementById('countdown');
+        document.getElementById("timerLabel").innerHTML = secondsToTime(seconds);
+        timeoutMyOswego = setTimeout(countdown, 1000);
+    }
+
+    function timeToSeconds(timeArray) {
+        var minutes = (timeArray[0] * 1);
+        var seconds = (minutes * 60) + (timeArray[1] * 1);
+        return seconds;
+    }
+
+    function secondsToTime(secs) {
+        var hours = Math.floor(secs / (60 * 60));
+        hours = hours < 10 ? '0' + hours : hours;
+        var divisor_for_minutes = secs % (60 * 60);
+        var minutes = Math.floor(divisor_for_minutes / 60);
+        minutes = minutes < 10 ? '0' + minutes : minutes;
+        var divisor_for_seconds = divisor_for_minutes % 60;
+        var seconds = Math.ceil(divisor_for_seconds);
+        seconds = seconds < 10 ? '0' + seconds : seconds;
+        return minutes + ':' + seconds;
+    }
+
+    setTimeout("countdown()", 120);
+
+</script>
+
+
+
+

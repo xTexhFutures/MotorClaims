@@ -1,0 +1,279 @@
+.auth-wrapper {
+  min-height: calc(100vh - 12.438rem);
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-padding-start: 5rem;
+  padding-inline-start: 5rem;
+  position: relative;
+  z-index: 1;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+@media (max-width: 767px) {
+  .auth-wrapper {
+    min-height: auto;
+    padding: 0;
+  }
+}
+
+.auth-wrapper .auth-inner-wrapper {
+  background-color: #ffffff;
+  width: 70%;
+  border-radius: 0.75rem 0.75rem 0px 0px;
+  padding: 1.5rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.auth-wrapper .auth-inner-wrapper.otp {
+  width: auto;
+}
+
+@media (max-width: 767px) {
+  .auth-wrapper .auth-inner-wrapper {
+    width: auto;
+    height: 100%;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    background: #F2F3F5;
+  }
+}
+
+.auth-wrapper .auth-inner-wrapper .auth-form-component {
+  background: #F2F3F5;
+  padding: 4rem;
+  width: 50%;
+}
+
+@media (max-width: 767px) {
+  .auth-wrapper .auth-inner-wrapper .auth-form-component {
+    padding: 0;
+    width: 100%;
+    background: transparent;
+  }
+}
+
+.auth-wrapper .auth-inner-wrapper .auth-form-component.otp-wrap-container {
+  background-color: #ffffff;
+  width: 34.5rem;
+}
+
+@media (max-width: 767px) {
+  .auth-wrapper .auth-inner-wrapper .auth-form-component.otp-wrap-container {
+    padding: 0;
+    width: 100%;
+    background: transparent;
+  }
+}
+
+.auth-wrapper .auth-inner-wrapper .auth-form-component .auth-heading {
+  font-weight: 800;
+  font-size: 2.125rem;
+  line-height: 120%;
+  text-align: center;
+  letter-spacing: -0.02em;
+  color: #455560;
+  margin-bottom: 1.5rem;
+}
+
+.auth-wrapper .auth-inner-wrapper .auth-form-component .verify-content {
+  font-size: 1rem;
+  line-height: 140%;
+  text-align: center;
+  color: #455560;
+}
+
+.auth-wrapper .auth-inner-wrapper .auth-form-component .verify-content .verificationContent {
+  font-weight: 400;
+}
+
+.auth-wrapper .auth-inner-wrapper .auth-form-component .verify-content .number {
+  font-weight: 700;
+}
+
+.auth-wrapper .auth-inner-wrapper .auth-form-component .code-heading {
+  margin-top: 1.5rem;
+  font-weight: 800;
+  font-size: 1.25rem;
+  line-height: 120%;
+  text-align: center;
+  letter-spacing: -0.01em;
+  color: #455560;
+  margin-bottom: 1.5rem;
+}
+
+.auth-wrapper .auth-inner-wrapper .auth-form-component .form-wrapper {
+  margin-bottom: 1.5rem;
+}
+
+.auth-wrapper .auth-inner-wrapper .auth-form-component .form-wrapper .otpPinWrapper .container-otp {
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  margin-bottom: 1.5rem;
+}
+
+.auth-wrapper .auth-inner-wrapper .auth-form-component .form-wrapper .otpPinWrapper .container-otp .otpPin {
+  width: calc(100% / 4 - 0.375rem) !important;
+  border-radius: 4px;
+}
+
+.auth-wrapper .auth-inner-wrapper .auth-form-component .form-wrapper .otpPinWrapper .container-otp .otpPin .otp-input-style {
+  background: #F2F3F5;
+  width: 100% !important;
+  padding: 2.5rem 2rem !important;
+  border: 0;
+  border-radius: 0.25rem;
+}
+
+@media (max-width: 767px) {
+  .auth-wrapper .auth-inner-wrapper .auth-form-component .form-wrapper .otpPinWrapper .container-otp .otpPin .otp-input-style {
+    padding: 0;
+    width: 100%;
+    background: #ffffff;
+  }
+}
+
+.auth-wrapper .auth-inner-wrapper .auth-form-component .form-wrapper .submit-button-wrapper .button {
+  width: 100%;
+  font-weight: 400;
+  font-size: 1rem;
+  line-height: 1rem;
+  color: #ffffff;
+  padding: 1.188rem;
+}
+
+.auth-wrapper .auth-inner-wrapper .auth-form-component .terms-wrapper {
+  margin-bottom: 2.5rem;
+}
+
+.auth-wrapper .auth-inner-wrapper .auth-form-component .terms-wrapper .term {
+  text-align: center;
+  font-weight: 400;
+  font-size: 0.875rem;
+  line-height: 140%;
+  text-align: center;
+  color: #455560;
+}
+
+.auth-wrapper .auth-inner-wrapper .auth-form-component .terms-wrapper .term-link {
+  color: #795ceb;
+}
+
+.auth-wrapper .auth-inner-wrapper .auth-form-component .forgot-password {
+  text-align: center;
+}
+
+.auth-wrapper .auth-inner-wrapper .auth-form-component .forgot-password .forgot-password-link {
+  font-weight: 400;
+  font-size: 1.125rem;
+  line-height: 140%;
+  text-align: center;
+  color: #795ceb;
+}
+
+.auth-wrapper .auth-inner-wrapper .auth-form-component .resend-timer {
+  font-weight: 400;
+  font-size: 0.875rem;
+  line-height: 140%;
+  text-align: center;
+  color: #455560;
+  margin-bottom: 1.5rem;
+}
+
+.auth-wrapper .auth-inner-wrapper .auth-form-component .resend-option {
+  font-weight: 400;
+  font-size: 0.875rem;
+  line-height: 140%;
+  text-align: center;
+  color: #455560;
+}
+
+.auth-wrapper .auth-inner-wrapper .auth-form-component .resend-option .primary-link {
+  color: #312E52;
+  cursor: pointer;
+}
+
+.auth-wrapper .auth-inner-wrapper .auth-content-reference {
+  width: calc(50% - 2rem);
+}
+
+@media (max-width: 767px) {
+  .auth-wrapper .auth-inner-wrapper .auth-content-reference {
+    display: none;
+  }
+}
+
+.auth-wrapper .auth-inner-wrapper .auth-content-reference .reference-content-wrapper .ref-heading {
+  font-size: 2.5rem;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.form-inputbox {
+  width: calc(100% - 2.25rem);
+  border: 0;
+}
+
+.form-inputbox:focus {
+  outline: none;
+}
+
+.form-label {
+  font-weight: 400;
+  font-size: 1rem;
+  line-height: 140%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  color: #818B9B;
+  position: absolute;
+  top: 1.25rem;
+  left: 3.95rem;
+  transition: 0.2s ease all;
+  -moz-transition: 0.2s ease all;
+  -webkit-transition: 0.2s ease all;
+  pointer-events: none;
+}
+
+.form-inputbox:focus ~ .form-label,
+.form-inputbox:valid ~ .form-label {
+  top: -20px;
+  font-size: 0.875rem;
+  left: 0;
+}
+
+.revert .form-label {
+  right: 3.95rem;
+  left: auto;
+}
+
+.revert .form-inputbox:focus ~ .form-label,
+.revert .form-inputbox:valid ~ .form-label {
+  right: 0;
+  left: auto;
+}
+/*# sourceMappingURL=loginStyle.css.map */

@@ -1,0 +1,171 @@
+﻿@{
+    Layout = null;
+}
+
+
+<div class="policy-detail-wrapper">
+    <div class="basic-detail">
+        <div class="policy-header">
+            <div class="name-number-wrapper">
+                <div class="policy-name-wrapper">
+                    <img src="/assets/icons/Fraud.png" class="policy-icon" />
+                    <p class="policy-name">Fraud Setup</p>
+                </div>
+            </div>
+            <div class="action-dropdown">
+                <div class="btn-wrapper">
+                    <button class="button button-primary">
+                        Add Fraud Setup
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="policy-detail-body" style="background-color:white !important">
+            <div class="inner-clild-wrap">
+                <ul class="detail-list">
+                    @for (int i = 0; i < 8; i++)
+                    {
+                        <li class="detailed-item false">
+                            <div class="item-content">
+                                <span class="label" style="color:white !important">From 0 - 45</span>
+                                <h3 class="value" style="color:white !important">Error</h3>
+                            </div>
+                        </li>
+                    }
+
+
+                </ul>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="policy-wrapper">
+    <h2 class="heading">Fraud Managment</h2>
+    <div class="search-member">
+        <div class="search-filter-wrapper">
+
+
+            <select class="common-dropdown ">
+                <option selected disabled value="">Status</option>
+                <option value="1">Active</option>
+                <option value="0">In-Active</option>
+            </select>
+
+            <div class="search-heading-wrap">
+
+                <button class="button button-secondary">Search</button>
+            </div>
+
+
+        </div>
+
+    </div>
+</div>
+
+
+
+<div class="transaction-details">
+    <div class="search-heading-wrap" style="float: right;margin-bottom: 5px;">
+
+        <button class="button button-secondary" onclick="UpdateFraudIndicator(0)">Add Fraud Indicator</button>
+    </div>
+    <table class="universal-table">
+        <tr>
+            <!-- <th>#</th> -->
+            <th>Stage Name</th>
+            <th>Order</th>
+            <th>Is Active</th>
+            <th>Creation Date</th>
+            <th>Approvers</th>
+        </tr>
+
+        <tr>
+            <!-- <td></td> -->
+            <td class="tran" onclick="UpdateFraudIndicator(1)">#TR44372</td>
+            <td>324234235</td>
+            <td>12/12/12</td>
+            <td>1321231</td>
+            <td class="tran" onclick="UpdateFraudSetup(1)">5</td>
+
+
+        </tr>
+        <tr>
+            <!-- <td></td> -->
+            <td class="tran">#TR44372</td>
+            <td>324234235</td>
+            <td>12/12/12</td>
+            <td>1321231</td>
+            <td class="tran" onclick="UpdateFraudSetup(1)">5</td>
+
+
+        </tr>
+        <tr>
+            <!-- <td></td> -->
+            <td class="tran">#TR44372</td>
+            <td>324234235</td>
+            <td>12/12/12</td>
+            <td>1321231</td>
+            <td class="tran" onclick="UpdateFraudSetup(1)">5</td>
+
+
+        </tr>
+        <tr>
+            <!-- <td></td> -->
+            <td class="tran">#TR44372</td>
+            <td>324234235</td>
+            <td>12/12/12</td>
+            <td>1321231</td>
+            <td class="tran" onclick="UpdateFraudSetup(1)">5</td>
+
+
+        </tr>
+        <tr>
+            <!-- <td></td> -->
+            <td class="tran">#TR44372</td>
+            <td>324234235</td>
+            <td>12/12/12</td>
+            <td>1321231</td>
+            <td class="tran" onclick="UpdateFraudSetup(1)">5</td>
+
+
+        </tr>
+        <tr>
+            <!-- <td></td> -->
+            <td class="tran">#TR44372</td>
+            <td>324234235</td>
+            <td>12/12/12</td>
+            <td>1321231</td>
+            <td class="tran" onclick="UpdateFraudSetup(1)">5</td>
+
+
+        </tr>
+        <tr>
+            <!-- <td></td> -->
+            <td class="tran">#TR44372</td>
+            <td>324234235</td>
+            <td>12/12/12</td>
+            <td>1321231</td>
+            <td class="tran" onclick="UpdateFraudSetup(1)">5</td>
+
+        </tr>
+        <tr>
+            <!-- <td></td> -->
+            <td class="tran">#TR44372</td>
+            <td>324234235</td>
+            <td>12/12/12</td>
+            <td>1321231</td>
+            <td class="tran" onclick="UpdateFraudSetup(1)">5</td>
+
+        </tr>
+    </table>
+</div>
+
+
+
+
+<div id="edit-FraudIndicator-popup" class="edit-member-id-popup">
+</div>
+<div id="edit-FraudSetup-popup" class="edit-member-id-popup">
+</div>

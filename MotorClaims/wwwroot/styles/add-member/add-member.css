@@ -1,0 +1,2274 @@
+.content-wrapper {
+  width: calc(100% - 38rem);
+  padding: 3rem;
+  margin-bottom: 6rem;
+  -webkit-margin-start: 5rem;
+          margin-inline-start: 5rem;
+}
+
+.content-wrapper .add-member-detail {
+  max-width: calc(100% - 33.688rem);
+  margin-top: 3.125rem;
+}
+
+.content-wrapper .add-member-detail .page-heading .page-title {
+  font-weight: 800;
+  font-size: 1.25rem;
+  line-height: 120%;
+  letter-spacing: -0.01em;
+  color: #1A1C1F;
+}
+
+.content-wrapper .add-member-detail .select-member-type .radio-card .title {
+  font-weight: 800;
+  font-size: 1rem;
+  color: #455560;
+  margin-top: 0.813rem;
+  margin-bottom: 0.25rem;
+  position: relative;
+  z-index: 0;
+}
+
+.content-wrapper .add-member-detail .select-member-type .radio-card .detailed {
+  font-weight: 400;
+  font-size: 0.75rem;
+  color: #455560;
+  opacity: 0.8;
+  line-height: 140%;
+  position: relative;
+  z-index: 0;
+}
+
+.content-wrapper .add-member-detail .detailed-wrapper .employee-detailds {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  background-color: #ffffff;
+  padding: 1.5rem;
+  border-radius: 8px;
+}
+
+.content-wrapper .add-member-detail .detailed-wrapper .employee-detailds .section-title {
+  font-size: 1.125rem;
+}
+
+.content-wrapper .add-member-detail .detailed-wrapper .employee-detailds .employee-id-container .employee-id-details {
+  padding: 2rem 1.5rem;
+  border-radius: 8px;
+  background-color: #F2F3F5;
+  margin-top: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.content-wrapper .add-member-detail .detailed-wrapper .employee-detailds .employee-id-container .employee-id-details .form-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.content-wrapper .add-member-detail .detailed-wrapper .employee-detailds .employee-id-container .employee-id-details .form-container .button {
+  margin-top: 1rem;
+  border-radius: 8px;
+  padding: 1.2rem 0;
+  font-size: 1rem;
+}
+
+.content-wrapper .add-member-detail .detailed-wrapper .employee-detailds .employee-id-container .employee-id-details .form-container.only-relative {
+  display: none;
+}
+
+.content-wrapper .add-member-detail .detailed-wrapper .employee-detailds .employee-id-container .member-information {
+  margin-top: 1rem;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: (1fr)[2];
+      grid-template-columns: repeat(2, 1fr);
+  row-gap: 1.5rem;
+  -webkit-column-gap: 1.5rem;
+          column-gap: 1.5rem;
+  padding: 1.5rem;
+  background-color: #F2F3F5;
+  border-radius: 8px;
+}
+
+.content-wrapper .add-member-detail .detailed-wrapper .employee-detailds .employee-id-container .member-information .member-info-tiles {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.content-wrapper .add-member-detail .detailed-wrapper .employee-detailds .employee-id-container .member-information .member-info-tiles .detailed-support-icon {
+  width: 1.25rem;
+  -webkit-margin-end: 1rem;
+          margin-inline-end: 1rem;
+}
+
+.content-wrapper .add-member-detail .detailed-wrapper .employee-detailds .employee-id-container .member-information .member-info-tiles .m-detail-tile {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.content-wrapper .add-member-detail .detailed-wrapper .employee-detailds .employee-id-container .member-information .member-info-tiles .m-detail-tile .info-label {
+  font-size: 0.75rem;
+  opacity: 0.8;
+  color: #000000;
+}
+
+.content-wrapper .add-member-detail .detailed-wrapper .employee-detailds .employee-id-container .member-information .member-info-tiles .m-detail-tile .info-value {
+  font-size: 1rem;
+  color: #000000;
+}
+
+.content-wrapper .add-member-detail .detailed-wrapper .employee-detailds .member-personal-detail .extra-detailed-container {
+  margin-top: 1.5rem;
+  margin-bottom: 2rem;
+  background-color: #F2F3F5;
+  padding: 1.5rem;
+  border-radius: 8px;
+}
+
+.content-wrapper .add-member-detail .detailed-wrapper .employee-detailds .member-personal-detail .extra-detailed-container .label {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  display: block;
+}
+
+.content-wrapper .add-member-detail .detailed-wrapper .employee-detailds .member-personal-detail .other-user-detail {
+  display: none;
+}
+
+.content-wrapper .add-member-detail .detailed-wrapper .employee-detailds .member-personal-detail .other-user-detail .other-info-container {
+  padding: 1.5rem;
+  border-radius: 8px;
+  background-color: #F2F3F5;
+  margin-top: 1.5rem;
+}
+
+.content-wrapper .add-member-detail .detailed-wrapper .employee-detailds .member-personal-detail .other-user-detail .other-info-container .nationality-user {
+  margin-top: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.content-wrapper .add-member-detail .detailed-wrapper .employee-detailds .member-personal-detail .other-user-detail .other-info-container .nationality-user .form-label {
+  display: block;
+  font-size: 0.75rem;
+}
+
+.content-wrapper .add-member-detail .detailed-wrapper .employee-detailds .dependent-container-header {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid #dedede;
+  padding-bottom: 1.5rem;
+}
+
+.content-wrapper .add-member-detail .detailed-wrapper .employee-detailds .button {
+  padding: 1rem;
+  font-size: 1rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.content-wrapper .add-member-detail .detailed-wrapper .employee-detailds .button .button-icon {
+  -webkit-margin-end: 1rem;
+          margin-inline-end: 1rem;
+  width: 1.25rem;
+}
+
+.content-wrapper .add-member-detail .detailed-wrapper .employee-detailds .employee-dependents {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: (1fr)[1];
+      grid-template-columns: repeat(1, 1fr);
+  -webkit-column-gap: 1.5rem;
+          column-gap: 1.5rem;
+  row-gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.content-wrapper .add-member-detail .detailed-wrapper .employee-detailds .employee-dependents .dependent-tile {
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #dedede;
+}
+
+.content-wrapper .add-member-detail .detailed-wrapper .employee-detailds .employee-dependents .dependent-tile .dependent-header {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
+}
+
+.content-wrapper .add-member-detail .detailed-wrapper .employee-detailds .employee-dependents .dependent-tile .dependent-header .dependent-name {
+  font-size: 1rem;
+  color: #000000;
+  font-weight: 800;
+}
+
+.content-wrapper .add-member-detail .detailed-wrapper .employee-detailds .employee-dependents .dependent-tile .dependent-header .dependent-name .age {
+  background-color: #0d426c;
+  padding: 0.25rem 0.5rem;
+  border-radius: 25px;
+  font-size: 0.75rem;
+  color: #ffffff;
+}
+
+.content-wrapper .add-member-detail .detailed-wrapper .employee-detailds .employee-dependents .dependent-tile .dependent-header .dependent-events {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.content-wrapper .add-member-detail .detailed-wrapper .employee-detailds .employee-dependents .dependent-tile .dependent-header .dependent-events .dependent-slice {
+  width: 1rem;
+  cursor: pointer;
+}
+
+.content-wrapper .add-member-detail .detailed-wrapper .employee-detailds .employee-dependents .dependent-tile .dependent-header .dependent-events .dependent-trace {
+  width: 1rem;
+  -webkit-margin-start: 1rem;
+          margin-inline-start: 1rem;
+  cursor: pointer;
+}
+
+.content-wrapper .add-member-detail .detailed-wrapper .employee-detailds .employee-dependents .dependent-tile .dependent-other-details {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-column-gap: 0.75rem;
+          column-gap: 0.75rem;
+  row-gap: 0.75rem;
+}
+
+.content-wrapper .add-member-detail .detailed-wrapper .employee-detailds .employee-dependents .dependent-tile .dependent-other-details .other-detailed-item {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.content-wrapper .add-member-detail .detailed-wrapper .employee-detailds .employee-dependents .dependent-tile .dependent-other-details .other-detailed-item .label {
+  font-size: 0.847rem;
+  opacity: 0.4;
+}
+
+.content-wrapper .add-member-detail .detailed-wrapper .employee-detailds .employee-dependents .dependent-tile .dependent-other-details .other-detailed-item .text {
+  font-size: 0.847rem;
+  font-weight: 800;
+  -webkit-margin-start: 0.375rem;
+          margin-inline-start: 0.375rem;
+  opacity: 0.6;
+}
+
+.content-wrapper .add-member-detail .detailed-wrapper.iqama-user .not-iqama {
+  display: none;
+}
+
+.content-wrapper .add-member-detail .detailed-wrapper.iqama-user .border-iqama {
+  display: block;
+}
+
+.content-wrapper .add-member-detail .detailed-wrapper.iqama-user .mem-border-iqama {
+  display: none;
+}
+
+.content-wrapper .add-member-detail .detailed-wrapper.iqama-user .mem-border-iqama.active {
+  display: block;
+}
+
+.content-wrapper .add-member-detail .detailed-wrapper.iqama-user .employee-id-details .form-container.only-relative {
+  display: none;
+}
+
+.content-wrapper .add-member-detail .detailed-wrapper.border-user .employee-detailds .ducument-detaild {
+  -ms-grid-columns: (1fr)[1];
+      grid-template-columns: repeat(1, 1fr);
+}
+
+.content-wrapper .add-member-detail .detailed-wrapper.border-user .border-iqama {
+  display: block;
+}
+
+.content-wrapper .add-member-detail .detailed-wrapper.border-user .mem-border-iqama {
+  display: none;
+}
+
+.content-wrapper .add-member-detail .detailed-wrapper.border-user .mem-border-iqama.active {
+  display: block;
+}
+
+.content-wrapper .add-member-detail .detailed-wrapper.border-user .employee-id-details .form-container.only-relative {
+  display: none;
+}
+
+.content-wrapper .add-member-detail .detailed-wrapper.gcc-user .employee-detailds .ducument-detaild {
+  -ms-grid-columns: (1fr)[2];
+      grid-template-columns: repeat(2, 1fr);
+}
+
+.content-wrapper .add-member-detail .detailed-wrapper.gcc-user .employee-detailds .ducument-detaild .not-border-user {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.content-wrapper .add-member-detail .detailed-wrapper.gcc-user .border-iqama {
+  display: none;
+}
+
+.content-wrapper .add-member-detail .detailed-wrapper.gcc-user .member-personal-detail .other-user-detail {
+  display: block;
+}
+
+.content-wrapper .add-member-detail .detailed-wrapper.gcc-user .employee-id-details .form-container.only-relative {
+  display: none;
+}
+
+.content-wrapper .add-member-detail .detailed-wrapper.bedoon-user .employee-detailds .ducument-detaild {
+  -ms-grid-columns: (1fr)[2];
+      grid-template-columns: repeat(2, 1fr);
+}
+
+.content-wrapper .add-member-detail .detailed-wrapper.bedoon-user .employee-detailds .ducument-detaild .not-border-user {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.content-wrapper .add-member-detail .detailed-wrapper.bedoon-user .border-iqama {
+  display: none;
+}
+
+.content-wrapper .add-member-detail .detailed-wrapper.bedoon-user .member-personal-detail .other-user-detail {
+  display: block;
+}
+
+.content-wrapper .add-member-detail .detailed-wrapper.bedoon-user .employee-id-details .form-container.only-relative {
+  display: none;
+}
+
+.content-wrapper .add-member-detail .detailed-wrapper.relative-user .employee-detailds .ducument-detaild {
+  -ms-grid-columns: (1fr)[3];
+      grid-template-columns: repeat(3, 1fr);
+}
+
+.content-wrapper .add-member-detail .detailed-wrapper.relative-user .employee-detailds .ducument-detaild .not-border-user,
+.content-wrapper .add-member-detail .detailed-wrapper.relative-user .employee-detailds .ducument-detaild .not-bedoon-user {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.content-wrapper .add-member-detail .detailed-wrapper.relative-user .border-iqama {
+  display: none;
+}
+
+.content-wrapper .add-member-detail .detailed-wrapper.relative-user .member-personal-detail .other-user-detail {
+  display: block;
+}
+
+.content-wrapper .add-member-detail .detailed-wrapper.relative-user .employee-id-details .form-container.only-relative {
+  display: block !important;
+}
+
+.aside-right {
+  width: 33rem;
+  background-color: #ffffff;
+  padding: 3rem;
+  position: fixed;
+  right: 0;
+  height: 100vh;
+  top: 0;
+  padding-top: 7.5rem;
+}
+
+.dependnet-form .dependent-title {
+  font-size: 1.25rem;
+}
+
+.dependnet-form .dependent-label {
+  font-size: 1rem;
+}
+
+.dependnet-form .select-type-container {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: (1fr)[1];
+      grid-template-columns: repeat(1, 1fr);
+  -webkit-column-gap: 2rem;
+          column-gap: 2rem;
+  row-gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.dependnet-form .select-type-container .select-dependent-type {
+  padding: 1.5rem;
+  border-radius: 8px;
+  background-color: #ffffff;
+}
+
+.dependnet-form .select-type-container .select-dependent-type .dependent-type-grid {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: (1fr)[3];
+      grid-template-columns: repeat(3, 1fr);
+  -webkit-column-gap: 0.75rem;
+          column-gap: 0.75rem;
+  row-gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.dependnet-form .select-type-container .select-dependent-type .dependent-type-grid label.radio-card-v2 .card-content-wrapper {
+  background-color: #F2F3F5;
+}
+
+.dependnet-form .select-type-container .select-dependent-type.separate {
+  background-color: #F2F3F5;
+  padding: 0rem;
+  border-radius: 8px;
+}
+
+.dependnet-form .select-type-container .select-dependent-id-type {
+  padding: 1.5rem;
+  border-radius: 8px;
+  background-color: #ffffff;
+}
+
+.dependnet-form .select-type-container .select-dependent-id-type .dependent-id-grid {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: (1fr)[3];
+      grid-template-columns: repeat(3, 1fr);
+  -webkit-column-gap: 0.75rem;
+          column-gap: 0.75rem;
+  row-gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.dependnet-form .select-type-container .select-dependent-id-type .dependent-id-grid label.radio-card-v2 .card-content-wrapper {
+  background-color: #F2F3F5;
+}
+
+.dependnet-form .dependent-id-details {
+  padding: 1.5rem;
+  border-radius: 8px;
+  background-color: #ffffff;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: (1fr)[1];
+      grid-template-columns: repeat(1, 1fr);
+  -webkit-column-gap: 2rem;
+          column-gap: 2rem;
+  row-gap: 2rem;
+}
+
+.dependnet-form .dependent-id-details .form-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.dependnet-form .dependent-id-details .form-container .form-controlar {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  padding: 1rem;
+  height: 4rem;
+}
+
+.dependnet-form .dependent-id-details .form-container .button {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  font-size: 1rem;
+  white-space: nowrap;
+  height: 4rem;
+}
+
+.dependnet-form .dependent-id-details .form-container.only-relative {
+  display: none;
+}
+
+.dependnet-form .dependent-selected-member-type .dependent-border-iqama {
+  padding: 1.5rem;
+  border-radius: 8px;
+  background-color: #ffffff;
+  margin-top: 2rem;
+}
+
+.dependnet-form .dependent-selected-member-type .dependent-border-iqama .dependent-information {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: (1fr)[2];
+      grid-template-columns: repeat(2, 1fr);
+  -webkit-column-gap: 2rem;
+          column-gap: 2rem;
+  row-gap: 2rem;
+  margin-top: 1rem;
+}
+
+.dependnet-form .dependent-selected-member-type .dependent-border-iqama .dependent-information .dependent-info-tiles {
+  padding: 1.5rem;
+  background-color: #F2F3F5;
+  border-radius: 8px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.dependnet-form .dependent-selected-member-type .dependent-border-iqama .dependent-information .dependent-info-tiles .detailed-support-icon {
+  width: 20px;
+  -webkit-margin-end: 1rem;
+          margin-inline-end: 1rem;
+}
+
+.dependnet-form .dependent-selected-member-type .dependent-border-iqama .dependent-information .dependent-info-tiles .m-detail-tile {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.dependnet-form .dependent-selected-member-type .dependent-border-iqama .dependent-information .dependent-info-tiles .m-detail-tile .info-label {
+  font-size: 0.75rem;
+  opacity: 0.8;
+  color: #000000;
+}
+
+.dependnet-form .dependent-selected-member-type .dependent-border-iqama .dependent-information .dependent-info-tiles .m-detail-tile .info-value {
+  font-size: 1rem;
+  color: #000000;
+}
+
+.dependnet-form .dependent-selected-member-type .dependnet-personal-information {
+  padding: 1.5rem;
+  border-radius: 8px;
+  background-color: #ffffff;
+  margin-top: 2rem;
+}
+
+.dependnet-form .dependent-selected-member-type .dependnet-personal-information .dependent-other-info-container {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: (1fr)[1];
+      grid-template-columns: repeat(1, 1fr);
+  -webkit-column-gap: 2rem;
+          column-gap: 2rem;
+  row-gap: 2rem;
+  margin-top: 1rem;
+}
+
+.dependnet-form .dependent-selected-member-type .dependnet-personal-information .dependent-other-info-container .dependent-nationality-container {
+  padding: 1.5rem;
+  background-color: #F2F3F5;
+  border-radius: 8px;
+}
+
+.dependnet-form .dependent-selected-member-type .dependnet-personal-information .dependent-other-info-container .dependent-nationality-container .dependent-nationality-user {
+  margin-top: 1rem;
+}
+
+.dependnet-form .dependent-selected-member-type .dependnet-personal-information .dependent-other-info-container .dependent-gender-container {
+  padding: 1.5rem;
+  background-color: #F2F3F5;
+  border-radius: 8px;
+}
+
+.dependnet-form .dependent-selected-member-type .dependnet-personal-information .dependent-other-info-container .dependent-gender-container .dependent-gender-grid {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: (1fr)[2];
+      grid-template-columns: repeat(2, 1fr);
+  -webkit-column-gap: 2rem;
+          column-gap: 2rem;
+  margin-top: 1rem;
+}
+
+.dependnet-form .dependent-selected-member-type .dependnet-personal-information .dependent-other-info-container .dependent-dob-container {
+  padding: 1.5rem;
+  background-color: #F2F3F5;
+  border-radius: 8px;
+}
+
+.dependnet-form .dependent-selected-member-type .dependnet-personal-information .dependent-other-info-container .dependent-dob-container .form-container {
+  margin-top: 1rem;
+}
+
+.dependnet-form .dependent-selected-member-type .dependent-other-mandatory {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: (1fr)[2];
+      grid-template-columns: repeat(2, 1fr);
+  -webkit-column-gap: 2rem;
+          column-gap: 2rem;
+  row-gap: 2rem;
+  margin-top: 1rem;
+  background-color: #ffffff;
+}
+
+.dependnet-form .dependent-selected-member-type .dependent-other-mandatory .extra-detailed-container {
+  padding: 1.5rem;
+  border-radius: 8px;
+}
+
+.dependnet-form .dependent-selected-member-type .dependent-other-mandatory .extra-detailed-container .dependent-merital-grid {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: (1fr)[3];
+      grid-template-columns: repeat(3, 1fr);
+  -webkit-column-gap: 1.5rem;
+          column-gap: 1.5rem;
+  row-gap: 1.5rem;
+  margin-top: 1rem;
+  background-color: #F2F3F5;
+  padding: 1.5rem;
+  border-radius: 8px;
+}
+
+.dependnet-form .dependent-selected-member-type .dependent-other-mandatory .extra-detailed-container .form-container-mobile {
+  background-color: #F2F3F5;
+  padding: 1.5rem;
+  border-radius: 8px;
+  margin-top: 1rem;
+}
+
+.dependnet-form .dependent-selected-member-type .dependent-other-mandatory.dep-separate {
+  display: block;
+}
+
+.dependnet-form .dependent-selected-member-type .dependent-other-mandatory.dep-separate .extra-detailed-container .dependent-merital-grid {
+  -ms-grid-columns: (1fr)[5];
+      grid-template-columns: repeat(5, 1fr);
+}
+
+.dependnet-form .dependent-selected-member-type .dependent-documents {
+  margin-top: 2rem;
+  background-color: #ffffff;
+  padding: 1.5rem;
+  border-radius: 8px;
+}
+
+.dependnet-form .dependent-selected-member-type .dependent-documents .ducument-detaild {
+  margin-top: 1rem;
+}
+
+.dependnet-form .dependent-selected-member-type.iqama-user .dependent-border-iqama {
+  display: block;
+}
+
+.dependnet-form .dependent-selected-member-type.iqama-user .dependnet-personal-information {
+  display: none;
+}
+
+.dependnet-form .dependent-selected-member-type.iqama-user .dependent-documents {
+  display: none;
+}
+
+.dependnet-form .dependent-selected-member-type.border-user .dependent-border-iqama {
+  display: block;
+}
+
+.dependnet-form .dependent-selected-member-type.border-user .dependnet-personal-information {
+  display: none;
+}
+
+.dependnet-form .dependent-selected-member-type.border-user .dependent-documents {
+  display: block;
+}
+
+.dependnet-form .dependent-selected-member-type.gcc-user .dependent-border-iqama {
+  display: none;
+}
+
+.dependnet-form .dependent-selected-member-type.gcc-user .dependnet-personal-information {
+  display: block;
+}
+
+.dependnet-form .dependent-selected-member-type.gcc-user .dependent-documents {
+  display: block;
+}
+
+.dependnet-form .dependent-selected-member-type.gcc-user .form-container .border-iqama {
+  display: none;
+}
+
+.dependnet-form .dependent-selected-member-type.bedoon-user .dependent-border-iqama {
+  display: none;
+}
+
+.dependnet-form .dependent-selected-member-type.bedoon-user .dependnet-personal-information {
+  display: block;
+}
+
+.dependnet-form .dependent-selected-member-type.bedoon-user .dependent-documents {
+  display: block;
+}
+
+.dependnet-form .dependent-selected-member-type.bedoon-user .dependent-id-details .form-container.only-relative {
+  display: block;
+}
+
+.dependnet-form .dependent-selected-member-type.bedoon-user .form-container .border-iqama {
+  display: none;
+}
+
+.dependent-seperated-page {
+  display: none;
+}
+
+.dependent-seperated-page.active {
+  display: block;
+}
+
+.dependent-seperated-page .separated-dependent .select-dependent-id-type {
+  display: none;
+}
+
+.dependent-seperated-page .separated-dependent .select-dependent-id-type.active {
+  display: block;
+}
+
+.dependent-seperated-page .separated-dependent .dependent-selected-member-type .dependent-id-details {
+  display: none;
+}
+
+.dependent-seperated-page .separated-dependent .dependent-selected-member-type .dependent-id-details.active {
+  display: block;
+}
+
+.dependent-seperated-page .separated-dependent .dependent-selected-member-type .dependent-border-iqama {
+  display: none;
+}
+
+.dependent-seperated-page .separated-dependent .dependent-selected-member-type .dependent-border-iqama.active {
+  display: block;
+}
+
+.dependent-seperated-page .separated-dependent .dependent-selected-member-type .dependnet-personal-information {
+  display: none;
+}
+
+.dependent-seperated-page .separated-dependent .dependent-selected-member-type .dependnet-personal-information.active {
+  display: block;
+}
+
+.dependent-seperated-page .separated-dependent .dependent-selected-member-type .dependent-other-mandatory {
+  display: none;
+}
+
+.dependent-seperated-page .separated-dependent .dependent-selected-member-type .dependent-other-mandatory.active {
+  display: block;
+}
+
+.dependent-seperated-page .separated-dependent .dependent-selected-member-type .dependent-other-mandatory .marital.not-active {
+  display: none;
+}
+
+.dependent-seperated-page .separated-dependent .dependent-selected-member-type .dependent-documents {
+  display: none;
+}
+
+.dependent-seperated-page .separated-dependent .dependent-selected-member-type .dependent-documents.active {
+  display: block;
+}
+
+.dependent-seperated-page .separated-dependent .selected-dependent-type {
+  display: none;
+}
+
+.dependent-seperated-page .separated-dependent.border .dependent-selected-member-type .dependent-documents {
+  display: block;
+}
+
+.dependent-seperated-page .separated-dependent.gcc .border-iqama {
+  display: none;
+}
+
+.dependent-seperated-page .separated-dependent.badoon .border-iqama {
+  display: none;
+}
+
+/* The Modal (background) */
+.add-dependent-modal {
+  display: none;
+  position: fixed;
+  z-index: 9999;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: black;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.add-dependent-modal .modal-content {
+  position: relative;
+  background-color: #F2F3F5;
+  padding: 0;
+  border: 1px solid #9AA2AF;
+  width: 450px;
+  -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+          box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  -webkit-animation-name: animateRight;
+  -webkit-animation-duration: 0.4s;
+  animation-name: animateRight;
+  animation-duration: 0.4s;
+  margin-left: auto;
+}
+
+.add-dependent-modal .modal-content .modal-header {
+  padding: 2rem;
+  background-color: #F2F3F5;
+  color: #000000;
+  /* The Close Button */
+}
+
+.add-dependent-modal .modal-content .modal-header .close {
+  color: #000000;
+  float: right;
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.add-dependent-modal .modal-content .modal-header .close:hover,
+.add-dependent-modal .modal-content .modal-header .close:focus {
+  color: #000000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.add-dependent-modal .modal-content .modal-body {
+  padding: 2px 16px;
+  min-height: 100vh;
+}
+
+.add-dependent-modal .modal-content .modal-footer {
+  padding: 2rem;
+  background-color: #F2F3F5;
+  color: #000000;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+}
+
+.add-dependent-modal .modal-content .modal-footer .button {
+  min-width: 6rem;
+  padding: 1rem;
+  font-size: 1rem;
+  -webkit-margin-start: 1rem;
+          margin-inline-start: 1rem;
+}
+
+.delete-dependent-modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: black;
+  background-color: rgba(0, 0, 0, 0.4);
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.delete-dependent-modal .modal-content {
+  position: relative;
+  background-color: #F2F3F5;
+  margin: auto;
+  padding: 0;
+  border: 1px solid #9AA2AF;
+  width: 100%;
+  max-width: 320px;
+  -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+          box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  -webkit-animation-name: animatetop;
+  -webkit-animation-duration: 0.4s;
+  animation-name: animatetop;
+  animation-duration: 0.4s;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.delete-dependent-modal .modal-content .modal-header {
+  padding: 2rem;
+  background-color: #F2F3F5;
+  color: #000000;
+  /* The Close Button */
+}
+
+.delete-dependent-modal .modal-content .modal-header .close-delete-dependent {
+  color: #000000;
+  float: right;
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.delete-dependent-modal .modal-content .modal-header .close-delete-dependent:hover,
+.delete-dependent-modal .modal-content .modal-header .close-delete-dependent:focus {
+  color: #000000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.delete-dependent-modal .modal-content .modal-body {
+  padding: 2px 16px;
+}
+
+.delete-dependent-modal .modal-content .modal-body .delete-text {
+  text-align: center;
+  font-weight: bold;
+}
+
+.delete-dependent-modal .modal-content .modal-footer {
+  padding: 2rem;
+  background-color: #F2F3F5;
+  color: #000000;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.delete-dependent-modal .modal-content .modal-footer .button {
+  min-width: 6rem;
+  padding: 1rem;
+  font-size: 0.8rem;
+  -webkit-margin-start: 1rem;
+          margin-inline-start: 1rem;
+}
+
+.delete-dependent-modal.display-block {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: grid;
+}
+
+.delete-custom-modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: black;
+  background-color: rgba(0, 0, 0, 0.4);
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.delete-custom-modal.display-block {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.delete-custom-modal .modal-content {
+  margin-top: 50px;
+  position: relative;
+  background-color: #F2F3F5;
+  margin: auto;
+  padding: 0;
+  border: 1px solid #9AA2AF;
+  width: 100%;
+  max-width: 320px;
+  -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+          box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  -webkit-animation-name: animatetop;
+  -webkit-animation-duration: 0.4s;
+  animation-name: animatetop;
+  animation-duration: 0.4s;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.delete-custom-modal .modal-content .modal-header {
+  padding: 2rem;
+  background-color: #F2F3F5;
+  color: #000000;
+  /* The Close Button */
+}
+
+.delete-custom-modal .modal-content .modal-header .close--dependent {
+  color: #000000;
+  float: right;
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.delete-custom-modal .modal-content .modal-header .close-delete-dependent:hover,
+.delete-custom-modal .modal-content .modal-header .close-delete-dependent:focus {
+  color: #000000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.delete-custom-modal .modal-content .modal-body {
+  padding: 2px 16px;
+}
+
+.delete-custom-modal .modal-content .modal-body .delete-text {
+  text-align: center;
+  font-weight: bold;
+}
+
+.delete-custom-modal .modal-content .modal-footer {
+  padding: 2rem;
+  background-color: #F2F3F5;
+  color: #000000;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.delete-custom-modal .modal-content .modal-footer .button {
+  min-width: 6rem;
+  padding: 1rem;
+  font-size: 0.8rem;
+  -webkit-margin-start: 1rem;
+          margin-inline-start: 1rem;
+}
+
+.member-summary-container .member-summar-header {
+  background-color: #ffffff;
+  padding: 1.5rem;
+  border-radius: 8px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin-top: 2rem;
+}
+
+.member-summary-container .member-summar-header .member-info-detailed {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.member-summary-container .member-summar-header .member-info-detailed .member-summary-icon {
+  width: 20px;
+  -webkit-margin-end: 1rem;
+          margin-inline-end: 1rem;
+}
+
+.member-summary-container .member-summar-header .member-info-detailed .total-member {
+  font-size: 1rem;
+}
+
+.member-summary-container .member-summar-header .member-info-detailed .total-member .badge {
+  color: #0d426c;
+  font-size: 1rem;
+}
+
+.member-summary-container .member-summar-header .members-events .button {
+  padding: 0.8rem 1.5rem;
+}
+
+.member-summary-container .total-member-list {
+  margin-top: 1rem;
+  background-color: #ffffff;
+  padding: 1.5rem;
+  border-radius: 8px;
+}
+
+.member-summary-container .total-member-list .title {
+  font-size: 1.25rem;
+}
+
+.member-summary-container .total-member-list .member-list-container {
+  background-color: #F2F3F5;
+  margin-top: 1rem;
+  border-radius: 8px;
+}
+
+.member-summary-container .total-member-list .member-list-container .member-collapse {
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid #dedede;
+}
+
+.member-summary-container .total-member-list .member-list-container .member-collapse:last-child {
+  border-width: 0;
+}
+
+.member-summary-container .total-member-list .member-list-container .member-collapse .member-collapse-header {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.member-summary-container .total-member-list .member-list-container .member-collapse .member-collapse-header .member-explanation .member-explain-info {
+  margin-bottom: 1rem;
+}
+
+.member-summary-container .total-member-list .member-list-container .member-collapse .member-collapse-header .member-explanation .member-explain-info .name-info {
+  font-size: 1rem;
+  opacity: 0.8;
+}
+
+.member-summary-container .total-member-list .member-list-container .member-collapse .member-collapse-header .member-explanation .member-explain-info .member-info {
+  margin-top: 0.5rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.member-summary-container .total-member-list .member-list-container .member-collapse .member-collapse-header .member-explanation .member-explain-info .member-info .member-detailed-tiles {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-margin-end: 1.5rem;
+          margin-inline-end: 1.5rem;
+}
+
+.member-summary-container .total-member-list .member-list-container .member-collapse .member-collapse-header .member-explanation .member-explain-info .member-info .member-detailed-tiles .member-info-label {
+  font-size: 0.847rem;
+  -webkit-margin-end: 0.5rem;
+          margin-inline-end: 0.5rem;
+  opacity: 0.5;
+}
+
+.member-summary-container .total-member-list .member-list-container .member-collapse .member-collapse-header .member-explanation .member-explain-info .member-info .member-detailed-tiles .member-info-text {
+  font-size: 0.847rem;
+  font-weight: bold;
+  opacity: 0.6;
+}
+
+.member-summary-container .total-member-list .member-list-container .member-collapse .member-collapse-header .member-events .member-event-actions {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.member-summary-container .total-member-list .member-list-container .member-collapse .member-collapse-header .member-events .member-event-actions .member-class-name {
+  -webkit-margin-start: 0.5rem;
+          margin-inline-start: 0.5rem;
+  font-weight: 400;
+  font-size: 0.75rem;
+  color: #ffffff;
+  background: #312E52;
+  border-radius: 100px;
+  padding: 0.5rem 1rem;
+  margin: 0.5rem;
+  white-space: nowrap;
+}
+
+.member-summary-container .total-member-list .member-list-container .member-collapse .member-collapse-header .member-events .member-event-actions .dependent-count {
+  -webkit-margin-start: 0.5rem;
+          margin-inline-start: 0.5rem;
+  font-weight: 400;
+  font-size: 0.75rem;
+  color: #ffffff;
+  background: #0d426c;
+  border-radius: 100px;
+  padding: 0.5rem 1rem;
+  margin: 0.5rem;
+  white-space: nowrap;
+}
+
+.member-summary-container .total-member-list .member-list-container .member-collapse .member-collapse-header .member-events .member-event-actions .premium-individual {
+  -webkit-margin-start: 0.5rem;
+          margin-inline-start: 0.5rem;
+  font-weight: 700;
+  font-size: 0.75rem;
+  color: #312E52;
+  border-radius: 100px;
+  padding: 0.5rem 1rem;
+  margin: 0.5rem;
+  white-space: nowrap;
+}
+
+.member-summary-container .total-member-list .member-list-container .member-collapse .member-collapse-header .member-events .member-event-actions .edit-member-icon {
+  -webkit-margin-start: 1rem;
+          margin-inline-start: 1rem;
+  width: 16px;
+  cursor: pointer;
+}
+
+.member-summary-container .total-member-list .member-list-container .member-collapse .member-collapse-header .member-events .member-event-actions .delete-member-icon {
+  -webkit-margin-start: 1rem;
+          margin-inline-start: 1rem;
+  width: 16px;
+  cursor: pointer;
+}
+
+.member-summary-container .total-member-list .member-list-container .member-collapse .member-collapse-header .member-events .member-event-actions .dependent-detailed {
+  -webkit-margin-start: 1rem;
+          margin-inline-start: 1rem;
+  width: 16px;
+  cursor: pointer;
+}
+
+.member-summary-container .total-member-list .member-list-container .member-collapse .member-collapse-body {
+  display: none;
+  padding: 1rem;
+  border-top: 1px solid #dedede;
+}
+
+.member-summary-container .total-member-list .member-list-container .member-collapse .member-collapse-body.display-block {
+  display: block;
+  -webkit-animation-name: animatetop;
+          animation-name: animatetop;
+  -webkit-animation-duration: 0.4s;
+          animation-duration: 0.4s;
+}
+
+.member-summary-container .total-member-list .member-list-container .member-collapse .member-collapse-body .dependent-collapse-header {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  padding: 0rem;
+  background-color: #F2F3F5;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+}
+
+.member-summary-container .total-member-list .member-list-container .member-collapse .member-collapse-body .dependent-collapse-header:last-child {
+  margin-bottom: 0;
+}
+
+.member-summary-container .total-member-list .member-list-container .member-collapse .member-collapse-body .dependent-collapse-header .dependent-explanation .dependent-explain-info .name-info {
+  font-size: 1rem;
+  opacity: 0.8;
+}
+
+.member-summary-container .total-member-list .member-list-container .member-collapse .member-collapse-body .dependent-collapse-header .dependent-explanation .dependent-explain-info .dependent-info {
+  margin-top: 0.5rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.member-summary-container .total-member-list .member-list-container .member-collapse .member-collapse-body .dependent-collapse-header .dependent-explanation .dependent-explain-info .dependent-info .dependent-detailed-tiles {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-margin-end: 1.5rem;
+          margin-inline-end: 1.5rem;
+}
+
+.member-summary-container .total-member-list .member-list-container .member-collapse .member-collapse-body .dependent-collapse-header .dependent-explanation .dependent-explain-info .dependent-info .dependent-detailed-tiles .dependent-info-label {
+  font-size: 0.847rem;
+  -webkit-margin-end: 0.5rem;
+          margin-inline-end: 0.5rem;
+  opacity: 0.5;
+}
+
+.member-summary-container .total-member-list .member-list-container .member-collapse .member-collapse-body .dependent-collapse-header .dependent-explanation .dependent-explain-info .dependent-info .dependent-detailed-tiles .dependent-info-text {
+  font-size: 0.847rem;
+  font-weight: bold;
+  opacity: 0.6;
+}
+
+.member-summary-container .total-member-list .member-list-container .member-collapse .member-collapse-body .dependent-collapse-header .dependent-events .dependent-event-actions {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.member-summary-container .total-member-list .member-list-container .member-collapse .member-collapse-body .dependent-collapse-header .dependent-events .dependent-event-actions .delete-dependent-icon {
+  -webkit-margin-start: 1rem;
+          margin-inline-start: 1rem;
+  width: 16px;
+  cursor: pointer;
+}
+
+.member-health-container .member-health-header {
+  padding: 1rem 1.5rem;
+  background-color: #ffffff;
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+  margin-top: 1rem;
+}
+
+.member-health-container .member-health-header .member-info-detailed {
+  display: block;
+}
+
+.member-health-container .member-health-header .member-info-detailed .title {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.member-health-container .member-health-header .member-info-detailed .text {
+  font-size: 1rem;
+}
+
+.member-health-container .health-declaration-category {
+  background-color: #ffffff;
+  padding: 1rem;
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+}
+
+.member-health-container .health-declaration-category .question-category {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.member-health-container .health-declaration-category .question-category .cat-icon {
+  -webkit-margin-end: 1rem;
+          margin-inline-end: 1rem;
+  width: 16px;
+}
+
+.member-health-container .health-declaration-category .question-category .cagegory-text {
+  font-size: 1rem;
+}
+
+.member-health-container .health-declaration-category .questions {
+  margin-top: 1.5rem;
+}
+
+.member-health-container .health-declaration-category .questions .question-list {
+  background-color: #F2F3F5;
+  padding: 1rem;
+  border-radius: 8px;
+}
+
+.member-health-container .health-declaration-category .questions .question-list .question-item {
+  margin-bottom: 4px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  padding: 1rem 0;
+  border-bottom: 1px solid #00000012;
+}
+
+.member-health-container .health-declaration-category .questions .question-list .question-item:last-child {
+  border-width: 0;
+}
+
+.member-health-container .health-declaration-category .questions .question-list .question-item .switch .switch-check-box {
+  display: none;
+}
+
+.member-health-container .health-declaration-category .questions .question-list .question-item .text-detail {
+  font-size: 1rem;
+  width: calc(100% - 120px);
+  line-height: 140%;
+  opacity: 0.6;
+}
+
+.member-health-container .health-declaration-category .questions .question-list .question-item .edit-health-icon {
+  -webkit-margin-start: auto;
+          margin-inline-start: auto;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  background-color: #0d426c;
+}
+
+.member-health-container .health-declaration-category .questions .question-list .question-item .edit-health-icon .edit-health-question {
+  width: 10px;
+}
+
+.member-health-container .health-declaration-category .agree-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+}
+
+.member-health-container .health-declaration-category .agree-container .agree-check {
+  -webkit-margin-end: 1rem;
+          margin-inline-end: 1rem;
+}
+
+.member-health-container .health-declaration-category .agree-container .agree-text {
+  font-size: 1rem;
+  line-height: 140%;
+  opacity: 0.7;
+}
+
+.member-health-container .health-declaration-category .agree-container .agree-text .color-primary {
+  color: #0d426c;
+  text-decoration: underline;
+}
+
+.member-health-container .note {
+  color: #FF4136;
+  margin-top: 1rem;
+}
+
+.health-custom-modal {
+  display: none;
+  position: fixed;
+  z-index: 99999;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: black;
+  background-color: rgba(0, 0, 0, 0.4);
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.health-custom-modal.active {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.health-custom-modal .modal-content {
+  position: relative;
+  background-color: #ffffff;
+  margin-left: auto;
+  padding: 0;
+  border: 1px solid #9AA2AF;
+  width: 90%;
+  height: 100%;
+  -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+          box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  -webkit-animation-name: animateRight;
+  -webkit-animation-duration: 0.4s;
+  animation-name: animateRight;
+  animation-duration: 0.4s;
+  overflow: hidden;
+}
+
+.health-custom-modal .modal-content .modal-header {
+  padding: 2rem;
+  color: #000000;
+  /* The Close Button */
+}
+
+.health-custom-modal .modal-content .modal-header .close--dependent {
+  color: #000000;
+  float: right;
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.health-custom-modal .modal-content .modal-header .close-delete-dependent:hover,
+.health-custom-modal .modal-content .modal-header .close-delete-dependent:focus {
+  color: #000000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.health-custom-modal .modal-content .modal-body {
+  padding: 2px 16px;
+  overflow: auto;
+  max-height: calc(100vh - 100px);
+}
+
+.health-custom-modal .modal-content .modal-body .health-dec-container .health-upper-part {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  background-color: #F2F3F5;
+  padding: 1rem;
+  border-radius: 8px;
+}
+
+.health-custom-modal .modal-content .modal-body .health-dec-container .health-upper-part .question-detailed {
+  width: calc(100% - 100px);
+  font-size: 1rem;
+  line-height: 140%;
+  color: #0d426c;
+}
+
+.health-custom-modal .modal-content .modal-body .health-dec-container .health-declaration-events {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  margin-top: 1.5rem;
+}
+
+.health-custom-modal .modal-content .modal-body .health-dec-container .health-declaration-events .button {
+  padding: 0.5rem 1.5rem;
+  min-width: 100px;
+  font-size: 1rem;
+}
+
+.health-custom-modal .modal-content .modal-body .health-dec-container .health-lower-part {
+  margin-top: 1.5rem;
+  padding: 1.5rem;
+  background-color: #F2F3F5;
+  border-radius: 8px;
+}
+
+.health-custom-modal .modal-content .modal-body .health-dec-container .health-lower-part .member-declare .health-member-detail .employee-card-header {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  padding: 1rem;
+  border-radius: 8px;
+  background-color: #F2F3F5;
+  margin-bottom: 1rem;
+}
+
+.health-custom-modal .modal-content .modal-body .health-dec-container .health-lower-part .member-declare .health-member-detail .employee-card-header .col-column-header {
+  padding: 0 1rem;
+}
+
+.health-custom-modal .modal-content .modal-body .health-dec-container .health-lower-part .member-declare .health-member-detail .employee-card-header .col-column-header.name {
+  width: 20%;
+}
+
+.health-custom-modal .modal-content .modal-body .health-dec-container .health-lower-part .member-declare .health-member-detail .employee-card-header .col-column-header.relation {
+  width: 10%;
+}
+
+.health-custom-modal .modal-content .modal-body .health-dec-container .health-lower-part .member-declare .health-member-detail .employee-card-header .col-column-header.id {
+  width: 10%;
+}
+
+.health-custom-modal .modal-content .modal-body .health-dec-container .health-lower-part .member-declare .health-member-detail .employee-card-header .col-column-header.report {
+  width: 30%;
+}
+
+.health-custom-modal .modal-content .modal-body .health-dec-container .health-lower-part .member-declare .health-member-detail .employee-card-header .col-column-header.delivery {
+  width: 20%;
+}
+
+.health-custom-modal .modal-content .modal-body .health-dec-container .health-lower-part .member-declare .health-member-detail .employee-card-header .col-column-header.disease {
+  width: 20%;
+}
+
+.health-custom-modal .modal-content .modal-body .health-dec-container .health-lower-part .member-declare .health-member-detail .employee-card-header .col-column-header.status {
+  width: 10%;
+}
+
+.health-custom-modal .modal-content .modal-body .health-dec-container .health-lower-part .member-declare .health-member-detail .employee-card-header .col-column-header .text {
+  font-size: 1rem;
+  list-style: 140%;
+  font-weight: 800;
+  display: block;
+  width: 100%;
+}
+
+.health-custom-modal .modal-content .modal-body .health-dec-container .health-lower-part .member-declare .health-member-detail .employe-declaration {
+  background-color: #ffffff;
+  padding: 1rem;
+  border-radius: 1rem;
+  margin-top: 1rem;
+}
+
+.health-custom-modal .modal-content .modal-body .health-dec-container .health-lower-part .member-declare .health-member-detail .employe-declaration .employee-card {
+  padding: 1rem 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.health-custom-modal .modal-content .modal-body .health-dec-container .health-lower-part .member-declare .health-member-detail .employe-declaration .employee-card .col-column {
+  padding: 0 1rem;
+}
+
+.health-custom-modal .modal-content .modal-body .health-dec-container .health-lower-part .member-declare .health-member-detail .employe-declaration .employee-card .col-column.name {
+  width: 20%;
+}
+
+.health-custom-modal .modal-content .modal-body .health-dec-container .health-lower-part .member-declare .health-member-detail .employe-declaration .employee-card .col-column.name .styled-checkbox + label:before {
+  background-color: #0d426c;
+}
+
+.health-custom-modal .modal-content .modal-body .health-dec-container .health-lower-part .member-declare .health-member-detail .employe-declaration .employee-card .col-column.relation {
+  width: 10%;
+}
+
+.health-custom-modal .modal-content .modal-body .health-dec-container .health-lower-part .member-declare .health-member-detail .employe-declaration .employee-card .col-column.id {
+  width: 10%;
+}
+
+.health-custom-modal .modal-content .modal-body .health-dec-container .health-lower-part .member-declare .health-member-detail .employe-declaration .employee-card .col-column.report {
+  width: 30%;
+}
+
+.health-custom-modal .modal-content .modal-body .health-dec-container .health-lower-part .member-declare .health-member-detail .employe-declaration .employee-card .col-column.delivery {
+  width: 20%;
+}
+
+.health-custom-modal .modal-content .modal-body .health-dec-container .health-lower-part .member-declare .health-member-detail .employe-declaration .employee-card .col-column.disease {
+  width: 20%;
+}
+
+.health-custom-modal .modal-content .modal-body .health-dec-container .health-lower-part .member-declare .health-member-detail .employe-declaration .employee-card .col-column.status {
+  width: 10%;
+}
+
+.health-custom-modal .modal-content .modal-body .health-dec-container .health-lower-part .member-declare .health-member-detail .employe-declaration .employee-card .col-column .text {
+  font-size: 1rem;
+  list-style: 140%;
+  font-weight: 400;
+  display: block;
+  width: 100%;
+}
+
+.health-custom-modal .modal-content .modal-body .health-dec-container .health-lower-part .member-declare .health-member-detail .employe-declaration .employee-card .col-column .text.true {
+  color: green;
+}
+
+.health-custom-modal .modal-content .modal-body .health-dec-container .health-lower-part .member-declare .health-member-detail .employe-declaration .dependent-declaration {
+  border-top: 1px solid #dedede;
+}
+
+.health-custom-modal .modal-content .modal-body .health-dec-container .health-lower-part .member-declare .health-member-detail .employe-declaration .dependent-declaration .dependent-card {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  margin-bottom: 0.5rem;
+}
+
+.health-custom-modal .modal-content .modal-body .health-dec-container .health-lower-part .member-declare .health-member-detail .employe-declaration .dependent-declaration .dependent-card .col-column {
+  padding: 1rem;
+}
+
+.health-custom-modal .modal-content .modal-body .health-dec-container .health-lower-part .member-declare .health-member-detail .employe-declaration .dependent-declaration .dependent-card .col-column.name {
+  width: 20%;
+}
+
+.health-custom-modal .modal-content .modal-body .health-dec-container .health-lower-part .member-declare .health-member-detail .employe-declaration .dependent-declaration .dependent-card .col-column.name .styled-checkbox + label:before {
+  background-color: #0d426c;
+}
+
+.health-custom-modal .modal-content .modal-body .health-dec-container .health-lower-part .member-declare .health-member-detail .employe-declaration .dependent-declaration .dependent-card .col-column.relation {
+  width: 10%;
+}
+
+.health-custom-modal .modal-content .modal-body .health-dec-container .health-lower-part .member-declare .health-member-detail .employe-declaration .dependent-declaration .dependent-card .col-column.id {
+  width: 10%;
+}
+
+.health-custom-modal .modal-content .modal-body .health-dec-container .health-lower-part .member-declare .health-member-detail .employe-declaration .dependent-declaration .dependent-card .col-column.report {
+  width: 30%;
+}
+
+.health-custom-modal .modal-content .modal-body .health-dec-container .health-lower-part .member-declare .health-member-detail .employe-declaration .dependent-declaration .dependent-card .col-column.delivery {
+  width: 20%;
+}
+
+.health-custom-modal .modal-content .modal-body .health-dec-container .health-lower-part .member-declare .health-member-detail .employe-declaration .dependent-declaration .dependent-card .col-column.disease {
+  width: 20%;
+}
+
+.health-custom-modal .modal-content .modal-body .health-dec-container .health-lower-part .member-declare .health-member-detail .employe-declaration .dependent-declaration .dependent-card .col-column.status {
+  width: 10%;
+}
+
+.health-custom-modal .modal-content .modal-body .health-dec-container .health-lower-part .member-declare .health-member-detail .employe-declaration .dependent-declaration .dependent-card .col-column .text {
+  display: block;
+  width: 100%;
+}
+
+.health-custom-modal .modal-content .modal-body .health-dec-container .health-lower-part.q1 .member-declare .health-member-detail .employee-card-header .col-column-header.disease {
+  display: none;
+}
+
+.health-custom-modal .modal-content .modal-body .health-dec-container .health-lower-part.q1 .member-declare .health-member-detail .employee-card-header .col-column-header.delivery {
+  display: none;
+}
+
+.health-custom-modal .modal-content .modal-body .health-dec-container .health-lower-part.q1 .member-declare .health-member-detail .employe-declaration .employee-card .col-column.disease {
+  display: none;
+}
+
+.health-custom-modal .modal-content .modal-body .health-dec-container .health-lower-part.q1 .member-declare .health-member-detail .employe-declaration .employee-card .col-column.delivery {
+  display: none;
+}
+
+.health-custom-modal .modal-content .modal-body .health-dec-container .health-lower-part.q1 .member-declare .health-member-detail .employe-declaration .dependent-declaration .dependent-card .col-column.delivery {
+  display: none;
+}
+
+.health-custom-modal .modal-content .modal-body .health-dec-container .health-lower-part.q1 .member-declare .health-member-detail .employe-declaration .dependent-declaration .dependent-card .col-column.disease {
+  display: none;
+}
+
+.health-custom-modal .modal-content .modal-body .health-dec-container .health-lower-part.q2 .member-declare .health-member-detail .employee-card-header .col-column-header.delivery {
+  display: none;
+}
+
+.health-custom-modal .modal-content .modal-body .health-dec-container .health-lower-part.q2 .member-declare .health-member-detail .employe-declaration .employee-card .col-column.delivery {
+  display: none;
+}
+
+.health-custom-modal .modal-content .modal-body .health-dec-container .health-lower-part.q2 .member-declare .health-member-detail .employe-declaration .dependent-declaration .dependent-card .col-column.delivery {
+  display: none;
+}
+
+.health-custom-modal .modal-content .modal-body .health-dec-container .health-lower-part.q3 .member-declare .health-member-detail .employee-card-header .col-column-header.delivery {
+  display: none;
+}
+
+.health-custom-modal .modal-content .modal-body .health-dec-container .health-lower-part.q3 .member-declare .health-member-detail .employe-declaration .employee-card .col-column.delivery {
+  display: none;
+}
+
+.health-custom-modal .modal-content .modal-body .health-dec-container .health-lower-part.q3 .member-declare .health-member-detail .employe-declaration .dependent-declaration .dependent-card .col-column.delivery {
+  display: none;
+}
+
+.health-custom-modal .modal-content .modal-body .health-dec-container .health-lower-part.q4 .member-declare .health-member-detail .employee-card-header .col-column-header.delivery {
+  display: none;
+}
+
+.health-custom-modal .modal-content .modal-body .health-dec-container .health-lower-part.q4 .member-declare .health-member-detail .employe-declaration .employee-card .col-column.delivery {
+  display: none;
+}
+
+.health-custom-modal .modal-content .modal-body .health-dec-container .health-lower-part.q4 .member-declare .health-member-detail .employe-declaration .dependent-declaration .dependent-card .col-column.delivery {
+  display: none;
+}
+
+.health-custom-modal .modal-content .modal-body .health-dec-container .health-lower-part.q5 .member-declare .health-member-detail .employee-card-header .col-column-header.delivery {
+  display: none;
+}
+
+.health-custom-modal .modal-content .modal-body .health-dec-container .health-lower-part.q5 .member-declare .health-member-detail .employe-declaration .employee-card .col-column.delivery {
+  display: none;
+}
+
+.health-custom-modal .modal-content .modal-body .health-dec-container .health-lower-part.q5 .member-declare .health-member-detail .employe-declaration .dependent-declaration .dependent-card .col-column.delivery {
+  display: none;
+}
+
+.health-custom-modal .modal-content .modal-body .health-dec-container .health-lower-part.q6 .member-declare .health-member-detail .employee-card-header .col-column-header.disease {
+  display: none;
+}
+
+.health-custom-modal .modal-content .modal-body .health-dec-container .health-lower-part.q6 .member-declare .health-member-detail .employee-card-header .col-column-header.report {
+  display: none;
+}
+
+.health-custom-modal .modal-content .modal-body .health-dec-container .health-lower-part.q6 .member-declare .health-member-detail .employe-declaration .employee-card .col-column.disease {
+  display: none;
+}
+
+.health-custom-modal .modal-content .modal-body .health-dec-container .health-lower-part.q6 .member-declare .health-member-detail .employe-declaration .employee-card .col-column.report {
+  display: none;
+}
+
+.health-custom-modal .modal-content .modal-body .health-dec-container .health-lower-part.q6 .member-declare .health-member-detail .employe-declaration .dependent-declaration .dependent-card .col-column.disease {
+  display: none;
+}
+
+.health-custom-modal .modal-content .modal-body .health-dec-container .health-lower-part.q6 .member-declare .health-member-detail .employe-declaration .dependent-declaration .dependent-card .col-column.report {
+  display: none;
+}
+
+.health-custom-modal .modal-content .modal-body .health-dec-container .health-lower-part.q7 .member-declare .health-member-detail .employee-card-header .col-column-header.disease {
+  display: none;
+}
+
+.health-custom-modal .modal-content .modal-body .health-dec-container .health-lower-part.q7 .member-declare .health-member-detail .employee-card-header .col-column-header.report {
+  display: none;
+}
+
+.health-custom-modal .modal-content .modal-body .health-dec-container .health-lower-part.q7 .member-declare .health-member-detail .employe-declaration .employee-card .col-column.disease {
+  display: none;
+}
+
+.health-custom-modal .modal-content .modal-body .health-dec-container .health-lower-part.q7 .member-declare .health-member-detail .employe-declaration .employee-card .col-column.report {
+  display: none;
+}
+
+.health-custom-modal .modal-content .modal-body .health-dec-container .health-lower-part.q7 .member-declare .health-member-detail .employe-declaration .dependent-declaration .dependent-card .col-column.disease {
+  display: none;
+}
+
+.health-custom-modal .modal-content .modal-body .health-dec-container .health-lower-part.q7 .member-declare .health-member-detail .employe-declaration .dependent-declaration .dependent-card .col-column.report {
+  display: none;
+}
+
+.health-custom-modal .modal-content .modal-body .health-dec-container .health-lower-part.q8 .member-declare .health-member-detail .employee-card-header .col-column-header.disease {
+  display: none;
+}
+
+.health-custom-modal .modal-content .modal-body .health-dec-container .health-lower-part.q8 .member-declare .health-member-detail .employe-declaration .employee-card .col-column.disease {
+  display: none;
+}
+
+.health-custom-modal .modal-content .modal-body .health-dec-container .health-lower-part.q8 .member-declare .health-member-detail .employe-declaration .dependent-declaration .dependent-card .col-column.disease {
+  display: none;
+}
+
+.health-custom-modal .modal-content .modal-footer {
+  padding: 2rem;
+  background-color: #ffffff;
+  color: #000000;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.health-custom-modal .modal-content .modal-footer .button {
+  min-width: 6rem;
+  padding: 1rem;
+  font-size: 0.8rem;
+  -webkit-margin-start: 1rem;
+          margin-inline-start: 1rem;
+}
+
+.member-payment-detail {
+  width: 100%;
+}
+
+.member-payment-detail .total-premium {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  background-color: #0d426c;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+}
+
+.member-payment-detail .total-premium .total-premium {
+  font-weight: 700;
+  font-size: 1rem;
+  color: #ffffff;
+}
+
+.member-payment-methods {
+  width: 100%;
+  padding: 1rem;
+  background-color: #F2F3F5;
+  border-radius: 8px;
+}
+
+.member-payment-methods .payment-method-card {
+  margin-bottom: 20px;
+}
+
+.member-payment-methods .payment-method-card:last-child {
+  margin-bottom: 0;
+}
+
+.member-payment-methods .payment-method-card .radio-card-v2 {
+  width: 100%;
+}
+
+.member-payment-methods .payment-help-details {
+  display: none;
+}
+
+.member-payment-methods .payment-help-details .payment-text {
+  line-height: 150%;
+  color: #54626c;
+}
+
+.member-payment-methods .payment-help-details .payment-text .primary-text {
+  color: #0d426c;
+  font-weight: bold;
+}
+
+.member-payment-methods .payment-help-details .card-payment-input {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  background-color: #ffffff;
+  border-radius: 8px;
+  overflow: hidden;
+  margin-top: 0.5rem;
+}
+
+.member-payment-methods .payment-help-details .card-payment-input .card-no {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: calc(100% - 10rem);
+  padding: 1rem;
+}
+
+.member-payment-methods .payment-help-details .card-payment-input .card-no .card-icon {
+  width: 1.5rem;
+  -webkit-margin-end: 1rem;
+          margin-inline-end: 1rem;
+}
+
+.member-payment-methods .payment-help-details .card-payment-input .card-no .card-number-input {
+  border: 0;
+  width: 100%;
+}
+
+.member-payment-methods .payment-help-details .card-payment-input .month-no {
+  width: 6rem;
+}
+
+.member-payment-methods .payment-help-details .card-payment-input .month-no .card-number-month {
+  width: 100%;
+  border: 0;
+  padding: 1rem;
+}
+
+.member-payment-methods .payment-help-details .card-payment-input .cvv {
+  width: 4rem;
+}
+
+.member-payment-methods .payment-help-details .card-payment-input .cvv .card-number-cvv {
+  width: 100%;
+  border: 0;
+  padding: 1rem 0;
+}
+
+.member-payment-methods .payment-help-details .button {
+  padding: 1rem;
+  display: block;
+  width: 100%;
+  font-size: 1rem;
+}
+
+.success-screen {
+  background-color: #ffffff;
+  padding: 1.5rem;
+  border-radius: 8px;
+  margin-top: 2rem;
+}
+
+.success-screen .dummy-positioning {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  margin-bottom: 20px;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.success-screen .dummy-positioning .helping-submit-endorsement {
+  width: calc(100% - 16rem);
+}
+
+.success-screen .dummy-positioning .helping-submit-endorsement .text {
+  font-size: 1rem;
+  line-height: 140%;
+  margin-bottom: 20px;
+}
+
+.success-screen .dummy-positioning .helping-submit-endorsement .extra-button {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.success-screen .dummy-positioning .helping-submit-endorsement .extra-button .button {
+  padding: 1rem;
+  -webkit-margin-end: 1rem;
+          margin-inline-end: 1rem;
+}
+
+.beneficiaries-wrapper {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+  padding: 1.5rem;
+  width: 29rem;
+  background: #E3FFEF;
+  border-radius: 1rem;
+}
+
+.beneficiaries-wrapper.bg-color {
+  background-color: #FFF5E5;
+}
+
+.beneficiaries-wrapper .green-Bg-Color {
+  background-color: #237B4B;
+}
+
+.beneficiaries-wrapper .beneficiariesIcon {
+  -webkit-margin-end: 0.313rem;
+          margin-inline-end: 0.313rem;
+}
+
+.beneficiaries-wrapper .beneficiariesContent {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+  -webkit-padding-start: 0.625rem;
+          padding-inline-start: 0.625rem;
+  width: calc(100% - 2.412rem);
+}
+
+.beneficiaries-wrapper .beneficiariesContent .addBeneficiariesTitle {
+  font-weight: 800;
+  font-size: 1.25rem;
+  line-height: 120%;
+  letter-spacing: -0.01em;
+  color: #332500;
+}
+
+.beneficiaries-wrapper .beneficiariesContent .addBeneficiariesDesc {
+  width: 20.938rem;
+  font-weight: 400;
+  font-size: 0.875rem;
+  line-height: 140%;
+  color: #332500;
+}
+
+.beneficiaries-wrapper .beneficiariesContent .userProgressBarWrapper {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+  padding: 0;
+  gap: 0.25rem;
+  width: 100%;
+}
+
+.beneficiaries-wrapper .beneficiariesContent .userProgressBarWrapper .userHeading {
+  margin-top: 0.75rem;
+}
+
+.beneficiaries-wrapper .beneficiariesContent .userProgressBarWrapper .userHeading .title {
+  font-weight: 800;
+  font-size: 1rem;
+  line-height: 120%;
+  color: #332500;
+  height: 1.25rem;
+}
+
+.beneficiaries-wrapper .beneficiariesContent .userProgressBarWrapper .progressBarContent {
+  padding: 0;
+  width: 100%;
+  height: 1.625rem;
+}
+
+.beneficiaries-wrapper .beneficiariesContent .userProgressBarWrapper .progressBarContent .progressBar {
+  margin-top: 0.25rem;
+  gap: 0.625rem;
+  height: 0.375rem;
+  background: #ffffff;
+  border-radius: 1.5rem;
+}
+
+.beneficiaries-wrapper .beneficiariesContent .userProgressBarWrapper .progressBarContent .progressBar .active {
+  height: 0.375rem;
+  background-color: #237B4B;
+  border-radius: 1.5rem;
+}
+
+.beneficiaries-wrapper .beneficiariesContent .userProgressBarWrapper .progressBarContent .progressBar .orangeBgColor {
+  background: #0d426c;
+}
+
+.beneficiaries-wrapper .beneficiariesContent .userProgressBarWrapper .progressBarContent .progressBar .greenBgColor {
+  background-color: #237B4B;
+}
+
+.beneficiaries-wrapper .beneficiariesContent .userProgressBarWrapper .requiredInfo .info {
+  margin-top: 0.25rem;
+  font-weight: 400;
+  font-size: 0.875rem;
+  line-height: 140%;
+  color: #1A1C1F;
+}
+
+.beneficiaries-wrapper .beneficiariesContent .addEmployee {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin: 1.5rem 0.5rem 0.5rem 0.5rem;
+  width: 13.5rem;
+  height: 3.375rem;
+  background: #0d426c;
+  border-radius: 0.5rem;
+}
+
+.beneficiaries-wrapper .beneficiariesContent .addEmployee .addEmployeeButton {
+  font-weight: 400;
+  font-size: 1rem;
+  line-height: 1rem;
+  color: #ffffff;
+}
+
+.select-relation-dependent {
+  font-weight: 400;
+  font-size: 1.125rem;
+  line-height: 160%;
+  text-align: center;
+  margin-top: 2rem;
+}
+
+.target-emp {
+  background-color: #ffffff;
+  padding: 1.5rem;
+  border-radius: 8px;
+  margin-top: 1.5rem;
+}
+
+.target-emp .target-heading {
+  margin-bottom: 1.5rem;
+}
+
+.target-emp .target-heading .target-heading {
+  font-weight: 700;
+  font-size: 1.25rem;
+  color: #1A1C1F;
+}
+
+.target-emp .select-emp {
+  padding: 1.5rem;
+  border-radius: 8px;
+  background-color: #F2F3F5;
+}
+
+.target-emp .select-emp .target-employee-label {
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+.target-emp .select-emp .select-member-box {
+  font-size: 1rem;
+  color: #1A1C1F;
+}
+
+.dependent-id-types {
+  display: -ms-grid;
+  display: grid;
+  grid-gap: 1.4rem;
+  /* place-items: center; */
+  /* place-content: center; */
+  -ms-grid-columns: (1fr)[4];
+      grid-template-columns: repeat(4, 1fr);
+  margin-bottom: 1.5rem;
+}
+/*# sourceMappingURL=add-member.css.map */

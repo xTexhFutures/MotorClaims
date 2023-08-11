@@ -1,0 +1,264 @@
+@import './../theme';
+
+.auth-wrapper {
+    min-height: calc(100vh - 12.438rem);
+    display: flex;
+    align-items: center;
+    -webkit-padding-start: 5rem;
+    padding-inline-start: 5rem;
+    position: relative;
+    z-index: 1;
+    justify-content: center;
+
+    @media(max-width: 767px) {
+        min-height: auto;
+        padding: 0;
+    }
+
+    .auth-inner-wrapper {
+        background-color: $white;
+        width: 70%;
+        border-radius: 0.75rem 0.75rem 0px 0px;
+        padding: 1.5rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        &.otp {
+            width: auto;
+        }
+
+        @media(max-width: 767px) {
+            width: auto;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: $defaultBackgroundColor;
+        }
+
+        .auth-form-component {
+            background: $defaultBackgroundColor;
+            // border-radius: 0.76rem;
+            padding: 4rem;
+            width: 50%;
+
+            @media(max-width: 767px) {
+                padding: 0;
+                width: 100%;
+                background: transparent;
+            }
+
+            &.otp-wrap-container {
+                background-color: $white;
+
+                width: 34.5rem;
+
+                @media(max-width: 767px) {
+                    padding: 0;
+                    width: 100%;
+                    background: transparent;
+                }
+            }
+
+            .auth-heading {
+                font-weight: 800;
+                font-size: 2.125rem;
+                line-height: 120%;
+                text-align: center;
+                letter-spacing: -0.02em;
+                color: $colorSecondaryVarient;
+                margin-bottom: 1.5rem;
+            }
+
+            .verify-content {
+                font-size: 1rem;
+                line-height: 140%;
+                text-align: center;
+                color: $colorSecondaryVarient;
+
+                .verificationContent {
+                    font-weight: 400;
+                }
+
+                .number {
+                    font-weight: 700;
+                }
+            }
+
+            .code-heading {
+                margin-top: 1.5rem;
+                font-weight: 800;
+                font-size: 1.25rem;
+                line-height: 120%;
+                text-align: center;
+                letter-spacing: -0.01em;
+                color: $colorSecondaryVarient;
+                margin-bottom: 1.5rem;
+            }
+
+            .form-wrapper {
+                margin-bottom: 1.5rem;
+
+                .otpPinWrapper {
+                    .container-otp {
+                        justify-content: space-between;
+                        margin-bottom: 1.5rem;
+
+                        .otpPin {
+                            width: calc(100% / 4 - 0.375rem) !important;
+                            border-radius: 4px;
+
+                            .otp-input-style {
+                                background: $defaultBackgroundColor;
+                                width: 100% !important;
+                                padding: 2.5rem 2rem !important;
+                                border: 0;
+                                border-radius: 0.25rem;
+
+                                @media(max-width: 767px) {
+                                    padding: 0;
+                                    width: 100%;
+                                    background: $white;
+                                }
+                            }
+                        }
+                    }
+                }
+
+                .submit-button-wrapper {
+
+                    .button {
+                        width: 100%;
+                        font-weight: 400;
+                        font-size: 1rem;
+                        line-height: 1rem;
+                        color: $white;
+                        padding: 1.188rem;
+                    }
+                }
+            }
+
+            .terms-wrapper {
+                margin-bottom: 2.5rem;
+
+                .term {
+                    text-align: center;
+                    font-weight: 400;
+                    font-size: 0.875rem;
+                    line-height: 140%;
+                    text-align: center;
+                    color: $colorSecondaryVarient;
+                }
+
+                .term-link {
+                    color: $primaryColor;
+                }
+            }
+
+            .forgot-password {
+                text-align: center;
+
+                .forgot-password-link {
+                    font-weight: 400;
+                    font-size: 1.125rem;
+                    line-height: 140%;
+                    text-align: center;
+                    color: $primaryColor;
+                }
+            }
+
+            .resend-timer {
+                font-weight: 400;
+                font-size: 0.875rem;
+                line-height: 140%;
+                text-align: center;
+                color: $colorSecondaryVarient;
+                margin-bottom: 1.5rem;
+            }
+
+            .resend-option {
+                font-weight: 400;
+                font-size: 0.875rem;
+                line-height: 140%;
+                text-align: center;
+                color: $colorSecondaryVarient;
+
+                .primary-link {
+                    color: $colorSecondary;
+                    cursor: pointer;
+                }
+            }
+        }
+
+        .auth-content-reference {
+            width: calc(50% - 2rem);
+
+            @media(max-width: 767px) {
+                display: none;
+            }
+
+            .reference-content-wrapper {
+
+                .ref-heading {
+                    font-size: 2.5rem;
+                    text-align: center;
+                    margin-bottom: 2rem;
+                }
+
+                .ref-tagline {}
+            }
+        }
+    }
+}
+
+
+
+// input
+
+.icon {}
+
+.form-inputbox {
+    width: calc(100% - 2.25rem);
+    border: 0;
+}
+
+.form-inputbox:focus {
+    outline: none;
+}
+
+.form-label {
+    font-weight: 400;
+    font-size: 1rem;
+    line-height: 140%;
+    display: flex;
+    align-items: center;
+    color: $colorSecondaryLight;
+    position: absolute;
+    top: 1.25rem;
+    left: 3.95rem;
+    transition: 0.2s ease all;
+    -moz-transition: 0.2s ease all;
+    -webkit-transition: 0.2s ease all;
+    pointer-events: none;
+}
+
+.form-inputbox:focus~.form-label,
+.form-inputbox:valid~.form-label {
+    top: -20px;
+    font-size: 0.875rem;
+    left: 0;
+}
+
+.revert {
+    .form-label {
+        right: 3.95rem;
+        left: auto;
+    }
+
+    .form-inputbox:focus~.form-label,
+    .form-inputbox:valid~.form-label {
+        right: 0;
+        left: auto;
+    }
+}

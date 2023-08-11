@@ -1,0 +1,12 @@
+@font-face {
+    font-family: 'Bliss 2';
+    src: url('Bliss2.eot');
+    src: url('Bliss2.eot?#iefix') format('embedded-opentype'),
+        url('Bliss2.woff2') format('woff2'),
+        url('Bliss2.woff') format('woff'),
+        url('Bliss2.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+

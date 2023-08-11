@@ -1,0 +1,122 @@
+@import './../theme';
+.request-list{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    column-gap: 1rem;
+    row-gap: 1rem;
+}
+.heading-page{
+    .heading-title{
+        font-size: 2rem;
+    }
+}
+.your-request{
+    margin-top: 1.5rem;
+    .heading-card{
+        margin-bottom: 1.5rem;
+        .heading{
+            font-size: 1.5rem;
+        }
+    }
+
+    .search-member{
+        margin-top: 2.5rem;
+    }
+}
+.request-card-v2-outer {
+    border-radius: 8px;
+    overflow: hidden;
+
+    .request-card-v2 {
+        background-color: $white;
+        padding: 1rem;
+
+        .endorsement-type {
+            font-weight: 400;
+            font-size: 0.75rem;
+            line-height: 0.75rem;
+            color: $headerTextColor;
+            margin-bottom: 0.375rem;
+        }
+
+        .request-emp-name {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+
+            .name {
+                width: calc(100% - 2rem);
+            }
+        }
+
+        .request-details {
+            padding-bottom: 0.75rem;
+            font-weight: 400;
+            font-size: 0.75rem;
+            line-height: 0.75rem;
+            color: $defaultTextColor;
+            border-bottom: 1px solid #1a1c1f1a;
+
+            .request-text {
+                margin-inline-end: 0.675rem;
+            }
+
+            .request-member-type {
+                opacity: 0.5;
+            }
+        }
+
+        .action-type {
+            padding-top: 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            .action {
+                padding: 0.375rem 0.75rem;
+                border-radius: 100px;
+                font-weight: 400;
+                font-size: 0.75rem;
+                background-color: #FFF1E4;
+                color: $statusUpdate;
+
+                &.completed {
+                    background-color: #F0FFF5;
+                    color: #5DB364;
+                }
+            }
+
+            .action-date {
+                display: flex;
+                align-items: center;
+
+                .calender {
+                    margin-inline-end: 0.675rem;
+                }
+
+                .date {
+                    font-weight: 400;
+                    font-size: 0.75rem;
+                    line-height: 0.75rem;
+                    color: $colorSecondaryVarient;
+                }
+            }
+        }
+
+    }
+
+    .action {
+        padding: 0.675rem;
+        text-align: center;
+        background-color: $lightPrimary;
+        display: block;
+
+        .action-text {
+            font-weight: 400;
+            font-size: 0.75rem;
+            line-height: 0.75rem;
+            color: $primaryColor;
+        }
+    }
+}

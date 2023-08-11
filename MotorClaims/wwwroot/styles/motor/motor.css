@@ -1,0 +1,672 @@
+.motor-card-v {
+  background-color: #ffffff;
+  border-radius: 8px;
+}
+
+.motor-card-v .motor-header {
+  padding: 1rem;
+  padding-bottom: 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+
+.motor-card-v .motor-header .motor-name {
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.motor-card-v .motor-body .motor-body-upper {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  padding: 1rem;
+  padding-bottom: 0.5rem;
+  margin-bottom: 0.5rem;
+  border-bottom: 1px solid rgba(26, 28, 31, 0.1);
+}
+
+.motor-card-v .motor-body .motor-body-upper .motor-no {
+  font-size: 0.75rem;
+  font-weight: 400;
+}
+
+.motor-card-v .motor-body .motor-body-upper .motor-drivers {
+  font-size: 0.75rem;
+  font-weight: 400;
+}
+
+.motor-card-v .motor-body .motor-body-lower {
+  padding: 1rem;
+  padding-bottom: 0;
+  margin-bottom: 1rem;
+  min-height: 3.75rem;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: (1fr)[3];
+      grid-template-columns: repeat(3, 1fr);
+}
+
+.motor-card-v .motor-body .motor-body-lower .motor-drive {
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.motor-card-v .motor-body .motor-body-lower .drive-efficiency {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+}
+
+.motor-card-v .motor-body .motor-body-lower .drive-efficiency .eff-image {
+  -webkit-margin-end: 0.5rem;
+          margin-inline-end: 0.5rem;
+}
+
+.motor-card-v .motor-body .motor-body-lower .drive-efficiency .eff-details {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.motor-card-v .motor-body .motor-body-lower .drive-efficiency .eff-details .week {
+  font-size: 0.75rem;
+  font-weight: 400;
+}
+
+.motor-card-v .motor-body .motor-body-lower .drive-efficiency .eff-details .score {
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.motor-card-v .motor-body .motor-body--clam {
+  padding: 1rem 1rem 0 1rem;
+  min-height: 3.75rem;
+}
+
+.motor-card-v .motor-body .motor-body--clam .new-query {
+  background-color: #FFF5E5;
+  padding: 0.5rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+  width: 100%;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+}
+
+.motor-card-v .motor-body .motor-body--clam .new-query .alert-icon {
+  -webkit-margin-end: 0.5rem;
+          margin-inline-end: 0.5rem;
+}
+
+.motor-card-v .motor-body .motor-body--clam .new-query .clam {
+  font-size: 0.75rem;
+}
+
+.motor-card-v .motor-footer .detail-link {
+  text-align: center;
+  display: block;
+  padding: 0.75rem;
+  background-color: #F8F6FF;
+  font-size: 0.75rem;
+}
+
+.motor-drop-down {
+  position: relative;
+}
+
+.motor-drop-down .motor-drop-image {
+  width: 1.25rem;
+  height: 1.25rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  cursor: pointer;
+}
+
+.motor-drop-down .motor-drop-image .threedots {
+  width: 100%;
+}
+
+.motor-drop-down .dropdoun-motor {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  display: none;
+  background-color: #ffffff;
+  border-radius: 8px;
+  overflow: hidden;
+  -webkit-transition: all ease-in-out 0.5s;
+  transition: all ease-in-out 0.5s;
+}
+
+.motor-drop-down .dropdoun-motor.active {
+  display: block;
+  -webkit-transition: all ease-in-out 0.5s;
+  transition: all ease-in-out 0.5s;
+}
+
+.motor-drop-down .dropdoun-motor .drop-item {
+  border-bottom: 1px solid rgba(26, 28, 31, 0.1);
+}
+
+.motor-drop-down .dropdoun-motor .drop-item:last-child {
+  border-width: 0;
+}
+
+.motor-drop-down .dropdoun-motor .drop-item .drop-link {
+  display: block;
+  font-size: 0.675rem;
+  padding: 0.5rem 1rem;
+  min-width: 10rem;
+  -webkit-box-shadow: 0 0 30px 10px rgba(9, 30, 66, 0.05);
+          box-shadow: 0 0 30px 10px rgba(9, 30, 66, 0.05);
+}
+
+.vehicle-details {
+  margin-bottom: 3rem;
+}
+
+.vehicle-details .vehicle-basic-detail {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: (1fr)[1];
+      grid-template-columns: repeat(1, 1fr);
+  row-gap: 1rem;
+  -webkit-column-gap: 1rem;
+          column-gap: 1rem;
+}
+
+.vehicle-details .vehicle-basic-detail .Vehicle-basic {
+  background-color: #ffffff;
+  -webkit-box-shadow: 0 4px 10px 0 rgba(26, 28, 31, 0.1);
+          box-shadow: 0 4px 10px 0 rgba(26, 28, 31, 0.1);
+  padding: 1rem;
+  border-radius: 8px;
+}
+
+.vehicle-header {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+}
+
+.vehicle-header .vehicle-icon {
+  -webkit-margin-end: 1rem;
+          margin-inline-end: 1rem;
+}
+
+.vehicle-header .vehicle-info {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.vehicle-header .vehicle-info .vehicle-name {
+  font-size: 0.75rem;
+  font-weight: 700;
+  line-height: 130%;
+  letter-spacing: 1.1px;
+  margin-bottom: 0.5rem;
+}
+
+.vehicle-header .vehicle-info .vehicle-no {
+  font-size: 0.75rem;
+  font-weight: 400;
+  line-height: 0.75rem;
+  letter-spacing: 1.1px;
+}
+
+.vehicle-header .vehicle-info .vehicle-serial {
+  font-size: 0.75rem;
+  font-weight: 400;
+}
+
+.vehicle-header .motor-drop-down {
+  -webkit-margin-start: auto;
+          margin-inline-start: auto;
+}
+
+.vehicle-basic-body {
+  margin-top: 1rem;
+}
+
+.vehicle-basic-body .detail-list {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: (1fr)[2];
+      grid-template-columns: repeat(2, 1fr);
+  background-color: #F2F3F5;
+  padding: 1rem;
+  border-radius: 8px;
+}
+
+.vehicle-basic-body .detail-list.detail-list-driver {
+  -ms-grid-columns: (1fr)[3];
+      grid-template-columns: repeat(3, 1fr);
+}
+
+.vehicle-basic-body .detail-list .detailed-item {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+}
+
+.vehicle-basic-body .detail-list .detailed-item .detailed-icon-wrap {
+  width: 1rem;
+  height: 1rem;
+  -webkit-margin-end: 1rem;
+          margin-inline-end: 1rem;
+}
+
+.vehicle-basic-body .detail-list .detailed-item .detailed-icon-wrap .item-icon {
+  width: 100%;
+}
+
+.vehicle-basic-body .detail-list .detailed-item .item-content {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.vehicle-basic-body .detail-list .detailed-item .item-content .label {
+  font-size: 0.75rem;
+  font-weight: 400;
+}
+
+.vehicle-basic-body .detail-list .detailed-item .item-content .value {
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.your-service .your-service-heading {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.your-service .service-list {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: (1fr)[6];
+      grid-template-columns: repeat(6, 1fr);
+  -webkit-column-gap: 1rem;
+          column-gap: 1rem;
+  row-gap: 1rem;
+}
+
+.your-service .service-list .service-card {
+  background: #ffffff;
+  border-radius: 8px;
+  padding: 1rem;
+}
+
+.your-service .service-list .service-card .service-type {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  font-size: 1rem;
+  min-height: 4rem;
+}
+
+.your-service .deiver-list {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.your-service .deiver-list .driver {
+  margin-bottom: 1rem;
+  padding: 1.5rem;
+  border-radius: 8px;
+  background-color: #ffffff;
+}
+
+.your-service .deiver-list .driver .driver-header .driver-image {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.your-service .deiver-list .driver .driver-header .driver-image .driver-img {
+  -webkit-margin-end: 1rem;
+          margin-inline-end: 1rem;
+  width: 1.24rem;
+}
+
+.your-service .deiver-list .driver .driver-header .driver-image .driver-name {
+  -webkit-margin-end: auto;
+          margin-inline-end: auto;
+}
+
+.your-service .deiver-list .driver .driver-header .driver-image .delete-icon {
+  width: 1.25rem;
+}
+
+.resent-things {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: (1fr)[2];
+      grid-template-columns: repeat(2, 1fr);
+  -webkit-column-gap: 1.5rem;
+          column-gap: 1.5rem;
+}
+
+.resent-things .resent-accident .header-resent {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.resent-things .resent-accident .header-resent .heading {
+  font-weight: 700;
+  font-size: 1.25rem;
+}
+
+.resent-things .resent-accident .header-resent .view-all-link {
+  font-size: 0.875rem;
+  font-weight: 400;
+  color: #795ceb;
+}
+
+.resent-things .resent-accident .Accident-request-list {
+  margin-top: 1.5rem;
+}
+
+.resent-things .resent-accident .Accident-request-list .accdient-card {
+  background-color: #ffffff;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  padding: 1.5rem;
+}
+
+.resent-things .resent-accident .Accident-request-list .accdient-card .accdent-card-header {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  background-color: #F2F3F5;
+  padding: 1rem;
+  border-radius: 8px;
+}
+
+.resent-things .resent-accident .Accident-request-list .accdient-card .accdent-card-header .motor-icon {
+  -webkit-margin-end: 1rem;
+          margin-inline-end: 1rem;
+}
+
+.resent-things .resent-accident .Accident-request-list .accdient-card .accdent-card-header .motor-details {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.resent-things .resent-accident .Accident-request-list .accdient-card .accdent-card-header .motor-details .motor-name {
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.resent-things .resent-accident .Accident-request-list .accdient-card .accdent-card-header .motor-details .motor-number {
+  font-size: 0.75rem;
+  opacity: 0.6;
+}
+
+.resent-things .resent-accident .Accident-request-list .accdient-card .accdent-card-header .motor-details .ref-no {
+  margin-top: 1rem;
+  color: #795ceb;
+  font-size: 0.875rem;
+}
+
+.resent-things .resent-accident .Accident-request-list .accdient-card .addident-body {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  margin-top: 1rem;
+}
+
+.resent-things .resent-accident .Accident-request-list .accdient-card .addident-body .case-no {
+  font-size: 0.75rem;
+  opacity: 0.6;
+}
+
+.resent-things .resent-accident .Accident-request-list .accdient-card .addident-body .date {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.resent-things .resent-accident .Accident-request-list .accdient-card .addident-body .date .date-image {
+  width: 1rem;
+  -webkit-margin-end: 0.5rem;
+          margin-inline-end: 0.5rem;
+}
+
+.resent-things .resent-accident .Accident-request-list .accdient-card .addident-body .date .date-text {
+  font-size: 0.75rem;
+}
+
+.resent-things .resent-accident .Accident-request-list .accdient-card .addident-body .request-for-update {
+  font-size: 0.75rem;
+  background-color: #F8F6FF;
+  padding: 0.5rem 1rem;
+}
+
+.resent-things .resent-accident .Accident-request-list .accdient-card .footer {
+  margin-top: 1rem;
+}
+
+.resent-things .resent-accident .Accident-request-list .accdient-card .footer .footer-create-claim-link {
+  display: block;
+  font-size: 0.75rem;
+  color: #795ceb;
+  text-align: center;
+}
+
+.motor-modal {
+  display: none;
+  position: fixed;
+  z-index: 99999;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: black;
+  background-color: rgba(0, 0, 0, 0.4);
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.motor-modal.active {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.motor-modal .modal-content {
+  position: relative;
+  background-color: #ffffff;
+  margin-left: auto;
+  padding: 0;
+  border: 1px solid #9AA2AF;
+  width: 70rem;
+  height: 100%;
+  -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+          box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  -webkit-animation-name: animateRight;
+  -webkit-animation-duration: 0.4s;
+  animation-name: animateRight;
+  animation-duration: 0.4s;
+  overflow: hidden;
+}
+
+.motor-modal .modal-content .modal-header {
+  padding: 2rem;
+  color: #000000;
+  /* The Close Button */
+}
+
+.motor-modal .modal-content .modal-header .close--dependent {
+  color: #000000;
+  float: right;
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.motor-modal .modal-content .modal-header .close-delete-dependent:hover,
+.motor-modal .modal-content .modal-header .close-delete-dependent:focus {
+  color: #000000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.motor-modal .modal-content .modal-body {
+  padding: 2px 16px;
+  overflow: auto;
+  max-height: calc(100vh - 100px);
+}
+
+.motor-modal .modal-content .modal-body .modal-inner-body-wrap {
+  background-color: #F2F3F5;
+  padding: 1.5rem;
+  border-radius: 8px;
+  margin-top: 1.5rem;
+}
+
+.motor-modal .modal-content .modal-body .modal-inner-body-wrap .heading {
+  font-weight: 700;
+  font-size: 1.25rem;
+  line-height: 130%;
+  margin-bottom: 1rem;
+}
+
+.motor-modal .modal-content .modal-body .modal-inner-body-wrap .input-wrapper .button {
+  margin-top: 1rem;
+  padding: 1rem;
+  font-size: 1rem;
+  display: block;
+}
+
+.motor-modal .modal-content .modal-body .modal-inner-body-wrap .input-wrapper.input-margin {
+  margin-bottom: 1.5rem;
+}
+
+.motor-modal .modal-content .modal-footer {
+  padding: 2rem;
+  background-color: #ffffff;
+  color: #000000;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.motor-modal .modal-content .modal-footer .button {
+  min-width: 6rem;
+  padding: 1rem;
+  font-size: 0.8rem;
+  -webkit-margin-start: 1rem;
+          margin-inline-start: 1rem;
+  width: 100%;
+}
+
+.ducument-detaild {
+  background-color: #ffffff;
+  padding: 1.5rem;
+  -ms-grid-columns: (1fr)[3];
+      grid-template-columns: repeat(3, 1fr);
+  border-radius: 8px;
+}
+
+.vehicleList .vehicle-item {
+  border: 2px solid rgba(26, 28, 31, 0.1);
+}
+
+.vehicleList .vehicle-item .vehicle-header {
+  padding: 1rem 1rem 0 1rem;
+}
+
+.vehicleList .vehicle-item .detail-list {
+  border-radius: 0;
+}
+
+.vehicle-add-title {
+  margin-bottom: 1rem;
+}
+
+.vehicle-owner-grid {
+    display: flex;
+    -ms-grid-columns: (1fr)[2];
+    grid-template-columns: repeat(2, 1fr);
+    row-gap: 1rem;
+    -webkit-column-gap: 1rem;
+    column-gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+/*# sourceMappingURL=motor.css.map */

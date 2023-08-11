@@ -1,0 +1,134 @@
+﻿@{
+    Layout = null;
+}
+
+<div class="policy-wrapper">
+    <h2 class="heading">Workflow Managment</h2>
+    <div class="search-member">
+        <div class="search-filter-wrapper">
+
+            <div class="search-wrapper">
+                <div class="search-input-box-wrapper">
+
+                    <div class="search-icon-wrapper">
+                        <img src="/assets/icons/search.svg" class="search-icon" alt="">
+                    </div>
+                    <input type="text" class="input-box" placeholder="Search By Stage Name"
+                           value="">
+                </div>
+            </div>
+            <div class="search-heading-wrap">
+
+                <button class="button button-secondary">Search</button>
+            </div>
+
+
+        </div>
+
+    </div>
+</div>
+
+
+<div class="transaction-details">
+    <div class="search-heading-wrap" style="float: right;margin-bottom: 5px;">
+
+        <button class="button button-secondary" onclick="UpdateWorkFlow(0)">Add Document</button>
+    </div>
+    <table class="universal-table">
+        <tr>
+            <!-- <th>#</th> -->
+            <th>Stage Name</th>
+            <th>Order</th>
+            <th>Is Active</th>
+            <th>Creation Date</th>
+            <th>Approvers</th>
+        </tr>
+
+        <tr>
+            <!-- <td></td> -->
+            <td class="tran" onclick="UpdateWorkFlow(1)">#TR44372</td>
+            <td>324234235</td>
+            <td>12/12/12</td>
+            <td>1321231</td>
+            <td class="tran" onclick="UpdateWorkFlowApprovers(1)">5</td>
+
+
+        </tr>
+        <tr>
+            <!-- <td></td> -->
+            <td class="tran">#TR44372</td>
+            <td>324234235</td>
+            <td>12/12/12</td>
+            <td>1321231</td>
+            <td class="tran" onclick="UpdateWorkFlowApprovers(1)">5</td>
+
+
+        </tr>
+        <tr>
+            <!-- <td></td> -->
+            <td class="tran">#TR44372</td>
+            <td>324234235</td>
+            <td>12/12/12</td>
+            <td>1321231</td>
+            <td class="tran" onclick="UpdateWorkFlowApprovers(1)">5</td>
+
+
+        </tr>
+        <tr>
+            <!-- <td></td> -->
+            <td class="tran">#TR44372</td>
+            <td>324234235</td>
+            <td>12/12/12</td>
+            <td>1321231</td>
+            <td class="tran" onclick="UpdateWorkFlowApprovers(1)">5</td>
+
+
+        </tr>
+        <tr>
+            <!-- <td></td> -->
+            <td class="tran">#TR44372</td>
+            <td>324234235</td>
+            <td>12/12/12</td>
+            <td>1321231</td>
+            <td class="tran" onclick="UpdateWorkFlowApprovers(1)">5</td>
+
+
+        </tr>
+        <tr>
+            <!-- <td></td> -->
+            <td class="tran">#TR44372</td>
+            <td>324234235</td>
+            <td>12/12/12</td>
+            <td>1321231</td>
+            <td class="tran" onclick="UpdateWorkFlowApprovers(1)">5</td>
+
+
+        </tr>
+        <tr>
+            <!-- <td></td> -->
+            <td class="tran">#TR44372</td>
+            <td>324234235</td>
+            <td>12/12/12</td>
+            <td>1321231</td>
+            <td class="tran" onclick="UpdateWorkFlowApprovers(1)">5</td>
+
+        </tr>
+        <tr>
+            <!-- <td></td> -->
+            <td class="tran">#TR44372</td>
+            <td>324234235</td>
+            <td>12/12/12</td>
+            <td>1321231</td>
+            <td class="tran" onclick="UpdateWorkFlowApprovers(1)">5</td>
+
+        </tr>
+    </table>
+</div>
+
+
+
+
+<div id="edit-WorkFlow-popup" class="edit-member-id-popup" >
+</div>
+<div id="edit-WorkFlowApprovers-popup" class="edit-member-id-popup">
+</div>

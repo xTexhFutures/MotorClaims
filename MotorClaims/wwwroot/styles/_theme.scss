@@ -1,0 +1,71 @@
+$primaryColor: #795ceb;
+$colorSecondary: #312E52;
+$colorSecondaryLight: #818B9B;
+$colorDanger: #FF4136;
+$defaultColor: #D9DCE1;
+$disabledColor: #B3B9C3;
+$primaryVarient: #795ceb;
+$default: #212529;
+$successColor: #237B4B;
+$colorPrimaryLight: #7d71ac;
+$statusUpdate: #FF6D01;
+$lightPrimary: #F8F6FF;
+
+// status
+$rejectedStatusBg: #FCF4F6;
+$borderGrey: #cccccc;
+
+// header 
+$headerTextColor: #676f7c;
+
+// Breadcrumb
+$breadBrumb: #34383E;
+
+
+$boxShadowColor: rgba(26, 28, 31, 0.1);
+$popupBoxShadow: rgba(9, 30, 66, 0.15);
+$boxShadow: rgba(9, 30, 66, 0.05);
+$popupBackDrop: rgba(0, 0, 0, 0.288);
+
+$colorSecondaryVarient: #455560;
+$defaultTextColor : #1A1C1F;
+$defaultBackgroundColor: #F2F3F5;
+$grey: #E3FFEF;
+$lightGrey: #FFF5E5;
+$greyLighter: #F1F5F8;
+$titleHeadingVarient: #332500;
+$classTagBg: #F5F2FF;
+$radioDefault: #d1d3d1;
+$radioActive: #ffa500;
+
+$white : #ffffff;
+$whiteVarient: #F5F2FF;
+$black: #000000;
+$red: red;
+$skyBlue: #009DDE;
+$darkGreay: #9AA2AF;
+
+
+// border
+$defaultBorder : $defaultColor;
+$PrimaryBorderColor: $primaryColor;
+$SecondaryBorderColor: $colorSecondary;
+$DangerBorderColor: $colorDanger;
+$primaryLightBorder: #8f77e1;
+
+
+// Buttons
+$PrimaryButton: $primaryColor;
+$ButtonDefault: transparent;
+
+$ButtonDelete: $colorDanger;
+$buttonDisabled: $disabledColor;
+
+$ButtonPrimaryVarient: $primaryVarient;
+
+// sizes
+$smallModal: 450px;
+
+
+
+$transition: 200ms linear;

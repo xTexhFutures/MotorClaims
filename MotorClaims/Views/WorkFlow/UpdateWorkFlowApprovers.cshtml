@@ -1,0 +1,48 @@
+﻿<div class="popup-body-wrapper">
+    <div class="popup-header">
+        <div class="popup-header-inner">
+            <h3 class="popup-title">Change Member ID</h3>
+            <div class="close-popup-icon" onclick="Close('edit-WorkFlowApprovers-popup')">
+                <img class="close-icon" src="./assets/icons/close.svg">
+            </div>
+        </div>
+        <p class="popup-description">Change your member ID from boader no to IQAMA</p>
+    </div>
+    <div class="popup-body">
+        <div class="detailed edit">
+            <div class="detailed-ele">
+                <div class="detailed-desc">
+
+                    <div class="form-field-wrapper">
+                        <div class="form-input-wrapper">
+                            <input class="form-inputbox" id="txtApproverEmail" name="ApproverEmail" type="text" required value="">
+                            <input id="txthfApproverEmail" name="hfApproverEmail" type="hidden">
+                            <label class="form-label non-icon" for="txtApproverEmail">Approver Email</label>
+                        </div>
+                    </div>
+                    <div class="form-field-wrapper">
+                        <div class="form-input-wrapper">
+                            <input class="form-inputbox" id="txtLevel" name="Level" type="text" required value="">
+                            <label class="form-label non-icon" for="txtLevel">Approval Level</label>
+                        </div>
+                    </div>
+                    <div class="form-field-wrapper">
+                        <div class="form-input-wrapper">
+                            <input class="form-inputbox" id="txtApprovalType" name="ApprovalType" type="text" required value="">
+                            <label class="form-label non-icon" for="txtApprovalType">Approval Type</label>
+                        </div>
+                    </div>
+             
+                </div>
+            </div>
+
+        </div>
+
+    
+    </div>
+    <div class="popup-footer">
+        <button class="button button-secondary" type="button" onclick="Close('edit-WorkFlowApprovers-popup')">Cancel</button>
+        <button class="button button-secondary" type="submit">Submit</button>
+    </div>
+</div>
+
