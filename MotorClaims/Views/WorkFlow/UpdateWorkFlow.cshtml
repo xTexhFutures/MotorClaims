@@ -1,4 +1,7 @@
-﻿<div class="popup-body-wrapper" style="max-width:80% !important;display:grid">
+﻿@using CORE.DTOs.MotorClaim.WorkFlow;
+@model WorkFlowStages
+
+<div class="popup-body-wrapper" style="max-width:80% !important;display:grid">
     <div class="popup-header">
         <div class="popup-header-inner">
             <h3 class="popup-title">WorkFlow Design</h3>
@@ -8,189 +11,191 @@
         </div>
         <p class="popup-description">Design New Workflow Stage</p>
     </div>
-    <div class="popup-body">
-        <div class="popup-floating-content right-border" style="width: 30%;">
-            <div class="detailed edit">
-                <div class="detailed-ele">
+    <form method="post" asp-action="UpdateWorkFlow" asp-controller="WorkFlow" style="display:grid">
+        <div class="popup-body">
+            <div class="popup-floating-content right-border" style="width: 30%;">
+                <div class="detailed edit">
+                    <div class="detailed-ele">
 
-                    <div class="detailed-desc">
+                        <div class="detailed-desc">
 
-                        <input id="txtId" name="Id" type="hidden" value="@Model">
-                        <!-- <h4 class="title">Nationality</h4> -->
-                        <div class="form-field-wrapper">
-                            <div class="form-input-wrapper">
-                                <input class="form-inputbox" id="txtStageName" name="StageName" type="text" required maxlength="100" value="">
-                                <label class="form-label non-icon" for="txtStageName">Stage Name</label>
-                            </div>
-                        </div>
-                        <div class="form-field-wrapper">
-                            <div class="form-input-wrapper">
-                                <textarea class="form-inputbox" id="txtDescription" name="Description" maxlength="1024" rows="5"></textarea>
-                                <label class="form-label non-icon" for="txtDescription">Description</label>
-                            </div>
-                        </div>
-                        <div class="vehicle-owner-grid">
-                            <label for="radio-card-v2-11" class="radio-card-v2" style="min-width:50% !important">
-                                <input type="radio" value="1" name="vehicle_card" id="radio-card-v2-11" checked />
-                                <div class="card-content-wrapper">
-                                    <span class="check-icon"></span>
-                                    <div class="card-content">
-                                        <h4 class="title">Active</h4>
-                                    </div>
+                            <input id="txtId" name="Id" type="hidden" value="@Model.Id">
+                            <!-- <h4 class="title">Nationality</h4> -->
+                            <div class="form-field-wrapper">
+                                <div class="form-input-wrapper">
+                                    <input class="form-inputbox" id="txtStageName" name="StageName" type="text" required maxlength="100" value="@Model.StageName">
+                                    <label class="form-label non-icon" for="txtStageName">Stage Name</label>
                                 </div>
-                            </label>
-                            <!-- /.radio-card -->
-
-                            <label for="radio-card-v2-12" class="radio-card-v2" style="min-width:50% !important">
-                                <input type="radio" value="2" name="vehicle_card" id="radio-card-v2-12" />
-                                <div class="card-content-wrapper">
-                                    <span class="check-icon"></span>
-                                    <div class="card-content">
-                                        <h4 class="title">In Active</h4>
-                                    </div>
-                                </div>
-                            </label>
-
-
-                        </div>
-
-                        <div class="form-field-wrapper">
-                            <div class="form-input-wrapper">
-                                <input class="form-inputbox" id="txtOrder" name="Order" type="text" required maxlength="3" value="">
-                                <label class="form-label non-icon" for="txtOrder">Order</label>
                             </div>
-                        </div>
+                            <div class="form-field-wrapper">
+                                <div class="form-input-wrapper">
+                                    <textarea class="form-inputbox" id="txtDescription" name="Description" maxlength="1024" rows="5">@Model.Description</textarea>
+                                    <label class="form-label non-icon" for="txtDescription">Description</label>
+                                </div>
+                            </div>
+                            <div class="vehicle-owner-grid">
+                                <label for="radio-card-v2-11" class="radio-card-v2" style="min-width:50% !important">
+                                    <input type="radio" value="true" name="IsActive" id="radio-card-v2-11" @(Model.Id > 0 ? (Model.IsActive ? "checked":"") : "checked") />
+                                    <div class="card-content-wrapper">
+                                        <span class="check-icon"></span>
+                                        <div class="card-content">
+                                            <h4 class="title">Active</h4>
+                                        </div>
+                                    </div>
+                                </label>
+                                <!-- /.radio-card -->
 
-                      
+                                <label for="radio-card-v2-12" class="radio-card-v2" style="min-width:50% !important">
+                                    <input type="radio" value="false" name="IsActive" id="radio-card-v2-12" @(Model.Id > 0 ? (!Model.IsActive ? "checked" : "") : "") />
+                                    <div class="card-content-wrapper">
+                                        <span class="check-icon"></span>
+                                        <div class="card-content">
+                                            <h4 class="title">In Active</h4>
+                                        </div>
+                                    </div>
+                                </label>
+
+
+                            </div>
+
+                            <div class="form-field-wrapper">
+                                <div class="form-input-wrapper">
+                                    <input class="form-inputbox" id="txtOrder" name="Order" type="text" required maxlength="3" value="@(Model.Id>0?Model.Order:string.Empty)">
+                                    <label class="form-label non-icon" for="txtOrder">Order</label>
+                                </div>
+                            </div>
+
+
+                        </div>
                     </div>
-                </div>
 
+                </div>
             </div>
+
+            <div class="popup-floating-content right-border" style="width: 40%;">
+                <div class="detailed edit">
+                    <div class="detailed-ele">
+
+                        <div class="detailed-desc">
+
+
+                            <div class="form-field-wrapper">
+                                <div class="form-input-wrapper">
+                                    <textarea class="form-inputbox" id="txtEmailSubjectTemplate" name="EmailSubjectTemplate" maxlength="1024">@Model.EmailSubjectTemplate</textarea>
+                                    <label class="form-label non-icon" for="txtEmailSubjectTemplate">Email Subject Template</label>
+                                </div>
+                            </div>
+                            <div class="form-field-wrapper">
+                                <label style="color:#818B9B">Email Body Template</label>
+                                <div class="form-input-wrapper">
+
+                                    <textarea class="form-inputbox" id="txtEmailBodyTemplate" name="EmailBodyTemplate" maxlength="2024">@Model.EmailBodyTemplate</textarea>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="popup-floating-content" style="width: 30%;">
+                <div class="detailed edit">
+                    <div class="detailed-ele">
+
+                        <div class="detailed-desc">
+
+                            <div class="vehicle-owner-grid">
+                                <label for="ClaimType1" class="radio-card-v2">
+                                    <input type="radio" value="1" name="PolicyType" id="ClaimType1" @(Model.Id > 0 ? (Model.PolicyType == 1 ? "checked":"") : "checked") />
+                                    <div class="card-content-wrapper">
+                                        <span class="check-icon"></span>
+                                        <div class="card-content">
+                                            <h4 class="title">TPL</h4>
+                                        </div>
+                                    </div>
+                                </label>
+                                <!-- /.radio-card -->
+
+                                <label for="ClaimType2" class="radio-card-v2">
+                                    <input type="radio" value="2" name="PolicyType" id="ClaimType2" @(Model.Id > 0 ? (Model.PolicyType == 2 ? "checked" : "") : "") />
+                                    <div class="card-content-wrapper">
+                                        <span class="check-icon"></span>
+                                        <div class="card-content">
+                                            <h4 class="title">COMP</h4>
+                                        </div>
+                                    </div>
+                                </label>
+
+                                <label for="ClaimType3" class="radio-card-v2">
+                                    <input type="radio" value="3" name="PolicyType" id="ClaimType3" @(Model.Id > 0 ? (Model.PolicyType == 3 ? "checked" : "") : "") />
+                                    <div class="card-content-wrapper">
+                                        <span class="check-icon"></span>
+                                        <div class="card-content">
+                                            <h4 class="title">Both</h4>
+                                        </div>
+                                    </div>
+                                </label>
+                            </div>
+
+                            <div class="form-field-wrapper">
+                                <div class="form-input-wrapper">
+                                    <textarea class="form-inputbox" id="txtQuery" name="Query" required maxlength="2024" rows="6">@Model.Query</textarea>
+                                    <label class="form-label non-icon" for="txtDescription">Query</label>
+                                </div>
+                            </div>
+
+                            <div class="form-field-wrapper">
+                                <div class="form-input-wrapper">
+                                    <select id="ddlOutComeType" name="OutComeType" required class="form-inputbox">
+                                        <option></option>
+                                        <option value="1">Boolean</option>
+                                        <option value="2">Date</option>
+                                        <option value="3">Number</option>
+                                        <option value="4">String</option>
+
+
+                                    </select>
+                                    <label class="form-label non-icon" for="ddlOutComeType">OutCome Type</label>
+                                </div>
+                            </div>
+
+                            <div class="form-field-wrapper">
+                                <div class="form-input-wrapper">
+                                    <select id="ddlOperator" name="Operator" required class="form-inputbox">
+                                        <option value=""></option>
+                                        <option value="1">Greater</option>
+                                        <option value="2">GreaterOrEqual</option>
+                                        <option value="3">Equal</option>
+                                        <option value="4">Less</option>
+                                        <option value="5">LessOrEqual</option>
+
+
+                                    </select>
+                                    <label class="form-label non-icon" for="ddlOperator">Operator</label>
+                                </div>
+                            </div>
+                            <div class="form-field-wrapper">
+                                <div class="form-input-wrapper">
+                                    <input class="form-inputbox" id="txtComparingValue" name="ComparingValue" type="text" required maxlength="100" value="@(Model.Id>0?Model.ComparingValue:string.Empty)">
+                                    <label class="form-label non-icon" for="txtComparingValue">Comparing Value</label>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
         </div>
 
-        <div class="popup-floating-content right-border" style="width: 40%;">
-            <div class="detailed edit">
-                <div class="detailed-ele">
-
-                    <div class="detailed-desc">
-
-
-                        <div class="form-field-wrapper">
-                            <div class="form-input-wrapper">
-                                <textarea class="form-inputbox" id="txtEmailSubjectTemplate" name="EmailSubjectTemplate" maxlength="1024"></textarea>
-                                <label class="form-label non-icon" for="txtEmailSubjectTemplate">Email Subject Template</label>
-                            </div>
-                        </div>
-                        <div class="form-field-wrapper">
-                            <label style="color:#818B9B">Email Body Template</label>
-                            <div class="form-input-wrapper">
-                          
-                                <textarea class="form-inputbox" id="txtEmailBodyTemplate" name="EmailBodyTemplate" maxlength="2024"></textarea>
-
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-
-            </div>
+        <div class="popup-footer">
+            <button class="button button-secondary" type="button" onclick="Close('edit-WorkFlow-popup')">Cancel</button>
+            <button class="button button-secondary" type="submit">Submit</button>
         </div>
-
-        <div class="popup-floating-content" style="width: 30%;">
-            <div class="detailed edit">
-                <div class="detailed-ele">
-
-                    <div class="detailed-desc">
-
-                        <div class="vehicle-owner-grid">
-                            <label for="ClaimType1" class="radio-card-v2">
-                                <input type="radio" value="1" name="ClaimType" id="ClaimType1" checked />
-                                <div class="card-content-wrapper">
-                                    <span class="check-icon"></span>
-                                    <div class="card-content">
-                                        <h4 class="title">TPL</h4>
-                                    </div>
-                                </div>
-                            </label>
-                            <!-- /.radio-card -->
-
-                            <label for="ClaimType2" class="radio-card-v2">
-                                <input type="radio" value="2" name="ClaimType" id="ClaimType2" />
-                                <div class="card-content-wrapper">
-                                    <span class="check-icon"></span>
-                                    <div class="card-content">
-                                        <h4 class="title">COMP</h4>
-                                    </div>
-                                </div>
-                            </label>
-
-                            <label for="ClaimType3" class="radio-card-v2">
-                                <input type="radio" value="3" name="ClaimType" id="ClaimType3" />
-                                <div class="card-content-wrapper">
-                                    <span class="check-icon"></span>
-                                    <div class="card-content">
-                                        <h4 class="title">Both</h4>
-                                    </div>
-                                </div>
-                            </label>
-                        </div>
-
-                        <div class="form-field-wrapper">
-                            <div class="form-input-wrapper">
-                                <textarea class="form-inputbox" id="txtQuery" name="Query" required maxlength="2024" rows="6"></textarea>
-                                <label class="form-label non-icon" for="txtDescription">Query</label>
-                            </div>
-                        </div>
-
-                        <div class="form-field-wrapper">
-                            <div class="form-input-wrapper">
-                                <select id="ddlOutComeType" name="OutComeType" required class="form-inputbox">
-                                <option></option>
-                                <option value="1">Boolean</option>
-                                <option value="2">Date</option>
-                                <option value="3">Number</option>
-                                <option value="4">String</option>
-
-
-                            </select>
-                                <label class="form-label non-icon" for="ddlOutComeType">OutCome Type</label>
-                        </div>
-                        </div>
-
-                        <div class="form-field-wrapper">
-                            <div class="form-input-wrapper">
-                                <select id="ddlOperator" name="Operator" required class="form-inputbox">
-                                <option></option>
-                                <option value="1">Greater</option>
-                                <option value="2">GreaterOrEqual</option>
-                                <option value="3">Equal</option>
-                                <option value="4">Less</option>
-                                <option value="5">LessOrEqual</option>
-
-
-                            </select>
-                                <label class="form-label non-icon" for="ddlOperator">Operator</label>
-                            </div>
-                        </div>
-                        <div class="form-field-wrapper">
-                            <div class="form-input-wrapper">
-                                <input class="form-inputbox" id="txtComparingValue" name="ComparingValue" type="text" required maxlength="100" value="">
-                                <label class="form-label non-icon" for="txtComparingValue">Comparing Value</label>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-
-            </div>
-        </div>
-        
-    </div>
-
-            <div class="popup-footer">
-    <button class="button button-secondary" type="button" onclick="Close('edit-WorkFlow-popup')">Cancel</button>
-    <button class="button button-secondary" type="submit">Submit</button>
-    </div>
+    </form>
 </div>
 
 <script>
@@ -203,5 +208,15 @@
             "rule image link unlink  |   source",
         bodyStyle: " background-color: #fff7dd !important"
 
+    });
+    $(function(){
+        $('#txtOrder').ForceIntegerEntry();
+        var Id=@Model.Id;
+        if(Id>0){
+            if ('@Model.Operator'!='')
+                $('#ddlOperator').val('@Model.Operator');
+            $('#ddlOutComeType').val('@Model.OutComeType');
+        }
+    
     });
 </script>

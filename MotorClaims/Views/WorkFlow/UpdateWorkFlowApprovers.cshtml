@@ -1,48 +1,60 @@
-﻿<div class="popup-body-wrapper">
+﻿@using CORE.DTOs.MotorClaim.WorkFlow;
+@model WorkFlowApprovers
+@{
+    int StageId = (int)ViewData["WFId"];
+}
+<div class="popup-body-wrapper">
     <div class="popup-header">
         <div class="popup-header-inner">
-            <h3 class="popup-title">Change Member ID</h3>
+            <h3 class="popup-title">Workflow Approver</h3>
             <div class="close-popup-icon" onclick="Close('edit-WorkFlowApprovers-popup')">
-                <img class="close-icon" src="./assets/icons/close.svg">
+                <img class="close-icon" src="/assets/icons/close.svg">
             </div>
         </div>
-        <p class="popup-description">Change your member ID from boader no to IQAMA</p>
+        <p class="popup-description">Define Workflow Approver</p>
     </div>
-    <div class="popup-body">
-        <div class="detailed edit">
-            <div class="detailed-ele">
-                <div class="detailed-desc">
+    <form method="post" asp-action="UpdateWorkflowApprovers" asp-controller="Workflow">
 
-                    <div class="form-field-wrapper">
-                        <div class="form-input-wrapper">
-                            <input class="form-inputbox" id="txtApproverEmail" name="ApproverEmail" type="text" required value="">
-                            <input id="txthfApproverEmail" name="hfApproverEmail" type="hidden">
-                            <label class="form-label non-icon" for="txtApproverEmail">Approver Email</label>
+        <div class="popup-body">
+            <div class="detailed edit">
+                <div class="detailed-ele">
+
+                    <div class="detailed-desc">
+
+                        <input id="txtId" name="Id" type="hidden" value="@Model.Id">
+                        <input id="txtStageId" name="StageId" type="hidden" value="@StageId">
+                        <!-- <h4 class="title">Nationality</h4> -->
+                        <div class="form-field-wrapper">
+                            <div class="form-input-wrapper">
+                                <input class="form-inputbox" id="txtEmail" autocomplete="off" name="Email" type="text" required value="@Model.Email">
+                                <input id="txtName" name="Name" type="hidden" >
+                                <label class="form-label non-icon" for="txtEmail">Email</label>
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-field-wrapper">
-                        <div class="form-input-wrapper">
-                            <input class="form-inputbox" id="txtLevel" name="Level" type="text" required value="">
-                            <label class="form-label non-icon" for="txtLevel">Approval Level</label>
+                        <div class="form-field-wrapper">
+                            <div class="form-input-wrapper">
+                                <input class="form-inputbox" id="txtApprovalLevel" autocomplete="off" name="ApprovalLevel" type="text" required value="@Model.ApprovalLevel">
+                                <label class="form-label non-icon" for="txtApprovalLevel">Approval Level</label>
+                            </div>
                         </div>
+                 
                     </div>
-                    <div class="form-field-wrapper">
-                        <div class="form-input-wrapper">
-                            <input class="form-inputbox" id="txtApprovalType" name="ApprovalType" type="text" required value="">
-                            <label class="form-label non-icon" for="txtApprovalType">Approval Type</label>
-                        </div>
-                    </div>
-             
                 </div>
+
             </div>
-
         </div>
-
-    
-    </div>
-    <div class="popup-footer">
-        <button class="button button-secondary" type="button" onclick="Close('edit-WorkFlowApprovers-popup')">Cancel</button>
-        <button class="button button-secondary" type="submit">Submit</button>
-    </div>
+        <div class="popup-footer">
+            <button class="button button-secondary" type="button" onclick="Close('edit-WorkFlowApprovers-popup')">Cancel</button>
+            <button class="button button-secondary" type="submit">Submit</button>
+        </div>
+    </form>
 </div>
 
+<script>
+    $(function () {
+        if ('@ViewData["Error"]' != "" && '@ViewData["Error"]' != '') {
+            ErrorAlert('@ViewData["Error"]');
+        }
+    })
+    $('#txtApprovalLevel').ForceIntegerEntry();
+</script>

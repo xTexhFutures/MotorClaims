@@ -1,13 +1,16 @@
-﻿<div class="popup-body-wrapper" style="max-width:50% !important;display:grid">
+﻿@using CORE.DTOs.MotorClaim.Frauds;
+@model FraudIndicators
+<div class="popup-body-wrapper" style="max-width:50% !important;display:grid">
     <div class="popup-header">
         <div class="popup-header-inner">
             <h3 class="popup-title">Fraud Indicator</h3>
             <div class="close-popup-icon" onclick="Close('edit-FraudIndicator-popup')">
-                <img class="close-icon" src="./assets/icons/close.svg">
+                <img class="close-icon" src="/assets/icons/close.svg">
             </div>
         </div>
         <p class="popup-description">Define New Fraud Indicator</p>
     </div>
+    <form method="post" asp-action="UpdateFraudIndicator" asp-controller="Fraud" style="display:grid">
     <div class="popup-body">
         <div class="popup-floating-content right-border" style="width: 40%;">
             <div class="detailed edit">
@@ -15,23 +18,23 @@
 
                     <div class="detailed-desc">
 
-                        <input id="txtId" name="Id" type="hidden" value="@Model">
+                        <input id="txtId" name="Id" type="hidden" value="@Model.Id">
                         <!-- <h4 class="title">Nationality</h4> -->
                         <div class="form-field-wrapper">
                             <div class="form-input-wrapper">
-                                <input class="form-inputbox" id="txtStageName" name="StageName" type="text" required maxlength="100" value="">
-                                <label class="form-label non-icon" for="txtStageName">Stage Name</label>
+                                <input class="form-inputbox" id="txtIndicatorName" name="Name" type="text" required maxlength="140" value="@Model.Name">
+                                <label class="form-label non-icon" for="txtIndicatorName">Indicator Name</label>
                             </div>
                         </div>
                         <div class="form-field-wrapper">
                             <div class="form-input-wrapper">
-                                <textarea class="form-inputbox" id="txtDescription" name="Description" maxlength="1024" rows="5"></textarea>
+                                <textarea class="form-inputbox" id="txtDescription" name="Description" maxlength="1024" rows="5">@Model.Description</textarea>
                                 <label class="form-label non-icon" for="txtDescription">Description</label>
                             </div>
                         </div>
                         <div class="vehicle-owner-grid">
                             <label for="radio-card-v2-11" class="radio-card-v2" style="min-width:50% !important">
-                                <input type="radio" value="1" name="vehicle_card" id="radio-card-v2-11" checked />
+                                <input type="radio" value="true" name="IsActive" id="radio-card-v2-11" @(Model.Id == 0 ? "checked" : (Model.IsActive ? "checked":"")) />
                                 <div class="card-content-wrapper">
                                     <span class="check-icon"></span>
                                     <div class="card-content">
@@ -42,7 +45,7 @@
                             <!-- /.radio-card -->
 
                             <label for="radio-card-v2-12" class="radio-card-v2" style="min-width:50% !important">
-                                <input type="radio" value="2" name="vehicle_card" id="radio-card-v2-12" />
+                                <input type="radio" value="false" name="IsActive" id="radio-card-v2-12" @(!Model.IsActive ? "checked" : "") />
                                 <div class="card-content-wrapper">
                                     <span class="check-icon"></span>
                                     <div class="card-content">
@@ -56,8 +59,8 @@
 
                         <div class="form-field-wrapper">
                             <div class="form-input-wrapper">
-                                <input class="form-inputbox" id="txtOrder" name="Order" type="text" required maxlength="3" value="">
-                                <label class="form-label non-icon" for="txtOrder">Order</label>
+                                <input class="form-inputbox" id="txtScore" name="Score" type="text" required maxlength="3" value="@(Model.Id==0?string.Empty:Model.Score)">
+                                <label class="form-label non-icon" for="txtScore">Score</label>
                             </div>
                         </div>
 
@@ -76,7 +79,7 @@
 
                         <div class="vehicle-owner-grid">
                             <label for="ClaimType1" class="radio-card-v2">
-                                <input type="radio" value="1" name="ClaimType" id="ClaimType1" checked />
+                                <input type="radio" value="1" name="PolicyType" id="ClaimType1" @(Model.Id == 0 ? "checked" : (Model.PolicyType==1 ? "checked" : "")) />
                                 <div class="card-content-wrapper">
                                     <span class="check-icon"></span>
                                     <div class="card-content">
@@ -87,7 +90,7 @@
                             <!-- /.radio-card -->
 
                             <label for="ClaimType2" class="radio-card-v2">
-                                <input type="radio" value="2" name="ClaimType" id="ClaimType2" />
+                                <input type="radio" value="2" name="PolicyType" id="ClaimType2" @(Model.PolicyType==2? "checked" : "" ) />
                                 <div class="card-content-wrapper">
                                     <span class="check-icon"></span>
                                     <div class="card-content">
@@ -97,7 +100,7 @@
                             </label>
 
                             <label for="ClaimType3" class="radio-card-v2">
-                                <input type="radio" value="3" name="ClaimType" id="ClaimType3" />
+                                <input type="radio" value="3" name="PolicyType" id="ClaimType3" @(Model.PolicyType == 3 ? "checked" : "") />
                                 <div class="card-content-wrapper">
                                     <span class="check-icon"></span>
                                     <div class="card-content">
@@ -109,7 +112,7 @@
 
                         <div class="form-field-wrapper">
                             <div class="form-input-wrapper">
-                                <textarea class="form-inputbox" id="txtQuery" name="Query" required maxlength="2024" rows="6"></textarea>
+                                <textarea class="form-inputbox" id="txtQuery" name="Query" required maxlength="2024" rows="6">@Model.Query</textarea>
                                 <label class="form-label non-icon" for="txtDescription">Query</label>
                             </div>
                         </div>
@@ -146,7 +149,7 @@
                         </div>
                         <div class="form-field-wrapper">
                             <div class="form-input-wrapper">
-                                <input class="form-inputbox" id="txtComparingValue" name="ComparingValue" type="text" required maxlength="100" value="">
+                                <input class="form-inputbox" id="txtComparingValue" name="ComparingValue" type="text" required maxlength="100" value="@(Model.Id==0?string.Empty:Model.ComparingValue)">
                                 <label class="form-label non-icon" for="txtComparingValue">Comparing Value</label>
                             </div>
                         </div>
@@ -163,5 +166,13 @@
         <button class="button button-secondary" type="button" onclick="Close('edit-FraudIndicator-popup')">Cancel</button>
         <button class="button button-secondary" type="submit">Submit</button>
     </div>
+    </form>
 </div>
+<script>
+    $('#txtScore').ForceIntegerEntry();
 
+    $(function(){
+        $('#ddlOutComeType').val('@Model.OutComeType');
+        $('#ddlOperator').val('@Model.Operator');
+    })
+</script>

@@ -1,0 +1,71 @@
+﻿@using CORE.DTOs.MotorClaim.WorkFlow;
+@model List<WorkFlowApprovers>
+@{
+    Layout = null;
+}
+
+
+
+
+    <div class="slide-popup-inner">
+        <div class="slide-header">
+            <div class="heading-card">
+                <h2 class="heading">Workflow Approvers</h2>
+            </div>
+        </div>
+        <div class="slide-body">
+       
+            <div class="popup-body-wrapper">
+             
+                <div class="body-content-wrapper">
+                
+                        <table class="universal-table" >
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Approval Level</th>
+                                <th>Action</th>
+                            </tr>
+
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <!-- <td></td> -->
+                                    <td class="tran" onclick="UpdateWorkFlow(@item.Id)">#@item.Name</td>
+                                    <td>@item.Email</td>
+                                    <td>
+                                        @item.ApprovalLevel
+                                    </td>
+                                    <td>
+                                        <div class="resubmit" style="padding-left:10px">
+                                            <button class="button button-delete-border" id="delet-Draft-Member" title="Delete" style="border: brown !important"
+                                                    onclick="openDeleteApprover(@item.Id)">
+                                                <img class="btn-icon" src="/assets/icons/trash-can.svg" />
+                                            </button>
+                                        </div>
+                                    </td>
+
+
+                                </tr>
+                            }
+
+
+                        </table>
+                 
+                </div>
+                <div class="slide-footer">
+                    <div class="slide-inner-footer">
+                        <button class="button button-secondary-border"
+                                onclick="Close('ManageApproversPopup')">
+                            Cancel
+                        </button>
+          
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+<div id="delete-Confirmation" class="delete-dependent-modal"></div>

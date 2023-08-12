@@ -1,28 +1,34 @@
-﻿@{
-    Layout = null;
+﻿@using CORE.DTOs.MotorClaim.WorkFlow;
+@{
+    List<DelegationSetup> delegationSetups=(List<DelegationSetup>) ViewData["Delegations"];
+    int? Filter = (int?)ViewData["Filter"];
 }
 
+    @{
+        await Html.RenderPartialAsync("_ContentSection");
+    }
 
         <div class="policy-wrapper">
             <h2 class="heading">Delegations Managment</h2>
             <div class="search-member">
+        <form method="post" asp-action="SearchDelegations" asp-controller="Delegation">
                 <div class="search-filter-wrapper">
 
 
-                    <select class="common-dropdown ">
-                        <option selected disabled value="">Status</option>
-                        <option value="1">Active</option>
+                    <select class="common-dropdown" id="ddlFilter" name="Filter">
+                        <option  value="" >Status</option>
+                        <option value="1" >Active</option>
                         <option value="0">In-Active</option>
                    </select>
 
                     <div class="search-heading-wrap">
 
-                        <button class="button button-secondary">Search</button>
+                        <button class="button button-secondary" type="submit">Search</button>
                     </div>
 
 
                 </div>
-
+        </form>
             </div>
         </div>
 
@@ -40,88 +46,40 @@
                     <th>Delegated From </th>
                     <th>Delegated To</th>
                     <th>Status</th>
+                    <th>Actions</th>
                 </tr>
-
+        @if (delegationSetups!=null)
+        {
+            foreach (var item in delegationSetups)
+            {
                 <tr>
-                    <!-- <td></td> -->
-                    <td class="tran" onclick="UpdateDelegation(1)">#TR44372</td>
-                    <td>324234235</td>
-                    <td>12/12/12</td>
-                    <td>1321231</td>
-                    <td>1321231</td>
-
-
+                    <td class="tran" onclick="UpdateDelegation(@item.Id)">@item.From.ToString("dd-MMM-yyyy")</td>
+                    <td>@item.To.ToString("dd-MMM-yyyy")</td>
+                    <td>@item.DelegateFrom </td>
+                    <td>@item.DelegateTo</td>
+                    <td>
+                        @if (DateTime.Now<item.To)
+                        {
+                            <span>Active</span>
+                        }
+                        else
+                        {
+                            <span>In-Active</span>
+                        }
+                    </td>
+                    <td>
+                        <div class="resubmit" style="padding-left:10px">
+                            <button class="button button-delete-border" id="delet-Draft-Member" title="Delete" style="border: brown !important"
+                                    onclick="openDeleteDelegation(@item.Id)">
+                                <img class="btn-icon" src="/assets/icons/trash-can.svg" />
+                            </button>
+                        </div>
+                    </td>
                 </tr>
-                <tr>
-                    <!-- <td></td> -->
-                    <td class="tran">#TR44372</td>
-                    <td>324234235</td>
-                    <td>12/12/12</td>
-                    <td>1321231</td>
-                    <td>1321231</td>
+            }
 
+        }
 
-                </tr>
-                <tr>
-                    <!-- <td></td> -->
-                    <td class="tran">#TR44372</td>
-                    <td>324234235</td>
-                    <td>12/12/12</td>
-                    <td>1321231</td>
-                    <td>1321231</td>
-
-
-                </tr>
-                <tr>
-                    <!-- <td></td> -->
-                    <td class="tran">#TR44372</td>
-                    <td>324234235</td>
-                    <td>12/12/12</td>
-                    <td>1321231</td>
-                    <td>1321231</td>
-
-
-                </tr>
-                <tr>
-                    <!-- <td></td> -->
-                    <td class="tran">#TR44372</td>
-                    <td>324234235</td>
-                    <td>12/12/12</td>
-                    <td>1321231</td>
-                    <td>1321231</td>
-
-
-                </tr>
-                <tr>
-                    <!-- <td></td> -->
-                    <td class="tran">#TR44372</td>
-                    <td>324234235</td>
-                    <td>12/12/12</td>
-                    <td>1321231</td>
-                    <td>1321231</td>
-
-
-                </tr>
-                <tr>
-                    <!-- <td></td> -->
-                    <td class="tran">#TR44372</td>
-                    <td>324234235</td>
-                    <td>12/12/12</td>
-                    <td>1321231</td>
-                    <td>1321231</td>
-
-
-                </tr>
-                <tr>
-                    <!-- <td></td> -->
-                    <td class="tran">#TR44372</td>
-                    <td>324234235</td>
-                    <td>12/12/12</td>
-                    <td>1321231</td>
-                    <td>1321231</td>
-
-
-                </tr>
             </table>
         </div>
 
@@ -129,3 +87,20 @@
 
 <div id="edit-Delegation-popup" class="edit-member-id-popup">
 </div>
+<div id="delete-Confirmation" class="delete-dependent-modal"></div>
+<script>
+    var element = document.getElementById("shad1");
+    element.classList.add("Selected");
+    $(function () {
+
+        var filter='@Filter';
+        if (filter.length>0) {
+            $('#ddlFilter').val('@Filter');
+        }
+        if ('@ViewData["Error"]' != "" && '@ViewData["Error"]' != '') {
+            ErrorAlert('@ViewData["Error"]');
+        }
+    })
+
+</script>
+

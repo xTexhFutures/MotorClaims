@@ -1,69 +1,80 @@
-﻿<div class="popup-body-wrapper">
+﻿@using CORE.DTOs.MotorClaim.WorkFlow;
+@model DocumentInfo
+
+<div class="popup-body-wrapper">
     <div class="popup-header">
         <div class="popup-header-inner">
             <h3 class="popup-title">Documents Managment</h3>
             <div class="close-popup-icon" onclick="Close('edit-Document-popup')">
-                <img class="close-icon" src="./assets/icons/close.svg">
+                <img class="close-icon" src="/assets/icons/close.svg">
             </div>
         </div>
         <p class="popup-description">Control documents per Module</p>
     </div>
-    <div class="popup-body">
-        <div class="detailed edit">
-            <div class="detailed-ele">
-                <div class="detailed-desc">
+    <form asp-action="UpdateDocument" asp-controller="Documents" method="post">
+        <div class="popup-body">
+            <div class="detailed edit">
+                <div class="detailed-ele">
+                    <div class="detailed-desc">
 
-                    <input id="txtId" name="Id" type="hidden" value="@Model">
-                    <!-- <h4 class="title">Nationality</h4> -->
-                    <div class="form-field-wrapper">
-                        <div class="form-input-wrapper">
-                            <input class="form-inputbox" id="txtDcumentName" name="DcumentName" type="text" required value="">
-                            <label class="form-label non-icon" for="txtDcumentName">Dcument Name</label>
-                        </div>
-                    </div>
-                    <div class="form-field-wrapper">
-                        <div class="form-input-wrapper">
-                            <select class="form-inputbox">
-                                <option selected disabled value="">All Modules</option>
-                                <option value="@((int)MotorClaims.Models.Enums.DocumnetType.Claim)">@MotorClaims.Models.Enums.DocumnetType.Claim</option>
-                                <option value="@((int)MotorClaims.Models.Enums.DocumnetType.Claimant)">@MotorClaims.Models.Enums.DocumnetType.Claimant</option>
-                                <option value="@((int)MotorClaims.Models.Enums.DocumnetType.Fraud)">@MotorClaims.Models.Enums.DocumnetType.Fraud</option>
-                                <option value="@((int)MotorClaims.Models.Enums.DocumnetType.Reserve)">@MotorClaims.Models.Enums.DocumnetType.Reserve</option>
-                                <option value="@((int)MotorClaims.Models.Enums.DocumnetType.Payment)">@MotorClaims.Models.Enums.DocumnetType.Payment</option>
-                            </select>
-                            <label class="form-label non-icon" for="txtDelegateTo">Modules</label>
-                        </div>
-                    </div>
-                    <div class="vehicle-owner-grid">
-                        <label for="radio-card-v2-11" class="radio-card-v2" style="min-width:50% !important">
-                            <input type="radio" value="1" name="RequiredOption" id="radio-card-v2-11" checked />
-                            <div class="card-content-wrapper">
-                                <span class="check-icon"></span>
-                                <div class="card-content">
-                                    <h4 class="title">Required</h4>
-                                </div>
+                        <input id="txtId" name="Id" type="hidden" value="@Model.Id">
+                        <!-- <h4 class="title">Nationality</h4> -->
+                        <div class="form-field-wrapper">
+                            <div class="form-input-wrapper">
+                                <input class="form-inputbox" id="txtDcumentName" autocomplete="off" name="Name" type="text" required value="@Model.Name">
+                                <label class="form-label non-icon" for="txtDcumentName">Dcument Name</label>
                             </div>
-                        </label>
-                        <!-- /.radio-card -->
+                        </div>
+                        <div class="form-field-wrapper">
+                            <div class="form-input-wrapper">
+                                <select class="form-inputbox" name="ModuleId" id="ddlModuleId">
+                                    <option value="">All Modules</option>
+                                    <option value="@((int)MotorClaims.Models.Enums.DocumnetType.Claim)">@MotorClaims.Models.Enums.DocumnetType.Claim</option>
+                                    <option value="@((int)MotorClaims.Models.Enums.DocumnetType.Claimant)">@MotorClaims.Models.Enums.DocumnetType.Claimant</option>
+                                    <option value="@((int)MotorClaims.Models.Enums.DocumnetType.Fraud)">@MotorClaims.Models.Enums.DocumnetType.Fraud</option>
+                                    <option value="@((int)MotorClaims.Models.Enums.DocumnetType.Reserve)">@MotorClaims.Models.Enums.DocumnetType.Reserve</option>
+                                    <option value="@((int)MotorClaims.Models.Enums.DocumnetType.Payment)">@MotorClaims.Models.Enums.DocumnetType.Payment</option>
+                                </select>
+                                <label class="form-label non-icon" for="txtDelegateTo">Modules</label>
+                            </div>
+                        </div>
+                        <div class="vehicle-owner-grid">
+                            <label for="radio-card-v2-11" class="radio-card-v2" style="min-width:50% !important">
+                                <input type="radio" value="true" name="IsRequired" id="radio-card-v2-11" @(Model.Id > 0 ? (Model.IsRequired ? "checked" : "") : "checked") />
+                                <div class="card-content-wrapper">
+                                    <span class="check-icon"></span>
+                                    <div class="card-content">
+                                        <h4 class="title">Required</h4>
+                                    </div>
+                                </div>
+                            </label>
+                            <!-- /.radio-card -->
 
-                        <label for="radio-card-v2-12" class="radio-card-v2" style="min-width:50% !important">
-                            <input type="radio" value="2" name="RequiredOption" id="radio-card-v2-12" />
-                            <div class="card-content-wrapper">
-                                <span class="check-icon"></span>
-                                <div class="card-content">
-                                    <h4 class="title">Optional</h4>
+                            <label for="radio-card-v2-12" class="radio-card-v2" style="min-width:50% !important">
+                                <input type="radio" value="false" name="IsRequired" id="radio-card-v2-12" @(!Model.IsRequired ? "checked" : "") />
+                                <div class="card-content-wrapper">
+                                    <span class="check-icon"></span>
+                                    <div class="card-content">
+                                        <h4 class="title">Optional</h4>
+                                    </div>
                                 </div>
-                            </div>
-                        </label>
+                            </label>
+                        </div>
+
                     </div>
-       
                 </div>
-            </div>
 
+            </div>
         </div>
-    </div>
-    <div class="popup-footer">
-        <button class="button button-secondary" type="button" onclick="Close('edit-Document-popup')">Cancel</button>
-        <button class="button button-secondary"type="submit">Submit</button>
-    </div>
+        <div class="popup-footer">
+            <button class="button button-secondary" type="button" onclick="Close('edit-Document-popup')">Cancel</button>
+            <button class="button button-secondary" type="submit">Submit</button>
+        </div>
+    </form>
 </div>
+
+<script>
+    $(function () {
+        $('#ddlModuleId').val('@Model.ModuleId');
+    });
+</script>

@@ -1,0 +1,25 @@
+﻿@{
+    string Controller = ViewData["Controller"].ToString();
+    string Action = ViewData["Action"].ToString();
+}
+
+@model int
+
+<form asp-controller="@Controller" asp-action="@Action" method="post">
+    <div class="modal-content">
+        <div class="modal-header">
+            <span class="close-delete-dependent" onclick="Close('delete-Confirmation')">&times;</span>
+            <h2>Delete Confirmation</h2>
+        </div>
+        <div class="modal-body">
+            <input type="hidden" name="Id" value="@Model" />
+            <p class="delete-text">
+                Are You Sure ?
+            </p>
+        </div>
+        <div class="modal-footer">
+            <button onclick="Close('delete-Confirmation')" type="button" class="button button-secondary-border">Cancel</button>
+            <button class="button button-primary" type="submit">OK</button>
+        </div>
+    </div>
+</form>

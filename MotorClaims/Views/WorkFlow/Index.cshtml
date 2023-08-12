@@ -1,30 +1,36 @@
-﻿@{
-    Layout = null;
+﻿@using CORE.DTOs.MotorClaim.WorkFlow;
+@{
+    List<WorkFlowStages> WF = (List<WorkFlowStages>)ViewData["WF"];
+    string? Filter = (string?)ViewData["Filter"];
+}
+@{
+    await Html.RenderPartialAsync("_ContentSection");
 }
 
 <div class="policy-wrapper">
     <h2 class="heading">Workflow Managment</h2>
     <div class="search-member">
+        <form method="post" asp-controller="Workflow" asp-action="SearchWorkFlow">
         <div class="search-filter-wrapper">
-
+      
             <div class="search-wrapper">
                 <div class="search-input-box-wrapper">
 
                     <div class="search-icon-wrapper">
                         <img src="/assets/icons/search.svg" class="search-icon" alt="">
                     </div>
-                    <input type="text" class="input-box" placeholder="Search By Stage Name"
-                           value="">
+                        <input type="text" class="input-box" name="Filter" placeholder="Search By Stage Name"
+                           value="@Filter">
                 </div>
             </div>
             <div class="search-heading-wrap">
 
-                <button class="button button-secondary">Search</button>
+                <button class="button button-secondary" type="submit">Search</button>
             </div>
-
+        
 
         </div>
-
+            </form>
     </div>
 </div>
 
@@ -32,103 +38,63 @@
 <div class="transaction-details">
     <div class="search-heading-wrap" style="float: right;margin-bottom: 5px;">
 
-        <button class="button button-secondary" onclick="UpdateWorkFlow(0)">Add Document</button>
+        <button class="button button-secondary" onclick="UpdateWorkFlow(0)">Add Workflow Stage</button>
     </div>
+  
     <table class="universal-table">
         <tr>
             <!-- <th>#</th> -->
             <th>Stage Name</th>
             <th>Order</th>
             <th>Is Active</th>
-            <th>Creation Date</th>
+            <th>Email Subject</th>
+            <th>Add Approvers</th>
             <th>Approvers</th>
         </tr>
 
-        <tr>
-            <!-- <td></td> -->
-            <td class="tran" onclick="UpdateWorkFlow(1)">#TR44372</td>
-            <td>324234235</td>
-            <td>12/12/12</td>
-            <td>1321231</td>
-            <td class="tran" onclick="UpdateWorkFlowApprovers(1)">5</td>
+        @if (WF != null)
+            @foreach (var item in WF)
+            {
+                <tr>
+                    <!-- <td></td> -->
+                    <td class="tran" onclick="UpdateWorkFlow(@item.Id)">#@item.StageName</td>
+                    <td>@item.Order</td>
+                    <td>
+                        @if (item.IsActive)
+                        {
+                            <span>Active</span>
+                        }
+                        else
+                        {
+                            <span>In-Active</span>
+                        }
+                    </td>
+                    <td>@item.EmailSubjectTemplate</td>
+                    <td>  <button class="button button-secondary" onclick="UpdateWorkFlowApprover(@item.Id)">Add Workflow Approver</button></td>
+                    <td class="tran" onclick="UpdateWorkFlowApprovers(@item.Id)">View</td>
 
 
-        </tr>
-        <tr>
-            <!-- <td></td> -->
-            <td class="tran">#TR44372</td>
-            <td>324234235</td>
-            <td>12/12/12</td>
-            <td>1321231</td>
-            <td class="tran" onclick="UpdateWorkFlowApprovers(1)">5</td>
+                </tr>
+            }
 
 
-        </tr>
-        <tr>
-            <!-- <td></td> -->
-            <td class="tran">#TR44372</td>
-            <td>324234235</td>
-            <td>12/12/12</td>
-            <td>1321231</td>
-            <td class="tran" onclick="UpdateWorkFlowApprovers(1)">5</td>
-
-
-        </tr>
-        <tr>
-            <!-- <td></td> -->
-            <td class="tran">#TR44372</td>
-            <td>324234235</td>
-            <td>12/12/12</td>
-            <td>1321231</td>
-            <td class="tran" onclick="UpdateWorkFlowApprovers(1)">5</td>
-
-
-        </tr>
-        <tr>
-            <!-- <td></td> -->
-            <td class="tran">#TR44372</td>
-            <td>324234235</td>
-            <td>12/12/12</td>
-            <td>1321231</td>
-            <td class="tran" onclick="UpdateWorkFlowApprovers(1)">5</td>
-
-
-        </tr>
-        <tr>
-            <!-- <td></td> -->
-            <td class="tran">#TR44372</td>
-            <td>324234235</td>
-            <td>12/12/12</td>
-            <td>1321231</td>
-            <td class="tran" onclick="UpdateWorkFlowApprovers(1)">5</td>
-
-
-        </tr>
-        <tr>
-            <!-- <td></td> -->
-            <td class="tran">#TR44372</td>
-            <td>324234235</td>
-            <td>12/12/12</td>
-            <td>1321231</td>
-            <td class="tran" onclick="UpdateWorkFlowApprovers(1)">5</td>
-
-        </tr>
-        <tr>
-            <!-- <td></td> -->
-            <td class="tran">#TR44372</td>
-            <td>324234235</td>
-            <td>12/12/12</td>
-            <td>1321231</td>
-            <td class="tran" onclick="UpdateWorkFlowApprovers(1)">5</td>
-
-        </tr>
     </table>
 </div>
 
 
 
 
-<div id="edit-WorkFlow-popup" class="edit-member-id-popup" >
+
+
+
+<div id="edit-WorkFlow-popup" class="edit-member-id-popup">
 </div>
 <div id="edit-WorkFlowApprovers-popup" class="edit-member-id-popup">
 </div>
+<div class="common-slide-popup" id="ManageApproversPopup">
+</div>
+
+<script>
+    var element = document.getElementById("shad2");
+    element.classList.add("Selected");
+</script>

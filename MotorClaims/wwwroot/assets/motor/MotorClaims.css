@@ -29,3 +29,8 @@
     border-style: dotted;
     border-color: #999;
 }
+
+
+.Selected {
+    box-shadow:5px 5px !important;
+}

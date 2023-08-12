@@ -1,0 +1,73 @@
+﻿@using CORE.DTOs.MotorClaim.Frauds;
+@model FraudSetup
+<div class="popup-body-wrapper">
+    <div class="popup-header">
+        <div class="popup-header-inner">
+            <h3 class="popup-title">Fraud Setup</h3>
+            <div class="close-popup-icon" onclick="Close('edit-FraudSetup-popup')">
+                <img class="close-icon" src="/assets/icons/close.svg">
+            </div>
+        </div>
+        <p class="popup-description">Define Fraud range appearance</p>
+    </div>
+    <form method="post" asp-action="UpdateFraudSetup" asp-controller="Fraud">
+        <input type="hidden" name="Id" value="@Model.Id" />
+
+        <div class="popup-body">
+            <div class="detailed edit">
+                <div class="detailed-ele">
+                    <div class="detailed-desc">
+
+                        <input id="txtId" name="Id" type="hidden" value="@Model">
+                        <!-- <h4 class="title">Nationality</h4> -->
+                        <div class="form-field-wrapper">
+                            <div class="form-input-wrapper">
+                                <input class="form-inputbox" id="txtScoreFrom" name="ScoreFrom" type="text" maxlength="3" required value="@Model.ScoreFrom">
+                                <label class="form-label non-icon" for="txtScoreFrom">Score From</label>
+                            </div>
+                        </div>
+                        <div class="form-field-wrapper">
+                            <div class="form-input-wrapper">
+                                <input class="form-inputbox" id="txtScoreTo" name="ScoreTo" type="text" maxlength="3" required value="@Model.ScoreTo">
+                                <label class="form-label non-icon" for="txtScoreTo">Score To</label>
+                            </div>
+                        </div>
+                        <div class="form-field-wrapper">
+                            <div class="form-input-wrapper">
+                                <select class="form-inputbox" required name="FraudResult" id="ddlFraudResult">
+                                    <option selected disabled value="">Result Type</option>
+                                    <option value="@((int)MotorClaims.Models.Enums.FraudLevel.Error)">@MotorClaims.Models.Enums.FraudLevel.Error</option>
+                                    <option value="@((int)MotorClaims.Models.Enums.FraudLevel.Warning)">@MotorClaims.Models.Enums.FraudLevel.Warning</option>
+                                    <option value="@((int)MotorClaims.Models.Enums.FraudLevel.Low)">@MotorClaims.Models.Enums.FraudLevel.Low</option>
+                                    <option value="@((int)MotorClaims.Models.Enums.FraudLevel.None)">@MotorClaims.Models.Enums.FraudLevel.None</option>
+
+                                </select>
+                                <label class="form-label non-icon" for="ddlFraudResult">Fraud Result</label>
+                            </div>
+                        </div>
+                        <div class="form-field-wrapper">
+                            <div class="form-input-wrapper">
+                                <input class="form-inputbox" id="txtColor" name="Color" type="color" required value="@Model.Color">
+                                <label class="form-label non-icon" for="txtColor">Color</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="popup-footer">
+            <button class="button button-secondary" type="button" onclick="Close('edit-FraudSetup-popup')">Cancel</button>
+            <button class="button button-secondary" type="submit">Submit</button>
+        </div>
+    </form>
+</div>
+
+<script>
+    $(function () {
+        $('#ddlFraudResult').val('@Model.FraudResult');
+    });
+    $('#txtScoreFrom').ForceIntegerEntry();
+    $('#txtScoreTo').ForceIntegerEntry();
+
+</script>

@@ -113,7 +113,7 @@ function changeMemberId(id, i, p, n) {
     $('#edit-member-id-popup').load('/PolicyDetail/EditMember', { Member: i, Policy: p, NationalId: n });
 }
 function deleteMemberEndors(id, n, p) {
-   
+
     const element = document.getElementById(id);
     const popupEditMemberId = document.getElementById('delet-member-popup')
     //element.classList.toggle('active');
@@ -172,11 +172,11 @@ function ApprovalFinanceActions(id, i) {
 }
 
 function LoadHistiryDetails(id) {
-   
+
     const element = document.getElementById('details-popup')
     element.classList.toggle('active');
-   
-    $('#details-popup').load('/Approvals/FilterApprovalsHistory', {Id : id });
+
+    $('#details-popup').load('/Approvals/FilterApprovalsHistory', { Id: id });
 }
 
 function LoadCreditLimit(id) {
@@ -361,33 +361,33 @@ function GenerateQuotation(PolicyId) {
     spinner.show();
     $.get("/Issuance/GenerateEskaQuotation/" + PolicyId, function (data) {
         debugger;
-        if (data.length>0) {
+        if (data.length > 0) {
             ErrorAlert(data);
         } else {
             $('#PrintReport1').attr('disabled', false);
             $('#PrintReport2').attr('disabled', false);
         }
-     
+
         spinner.hide();
     });
-/*    setTimeout("countdown()", 120);*/
+    /*    setTimeout("countdown()", 120);*/
 }
-function GenerateEskaQuotation(Id,PId) {
+function GenerateEskaQuotation(Id, PId) {
 
     spinner.show();
     $.post("/Issuance/PrintEskaQuote/" + Id, { PolicyId: PId }, function (data) {
         if (data != null) {
             debugger;
             //download(data, makeid(15));
-            var ReportWindow = window.open(data, "window 1" , "location=no,menubar=no,status=no,titlebar=no,toolbar=no,resizable=yes");
+            var ReportWindow = window.open(data, "window 1", "location=no,menubar=no,status=no,titlebar=no,toolbar=no,resizable=yes");
             ReportWindow.focus();
             ReportWindow.blur();
-/*            window.location.href = "/Issuance/PrintEskaQuote/?id=" + data;*/
+            /*            window.location.href = "/Issuance/PrintEskaQuote/?id=" + data;*/
             spinner.hide();
             //window.open(data, "_blank");
         }
     });
-/*setTimeout("countdown()", 120);*/
+    /*setTimeout("countdown()", 120);*/
 }
 
 
@@ -427,7 +427,7 @@ function secondsToTime(secs) {
 }
 
 
-const openDeleteSummary = (Id, t, PId,originType) => {
+const openDeleteSummary = (Id, t, PId, originType) => {
     var modalDeleteDependent = document.getElementById("delete-summary-modal");
     modalDeleteDependent.classList.remove('display-none');
     modalDeleteDependent.classList.add('display-block');
@@ -449,7 +449,7 @@ function ShowNotes(q9, id) {
     else {
         $('#note').hide();
     }
-   
+
 }
 const closeDeleteSummary = () => {
     var modalDeleteDependent = document.getElementById("delete-summary-modal");
@@ -461,7 +461,7 @@ const Close = (id) => {
     model.classList.toggle('active');
 }
 
-function DeleteDraftMember(Id, policy,Otype) {
+function DeleteDraftMember(Id, policy, Otype) {
     spinner.show();
     $.post('/Issuance/DeleteDraftMember/', { Id: Id, PolicyId: policy }, function (data) {
         window.location = "/PolicyDetail/RequestDetails/" + policy + "?type=" + Otype;
@@ -514,20 +514,20 @@ function ChangeLogin(f) {
 function UpdateDocument(Id) {
     const element = document.getElementById('edit-Document-popup');
     element.classList.toggle('active');
-    if (Id>0) {
-        $('#edit-Document-popup').load('/Documents/UpdateDocument/'+Id);
+    if (Id > 0) {
+        $('#edit-Document-popup').load('/Documents/UpdateDocument/' + Id);
     } else {
-        $('#edit-Document-popup').load('/Documents/UpdateDocument/' );
+        $('#edit-Document-popup').load('/Documents/UpdateDocument/');
     }
 }
 function UpdateDelegation(Id) {
 
     const element = document.getElementById('edit-Delegation-popup');
     element.classList.toggle('active');
-    if (Id>0) {
-        $('#edit-Delegation-popup').load('/Delegation/UpdateDelegation/'+Id);
+    if (Id > 0) {
+        $('#edit-Delegation-popup').load('/Delegation/UpdateDelegation/' + Id);
     } else {
-        $('#edit-Delegation-popup').load('/Delegation/UpdateDelegation/' );
+        $('#edit-Delegation-popup').load('/Delegation/UpdateDelegation/');
     }
 }
 
@@ -535,38 +535,13 @@ function UpdateWorkFlow(Id) {
     let element = document.getElementById('edit-WorkFlow-popup')
     element.classList.toggle('active');
 
-    if (Id>0) {
-        $('#edit-WorkFlow-popup').load('/WorkFlow/UpdateWorkFlow/'+Id);
-    } else {
-        $('#edit-WorkFlow-popup').load('/WorkFlow/UpdateWorkFlow/' );
-    }
-}
-
-function UpdateWorkFlowApprovers(Id,WFId) {
-    let element = document.getElementById('edit-WorkFlowApprovers-popup')
-    element.classList.toggle('active');
-
     if (Id > 0) {
-        $('#edit-WorkFlowApprovers-popup').load('/WorkFlow/UpdateWorkFlowApprovers/', { WFId: WFId, Id: Id });
+        $('#edit-WorkFlow-popup').load('/WorkFlow/UpdateWorkFlow/' + Id);
     } else {
-        $('#edit-WorkFlowApprovers-popup').load('/WorkFlow/UpdateWorkFlowApprovers/', { WFId: WFId ,Id:0});
+        $('#edit-WorkFlow-popup').load('/WorkFlow/UpdateWorkFlow/' + 0);
     }
 }
-function LoadDelegationSection() {
-    $('#ContentSection').load('/Delegation/Index/');
-}
-function LoadWorkFlowSection() {
-    $('#ContentSection').load('/WorkFlow/Index/');
-}
-function LoadFraudSection() {
-    $('#ContentSection').load('/Fraud/Index/');
-}
-function LoadDocumentsSection() {
-    $('#ContentSection').load('/Documents/Index/');
-}
-function LoadAccessSection() {
-    $('#ContentSection').load('/Access/Index/');
-}
+
 function UpdateFraudIndicator(Id) {
     let element = document.getElementById('edit-FraudIndicator-popup')
     element.classList.toggle('active');
@@ -576,4 +551,66 @@ function UpdateFraudIndicator(Id) {
     } else {
         $('#edit-FraudIndicator-popup').load('/Fraud/UpdateFraudIndicator/');
     }
+}
+
+function UpdateWorkFlowApprover(Id) {
+    let element = document.getElementById('edit-WorkFlowApprovers-popup')
+    element.classList.toggle('active');
+
+    if (Id > 0) {
+        $('#edit-WorkFlowApprovers-popup').load('/WorkFlow/UpdateWorkFlowApproversV/' + Id);
+    } else {
+        $('#edit-WorkFlowApprovers-popup').load('/WorkFlow/UpdateWorkFlowApproversV/'+0);
+    }
+}
+function LoadFraudSetup(Id) {
+    let element = document.getElementById('edit-FraudSetup-popup')
+    element.classList.toggle('active');
+
+    if (Id > 0) {
+        $('#edit-FraudSetup-popup').load('/Fraud/UpdateFraudSetup/' + Id);
+    } else {
+        $('#edit-FraudSetup-popup').load('/Fraud/UpdateFraudSetup/');
+    }
+}
+
+
+function openDeleteDelegation(Id) {
+    debugger;
+    let element = document.getElementById('delete-Confirmation');
+    element.classList.remove('display-none');
+    element.classList.add('display-block');
+    element.classList.toggle('active');
+    $('#delete-Confirmation').load('/Delegation/DeleteDelegation/' + Id);
+}
+
+function openDeleteDocument(Id) {
+    let element = document.getElementById('delete-Confirmation');
+    element.classList.remove('display-none');
+    element.classList.add('display-block');
+    element.classList.toggle('active');
+    $('#delete-Confirmation').load('/Documents/DeleteDocument/' + Id);
+}
+function openDeleteFraud(Id) {
+    let element = document.getElementById('delete-Confirmation');
+    element.classList.remove('display-none');
+    element.classList.add('display-block');
+    element.classList.toggle('active');
+    $('#delete-Confirmation').load('/Fraud/DeleteFraud/' + Id);
+}
+
+function openDeleteApprover(Id) {
+    let element = document.getElementById('delete-Confirmation');
+    element.classList.remove('display-none');
+    element.classList.add('display-block');
+    element.classList.toggle('active');
+    $('#delete-Confirmation').load('/WorkFlow/DeleteApprover/' + Id);
+}
+
+function UpdateWorkFlowApprovers(Id) {
+    let element = document.getElementById('ManageApproversPopup');
+    element.classList.remove('display-none');
+    element.classList.add('display-block');
+    element.classList.toggle('active');
+    $('#ManageApproversPopup').load('/WorkFlow/LoadWorkFlowApprovers/' + Id);
 }

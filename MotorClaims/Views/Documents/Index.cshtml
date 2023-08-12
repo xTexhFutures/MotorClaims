@@ -1,15 +1,22 @@
-﻿@{
-    Layout = null;
+﻿@using CORE.DTOs.MotorClaim.WorkFlow;
+@{
+    List<DocumentInfo> documentInfos = (List<DocumentInfo>)ViewData["Documents"];
+    int? Filter = (int?)ViewData["Filter"];
+}
+    @{
+    await Html.RenderPartialAsync("_ContentSection");
+
 }
 
         <div class="policy-wrapper">
             <h2 class="heading">Documents Managment</h2>
             <div class="search-member">
+        <form method="post" asp-action="SearchDocuments" asp-controller="Documents">
                 <div class="search-filter-wrapper">
                  
                   
-                        <select class="common-dropdown ">
-                            <option selected disabled value="">All Modules</option>
+                        <select class="common-dropdown" name="Filter" id="ddlFilter">
+                            <option   value="">All Modules</option>
                         <option value="@((int)MotorClaims.Models.Enums.DocumnetType.Claim)">@MotorClaims.Models.Enums.DocumnetType.Claim</option>
                         <option value="@((int)MotorClaims.Models.Enums.DocumnetType.Claimant)">@MotorClaims.Models.Enums.DocumnetType.Claimant</option>
                         <option value="@((int)MotorClaims.Models.Enums.DocumnetType.Fraud)">@MotorClaims.Models.Enums.DocumnetType.Fraud</option>
@@ -19,12 +26,12 @@
 
                         <div class="search-heading-wrap">
 
-                            <button class="button button-secondary">Search</button>
+                            <button class="button button-secondary" type="submit">Search</button>
                         </div>
            
                 
                 </div>
-             
+        </form>
             </div>
         </div>
 
@@ -39,82 +46,43 @@
                     <!-- <th>#</th> -->
                     <th>Document Name</th>
                     <th>Module Name</th>
-                    <th>Priority</th>
                     <th>Type</th>
+                    <th>Actions</th>
                 </tr>
+        @if (documentInfos!=null)
 
-                <tr>
-                    <!-- <td></td> -->
-                    <td class="tran" onclick="UpdateDocument(1)">#TR44372</td>
-                    <td>324234235</td>
-                    <td>12/12/12</td>
-                    <td>1321231</td>
-            
-              
-                </tr>
-                <tr>
-                    <!-- <td></td> -->
-                    <td class="tran">#TR44372</td>
-                    <td>324234235</td>
-                    <td>12/12/12</td>
-                    <td>1321231</td>
-                
-                  
-                </tr>
-                <tr>
-                    <!-- <td></td> -->
-                    <td class="tran">#TR44372</td>
-                    <td>324234235</td>
-                    <td>12/12/12</td>
-                    <td>1321231</td>
-                
-           
-                </tr>
-                <tr>
-                    <!-- <td></td> -->
-                    <td class="tran">#TR44372</td>
-                    <td>324234235</td>
-                    <td>12/12/12</td>
-                    <td>1321231</td>
-               
-             
-                </tr>
-                <tr>
-                    <!-- <td></td> -->
-                    <td class="tran">#TR44372</td>
-                    <td>324234235</td>
-                    <td>12/12/12</td>
-                    <td>1321231</td>
-                 
-                
-                </tr>
-                <tr>
-                    <!-- <td></td> -->
-                    <td class="tran">#TR44372</td>
-                    <td>324234235</td>
-                    <td>12/12/12</td>
-                    <td>1321231</td>
-               
-               
-                </tr>
-                <tr>
-                    <!-- <td></td> -->
-                    <td class="tran">#TR44372</td>
-                    <td>324234235</td>
-                    <td>12/12/12</td>
-                    <td>1321231</td>
-               
-        
-                </tr>
-                <tr>
-                    <!-- <td></td> -->
-                    <td class="tran">#TR44372</td>
-                    <td>324234235</td>
-                    <td>12/12/12</td>
-                    <td>1321231</td>
-             
-           
-                </tr>
+        @foreach (var item in documentInfos)
+        {
+            <tr>
+                <td class="tran" onclick="UpdateDocument(@item.Id)">#@item.Name</td>
+                @{
+                    var y = Enum.TryParse(item.ModuleId.ToString(), out MotorClaims.Models.Enums.DocumnetType parsedEnumValue);
+                }
+                <td>@parsedEnumValue</td>
+                <td>
+
+                    @if (item.IsRequired)
+                    {
+                        <span>Required</span>
+                    }
+                    else
+                    {
+                        <span>Optional</span>
+                    }
+                </td>
+                    <td>
+                        <div class="resubmit" style="padding-left:10px">
+                            <button class="button button-delete-border" id="delet-Draft-Member" title="Delete" style="border: brown !important"
+                                    onclick="openDeleteDocument(@item.Id)">
+                                <img class="btn-icon" src="/assets/icons/trash-can.svg" />
+                            </button>
+                        </div>
+                    </td>
+
+            </tr>
+        }
+
+
             </table>
         </div>
 
@@ -122,5 +90,17 @@
 
 
 <div id="edit-Document-popup" class="edit-member-id-popup">
- 
+   
 </div>
+<div id="delete-Confirmation" class="delete-dependent-modal"></div>
+<script>
+    var element = document.getElementById("shad3");
+    element.classList.add("Selected");
+    $(function () {
+        var filter = '@Filter';
+        if (filter.length > 0) {
+            $('#ddlFilter').val('@Filter');
+        }
+    })
+
+</script>

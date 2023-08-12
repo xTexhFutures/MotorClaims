@@ -36,7 +36,15 @@ namespace MotorClaims.Models
             Payment = 5
 
         }
+        public enum FraudLevel
+        {
 
+            Error = 4,
+            Warning =3,
+            Low = 2,
+            None = 1
+
+        }
         public enum PaymentMethod
         {
 
