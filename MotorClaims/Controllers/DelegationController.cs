@@ -1,7 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using CORE.DTOs.APIs.Business;
+using CORE.DTOs.APIs.MotorClaim;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Options;
 using MotorClaims.Models;
+using CORE.DTOs.MotorClaim.WorkFlow;
+using OfficeOpenXml.FormulaParsing.Excel.Functions.Engineering;
 
 namespace MotorClaims.Controllers
 {
@@ -20,34 +24,120 @@ namespace MotorClaims.Controllers
             _memoryCache = memoryCache;
             _memoryCache.TryGetValue(VehicleListCacheKey, out query);
         }
-        public IActionResult Index()
+
+
+
+        public IActionResult Index(string err = null, int? Status = null)
         {
+            ViewData["Error"] = err;
+            ViewData["Filter"] = Status;
+            MainSearchMC mainSearchMC = new MainSearchMC();
+            SetupClaimsRequestcs setupClaimsRequestcs = new SetupClaimsRequestcs()
+            {
+                TransactionType = CORE.Extensions.ClaimTransactionType.LoadDelegation,
+                Request = mainSearchMC
+            };
+            var Delegations = Helpers.ExcutePostAPI<List<DelegationSetup>>(setupClaimsRequestcs, _appSettings.APIHubPrefix + "api/MotorClaim/SetupMotorClaim");
+            ViewData["Delegations"] = Delegations;
             return View();
         }
-
         public IActionResult UpdateDelegation(int Id)
         {
-            return View(Id);
+            if (Id > 0)
+            {
+                MainSearchMC mainSearchMC = new MainSearchMC()
+                {
+                    Id = Id
+                };
+                SetupClaimsRequestcs setupClaimsRequestcs = new SetupClaimsRequestcs()
+                {
+                    TransactionType = CORE.Extensions.ClaimTransactionType.LoadDelegation,
+                    Request = mainSearchMC
+                };
+                var Delegations = Helpers.ExcutePostAPI<List<DelegationSetup>>(setupClaimsRequestcs, _appSettings.APIHubPrefix + "api/MotorClaim/SetupMotorClaim");
+
+                return View(Delegations.FirstOrDefault());
+            }
+            return View(new DelegationSetup());
         }
 
         [HttpPost]
-        public IActionResult UpdateDelegation()
+        public IActionResult UpdateDelegation(DelegationSetup delegationSetup)
         {
-            string DelegationFrom= HttpContext.Request.Form["DelegateFrom"];
-            int hfDelegationFrom= Convert.ToInt32(HttpContext.Request.Form["hfDelegateFrom"]);
-            string DelegationTo= HttpContext.Request.Form["DelegateTo"];
-            int hfDelegationTo = Convert.ToInt32(HttpContext.Request.Form["hfDelegateTo"]);
-            DateTime From=Helpers.ConvertDate( HttpContext.Request.Form["From"]);
-            DateTime To = Helpers.ConvertDate(HttpContext.Request.Form["To"]);
-            int Id = 0;
+            if (delegationSetup.To < delegationSetup.From)
+            {
+                return RedirectToAction("Index", new { err = "From Should be less than To" });
+            }
+            SetupClaimsRequestcs setupClaimsRequestcs = new SetupClaimsRequestcs()
+            {
+                TransactionType = CORE.Extensions.ClaimTransactionType.InsertUpdateDelegation,
+                Request = delegationSetup
+            };
+            var Delegations = Helpers.ExcutePostAPI<DelegationSetup>(setupClaimsRequestcs, _appSettings.APIHubPrefix + "api/MotorClaim/SetupMotorClaim");
+
+            return RedirectToAction("Index");
+        }
+
+
+        [HttpPost]
+        public IActionResult SearchDelegations()
+        {
+            int? Status = null;
             try
             {
-                Id = Convert.ToInt32(HttpContext.Request.Form["Id"]);
+                Status = Convert.ToInt32(HttpContext.Request.Form["Filter"]);
             }
             catch (Exception)
             {
             }
-            return View("UpdateDelegation");
+
+
+            MainSearchMC mainSearchMC = new MainSearchMC()
+            {
+                Status = Status
+            };
+            SetupClaimsRequestcs setupClaimsRequestcs = new SetupClaimsRequestcs()
+            {
+                TransactionType = CORE.Extensions.ClaimTransactionType.LoadDelegation,
+                Request = mainSearchMC
+            };
+            var Delegations = Helpers.ExcutePostAPI<List<DelegationSetup>>(setupClaimsRequestcs, _appSettings.APIHubPrefix + "api/MotorClaim/SetupMotorClaim");
+            ViewData["Delegations"] = Delegations;
+            ViewData["Error"] = null;
+            ViewData["Filter"] = Status;
+            return View("Index");
         }
+
+
+        public IActionResult DeleteDelegation(int Id)
+        {
+            ViewData["Controller"] = "Delegation";
+            ViewData["Action"] = "DeleteDelegationPost";
+
+            return View("_DeleteConfirmation",Id);
+        }
+
+        [HttpPost]
+        public IActionResult DeleteDelegationPost(int Id)
+        {
+            MainSearchMC mainSearchMC = new MainSearchMC()
+            {
+                Id = Id
+            };
+            SetupClaimsRequestcs setupClaimsRequestcs = new SetupClaimsRequestcs()
+            {
+                TransactionType = CORE.Extensions.ClaimTransactionType.DeleteDelegation,
+                Request = mainSearchMC
+            };
+            var Delegations = Helpers.ExcutePostAPI<bool>(setupClaimsRequestcs, _appSettings.APIHubPrefix + "api/MotorClaim/SetupMotorClaim");
+
+            return RedirectToAction("Index");
+        }
+
+
+
+    
+
+        
     }
 }

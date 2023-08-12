@@ -1,7 +1,12 @@
-﻿@{
-    Layout = null;
+﻿@using CORE.DTOs.MotorClaim.Frauds;
+@{
+    int? Filter = (int?)ViewData["Filter"];
+    List<FraudSetup> fraudSetups = (List<FraudSetup>)ViewData["FraudSetup"];
+    List<FraudIndicators> fraudIndicators = (List<FraudIndicators>)ViewData["FraudIndicators"];
 }
-
+@{
+    await Html.RenderPartialAsync("_ContentSection");
+}
 
 <div class="policy-detail-wrapper">
     <div class="basic-detail">
@@ -14,7 +19,7 @@
             </div>
             <div class="action-dropdown">
                 <div class="btn-wrapper">
-                    <button class="button button-primary">
+                    <button class="button button-primary" onclick="LoadFraudSetup(0)">
                         Add Fraud Setup
                     </button>
                 </div>
@@ -23,15 +28,20 @@
         <div class="policy-detail-body" style="background-color:white !important">
             <div class="inner-clild-wrap">
                 <ul class="detail-list">
-                    @for (int i = 0; i < 8; i++)
-                    {
-                        <li class="detailed-item false">
-                            <div class="item-content">
-                                <span class="label" style="color:white !important">From 0 - 45</span>
-                                <h3 class="value" style="color:white !important">Error</h3>
-                            </div>
-                        </li>
-                    }
+                    @if (fraudSetups != null)
+                        @foreach (var item in fraudSetups)
+                        {
+                            <li class="detailed-item false" style="cursor:pointer;background-color:@item.Color" onclick="LoadFraudSetup(@item.Id)">
+                                <div class="item-content">
+                                    <span class="label" style="color:white !important">From @item.ScoreFrom - @item.ScoreTo</span>
+                                    @{
+                                        var y = Enum.TryParse(item.FraudResult.ToString(), out MotorClaims.Models.Enums.FraudLevel parsedEnumValue);
+                                    }
+                                    <h3 class="value" style="color:white !important">@parsedEnumValue</h3>
+                                </div>
+                            </li>
+                        }
+
 
 
                 </ul>
@@ -44,23 +54,24 @@
 <div class="policy-wrapper">
     <h2 class="heading">Fraud Managment</h2>
     <div class="search-member">
+        <form method="post" asp-action="SearchFrauds" asp-controller="Fraud">
+
         <div class="search-filter-wrapper">
-
-
-            <select class="common-dropdown ">
-                <option selected disabled value="">Status</option>
+            
+                <select class="common-dropdown " id="ddlFilter" name="Filter">
+                <option  value="">Status</option>
                 <option value="1">Active</option>
                 <option value="0">In-Active</option>
             </select>
 
             <div class="search-heading-wrap">
 
-                <button class="button button-secondary">Search</button>
+                <button class="button button-secondary" type="submit">Search</button>
             </div>
-
+          
 
         </div>
-
+        </form>
     </div>
 </div>
 
@@ -75,90 +86,54 @@
         <tr>
             <!-- <th>#</th> -->
             <th>Stage Name</th>
-            <th>Order</th>
+            <th>Score</th>
             <th>Is Active</th>
-            <th>Creation Date</th>
-            <th>Approvers</th>
+            <th>Policy Type</th>
+            <th>Actions</th>
         </tr>
+        @if (fraudIndicators != null)
+        @foreach (var item in fraudIndicators)
+        {
+            <tr>
+                <td class="tran" onclick="UpdateFraudIndicator(@item.Id)">#@item.Name</td>
+                <td>@item.Score</td>
+                <td>
+                        @if (item.IsActive)
+                        {
+                            <span>Active</span>
+                        }
+                        else
+                        {
+                            <span>In-Active</span>
+                        }
+                </td>
+                <td>
+                        @if (item.PolicyType==1)
+                        {
+                            <span>TPL</span>
+                        }
+                        else if (item.PolicyType == 2)
+                        {
+                            <span>Comp</span>
+                        }else
+                        {
+                            <span>Both</span>
+                        }
+                </td>
 
-        <tr>
-            <!-- <td></td> -->
-            <td class="tran" onclick="UpdateFraudIndicator(1)">#TR44372</td>
-            <td>324234235</td>
-            <td>12/12/12</td>
-            <td>1321231</td>
-            <td class="tran" onclick="UpdateFraudSetup(1)">5</td>
+                    <td>
+                        <div class="resubmit" style="padding-left:10px">
+                            <button class="button button-delete-border" id="delet-Draft-Member" title="Delete" style="border: brown !important"
+                                    onclick="openDeleteFraud(@item.Id)">
+                                <img class="btn-icon" src="/assets/icons/trash-can.svg" />
+                            </button>
+                        </div>
+                    </td>
 
-
-        </tr>
-        <tr>
-            <!-- <td></td> -->
-            <td class="tran">#TR44372</td>
-            <td>324234235</td>
-            <td>12/12/12</td>
-            <td>1321231</td>
-            <td class="tran" onclick="UpdateFraudSetup(1)">5</td>
-
-
-        </tr>
-        <tr>
-            <!-- <td></td> -->
-            <td class="tran">#TR44372</td>
-            <td>324234235</td>
-            <td>12/12/12</td>
-            <td>1321231</td>
-            <td class="tran" onclick="UpdateFraudSetup(1)">5</td>
-
-
-        </tr>
-        <tr>
-            <!-- <td></td> -->
-            <td class="tran">#TR44372</td>
-            <td>324234235</td>
-            <td>12/12/12</td>
-            <td>1321231</td>
-            <td class="tran" onclick="UpdateFraudSetup(1)">5</td>
-
-
-        </tr>
-        <tr>
-            <!-- <td></td> -->
-            <td class="tran">#TR44372</td>
-            <td>324234235</td>
-            <td>12/12/12</td>
-            <td>1321231</td>
-            <td class="tran" onclick="UpdateFraudSetup(1)">5</td>
+            </tr>
+        }
 
 
-        </tr>
-        <tr>
-            <!-- <td></td> -->
-            <td class="tran">#TR44372</td>
-            <td>324234235</td>
-            <td>12/12/12</td>
-            <td>1321231</td>
-            <td class="tran" onclick="UpdateFraudSetup(1)">5</td>
-
-
-        </tr>
-        <tr>
-            <!-- <td></td> -->
-            <td class="tran">#TR44372</td>
-            <td>324234235</td>
-            <td>12/12/12</td>
-            <td>1321231</td>
-            <td class="tran" onclick="UpdateFraudSetup(1)">5</td>
-
-        </tr>
-        <tr>
-            <!-- <td></td> -->
-            <td class="tran">#TR44372</td>
-            <td>324234235</td>
-            <td>12/12/12</td>
-            <td>1321231</td>
-            <td class="tran" onclick="UpdateFraudSetup(1)">5</td>
-
-        </tr>
     </table>
 </div>
 
@@ -169,3 +144,21 @@
 </div>
 <div id="edit-FraudSetup-popup" class="edit-member-id-popup">
 </div>
+<div id="delete-Confirmation" class="delete-dependent-modal"></div>
+
+
+<script>
+    var element = document.getElementById("shad4");
+    element.classList.add("Selected");
+
+    var filter = '@Filter';
+    if (filter.length > 0) {
+        $('#ddlFilter').val('@Filter');
+    }
+    $(function () {
+        if ('@ViewData["Error"]' != "" && '@ViewData["Error"]' != '') {
+            ErrorAlert('@ViewData["Error"]');
+        }
+    })
+
+</script>

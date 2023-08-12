@@ -58,6 +58,58 @@
     };
 })(jQuery);
 
+(function ($) {
+    $.fn.ForceIntegerEntry = function (AcceptNegative) {
+
+        return this.each(function () {
+
+            $(this).keydown(function (e) {
+                var key = e.charCode || e.keyCode || 0;
+                if (AcceptNegative) {
+                    if (key == 189 || key == 109) {
+                        var hasMinus = $(this).val().indexOf("-") > -1;
+                        if (hasMinus) {
+                            $(this).val($(this).val().replace("-", ""));
+                            if ($(this).change) {
+                                $(this).change();
+                            }
+                            return false;
+                        } else {
+                            $(this).val("-" + $(this).val());
+                            if ($(this).change) {
+                                $(this).change();
+                            }
+                            return false;
+                        }
+                    }
+                }
+                return (
+                    key == 8 ||
+                    key == 9 ||
+                    key == 46 ||
+                    (key >= 37 && key <= 40) ||
+                    (key >= 48 && key <= 57) ||
+                    (key >= 96 && key <= 105));
+            });
+
+            $(this).blur(function (e) {
+                if ($(this).val() == "-") {
+                    $(this).val("");
+                }
+                return true;
+            });
+        });
+    };
+})(jQuery);
+
+(function ($) {
+    $.fn.UnForceIntegerEntry = function (type) {
+        return this.each(function () {
+            $(this).unbind('keydown');
+            $(this).unbind('blur');
+        });
+    };
+})(jQuery);
 $('#txtDelegateFrom').autocomplete({
     source: function (request, response) {
         $.getJSON("/api/Services/GetUsers/", { name: request.term }, function (data) {
@@ -143,3 +195,30 @@ $('#txtApproverEmail').autocomplete({
     }
 });
 
+$('#txtEmail').autocomplete({
+    source: function (request, response) {
+        $.getJSON("/api/Services/GetUsers/", { name: request.term }, function (data) {
+            response($.map(data, function (val, i) {
+                return {
+                    label: val.email,
+                    ReportGroupId: val.userName
+                };
+            }))
+        });
+    },
+    minLength: 1,
+    select: function (event, ui) {
+        $('#txtName').val(ui.item.ReportGroupId);
+        $('#txtEmail').val(ui.item.label);
+    },
+    change: function (event, ui) {
+        if (!ui.item) {
+            $('#txtEmail').val("");
+            $('#txtName').val("");
+        }
+    }
+}).focus(function () {
+    if ($(this).attr('state') != 'open' && !$('#txtName').val()) {
+        $(this).autocomplete("search");
+    }
+});

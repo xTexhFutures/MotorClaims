@@ -34,6 +34,7 @@ namespace MotorClaims.Models
         }
         public static T Deserilize<T>(string json)
         {
+   
             T? resultValue = JsonConvert.DeserializeObject<T>(json);
             return (T)Convert.ChangeType(resultValue, typeof(T));
         }
@@ -139,10 +140,10 @@ namespace MotorClaims.Models
             {
                 Content = new StringContent(obj, Encoding.UTF8, "application/json")
             };
+            
             var resultAll = client.Send(webRequest);
             var result = new StreamReader(resultAll.Content.ReadAsStream());
             var Info = result.ReadToEnd();
-
             return Deserilize<T>(Info);
 
         }
