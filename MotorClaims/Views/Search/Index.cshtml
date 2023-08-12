@@ -1,4 +1,5 @@
-﻿<div class="page-wrapper">
+﻿@model CORE.DTOs.APIs.MotorClaim.ClaimSearchResult
+<div class="page-wrapper">
     <div class="left-content">
         <div class="policy-detail-wrapper">
             <div class="basic-detail" style="background:none !important">
@@ -9,6 +10,7 @@
                         </div>
                      
                     </div>
+                    <form asp-controller="Search" method="post">
                     <div class="search-filter-wrapper">
                         <div class="search-wrapper">
                             <span class="label">Plate No</span>
@@ -17,7 +19,7 @@
                                 <div class="search-icon-wrapper">
                                     <img src="/assets/icons/search.svg" class="search-icon" alt="">
                                 </div>
-                                <input type="text" class="input-box" placeholder="Search By Plate No"
+                                <input type="text" class="input-box" name="plate" placeholder="Search By Plate No"
                                        value="">
                             </div>
                         </div>
@@ -28,7 +30,7 @@
                                 <div class="search-icon-wrapper">
                                     <img src="/assets/icons/search.svg" class="search-icon" alt="">
                                 </div>
-                                <input type="text" class="input-box" placeholder="Search By Sequance No"
+                                <input type="text" class="input-box" name="sequence" placeholder="Search By Sequance No"
                                        value="">
                             </div>
                         </div>
@@ -39,7 +41,7 @@
                                 <div class="search-icon-wrapper">
                                     <img src="/assets/icons/search.svg" class="search-icon" alt="">
                                 </div>
-                                <input type="text" class="input-box" placeholder="Search By Claim No"
+                                <input type="text" class="input-box" name="claimno" placeholder="Search By Claim No"
                                        value="">
                             </div>
                         </div>
@@ -53,7 +55,7 @@
                                 <div class="search-icon-wrapper">
                                     <img src="/assets/icons/search.svg" class="search-icon" alt="">
                                 </div>
-                                <input type="text" class="input-box" placeholder="Search By National Id"
+                                <input type="text" class="input-box" name="nationalid" placeholder="Search By National Id"
                                        value="">
                             </div>
                         </div>
@@ -64,7 +66,7 @@
                                 <div class="search-icon-wrapper">
                                     <img src="/assets/icons/search.svg" class="search-icon" alt="">
                                 </div>
-                                <input type="text" class="input-box" placeholder="Search By Mobile No"
+                                <input type="text" class="input-box" name="mobile" placeholder="Search By Mobile No"
                                        value="">
                             </div>
                         </div>
@@ -75,7 +77,7 @@
                                 <div class="search-icon-wrapper">
                                     <img src="/assets/icons/search.svg" class="search-icon" alt="">
                                 </div>
-                                <input type="text" class="input-box" placeholder="Search By Complaint No"
+                                <input type="text" class="input-box" name="complain" placeholder="Search By Complaint No"
                                        value="">
                             </div>
                         </div>
@@ -90,7 +92,7 @@
                                 <div class="search-icon-wrapper">
                                     <img src="/assets/icons/search.svg" class="search-icon" alt="">
                                 </div>
-                                <input type="text" class="input-box" placeholder="Search By Custom No"
+                                <input type="text" class="input-box" name="custom" placeholder="Search By Custom No"
                                        value="">
                             </div>
                         </div>
@@ -101,7 +103,7 @@
                                 <div class="search-icon-wrapper">
                                     <img src="/assets/icons/search.svg" class="search-icon" alt="">
                                 </div>
-                                <input type="text" class="input-box" placeholder="Search By Chasis No"
+                                <input type="text" class="input-box" name="chassis" placeholder="Search By Chasis No"
                                        value="">
                             </div>
                         </div>
@@ -112,261 +114,225 @@
                                 <div class="search-icon-wrapper">
                                     <img src="/assets/icons/search.svg" class="search-icon" alt="">
                                 </div>
-                                <input type="text" class="input-box" placeholder="Search By Policy No"
+                                <input type="text" class="input-box" name="policy" placeholder="Search By Policy No"
                                        value="">
                             </div>
                         </div>
                     </div>
 
                     <div class="search-heading-wrap" style="padding-top:10px">
-                    <button class="button button-secondary" style="width:100%">Search</button>
+                    <button class="button button-secondary" style="width:100%" asp-action="Search">Search</button>
                     </div>
-         @*           <div class="search-filter-wrapper">
-
-                        <div class="search-wrapper">
-                            <span class="label">Insurance Type</span>
-                            <div class="search-input-box-wrapper">
-
-
-                                <select class="common-dropdown ">
-                                    <option selected disabled value="">All Classes</option>
-                                    <option>Silver AS1</option>
-                                    <option>Silver AS3</option>
-                                    <option>Silver AS4</option>
-                                    <option>Silver AS5</option>
-                                    <option>Silver AS6</option>
-                                    <option>Silver AS6</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="search-wrapper">
-                            <span class="label">Insurance Type</span>
-                            <select class="common-dropdown">
-                                <option selected disabled value="">All Member</option>
-                                <option>Member 1</option>
-                                <option>Member 2</option>
-                                <option>Member 3</option>
-                                <option>Member 4</option>
-                                <option>Member 5</option>
-                                <option>Member 6</option>
-                            </select>
-                        </div>
-                        <div class="search-wrapper">
-                            <span class="label">Insurance Type</span>
-                            <select class="common-dropdown">
-                                <option selected disabled value="">All Member</option>
-                                <option>Member 1</option>
-                                <option>Member 2</option>
-                                <option>Member 3</option>
-                                <option>Member 4</option>
-                                <option>Member 5</option>
-                                <option>Member 6</option>
-                            </select>
-                        </div>
-                    </div>*@
+                    </form>
                 </div>
             </div>
-
-            <div class="policy-members">
-                <div class="heading-card">
-                    <h2 class="heading">All Vehicles</h2>
-                </div>
-                <div class="accordion-wrapper">
-                    <div class="accordion-item-wrapper">
-                        <div class="accordion-header" onclick="memberAccordion('member_1')">
-                            <div class="accordion-collapse-icon-wrapper">
-                                <img class="icon-minus" src="/assets/icons/circle-minus.svg">
-                                <img class="icon-plus" src="/assets/icons/circle-plus.svg">
-                            </div>
-                            <div class="accordion-heaing-content">
-                                <div class="heading-wrap">
-                                    <h2 class="heading">P/IJARAH/1005/123456</h2>
-                                </div>
-                                <ul class="detail-basic">
-                                    <li class="detailed-item">
-                                        <span class="label">Business Channel:</span>
-                                        <span class="value">Tameeni</span>
-                                    </li>
-                                    <li class="detailed-item">
-                                        <span class="label">National ID:</span>
-                                        <span class="value">1004938468</span>
-                                    </li>
-                                    <li class="detailed-item">
-                                        <span class="label"># of Drivers :</span>
-                                        <span class="value">1</span>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="class-tag">A</div>
-                            <div class="total-person">
-                                <img class="users-icon" src="~/assets/motor/Vehicles.png" />
-                                <span class="user-count">3</span>
-                            </div>
-                            <div class="total-person">
-                                <img class="users-icon" src="~/assets/motor/accident.png" />
-                                <span class="user-count">3</span>
-                            </div>
+            @if (Model != null && Model.Productions != null && Model.Productions.Count > 0)
+            {
+                @foreach (var item in Model.Productions)
+                {
+                    <div class="policy-members">
+                        <div class="heading-card">
+                            <h2 class="heading">All Vehicles</h2>
                         </div>
-                        <div class="accordion-body" id="member_1">
-                            <ul class="dates-and-conpany-wrapper">
-                                <li class="column-item">
-                                    <img class="support-icon" src="/assets/icons/calendar.svg" />
-                                    <span class="label">Effective Date:</span>
-                                    <span class="value">19 Sep 1984</span>
-                                </li>
-                                <li class="column-item">
-                                    <img class="support-icon" src="/assets/icons/calendar.svg" />
-                                    <span class="label">Expiry date:</span>
-                                    <span class="value">18 Dec 2022</span>
-                                </li>
-                                <li class="column-item">
-                                    <img class="support-icon" src="/assets/icons/home.svg" />
-                                    <span class="label">Usage:</span>
-                                    <span class="value">(Complaint No. from CRM as a simple integration)</span>
-                                </li>
-                            </ul>
-                         
-                            <div class="dependent-wrapper">
-                                <div class="dependent-header" >
-                                    <div class="heading-card">
-                                        <h2 class="heading">Vehicles</h2>
+                        <div class="accordion-wrapper">
+                            <div class="accordion-item-wrapper">
+                                <div class="accordion-header" onclick="memberAccordion('member_1')">
+                                    <div class="accordion-collapse-icon-wrapper">
+                                        <img class="icon-minus" src="/assets/icons/circle-minus.svg">
+                                        <img class="icon-plus" src="/assets/icons/circle-plus.svg">
+                                    </div>
+                                    <div class="accordion-heaing-content">
+                                        <div class="heading-wrap">
+                                            <h2 class="heading">@item.policy.PolicyNumber</h2>
+                                        </div>
+                                        <ul class="detail-basic">
+                                            <li class="detailed-item">
+                                                <span class="label">Business Channel:</span>
+                                                <span class="value">@item.policy.BusinessType</span>
+                                            </li>
+                                            <li class="detailed-item">
+                                                <span class="label">National ID:</span>
+                                                <span class="value">@item.policy.OwnerId</span>
+                                            </li>
+                                            <li class="detailed-item">
+                                                <span class="label"># of Drivers :</span>
+                                                <span class="value">1</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="class-tag">A</div>
+                                    <div class="total-person">
+                                        <img class="users-icon" src="~/assets/motor/Vehicles.png" />
+                                        <span class="user-count">@item.Vehicles.Count</span>
                                     </div>
                                 </div>
-                                <div class="dependent-list-body">
-                                    <div class="accordion-header">
-                                        <img src="/assets/motor/Vehicles.png" class="status-icon" />
-                                        <div class="accordion-heaing-content" style="width:100%;cursor:pointer" onclick="memberAccordion1('member_2')">
-                                            <div class="heading-wrap" >
-                                                <h2 class="heading">TYLER DENNIS</h2>
-                                             
-                                                <div class="class-tag">A</div>
-                                                <div class="request-btn-wrapper">
-                                                    <a href="@Url.Action("Index","Claims")" class="button button-primary" style="line-height:1rem !important">Select</a>
-                                                </div>
-                                                <div class="total-person">
-                                                    
-                                                    <img class="users-icon" src="~/assets/motor/accident.png" />
-                                                    <span class="user-count">3</span>
-                                                </div>
+                                <div class="accordion-body" id="member_1">
+                                    <ul class="dates-and-conpany-wrapper">
+                                        <li class="column-item">
+                                            <img class="support-icon" src="/assets/icons/calendar.svg" />
+                                            <span class="label">Effective Date:</span>
+                                            <span class="value">@item.policy.PolicyEffectiveDate.ToString("dd MMM yyyy")</span>
+                                        </li>
+                                        <li class="column-item">
+                                            <img class="support-icon" src="/assets/icons/calendar.svg" />
+                                            <span class="label">Expiry date:</span>
+                                            <span class="value">@item.policy.PolicyExpiryDate.ToString("dd MMM yyyy")</span>
+                                        </li>
+                                        <li class="column-item">
+                                            <img class="support-icon" src="/assets/icons/home.svg" />
+                                            <span class="label">Usage:</span>
+                                            <span class="value">(Complaint No. from CRM as a simple integration)</span>
+                                        </li>
+                                    </ul>
+
+                                    <div class="dependent-wrapper">
+                                        <div class="dependent-header">
+                                            <div class="heading-card">
+                                                <h2 class="heading">Vehicles</h2>
                                             </div>
-                                            <ul class="detail-basic">
-                                                <li class="detailed-item">
-                                                    <img class="support-icon" src="/assets/icons/calendar.svg" />
-                                                    <span class="label">Effective Date:</span>
-                                                    <span class="value">19 Sep 1984</span>
-                                                </li>
-                                                <li class="detailed-item">
-                                                    <span class="label">Make :</span>
-                                                    <span class="value">Toyota</span>
-                                                </li>
-                                                <li class="detailed-item">
-                                                    <span class="label">Model :</span>
-                                                    <span class="value">Corola</span>
-                                                </li>
-                                                <li class="detailed-item">
-                                                    <span class="label">Manufacture  :</span>
-                                                    <span class="value">2013</span>
-                                                </li>
-                                            </ul>
                                         </div>
-                                    </div>
+                                        @foreach(var veh in item.Vehicles)
+                                        {
+                                            <div class="dependent-list-body">
+                                                <div class="accordion-header">
+                                                    <img src="/assets/motor/Vehicles.png" class="status-icon" />
+                                                    <div class="accordion-heaing-content" style="width:100%;cursor:pointer" onclick="memberAccordion1('member_2')">
+                                                        <div class="heading-wrap">
+                                                            <h2 class="heading">@veh.drivers.FirstOrDefault().Name</h2>
 
+                                                            <div class="class-tag">A</div>
+                                                            <div class="request-btn-wrapper">
+                                                                <a href="@Url.Action("Index","Claims",new {policyNo = item.policy.PolicyNumber , chassis = veh.Vehicle.ChassisNo})" class="button button-primary" style="line-height:1rem !important">Select</a>
+                                                            </div>
+                                                            <div class="total-person">
 
-                                    <div class="dependent-list-body" id="member_2">
-                                        <div class="accordion-header">
-                                            <img src="/assets/motor/accident.png" class="status-icon" />
-                                            <div class="accordion-heaing-content" style="width:100%">
-                                                <div class="heading-wrap">
-                                                    <h2 class="heading">TYLER DENNIS</h2>
-                                                   
-                                                </div>
-                                                <ul class="detail-basic">
-                                                    <li class="detailed-item">
-                                                        <img class="support-icon" src="/assets/icons/calendar.svg" />
-                                                        <span class="label">Accident Date:</span>
-                                                        <span class="value">19 Sep 1984</span>
-                                                    </li>
-                                                    <li class="detailed-item">
-                                                        <span class="label">Liability :</span>
-                                                        <span class="value">75%</span>
-                                                    </li>
-                                                    <li class="detailed-item">
-                                                        <span class="label">Status :</span>
-                                                        <span class="value">Open</span>
-                                                    </li>
-                                                    <li class="detailed-item">
-                                                        <span class="label">Accident City:</span>
-                                                        <span class="value">Riyadh</span>
-                                                    </li>
-                                                    <li class="detailed-item">
-                                                        <span class="label">No Of Parties:</span>
-                                                        <span class="value">5</span>
-                                                    </li>
-                                                    <li class="detailed-item">
-                                                        <div class="request-btn-wrapper">
-                                                            <a href="@Url.Action("Index","Claims")" class="button button-primary" style="line-height:1rem !important">View</a>
+                                                                <img class="users-icon" src="~/assets/motor/accident.png" />
+                                                                <span class="user-count">@veh.lsClaims.Count</span>
+                                                            </div>
                                                         </div>
-                                                    </li>
-                                                </ul>
+                                                        <ul class="detail-basic">
+                                                            <li class="detailed-item">
+                                                                <img class="support-icon" src="/assets/icons/calendar.svg" />
+                                                                <span class="label">Effective Date:</span>
+                                                                <span class="value">@veh.Vehicle.VehicleEffectiveDate.ToString("dd MMM yyyy")</span>
+                                                            </li>
+                                                            <li class="detailed-item">
+                                                                <span class="label">Make :</span>
+                                                                <span class="value">@veh.Vehicle.Make</span>
+                                                            </li>
+                                                            <li class="detailed-item">
+                                                                <span class="label">Model :</span>
+                                                                <span class="value">@veh.Vehicle.Model</span>
+                                                            </li>
+                                                            <li class="detailed-item">
+                                                                <span class="label">Manufacture  :</span>
+                                                                <span class="value">@veh.Vehicle.ManufactureYear</span>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
 
-                                              
+                                                @if(veh.lsClaims !=null && veh.lsClaims.Count > 0)
+                                                {
+                                                    @foreach( var acc in  veh.lsClaims)
+                                                    {
+                                                        <div class="dependent-list-body" id="member_2">
+                                                            <div class="accordion-header">
+                                                                <img src="/assets/motor/accident.png" class="status-icon" />
+                                                                <div class="accordion-heaing-content" style="width:100%">
+                                                                    <div class="heading-wrap">
+                                                                        <h2 class="heading">@acc.Owner</h2>
+
+                                                                    </div>
+                                                                    <ul class="detail-basic">
+                                                                        <li class="detailed-item">
+                                                                            <img class="support-icon" src="/assets/icons/calendar.svg" />
+                                                                            <span class="label">Accident Date:</span>
+                                                                            <span class="value">@acc.DateOfLoss.ToString("dd MMM yyyy")</span>
+                                                                        </li>
+                                                                        <li class="detailed-item">
+                                                                            <span class="label">Accident No:</span>
+                                                                            <span class="value"> @acc.AccidentNo </span>
+                                                                        </li>
+                                                                        <li class="detailed-item">
+                                                                            <span class="label">Status :</span>
+                                                                            <span class="value">@acc.ClaimStatus</span>
+                                                                        </li>
+                                                                        <li class="detailed-item">
+                                                                            <div class="request-btn-wrapper">
+                                                                                <a href="@Url.Action("Index","Claims")" class="button button-primary" style="line-height:1rem !important">View</a>
+                                                                            </div>
+                                                                        </li>
+                                                                    </ul>
+
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    }
+                                                }
+                                               
+
+
                                             </div>
-                                        </div>
-                                    </div>
+                                        }
+                                       
 
-                                
+                                    </div>
                                 </div>
 
-                            </div>
-                        </div>
 
-                      
-                    </div>    
-                    
-                </div>
-            </div>
+                            </div>
+
+                        </div>
+                    </div>
+                }
+            }
+
         </div>
     </div>
-    <div class="right-sidebar false">
+   
+         <div class="right-sidebar false">
+
         <div class="inner-wrapper">
             <div class="membership-detail-wrapper">
+                @if (Model == null)
+                {
                 <div class="membership-inner-wrapper">
                     <div class="membership-header">
-                        <h2 class="heading-title">Steven Williams</h2>
-                        <p class="membership-id">Company Unified No.: 7009028932</p>
+                        <h2 class="heading-title">Pull Policy</h2>
+                        <p class="membership-id">pull policy from core system by entering policy No#</p>
                     </div>
-                    <div class="detail-tiles-wrapper">
-                        <div class="detail-tiles">
-                            <div class="tile-header">
-                                <div class="total-wrapper">
-                                    <h2 class="total">60</h2>
-                                    <p class="label-tag">Members</p>
+                        <div class="search-member">
+                         
+                            <form asp-controller="Search" method="post">
+                                <div class="search-filter-wrapper">
+
+                                    <div class="search-wrapper" style="width:100%">
+                                        <span class="label">Policy No</span>
+                                        <div class="search-input-box-wrapper">
+
+                                            <div class="search-icon-wrapper">
+                                                <img src="/assets/icons/search.svg" class="search-icon" alt="">
+                                            </div>
+                                            <input type="text" class="input-box" name="policy" placeholder="Search By Policy No"
+                                                   value="">
+                                        </div>
+                                    </div>
                                 </div>
-                                <img src="/assets/icons/users.svg" class="policy-summary-icon" alt="">
-                            </div>
-                        </div>
-                        <div class="detail-tiles">
-                            <div class="tile-header">
-                                <div class="total-wrapper">
-                                    <h2 class="total">16</h2>
-                                    <p class="label-tag">Request</p>
+
+                                <div class="search-heading-wrap" style="padding-top:10px">
+                                    <button class="button button-secondary" style="width:100%" asp-action="PullFromCore">Pull From Core</button>
                                 </div>
-                                <img src="/assets/icons/empty-file.svg" class="policy-summary-icon" alt="">
-                            </div>
+                            </form>
                         </div>
-                        <div class="detail-tiles">
-                            <div class="tile-header">
-                                <div class="total-wrapper">
-                                    <h2 class="total">-</h2>
-                                    <p class="label-tag">Interaction</p>
-                                </div>
-                                <img src="/assets/icons/empty-file.svg" class="policy-summary-icon" alt="">
-                            </div>
-                        </div>
+                       
                     </div>
+                }
                 </div>
             </div>
         </div>
-    </div>
+   
+    
 </div>
+

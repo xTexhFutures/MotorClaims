@@ -1,268 +1,275 @@
-﻿@{
+﻿@model CORE.DTOs.APIs.MotorClaim.ClaimSearchResult
+@{
     Layout = null;
 }
+@if (Model.Productions.FirstOrDefault().Vehicles.FirstOrDefault().lsClaims.Count > 0)
+{
 
-<div class="basic-detail">
-    <div class="policy-header">
-        <div class="name-number-wrapper">
-            <div class="policy-name-wrapper">
-                <img src="/assets/icons/empty-file.svg" class="policy-icon" />
-                <p class="policy-name">Claimants Info</p>
+    @foreach (var clm in Model.Productions.FirstOrDefault().Vehicles.FirstOrDefault().lsClaims)
+    {
+        <div class="basic-detail">
+            <div class="policy-header">
+                <div class="name-number-wrapper">
+                    <div class="policy-name-wrapper">
+                        <img src="/assets/icons/empty-file.svg" class="policy-icon" />
+                        <p class="policy-name">Claimants Info</p>
+                    </div>
+
+                </div>
+                <div class="action-dropdown">
+                    <h3 class="policy-no">Claimant No. 26115771</h3>
+                </div>
             </div>
+            <div class="policy-detail-body undefined">
+                <div class="inner-clild-wrap">
+                    <ul class="detail-list">
+                        <li class="detailed-item false">
+                            <span class="detailed-icon-wrap">
+                                <img src="/assets/icons/save.svg" alt="" class="item-icon">
+                            </span>
+                            <div class="item-content">
+                                <span class="label">Claimant Type</span>
+                                <h3 class="value ellipsis">A D F 1234</h3>
+                            </div>
+                        </li>
+                        <li class="detailed-item false">
+                            <span class="detailed-icon-wrap">
+                                <img src="/assets/icons/calendar.svg" alt="" class="item-icon">
+                            </span>
+                            <div class="item-content">
+                                <span class="label">Claimant Result</span>
+                                <h3 class="value ellipsis">2023</h3>
+                            </div>
+                        </li>
+                        <li class="detailed-item false">
+                            <span class="detailed-icon-wrap">
+                                <img src="/assets/icons/calendar.svg" alt="" class="item-icon">
+                            </span>
+                            <div class="item-content">
+                                <span class="label">Main Claim Cause</span>
+                                <h3 class="value ellipsis">17Dec2023</h3>
+                            </div>
+                        </li>
 
+                        <li class="detailed-item false">
+                            <span class="detailed-icon-wrap">
+                                <img src="/assets/icons/save.svg" alt="" class="item-icon">
+                            </span>
+                            <div class="item-content">
+                                <span class="label">Sub Claim Cause</span>
+                                <h3 class="value ellipsis">Toyota</h3>
+                            </div>
+                        </li>
+
+                        <li class="detailed-item false">
+                            <span class="detailed-icon-wrap">
+                                <img src="/assets/icons/save.svg" alt="" class="item-icon">
+                            </span>
+                            <div class="item-content">
+                                <span class="label">Claimant Name</span>
+                                <h3 class="value ellipsis">Agency</h3>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div style="background-color: white;min-height: 3px;"></div>
+                <div class="inner-clild-wrap">
+                    <ul class="detail-list">
+
+                        <li class="detailed-item false">
+                            <span class="detailed-icon-wrap">
+                                <img src="/assets/icons/save.svg" alt="" class="item-icon">
+                            </span>
+                            <div class="item-content">
+                                <span class="label">National Id</span>
+                                <h3 class="value ellipsis">Yaris</h3>
+                            </div>
+                        </li>
+
+
+                        <li class="detailed-item false">
+                            <span class="detailed-icon-wrap">
+                                <img src="/assets/icons/save.svg" alt="" class="item-icon">
+                            </span>
+                            <div class="item-content">
+                                <span class="label">Our %</span>
+                                <h3 class="value ellipsis">SUV</h3>
+                            </div>
+                        </li>
+                        <li class="detailed-item false">
+                            <span class="detailed-icon-wrap">
+                                <img src="/assets/icons/save.svg" alt="" class="item-icon">
+                            </span>
+                            <div class="item-content">
+                                <span class="label">Responsibility</span>
+                                <h3 class="value ellipsis">2021 </h3>
+                            </div>
+                        </li>
+                        <li class="detailed-item false">
+                            <span class="detailed-icon-wrap">
+                                <img src="/assets/icons/save.svg" alt="" class="item-icon">
+                            </span>
+                            <div class="item-content">
+                                <span class="label">Mobile No</span>
+                                <h3 class="value ellipsis">60dsadsee</h3>
+                            </div>
+                        </li>
+                        <li class="detailed-item false">
+                            <span class="detailed-icon-wrap">
+                                <img src="/assets/icons/save.svg" alt="" class="item-icon">
+                            </span>
+                            <div class="item-content">
+                                <span class="label">Driver Name</span>
+                                <h3 class="value ellipsis">67676667b SAR</h3>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div style="background-color: white;min-height: 3px;"></div>
+                <div class="inner-clild-wrap">
+                    <ul class="detail-list">
+
+                        <li class="detailed-item false">
+                            <span class="detailed-icon-wrap">
+                                <img src="/assets/icons/save.svg" alt="" class="item-icon">
+                            </span>
+                            <div class="item-content">
+                                <span class="label">Owner Name</span>
+                                <h3 class="value ellipsis">5</h3>
+                            </div>
+                        </li>
+
+
+                        <li class="detailed-item false">
+                            <span class="detailed-icon-wrap">
+                                <img src="/assets/icons/calendar.svg" alt="" class="item-icon">
+                            </span>
+                            <div class="item-content">
+                                <span class="label">Driver Date of Birth</span>
+                                <h3 class="value ellipsis">White</h3>
+                            </div>
+                        </li>
+                        <li class="detailed-item false">
+                            <span class="detailed-icon-wrap">
+                                <img src="/assets/icons/save.svg" alt="" class="item-icon">
+                            </span>
+                            <div class="item-content">
+                                <span class="label">Age</span>
+                                <h3 class="value ellipsis">20</h3>
+                            </div>
+                        </li>
+                        <li class="detailed-item false">
+                            <span class="detailed-icon-wrap">
+                                <img src="/assets/icons/save.svg" alt="" class="item-icon">
+                            </span>
+                            <div class="item-content">
+                                <span class="label">Driver License Expiry Date</span>
+                                <h3 class="value ellipsis">60dsadsee</h3>
+                            </div>
+                        </li>
+                        <li class="detailed-item false">
+                            <span class="detailed-icon-wrap">
+                                <img src="/assets/icons/save.svg" alt="" class="item-icon">
+                            </span>
+                            <div class="item-content">
+                                <span class="label">IBAN</span>
+                                <h3 class="value ellipsis">6 </h3>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div style="background-color: white;min-height: 3px;"></div>
+                <div class="inner-clild-wrap">
+                    <ul class="detail-list">
+
+                        <li class="detailed-item false">
+                            <span class="detailed-icon-wrap">
+                                <img src="/assets/icons/save.svg" alt="" class="item-icon">
+                            </span>
+                            <div class="item-content">
+                                <span class="label">Bank Name</span>
+                                <h3 class="value ellipsis">5</h3>
+                            </div>
+                        </li>
+
+
+                        <li class="detailed-item false">
+                            <span class="detailed-icon-wrap">
+                                <img src="/assets/icons/calendar.svg" alt="" class="item-icon">
+                            </span>
+                            <div class="item-content">
+                                <span class="label">Beneficiary Name</span>
+                                <h3 class="value ellipsis">White</h3>
+                            </div>
+                        </li>
+                        <li class="detailed-item false">
+                            <span class="detailed-icon-wrap">
+                                <img src="/assets/icons/save.svg" alt="" class="item-icon">
+                            </span>
+                            <div class="item-content">
+                                <span class="label">Missing Documents</span>
+                                <h3 class="value ellipsis">20</h3>
+                            </div>
+                        </li>
+                        <li class="detailed-item false">
+                            <span class="detailed-icon-wrap">
+                                <img src="/assets/icons/save.svg" alt="" class="item-icon">
+                            </span>
+                            <div class="item-content">
+                                <span class="label">Fraud</span>
+                                <h3 class="value ellipsis">No</h3>
+                            </div>
+                        </li>
+                        <li class="detailed-item false">
+                            <span class="detailed-icon-wrap">
+                                <img src="/assets/icons/save.svg" alt="" class="item-icon">
+                            </span>
+                            <div class="item-content">
+                                <span class="label">Make/Model/Manufacture</span>
+                                <h3 class="value ellipsis">Toyota/Yaris/2020 </h3>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div style="background-color: white;min-height: 3px;"></div>
+                <div class="inner-clild-wrap">
+                    <ul class="detail-list">
+
+                        <li class="detailed-item false">
+                            <span class="detailed-icon-wrap">
+                                <img src="/assets/icons/save.svg" alt="" class="item-icon">
+                            </span>
+                            <div class="item-content">
+                                <span class="label">Color</span>
+                                <h3 class="value ellipsis">5</h3>
+                            </div>
+                        </li>
+
+
+                        <li class="detailed-item false">
+                            <span class="detailed-icon-wrap">
+                                <img src="/assets/icons/calendar.svg" alt="" class="item-icon">
+                            </span>
+                            <div class="item-content">
+                                <span class="label">Plate Number</span>
+                                <h3 class="value ellipsis">White</h3>
+                            </div>
+                        </li>
+                        <li class="detailed-item false">
+                            <span class="detailed-icon-wrap">
+                                <img src="/assets/icons/save.svg" alt="" class="item-icon">
+                            </span>
+                            <div class="item-content">
+                                <span class="label">Chassis No</span>
+                                <h3 class="value ellipsis">20</h3>
+                            </div>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
         </div>
-        <div class="action-dropdown">
-            <h3 class="policy-no">Claimant No. 26115771</h3>
-        </div>
-    </div>
-    <div class="policy-detail-body undefined">
-        <div class="inner-clild-wrap">
-            <ul class="detail-list">
-                <li class="detailed-item false">
-                    <span class="detailed-icon-wrap">
-                        <img src="/assets/icons/save.svg" alt="" class="item-icon">
-                    </span>
-                    <div class="item-content">
-                        <span class="label">Claimant Type</span>
-                        <h3 class="value ellipsis">A D F 1234</h3>
-                    </div>
-                </li>
-                <li class="detailed-item false">
-                    <span class="detailed-icon-wrap">
-                        <img src="/assets/icons/calendar.svg" alt="" class="item-icon">
-                    </span>
-                    <div class="item-content">
-                        <span class="label">Claimant Result</span>
-                        <h3 class="value ellipsis">2023</h3>
-                    </div>
-                </li>
-                <li class="detailed-item false">
-                    <span class="detailed-icon-wrap">
-                        <img src="/assets/icons/calendar.svg" alt="" class="item-icon">
-                    </span>
-                    <div class="item-content">
-                        <span class="label">Main Claim Cause</span>
-                        <h3 class="value ellipsis">17Dec2023</h3>
-                    </div>
-                </li>
-
-                <li class="detailed-item false">
-                    <span class="detailed-icon-wrap">
-                        <img src="/assets/icons/save.svg" alt="" class="item-icon">
-                    </span>
-                    <div class="item-content">
-                        <span class="label">Sub Claim Cause</span>
-                        <h3 class="value ellipsis">Toyota</h3>
-                    </div>
-                </li>
-
-                <li class="detailed-item false">
-                    <span class="detailed-icon-wrap">
-                        <img src="/assets/icons/save.svg" alt="" class="item-icon">
-                    </span>
-                    <div class="item-content">
-                        <span class="label">Claimant Name</span>
-                        <h3 class="value ellipsis">Agency</h3>
-                    </div>
-                </li>
-            </ul>
-        </div>
-        <div style="background-color: white;min-height: 3px;"></div>
-        <div class="inner-clild-wrap">
-            <ul class="detail-list">
-
-                <li class="detailed-item false">
-                    <span class="detailed-icon-wrap">
-                        <img src="/assets/icons/save.svg" alt="" class="item-icon">
-                    </span>
-                    <div class="item-content">
-                        <span class="label">National Id</span>
-                        <h3 class="value ellipsis">Yaris</h3>
-                    </div>
-                </li>
-
-
-                <li class="detailed-item false">
-                    <span class="detailed-icon-wrap">
-                        <img src="/assets/icons/save.svg" alt="" class="item-icon">
-                    </span>
-                    <div class="item-content">
-                        <span class="label">Our %</span>
-                        <h3 class="value ellipsis">SUV</h3>
-                    </div>
-                </li>
-                <li class="detailed-item false">
-                    <span class="detailed-icon-wrap">
-                        <img src="/assets/icons/save.svg" alt="" class="item-icon">
-                    </span>
-                    <div class="item-content">
-                        <span class="label">Responsibility</span>
-                        <h3 class="value ellipsis">2021 </h3>
-                    </div>
-                </li>
-                <li class="detailed-item false">
-                    <span class="detailed-icon-wrap">
-                        <img src="/assets/icons/save.svg" alt="" class="item-icon">
-                    </span>
-                    <div class="item-content">
-                        <span class="label">Mobile No</span>
-                        <h3 class="value ellipsis">60dsadsee</h3>
-                    </div>
-                </li>
-                <li class="detailed-item false">
-                    <span class="detailed-icon-wrap">
-                        <img src="/assets/icons/save.svg" alt="" class="item-icon">
-                    </span>
-                    <div class="item-content">
-                        <span class="label">Driver Name</span>
-                        <h3 class="value ellipsis">67676667b SAR</h3>
-                    </div>
-                </li>
-            </ul>
-        </div>
-        <div style="background-color: white;min-height: 3px;"></div>
-        <div class="inner-clild-wrap">
-            <ul class="detail-list">
-
-                <li class="detailed-item false">
-                    <span class="detailed-icon-wrap">
-                        <img src="/assets/icons/save.svg" alt="" class="item-icon">
-                    </span>
-                    <div class="item-content">
-                        <span class="label">Owner Name</span>
-                        <h3 class="value ellipsis">5</h3>
-                    </div>
-                </li>
-
-
-                <li class="detailed-item false">
-                    <span class="detailed-icon-wrap">
-                        <img src="/assets/icons/calendar.svg" alt="" class="item-icon">
-                    </span>
-                    <div class="item-content">
-                        <span class="label">Driver Date of Birth</span>
-                        <h3 class="value ellipsis">White</h3>
-                    </div>
-                </li>
-                <li class="detailed-item false">
-                    <span class="detailed-icon-wrap">
-                        <img src="/assets/icons/save.svg" alt="" class="item-icon">
-                    </span>
-                    <div class="item-content">
-                        <span class="label">Age</span>
-                        <h3 class="value ellipsis">20</h3>
-                    </div>
-                </li>
-                <li class="detailed-item false">
-                    <span class="detailed-icon-wrap">
-                        <img src="/assets/icons/save.svg" alt="" class="item-icon">
-                    </span>
-                    <div class="item-content">
-                        <span class="label">Driver License Expiry Date</span>
-                        <h3 class="value ellipsis">60dsadsee</h3>
-                    </div>
-                </li>
-                <li class="detailed-item false">
-                    <span class="detailed-icon-wrap">
-                        <img src="/assets/icons/save.svg" alt="" class="item-icon">
-                    </span>
-                    <div class="item-content">
-                        <span class="label">IBAN</span>
-                        <h3 class="value ellipsis">6 </h3>
-                    </div>
-                </li>
-            </ul>
-        </div>
-
-        <div style="background-color: white;min-height: 3px;"></div>
-        <div class="inner-clild-wrap">
-            <ul class="detail-list">
-
-                <li class="detailed-item false">
-                    <span class="detailed-icon-wrap">
-                        <img src="/assets/icons/save.svg" alt="" class="item-icon">
-                    </span>
-                    <div class="item-content">
-                        <span class="label">Bank Name</span>
-                        <h3 class="value ellipsis">5</h3>
-                    </div>
-                </li>
-
-
-                <li class="detailed-item false">
-                    <span class="detailed-icon-wrap">
-                        <img src="/assets/icons/calendar.svg" alt="" class="item-icon">
-                    </span>
-                    <div class="item-content">
-                        <span class="label">Beneficiary Name</span>
-                        <h3 class="value ellipsis">White</h3>
-                    </div>
-                </li>
-                <li class="detailed-item false">
-                    <span class="detailed-icon-wrap">
-                        <img src="/assets/icons/save.svg" alt="" class="item-icon">
-                    </span>
-                    <div class="item-content">
-                        <span class="label">Missing Documents</span>
-                        <h3 class="value ellipsis">20</h3>
-                    </div>
-                </li>
-                <li class="detailed-item false">
-                    <span class="detailed-icon-wrap">
-                        <img src="/assets/icons/save.svg" alt="" class="item-icon">
-                    </span>
-                    <div class="item-content">
-                        <span class="label">Fraud</span>
-                        <h3 class="value ellipsis">No</h3>
-                    </div>
-                </li>
-                <li class="detailed-item false">
-                    <span class="detailed-icon-wrap">
-                        <img src="/assets/icons/save.svg" alt="" class="item-icon">
-                    </span>
-                    <div class="item-content">
-                        <span class="label">Make/Model/Manufacture</span>
-                        <h3 class="value ellipsis">Toyota/Yaris/2020 </h3>
-                    </div>
-                </li>
-            </ul>
-        </div>
-
-        <div style="background-color: white;min-height: 3px;"></div>
-        <div class="inner-clild-wrap">
-            <ul class="detail-list">
-
-                <li class="detailed-item false">
-                    <span class="detailed-icon-wrap">
-                        <img src="/assets/icons/save.svg" alt="" class="item-icon">
-                    </span>
-                    <div class="item-content">
-                        <span class="label">Color</span>
-                        <h3 class="value ellipsis">5</h3>
-                    </div>
-                </li>
-
-
-                <li class="detailed-item false">
-                    <span class="detailed-icon-wrap">
-                        <img src="/assets/icons/calendar.svg" alt="" class="item-icon">
-                    </span>
-                    <div class="item-content">
-                        <span class="label">Plate Number</span>
-                        <h3 class="value ellipsis">White</h3>
-                    </div>
-                </li>
-                <li class="detailed-item false">
-                    <span class="detailed-icon-wrap">
-                        <img src="/assets/icons/save.svg" alt="" class="item-icon">
-                    </span>
-                    <div class="item-content">
-                        <span class="label">Chassis No</span>
-                        <h3 class="value ellipsis">20</h3>
-                    </div>
-                </li>
-   
-            </ul>
-        </div>
-    </div>
-</div>
+    }
+}

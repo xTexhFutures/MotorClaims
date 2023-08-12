@@ -1,125 +1,133 @@
-﻿@{
+﻿@model CORE.DTOs.APIs.MotorClaim.ClaimSearchResult
+@{
     Layout = null;
 }
+@if (Model.Productions.FirstOrDefault().Vehicles.FirstOrDefault().lsClaims.Count > 0)
+{
 
-<div class="basic-detail">
-    <div class="policy-header">
-        <div class="name-number-wrapper">
-            <div class="policy-name-wrapper">
-                <img src="/assets/icons/empty-file.svg" class="policy-icon" />
-                <p class="policy-name">Claim Info</p>
+    @foreach (var clm in Model.Productions.FirstOrDefault().Vehicles.FirstOrDefault().lsClaims)
+    {
+        <div class="basic-detail">
+            <div class="policy-header">
+                <div class="name-number-wrapper">
+                    <div class="policy-name-wrapper">
+                        <img src="/assets/icons/empty-file.svg" class="policy-icon" />
+                        <p class="policy-name">Claim Info</p>
+                    </div>
+
+                </div>
+                <div class="action-dropdown">
+                    <h3 class="policy-no">Claim No. @clm.ClaimNo</h3>
+                </div>
             </div>
+            <div class="policy-detail-body undefined">
+                <div class="inner-clild-wrap">
+                    <ul class="detail-list">
+                        <li class="detailed-item false">
+                            <span class="detailed-icon-wrap">
+                                <img src="/assets/icons/save.svg" alt="" class="item-icon">
+                            </span>
+                            <div class="item-content">
+                                <span class="label">Claim Number</span>
+                                <h3 class="value ellipsis">@clm.ClaimNo</h3>
+                            </div>
+                        </li>
+                        <li class="detailed-item false">
+                            <span class="detailed-icon-wrap">
+                                <img src="/assets/icons/calendar.svg" alt="" class="item-icon">
+                            </span>
+                            <div class="item-content">
+                                <span class="label">Date Of Loss</span>
+                                <h3 class="value ellipsis">@clm.DateOfLoss.ToString("dd MMM yyyy")</h3>
+                            </div>
+                        </li>
+                        <li class="detailed-item false">
+                            <span class="detailed-icon-wrap">
+                                <img src="/assets/icons/calendar.svg" alt="" class="item-icon">
+                            </span>
+                            <div class="item-content">
+                                <span class="label">Report Type</span>
+                                <h3 class="value ellipsis">@clm.ClaimReportType</h3>
+                            </div>
+                        </li>
 
+                        <li class="detailed-item false">
+                            <span class="detailed-icon-wrap">
+                                <img src="/assets/icons/save.svg" alt="" class="item-icon">
+                            </span>
+                            <div class="item-content">
+                                <span class="label">Accident City</span>
+                                <h3 class="value ellipsis">@clm.City</h3>
+                            </div>
+                        </li>
+
+                        <li class="detailed-item false">
+                            <span class="detailed-icon-wrap">
+                                <img src="/assets/icons/calendar.svg" alt="" class="item-icon">
+                            </span>
+                            <div class="item-content">
+                                <span class="label">Notification date</span>
+                                <h3 class="value ellipsis">@clm.NotificationDate.ToString("dd MMM yyyy")</h3>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div style="background-color: white;min-height: 3px;"></div>
+                <div class="inner-clild-wrap">
+                    <ul class="detail-list">
+
+                        <li class="detailed-item false">
+                            <span class="detailed-icon-wrap">
+                                <img src="/assets/icons/save.svg" alt="" class="item-icon">
+                            </span>
+                            <div class="item-content">
+                                <span class="label">Geogrphical Area</span>
+                                <h3 class="value ellipsis">@clm.GeagraphicalArea</h3>
+                            </div>
+                        </li>
+
+
+                        <li class="detailed-item false">
+                            <span class="detailed-icon-wrap">
+                                <img src="/assets/icons/save.svg" alt="" class="item-icon">
+                            </span>
+                            <div class="item-content">
+                                <span class="label">Accidental Place</span>
+                                <h3 class="value ellipsis">@clm.City</h3>
+                            </div>
+                        </li>
+                        <li class="detailed-item false">
+                            <span class="detailed-icon-wrap">
+                                <img src="/assets/icons/calendar.svg" alt="" class="item-icon">
+                            </span>
+                            <div class="item-content">
+                                <span class="label">Registration Date</span>
+                                <h3 class="value ellipsis">@clm.RegistrationDate.ToString("dd MMM yyyy")</h3>
+                            </div>
+                        </li>
+                        <li class="detailed-item false">
+                            <span class="detailed-icon-wrap">
+                                <img src="/assets/icons/save.svg" alt="" class="item-icon">
+                            </span>
+                            <div class="item-content">
+                                <span class="label">Prefered city of Survey</span>
+                                <h3 class="value ellipsis">@clm.City</h3>
+                            </div>
+                        </li>
+                        <li class="detailed-item false">
+                            <span class="detailed-icon-wrap">
+                                <img src="/assets/icons/save.svg" alt="" class="item-icon">
+                            </span>
+                            <div class="item-content">
+                                <span class="label">Claim Event</span>
+                                <h3 class="value ellipsis">@clm.EventId</h3>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
         </div>
-        <div class="action-dropdown">
-            <h3 class="policy-no">Claim No. 26115771</h3>
-        </div>
-    </div>
-    <div class="policy-detail-body undefined">
-        <div class="inner-clild-wrap">
-            <ul class="detail-list">
-                <li class="detailed-item false">
-                    <span class="detailed-icon-wrap">
-                        <img src="/assets/icons/save.svg" alt="" class="item-icon">
-                    </span>
-                    <div class="item-content">
-                        <span class="label">Claim Number</span>
-                        <h3 class="value ellipsis">CL/1233/2222/Tameeni/123</h3>
-                    </div>
-                </li>
-                <li class="detailed-item false">
-                    <span class="detailed-icon-wrap">
-                        <img src="/assets/icons/calendar.svg" alt="" class="item-icon">
-                    </span>
-                    <div class="item-content">
-                        <span class="label">Date Of Loss</span>
-                        <h3 class="value ellipsis">12 May 2023</h3>
-                    </div>
-                </li>
-                <li class="detailed-item false">
-                    <span class="detailed-icon-wrap">
-                        <img src="/assets/icons/calendar.svg" alt="" class="item-icon">
-                    </span>
-                    <div class="item-content">
-                        <span class="label">Report Type</span>
-                        <h3 class="value ellipsis">Najm</h3>
-                    </div>
-                </li>
+    }
 
-                <li class="detailed-item false">
-                    <span class="detailed-icon-wrap">
-                        <img src="/assets/icons/save.svg" alt="" class="item-icon">
-                    </span>
-                    <div class="item-content">
-                        <span class="label">Accident City</span>
-                        <h3 class="value ellipsis">Toyota</h3>
-                    </div>
-                </li>
-
-                <li class="detailed-item false">
-                    <span class="detailed-icon-wrap">
-                        <img src="/assets/icons/calendar.svg" alt="" class="item-icon">
-                    </span>
-                    <div class="item-content">
-                        <span class="label">Notification date</span>
-                        <h3 class="value ellipsis">Agency</h3>
-                    </div>
-                </li>
-            </ul>
-        </div>
-        <div style="background-color: white;min-height: 3px;"></div>
-        <div class="inner-clild-wrap">
-            <ul class="detail-list">
-
-                <li class="detailed-item false">
-                    <span class="detailed-icon-wrap">
-                        <img src="/assets/icons/save.svg" alt="" class="item-icon">
-                    </span>
-                    <div class="item-content">
-                        <span class="label">Geogrphical Area</span>
-                        <h3 class="value ellipsis">Yaris</h3>
-                    </div>
-                </li>
-
-
-                <li class="detailed-item false">
-                    <span class="detailed-icon-wrap">
-                        <img src="/assets/icons/save.svg" alt="" class="item-icon">
-                    </span>
-                    <div class="item-content">
-                        <span class="label">Accidental Place</span>
-                        <h3 class="value ellipsis">SUV</h3>
-                    </div>
-                </li>
-                <li class="detailed-item false">
-                    <span class="detailed-icon-wrap">
-                        <img src="/assets/icons/calendar.svg" alt="" class="item-icon">
-                    </span>
-                    <div class="item-content">
-                        <span class="label">Registration Date</span>
-                        <h3 class="value ellipsis">2021 May 12</h3>
-                    </div>
-                </li>
-                <li class="detailed-item false">
-                    <span class="detailed-icon-wrap">
-                        <img src="/assets/icons/save.svg" alt="" class="item-icon">
-                    </span>
-                    <div class="item-content">
-                        <span class="label">Prefered city of Survey</span>
-                        <h3 class="value ellipsis">Riyadh</h3>
-                    </div>
-                </li>
-                <li class="detailed-item false">
-                    <span class="detailed-icon-wrap">
-                        <img src="/assets/icons/save.svg" alt="" class="item-icon">
-                    </span>
-                    <div class="item-content">
-                        <span class="label">Claim Event</span>
-                        <h3 class="value ellipsis">67676667b SAR</h3>
-                    </div>
-                </li>
-            </ul>
-        </div>
-
-    </div>
-</div>
+}

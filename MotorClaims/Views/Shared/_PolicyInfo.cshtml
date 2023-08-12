@@ -1,4 +1,5 @@
-﻿@{
+﻿@model CORE.DTOs.APIs.MotorClaim.ClaimSearchResult
+@{
     Layout = null;
 }
 
@@ -12,7 +13,7 @@
 
         </div>
         <div class="action-dropdown">
-            <h3 class="policy-no">Policy No. 26115771</h3>
+            <h3 class="policy-no">Policy No. @Model.Productions.FirstOrDefault().policy.PolicyNumber</h3>
         </div>
     </div>
     <div class="policy-detail-body undefined">
@@ -24,7 +25,7 @@
                     </span>
                     <div class="item-content">
                         <span class="label">Policy Type</span>
-                        <h3 class="value ellipsis">COMPULSARY MEDICAL</h3>
+                        <h3 class="value ellipsis">@Model.Productions.FirstOrDefault().policy.PolicyType</h3>
                     </div>
                 </li>
                 <li class="detailed-item false">
@@ -33,7 +34,7 @@
                     </span>
                     <div class="item-content">
                         <span class="label">Effective Date</span>
-                        <h3 class="value ellipsis">17 Dec 2023</h3>
+                        <h3 class="value ellipsis">@Model.Productions.FirstOrDefault().policy.PolicyEffectiveDate.ToString("dd MMM yyyy")</h3>
                     </div>
                 </li>
                 <li class="detailed-item false">
@@ -42,7 +43,7 @@
                     </span>
                     <div class="item-content">
                         <span class="label">Expiry Date</span>
-                        <h3 class="value ellipsis">17 Dec 2023</h3>
+                        <h3 class="value ellipsis">@Model.Productions.FirstOrDefault().policy.PolicyExpiryDate.ToString("dd MMM yyyy")</h3>
                     </div>
                 </li>
 
@@ -52,7 +53,7 @@
                     </span>
                     <div class="item-content">
                         <span class="label">Owner Name</span>
-                        <h3 class="value ellipsis">Ahmad</h3>
+                        <h3 class="value ellipsis">@Model.Productions.FirstOrDefault().policy.OwnerName</h3>
                     </div>
                 </li>
             </ul>
@@ -67,7 +68,7 @@
                     </span>
                     <div class="item-content">
                         <span class="label">Leasee Id</span>
-                        <h3 class="value ellipsis">1234</h3>
+                        <h3 class="value ellipsis">@Model.Productions.FirstOrDefault().policy.LesseeId</h3>
                     </div>
                 </li>
 
@@ -78,7 +79,7 @@
                     </span>
                     <div class="item-content">
                         <span class="label">Leasee Name</span>
-                        <h3 class="value ellipsis">Ahmad</h3>
+                        <h3 class="value ellipsis">@Model.Productions.FirstOrDefault().policy.LesseeName</h3>
                     </div>
                 </li>
                 <li class="detailed-item false">
@@ -87,7 +88,7 @@
                     </span>
                     <div class="item-content">
                         <span class="label">UW Year</span>
-                        <h3 class="value ellipsis">2021</h3>
+                        <h3 class="value ellipsis">@Model.Productions.FirstOrDefault().policy.PolicyUWYear</h3>
                     </div>
                 </li>
                 <li class="detailed-item false">
@@ -96,7 +97,7 @@
                     </span>
                     <div class="item-content">
                         <span class="label">Benificiary</span>
-                        <h3 class="value ellipsis">60</h3>
+                        <h3 class="value ellipsis">@Model.Productions.FirstOrDefault().policy.BenefecieryName</h3>
                     </div>
                 </li>
             </ul>
