@@ -4,7 +4,7 @@ const selectTabs = (tab, tabContent) => {
 	// let tabItem = document.getElementById(tab);
 	// let tabContentItem = document.getElementById(tabContent);
 	// tabContentItem.classList.add('active');
-	for (let i = 0; allTabs.length<i; i++) {
+	for (let i = 0; i<allTabs.length; i++) {
 		if (allTabs[i].id !== tab) {
 			allTabs[i].classList.remove('active');
 		} else {
