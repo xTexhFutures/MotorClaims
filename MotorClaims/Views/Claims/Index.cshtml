@@ -1,362 +1,104 @@
-﻿@model CORE.DTOs.APIs.MotorClaim.ClaimSearchResult
-
-<div class="page-wrapper">
-    <div class="left-content">
-        <div class="policy-detail-wrapper">
-            @{
-                await Html.RenderPartialAsync("_PolicyInfo",Model);
-            }
-
-            @{
-                await Html.RenderPartialAsync("_VehicleInfo",Model);
-            }
-                     
-            @{
-                await Html.RenderPartialAsync("_ClaimInfo",Model);
-            }        
-            @{
-                await Html.RenderPartialAsync("_ClaimantInfo",Model);
-            }
+﻿@using CORE.DTOs.APIs.MotorClaim;
+@using CORE.DTOs.MotorClaim;
+@using Newtonsoft.Json;
+@{
+    Production policy = (Production)ViewData["Policy"];
+    VehicleInfos vehicle = (VehicleInfos)ViewData["Vehicle"];
+}
 
 
+<div class="policy-detail-wrapper">
+    @{
+        await Html.RenderPartialAsync("_PolicyInfo", policy);
+    }
+
+    @{
+        await Html.RenderPartialAsync("_VehicleInfo", vehicle);
+    }
+
+    @*   @{
+    await Html.RenderPartialAsync("_ClaimInfo", vehicle);
+    }
+    @{
+    await Html.RenderPartialAsync("_ClaimantInfo", vehicle);
+    }*@
 
 
-            <div class="search-member">
-                <div class="search-heading-wrap">
-                    <div class="heading-card">
-                        <h2 class="heading">Claims List</h2>
-                    </div>
-                    <button class="button button-secondary" onclick="openAddVehicle()">Add Claim</button>
-                </div>
 
+
+    <div class="search-member">
+        <div class="search-heading-wrap">
+            <div class="heading-card">
+                <h2 class="heading">Claims List</h2>
             </div>
+            @{
+                ClaimSearchobj claimSearchobj = new ClaimSearchobj()
+            {
+                PolicyId = policy.policy.Id,
+                VehicleId = vehicle.Vehicle.Id
+            };
+            }
+            <a class="button button-secondary" href="@Url.Action("ClaimEntry","Claims",new{obj=MotorClaims.Models.Helpers.Encrypt(JsonConvert.SerializeObject(claimSearchobj))})">Add Claim</a>
 
         </div>
-        @if (Model.Productions.FirstOrDefault().Vehicles.FirstOrDefault().lsClaims.Count > 0)
-        {
-            <div class="transaction-details">
-                <table class="universal-table">
-                    <tr>
-                        <!-- <th>#</th> -->
-                        <th>Transaction ID</th>
-                        <th>Policy</th>
-                        <th>Transaction Date</th>
-                        <th>Type</th>
-                        <th>Endorsement</th>
-                        <th>Description</th>
-                        <th>Due Date</th>
-                        <th>Debit</th>
-                        <th>Credit</th>
-                        <th>Balance</th>
-                    </tr>
 
-
-            @foreach (var clm in Model.Productions.FirstOrDefault().Vehicles.FirstOrDefault().lsClaims)
-                {
-                  
-                            <tr>
-                                <!-- <td></td> -->
-                                <td class="tran">#@clm.ClaimNo</td>
-                                <td>@Model.Productions.FirstOrDefault().policy.PolicyNumber</td>
-                                <td>@clm.CreationDate</td>
-                                <td>@Model.Productions.FirstOrDefault().policy.PolicyType</td>
-                            <td>@(Model.Productions.FirstOrDefault().policy.PolicyId != null ? Model.Productions.FirstOrDefault().policy : "NA")</td>
-                                <td>@clm.Notes</td>
-                                <td>@clm.RegistrationDate.ToString("dd MMM yyyy")</td>
-                                <td class="tran">134</td>
-                                <td class="tran">00</td>
-                                <td class="tran">134</td>
-                            </tr>
-                        
-                        
-                }
-                </table>
-            </div>
-            
-
-        }
     </div>
-    <div class="right-sidebar false">
-        <div class="inner-wrapper">
-            <div class="membership-detail-wrapper">
-                <div class="membership-inner-wrapper">
-                    <div class="membership-header">
-                        <h2 class="heading-title">Steven Williams</h2>
-                        <p class="membership-id">Company Unified No.: 7009028932</p>
-                    </div>
-                    <div class="detail-tiles-wrapper">
-                        <div class="detail-tiles">
-                            <div class="tile-header">
-                                <div class="total-wrapper">
-                                    <h2 class="total">60</h2>
-                                    <p class="label-tag">Members</p>
-                                </div>
-                                <img src="/assets/icons/users.svg" class="policy-summary-icon" alt="">
-                            </div>
-                        </div>
-                        <div class="detail-tiles">
-                            <div class="tile-header">
-                                <div class="total-wrapper">
-                                    <h2 class="total">16</h2>
-                                    <p class="label-tag">Request</p>
-                                </div>
-                                <img src="/assets/icons/empty-file.svg" class="policy-summary-icon" alt="">
-                            </div>
-                        </div>
-                        <div class="detail-tiles">
-                            <div class="tile-header">
-                                <div class="total-wrapper">
-                                    <h2 class="total">-</h2>
-                                    <p class="label-tag">Interaction</p>
-                                </div>
-                                <img src="/assets/icons/empty-file.svg" class="policy-summary-icon" alt="">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+
 </div>
+@if (vehicle.lsClaims.Count > 0)
+{
+    <div class="transaction-details">
+        <table class="universal-table">
+            <tr>
+                <!-- <th>#</th> -->
+                <th>Claim Segment</th>
+                <th>Policy Type</th>
+                <th>Policy Number</th>
+                <th>Make</th>
+                <th>Model</th>
+                <th>Chassis</th>
+                <th>Creation Date</th>
+
+            </tr>
+
+
+            @foreach (var clm in vehicle.lsClaims)
+            {
+
+                <tr>
+                    @{
+                        claimSearchobj = new ClaimSearchobj()
+                    {
+                        PolicyId = policy.policy.Id,
+                        VehicleId = vehicle.Vehicle.Id,
+                        ClaimId = clm.Id
+                    };
+                    }
+                    <td class="tran"><a href="@Url.Action("ClaimEntry","Claims",new{obj=MotorClaims.Models.Helpers.Encrypt(JsonConvert.SerializeObject(claimSearchobj))})">#@clm.ClaimNo</a></td>
+                    <td>@policy.policy.PolicyTypeName</td>
+                    <td>@policy.policy.PolicyNumber</td>
+                    <td>@vehicle.Vehicle.MakeDesc</td>
+                    <td>@vehicle.Vehicle.ModelDesc</td>
+                    <td>@vehicle.Vehicle.ChassisNo</td>
+                    <td>@HelpersDate.FormatDateNoTime(clm.CreationDate.Value)</td>
+
+                </tr>
+
+
+            }
+        </table>
+    </div>
+}
+else
+{
+    <div class="ui-state-highlight ui-corner-all" style="background:none !important;margin-top: 1%;">
+        <span class="ui-icon ui-icon-info" style="float: left"></span>
+        <span>No results found.</span>
+    </div>
+}
+
+
+
 
 
 <!-- cancel policy driver no -->
-<div id="add-vehicle-m-modal" class="motor-modal">
-    <div class="modal-content">
-        <div class="modal-header">
-            <span onclick="Close('add-vehicle-m-modal')" class="close--dependent" style="cursor:pointer">&times;</span>
-            <h2>Vehicle Info</h2>
-            <p>Here you can add new Claim</p>
-        </div>
-        <form class="" asp-controller="Claims">
-        <div class="modal-body">
-            <div class="vehicleList">
-                <div class="vehicle-item">
-                    <div class="vehicle-header">
-                        <img src="/assets/motor/motor.svg" class="vehicle-icon" />
-                        <div class="vehicle-info">
-                            <span class="vehicle-name">BMW Cerato</span>
-                            <span class="vehicle-no">Plate Number : @Model.Productions.FirstOrDefault().policy.PolicyNumber</span>
-                        </div>
-                    </div>
-                    <div class="vehicle-basic-body">
-                        <ul class="detail-list">
-                            <li class="detailed-item">
-                                <span class="detailed-icon-wrap">
-                                    <img src="/assets/icons/save.svg" alt="" class="item-icon">
-                                </span>
-                                <div class="item-content">
-                                    <span class="label">Make</span>
-                                    <h3 class="value">@Model.Productions.FirstOrDefault().Vehicles.FirstOrDefault().Vehicle.MakeDesc</h3>
-                                </div>
-                            </li>
-                            <li class="detailed-item">
-                                <span class="detailed-icon-wrap">
-                                    <img src="/assets/icons/calendar.svg" alt="" class="item-icon">
-                                </span>
-                                <div class="item-content">
-                                    <span class="label">Model</span>
-                                    <h3 class="value">@Model.Productions.FirstOrDefault().Vehicles.FirstOrDefault().Vehicle.ModelDesc</h3>
-                                </div>
-                            </li>
-                            <li class="detailed-item">
-                                <span class="detailed-icon-wrap">
-                                    <img src="/assets/icons/calendar.svg" alt="" class="item-icon">
-                                </span>
-                                <div class="item-content">
-                                    <span class="label">Year of Manufacturing</span>
-                                    <h3 class="value">@Model.Productions.FirstOrDefault().Vehicles.FirstOrDefault().Vehicle.ManufactureYear</h3>
-                                </div>
-                            </li>
-                            <li class="detailed-item">
-                                <span class="detailed-icon-wrap">
-                                    <img src="/assets/icons/calendar.svg" alt="" class="item-icon">
-                                </span>
-                                <div class="item-content">
-                                    <span class="label">Plate No</span>
-                                    <h3 class="value">@Model.Productions.FirstOrDefault().Vehicles.FirstOrDefault().Vehicle.PlateNo</h3>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-            <br />
-            <div class="tabs-wrapper">
-                <ul class="tabs-navigation-wrap">
-                    <li class="tab-navigation tab-custom-two active" id="tabTwoOne" onclick="selectTabsTwo('tabTwoOne','one_1')">
-                        <div class="tab-item-text">
-                            Claim Info
-                        </div>
-                    </li>
-                    <li class="tab-navigation tab-custom-two" id="tabTwoTwo" onclick="selectTabsTwo('tabTwoTwo','two_1')">
-                        <div class="tab-item-text">
-                            Claimants
-                        </div>
-                    </li>
-                    <li class="tab-navigation tab-custom-two" id="tabTwoThree" onclick="selectTabsTwo('tabTwoThree','three_1')">
-                        <div class="tab-item-text">
-                            Documents
-                        </div>
-                    </li>
-                </ul>
-                <div class="tabbs-content-wrapper">
-                    <div class="tab-items-container tabs-one-content-two active" id="one_1">
-                      
-
-                       
-                        <div class="modal-inner-body-wrap">
-                            <div class="vehicle-owner-grid">
-                                <label for="radio-card-v2-11" class="radio-card-v2">
-                                    <input type="radio" value="1" name="vehicle_card" id="radio-card-v2-11" checked />
-                                    <div class="card-content-wrapper">
-                                        <span class="check-icon"></span>
-                                        <div class="card-content">
-                                            <h4 class="title">Najm</h4>
-                                        </div>
-                                    </div>
-                                </label>
-                                <!-- /.radio-card -->
-
-                                <label for="radio-card-v2-12" class="radio-card-v2">
-                                    <input type="radio" value="2" name="vehicle_card" id="radio-card-v2-12" />
-                                    <div class="card-content-wrapper">
-                                        <span class="check-icon"></span>
-                                        <div class="card-content">
-                                            <h4 class="title">Basher</h4>
-                                        </div>
-                                    </div>
-                                </label>
-
-                                <label for="radio-card-v2-13" class="radio-card-v2">
-                                    <input type="radio" value="3" name="vehicle_card" id="radio-card-v2-13" />
-                                    <div class="card-content-wrapper">
-                                        <span class="check-icon"></span>
-                                        <div class="card-content">
-                                            <h4 class="title">Manual</h4>
-                                        </div>
-                                    </div>
-                                </label>
-                            </div>
-
-
-                            <div class="vehicle-owner-grid">
-                                <div class="form-container">
-                                    <span class="label">Najm Accident No</span>
-                                    <input class="form-controlar"  placeholder="Najm Accident No" name="NajmRpt" />
-                                    <input style="display:none" name="policy" value="@Model.Productions.FirstOrDefault().policy.Id" />
-                                    <input style="display:none" name="vehicle" value="@Model.Productions.FirstOrDefault().Vehicles.FirstOrDefault().Vehicle.Id" />
-                                    <input style="display:none" name="policyNo" value="@Model.Productions.FirstOrDefault().policy.PolicyNumber" />
-                                    <input style="display:none" name="Effective" value="@Model.Productions.FirstOrDefault().policy.PolicyEffectiveDate" />
-                                    <input style="display:none" name="Expiry" value="@Model.Productions.FirstOrDefault().policy.PolicyExpiryDate" />
-                                    <input style="display:none" name="sequence" value="@Model.Productions.FirstOrDefault().Vehicles.FirstOrDefault().Vehicle.SequanceNo" />
-                                    <input style="display:none" name="vehicleName" value="@(Model.Productions.FirstOrDefault().Vehicles.FirstOrDefault().Vehicle.ChassisNo +"-"+Model.Productions.FirstOrDefault().Vehicles.FirstOrDefault().Vehicle.MakeDesc) " />
-                                    <input style="display:none" name="plate" value="@Model.Productions.FirstOrDefault().Vehicles.FirstOrDefault().Vehicle.PlateNo" />
-                                    <input style="display:none" name="chassis" value="@Model.Productions.FirstOrDefault().Vehicles.FirstOrDefault().Vehicle.ChassisNo" />
-                                </div>
-                                   <div class="form-container">
-                                    <span class="label">Morror No</span>
-                                    <input class="form-controlar" placeholder="Morror No" name="MroorRpt" />
-                                </div>
-                                   <div class="form-container">
-                                    <span class="label">Taqdeer No</span>
-                                    <input class="form-controlar" placeholder="Taqdeer No" name="TaqdeerRpt" />
-                                </div>
-
-                            </div>
-                            <div class="vehicle-owner-grid">
-                                <div class="form-container">
-                                    <span class="label">Loss Date</span>
-                                        <input class="form-controlar" required type="date" placeholder="Loss Date" name="lossdate" />
-                                </div>
-                                <div class="form-container">
-                                    <span class="label">Notification Date</span>
-                                    <input class="form-controlar" required type="date" placeholder="Notification Date" name="notificationdate" />
-                                </div>
-                                <div class="form-container">
-                                    <span class="label">Registration Date</span>
-                                        <input class="form-controlar" required type="date" placeholder="Registration Date" name="registrationdate" />
-                                </div>
-
-                            </div>
-                            <div class="form-container ">
-                                <div class="form-group col-md-6">
-                                        <select class="form-controlar" required name="bank">
-                                        <option selected disabled>Select Bank</option>
-                                        <option value="1">Bank 1</option>
-                                        <option value="2">Bank 2</option>
-                                        <option value="3">Bank 3</option>
-                                        <option value="4">Bank 4</option>
-                                    </select>
-                                </div>
-                                <div class="form-group col-md-6">
-                                        <input class="form-controlar" placeholder="IBAN Number" required name="Iban" />
-                                </div>
-                              
-                            </div>
-                        </div>
-                       
-                    </div>
-                    <div class="tab-items-container tabs-one-content-two" id="two_1">
-                            <div class="vehicle-owner-grid">
-                                <div class="form-container">
-                                    <span class="label">Name</span>
-                                    <input class="form-controlar" required type="text" placeholder="Name" name="claimantname" />
-                                </div>
-                                <div class="form-container">
-                                    <span class="label">Sequence</span>
-                                    <input class="form-controlar" required type="text" placeholder="Sequence" name="ClaimantSequence" />
-                                </div>
-                                <div class="form-container">
-                                    <span class="label">Chassis No</span>
-                                    <input class="form-controlar" required type="text" placeholder="Chassis" name="claimantChassis" />
-                                </div>
-
-                            </div>
-                              <div class="vehicle-owner-grid">
-                                <div class="form-container">
-                                    <span class="label">Accident City</span>
-                                    <input class="form-controlar" required type="text" placeholder="Accident City" name="AccidentCity" />
-                                </div>
-                                <div class="form-container">
-                                    <span class="label">National Id</span>
-                                    <input class="form-controlar" required type="text" placeholder="National Id" name="ClNatId" />
-                                </div>
-                                <div class="form-container">
-                                    <span class="label">Owner Name</span>
-                                    <input class="form-controlar" required type="text" placeholder="Owner Name" name="ownername" />
-                                </div>
-
-                            </div>
-                              <div class="vehicle-owner-grid">
-                                <div class="form-container">
-                                    <span class="label">Make</span>
-                                    <input class="form-controlar" required type="text" placeholder="Make" name="clMake" />
-                                </div>
-                                <div class="form-container">
-                                    <span class="label">Model</span>
-                                    <input class="form-controlar" required type="text" placeholder="Model" name="clModel" />
-                                </div>
-                                <div class="form-container">
-                                    <span class="label">Color</span>
-                                    <input class="form-controlar" required type="text" placeholder="color" name="clcolor" />
-                                </div>
-
-                            </div>
-                         
-                    </div>
-                    <div class="tab-items-container tabs-one-content-two" id="three_1">
-
-                    </div>
-                </div>
-            </div>
-
-            <div class="modal-footer">
-                <button type ="submit" asp-action="SaveClaims" class="button button-primary">Save Claim</button>
-            </div>
-        </div>
-         </form>
-    </div>
-</div>
-

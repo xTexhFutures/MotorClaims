@@ -1,11 +1,12 @@
-﻿@model CORE.DTOs.APIs.MotorClaim.ClaimSearchResult
+﻿@using CORE.DTOs.APIs.MotorClaim;
+@model VehicleInfos
 @{
     Layout = null;
 }
-@if (Model.Productions.FirstOrDefault().Vehicles.FirstOrDefault().lsClaims.Count > 0)
+@if (Model.lsClaims.Count > 0)
 {
 
-    @foreach (var clm in Model.Productions.FirstOrDefault().Vehicles.FirstOrDefault().lsClaims)
+    @foreach (var clm in Model.lsClaims)
     {
         <div class="basic-detail">
             <div class="policy-header">

@@ -614,3 +614,7 @@ function UpdateWorkFlowApprovers(Id) {
     element.classList.toggle('active');
     $('#ManageApproversPopup').load('/WorkFlow/LoadWorkFlowApprovers/' + Id);
 }
+
+function LoadClaimantsList(Id) {
+    $('#ClaimantsList').load('/Claims/ClaimantsList/' + Id);
+}

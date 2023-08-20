@@ -16,6 +16,7 @@
     background-image: url('../icons/calendar.svg');
     background-position: right center;
     background-repeat: no-repeat;
+    background-size:20px;
 }
 
 .popup-floating-content {
@@ -33,4 +34,22 @@
 
 .Selected {
     box-shadow:5px 5px !important;
+}
+
+.Full{
+    width:100% !important;
+}
+
+.ui-autocomplete-input::-ms-clear, .ui-autocomplete-loading::-ms-clear, .calendar-input::-ms-clear {
+    display: none;
+}
+
+.ui-autocomplete-input {
+    background-image: url('../Content/Images/search.png');
+    background-position: right center;
+    background-repeat: no-repeat;
+}
+
+input:read-only {
+    background-color: rgb(225,225,225) !important;
 }

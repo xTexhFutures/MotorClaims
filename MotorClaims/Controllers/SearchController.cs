@@ -25,36 +25,30 @@ namespace MotorClaims.Controllers
         }
         public IActionResult Index()
         {
+            ViewData["search"] = new Search();
             return View();
         }
-      
+
         [HttpPost]
-        public IActionResult Search()
+        public IActionResult Search(Search search)
         {
-            string Plate = HttpContext.Request.Form["plate"].ToString();
-            string sequence = HttpContext.Request.Form["sequence"].ToString();
-            string claimno = HttpContext.Request.Form["claimno"].ToString();
-            string nationalid = HttpContext.Request.Form["nationalid"].ToString();
-            string mobile = HttpContext.Request.Form["mobile"].ToString();
-            string complain = HttpContext.Request.Form["complain"].ToString();
-            string custom = HttpContext.Request.Form["custom"].ToString();
-            string chassis = HttpContext.Request.Form["chassis"].ToString();
-            string policyno = HttpContext.Request.Form["policy"].ToString();
             SearchingObj searchingObj = new SearchingObj()
             {
-               ChassisNo = chassis,
-                ClaimNo = claimno,
-                 ComplainNo = complain,
-                  CustomNo = custom,
-                   MobileNo = mobile,
-                    NationalId = nationalid,
-                     PlateNo = Plate,
-                      PolicyNo = policyno,
-                       SequenceNo = sequence,
+                ChassisNo = search.chassis,
+                ClaimNo = search.claimno,
+                ComplainNo = search.complain,
+                CustomNo = search.custom,
+                MobileNo = search.mobile,
+                NationalId = search.nationalid,
+                PlateNo = search.plate,
+                PolicyNo = search.policy,
+                SequenceNo = search.sequence,
             };
             ClaimSearchResult claimSearchResult = new ClaimSearchResult();
             claimSearchResult = Helpers.ExcutePostAPI<ClaimSearchResult>(searchingObj, _appSettings.APIHubPrefix + "api/MotorClaim/SearchClaimInfo");
             //claimSearchResult = JsonConvert.DeserializeObject<ClaimSearchResult>(JsonConvert.SerializeObject(obj));
+            ViewData["search"] = search;
+            HttpContext.Session.SetSessionData("SearchResult", claimSearchResult);
             return View("Index", claimSearchResult);
         }
     }

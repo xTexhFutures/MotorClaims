@@ -1,10 +1,10 @@
-﻿@model CORE.DTOs.APIs.MotorClaim.ClaimSearchResult
+﻿@using CORE.DTOs.APIs.MotorClaim;
+@model VehicleInfos
 @{
     Layout = null;
 }
 
-@foreach(var veh in Model.Productions.FirstOrDefault().Vehicles)
-{
+
     <div class="basic-detail">
         <div class="policy-header">
             <div class="name-number-wrapper">
@@ -15,7 +15,7 @@
 
             </div>
             <div class="action-dropdown">
-                <h3 class="policy-no">Interest No. @veh.Vehicle.SequanceNo</h3>
+                <h3 class="policy-no">@Model.Vehicle.Name</h3>
             </div>
         </div>
         <div class="policy-detail-body undefined">
@@ -27,7 +27,7 @@
                         </span>
                         <div class="item-content">
                             <span class="label">Plate Number</span>
-                            <h3 class="value ellipsis">@veh.Vehicle.PlateNo</h3>
+                            <h3 class="value ellipsis">@Model.Vehicle.PlateNo</h3>
                         </div>
                     </li>
                     <li class="detailed-item false">
@@ -36,7 +36,7 @@
                         </span>
                         <div class="item-content">
                             <span class="label">Manufacture Year</span>
-                            <h3 class="value ellipsis">@veh.Vehicle.ManufactureYear</h3>
+                            <h3 class="value ellipsis">@Model.Vehicle.ManufactureYear</h3>
                         </div>
                     </li>
                     <li class="detailed-item false">
@@ -45,7 +45,7 @@
                         </span>
                         <div class="item-content">
                             <span class="label">Chassis No</span>
-                            <h3 class="value ellipsis">@veh.Vehicle.ChassisNo</h3>
+                            <h3 class="value ellipsis">@Model.Vehicle.ChassisNo</h3>
                         </div>
                     </li>
 
@@ -55,7 +55,7 @@
                         </span>
                         <div class="item-content">
                             <span class="label">Make</span>
-                            <h3 class="value ellipsis">@veh.Vehicle.MakeDesc</h3>
+                            <h3 class="value ellipsis">@Model.Vehicle.MakeDesc</h3>
                         </div>
                     </li>
 
@@ -65,7 +65,7 @@
                         </span>
                         <div class="item-content">
                             <span class="label">Repair Condition</span>
-                            <h3 class="value ellipsis">@veh.Vehicle.RepairDesc</h3>
+                            <h3 class="value ellipsis">@Model.Vehicle.RepairDesc</h3>
                         </div>
                     </li>
                 </ul>
@@ -80,7 +80,7 @@
                         </span>
                         <div class="item-content">
                             <span class="label">Model</span>
-                            <h3 class="value ellipsis">@veh.Vehicle.ModelDesc</h3>
+                            <h3 class="value ellipsis">@Model.Vehicle.ModelDesc</h3>
                         </div>
                     </li>
 
@@ -91,7 +91,7 @@
                         </span>
                         <div class="item-content">
                             <span class="label">Vehicle Body</span>
-                            <h3 class="value ellipsis">@veh.Vehicle.BodyDesc</h3>
+                            <h3 class="value ellipsis">@Model.Vehicle.BodyDesc</h3>
                         </div>
                     </li>
                     <li class="detailed-item false">
@@ -100,7 +100,7 @@
                         </span>
                         <div class="item-content">
                             <span class="label">Usage</span>
-                            <h3 class="value ellipsis">@veh.Vehicle.usageDesc</h3>
+                            <h3 class="value ellipsis">@Model.Vehicle.usageDesc</h3>
                         </div>
                     </li>
                     <li class="detailed-item false">
@@ -109,7 +109,7 @@
                         </span>
                         <div class="item-content">
                             <span class="label">Contract No</span>
-                            <h3 class="value ellipsis">@veh.Vehicle.ChassisNo</h3>
+                            <h3 class="value ellipsis">@Model.Vehicle.ChassisNo</h3>
                         </div>
                     </li>
                     <li class="detailed-item false">
@@ -118,7 +118,7 @@
                         </span>
                         <div class="item-content">
                             <span class="label">Sum Insured</span>
-                            <h3 class="value ellipsis">@veh.Vehicle.SumInsured SAR</h3>
+                            <h3 class="value ellipsis">@Model.Vehicle.SumInsured SAR</h3>
                         </div>
                     </li>
                 </ul>
@@ -133,7 +133,7 @@
                         </span>
                         <div class="item-content">
                             <span class="label">No Of Insured Passengers</span>
-                            <h3 class="value ellipsis">@veh.Vehicle.NoOfCoveredPassegers</h3>
+                            <h3 class="value ellipsis">@Model.Vehicle.NoOfCoveredPassegers</h3>
                         </div>
                     </li>
 
@@ -144,7 +144,7 @@
                         </span>
                         <div class="item-content">
                             <span class="label">Color</span>
-                            <h3 class="value ellipsis">@veh.Vehicle.colorDesc</h3>
+                            <h3 class="value ellipsis">@Model.Vehicle.colorDesc</h3>
                         </div>
                     </li>
                     <li class="detailed-item false">
@@ -153,7 +153,7 @@
                         </span>
                         <div class="item-content">
                             <span class="label">Sequance No</span>
-                            <h3 class="value ellipsis">@veh.Vehicle.SequanceNo</h3>
+                            <h3 class="value ellipsis">@Model.Vehicle.SequanceNo</h3>
                         </div>
                     </li>
                     <li class="detailed-item false">
@@ -162,7 +162,7 @@
                         </span>
                         <div class="item-content">
                             <span class="label">Custom No</span>
-                            <h3 class="value ellipsis">@veh.Vehicle.CustomNo</h3>
+                            <h3 class="value ellipsis">@Model.Vehicle.CustomNo</h3>
                         </div>
                     </li>
                     <li class="detailed-item false">
@@ -171,12 +171,12 @@
                         </span>
                         <div class="item-content">
                             <span class="label">Claims Count</span>
-                            <h3 class="value ellipsis">@veh.lsClaims.Count </h3>
+                            <h3 class="value ellipsis">@Model.lsClaims.Count </h3>
                         </div>
                     </li>
                 </ul>
             </div>
         </div>
     </div>
-}
+
 

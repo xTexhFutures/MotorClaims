@@ -1,0 +1,58 @@
+﻿@using CORE.DTOs.MotorClaim.Claims;
+@using Newtonsoft.Json;
+
+@model List<Claimants>
+@{
+    Layout = null;
+}
+@if (Model.Count > 0)
+{
+    <div class="transaction-details">
+        <table class="universal-table">
+            <tr>
+                <!-- <th>#</th> -->
+                <th>Claim Segment</th>
+                <th>Policy Type</th>
+                <th>Policy Number</th>
+                <th>Make</th>
+                <th>Model</th>
+                <th>Chassis</th>
+                <th>Creation Date</th>
+
+            </tr>
+
+
+            @foreach (var clm in Model)
+            {
+
+                <tr>
+                    @{
+                        ClaimSearchobj claimSearchobj = new ClaimSearchobj()
+                    {
+                        PolicyId = 0,
+                        VehicleId = 0,
+                        ClaimId = clm.ClaimId
+                    };
+                    }
+                    <td class="tran"><a href="@Url.Action("ClaimEntry","Claims",new{obj=MotorClaims.Models.Helpers.Encrypt(JsonConvert.SerializeObject(claimSearchobj))})">#@clm.ClaimId</a></td>
+                    <td>@clm.InsurancePolicyNumber</td>
+                    <td>@clm.InsuranceCompanyName</td>
+                    <td>@clm.MakeDesc</td>
+                    <td>@clm.ModelDesc</td>
+                    <td>@clm.ChassisNo</td>
+                    <td>@HelpersDate.FormatDateNoTime(clm.DriverBirthDate.Value)</td>
+
+                </tr>
+
+
+            }
+        </table>
+    </div>
+}
+else
+{
+    <div class="ui-state-highlight ui-corner-all" style="background:none !important;margin-top: 1%;">
+        <span class="ui-icon ui-icon-info" style="float: left"></span>
+        <span>No results found.</span>
+    </div>
+}

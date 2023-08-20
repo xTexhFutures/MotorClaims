@@ -1,4 +1,9 @@
-﻿@model CORE.DTOs.APIs.MotorClaim.ClaimSearchResult
+﻿@using Newtonsoft.Json;
+@model CORE.DTOs.APIs.MotorClaim.ClaimSearchResult
+@{
+    Search search = (Search)ViewData["search"];
+    int i = 0, j = 0;
+}
 <div class="page-wrapper">
     <div class="left-content">
         <div class="policy-detail-wrapper">
@@ -8,135 +13,136 @@
                         <div class="heading-card">
                             <h2 class="heading">Claims Search</h2>
                         </div>
-                     
+
                     </div>
                     <form asp-controller="Search" method="post">
-                    <div class="search-filter-wrapper">
-                        <div class="search-wrapper">
-                            <span class="label">Plate No</span>
-                            <div class="search-input-box-wrapper">
+                        <div class="search-filter-wrapper">
+                            <div class="search-wrapper">
+                                <span class="label">Plate No</span>
+                                <div class="search-input-box-wrapper">
 
-                                <div class="search-icon-wrapper">
-                                    <img src="/assets/icons/search.svg" class="search-icon" alt="">
+                                    <div class="search-icon-wrapper">
+                                        <img src="/assets/icons/search.svg" class="search-icon" alt="">
+                                    </div>
+                                    <input type="text" class="input-box" autocomplete="off" name="plate" maxlength="20" placeholder="Search By Plate No"
+                                           value="@search.plate">
                                 </div>
-                                <input type="text" class="input-box" name="plate" placeholder="Search By Plate No"
-                                       value="">
+                            </div>
+                            <div class="search-wrapper">
+                                <span class="label">Sequance No</span>
+                                <div class="search-input-box-wrapper">
+
+                                    <div class="search-icon-wrapper">
+                                        <img src="/assets/icons/search.svg" class="search-icon" alt="">
+                                    </div>
+                                    <input type="text" class="input-box" autocomplete="off" id="txtsequence" maxlength="20" name="sequence" placeholder="Search By Sequance No"
+                                           value="@search.sequence">
+                                </div>
+                            </div>
+                            <div class="search-wrapper">
+                                <span class="label">Claim No</span>
+                                <div class="search-input-box-wrapper">
+
+                                    <div class="search-icon-wrapper">
+                                        <img src="/assets/icons/search.svg" class="search-icon" alt="">
+                                    </div>
+                                    <input type="text" class="input-box" autocomplete="off" maxlength="60" name="claimno" placeholder="Search By Claim No"
+                                           value="@search.claimno">
+                                </div>
                             </div>
                         </div>
-                        <div class="search-wrapper">
-                            <span class="label">Sequance No</span>
-                            <div class="search-input-box-wrapper">
 
-                                <div class="search-icon-wrapper">
-                                    <img src="/assets/icons/search.svg" class="search-icon" alt="">
+                        <div class="search-filter-wrapper">
+                            <div class="search-wrapper">
+                                <span class="label">National Id</span>
+                                <div class="search-input-box-wrapper">
+
+                                    <div class="search-icon-wrapper">
+                                        <img src="/assets/icons/search.svg" class="search-icon" alt="">
+                                    </div>
+                                    <input type="text" class="input-box" autocomplete="off" id="txtnationalid" maxlength="10" name="nationalid" placeholder="Search By National Id"
+                                           value="@search.nationalid">
                                 </div>
-                                <input type="text" class="input-box" name="sequence" placeholder="Search By Sequance No"
-                                       value="">
+                            </div>
+                            <div class="search-wrapper">
+                                <span class="label">Mobile No</span>
+                                <div class="search-input-box-wrapper">
+
+                                    <div class="search-icon-wrapper">
+                                        <img src="/assets/icons/search.svg" class="search-icon" alt="">
+                                    </div>
+                                    <input type="text" class="input-box" autocomplete="off" id="txtmobile" name="mobile" maxlength="9" placeholder="Search By Mobile No 5XXXXX"
+                                           value="@search.mobile">
+                                </div>
+                            </div>
+                            <div class="search-wrapper">
+                                <span class="label">Complaint No</span>
+                                <div class="search-input-box-wrapper">
+
+                                    <div class="search-icon-wrapper">
+                                        <img src="/assets/icons/search.svg" class="search-icon" alt="">
+                                    </div>
+                                    <input type="text" class="input-box" autocomplete="off" maxlength="20" name="complain" placeholder="Search By Complaint No"
+                                           value="@search.complain">
+                                </div>
                             </div>
                         </div>
-                        <div class="search-wrapper">
-                            <span class="label">Claim No</span>
-                            <div class="search-input-box-wrapper">
 
-                                <div class="search-icon-wrapper">
-                                    <img src="/assets/icons/search.svg" class="search-icon" alt="">
+
+                        <div class="search-filter-wrapper">
+                            <div class="search-wrapper">
+                                <span class="label">Custom No</span>
+                                <div class="search-input-box-wrapper">
+
+                                    <div class="search-icon-wrapper">
+                                        <img src="/assets/icons/search.svg" class="search-icon" alt="">
+                                    </div>
+                                    <input type="text" class="input-box" autocomplete="off" maxlength="20" id="txtcustom" name="custom" placeholder="Search By Custom No"
+                                           value="@search.custom">
                                 </div>
-                                <input type="text" class="input-box" name="claimno" placeholder="Search By Claim No"
-                                       value="">
+                            </div>
+                            <div class="search-wrapper">
+                                <span class="label">Chasis No</span>
+                                <div class="search-input-box-wrapper">
+
+                                    <div class="search-icon-wrapper">
+                                        <img src="/assets/icons/search.svg" class="search-icon" alt="">
+                                    </div>
+                                    <input type="text" class="input-box" autocomplete="off" maxlength="40" name="chassis" placeholder="Search By Chasis No"
+                                           value="@search.chassis">
+                                </div>
+                            </div>
+                            <div class="search-wrapper">
+                                <span class="label">Policy No</span>
+                                <div class="search-input-box-wrapper">
+
+                                    <div class="search-icon-wrapper">
+                                        <img src="/assets/icons/search.svg" class="search-icon" alt="">
+                                    </div>
+                                    <input type="text" class="input-box" autocomplete="off" maxlength="40" name="policy" placeholder="Search By Policy No"
+                                           value="@search.policy">
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div class="search-filter-wrapper">
-                        <div class="search-wrapper">
-                            <span class="label">National Id</span>
-                            <div class="search-input-box-wrapper">
-
-                                <div class="search-icon-wrapper">
-                                    <img src="/assets/icons/search.svg" class="search-icon" alt="">
-                                </div>
-                                <input type="text" class="input-box" name="nationalid" placeholder="Search By National Id"
-                                       value="">
-                            </div>
+                        <div class="search-heading-wrap" style="padding-top:10px">
+                            <button class="button button-secondary" style="width:100%" asp-action="Search">Search</button>
                         </div>
-                        <div class="search-wrapper">
-                            <span class="label">Mobile No</span>
-                            <div class="search-input-box-wrapper">
-
-                                <div class="search-icon-wrapper">
-                                    <img src="/assets/icons/search.svg" class="search-icon" alt="">
-                                </div>
-                                <input type="text" class="input-box" name="mobile" placeholder="Search By Mobile No"
-                                       value="">
-                            </div>
-                        </div>
-                        <div class="search-wrapper">
-                            <span class="label">Complaint No</span>
-                            <div class="search-input-box-wrapper">
-
-                                <div class="search-icon-wrapper">
-                                    <img src="/assets/icons/search.svg" class="search-icon" alt="">
-                                </div>
-                                <input type="text" class="input-box" name="complain" placeholder="Search By Complaint No"
-                                       value="">
-                            </div>
-                        </div>
-                    </div>
-
-
-                    <div class="search-filter-wrapper">
-                        <div class="search-wrapper">
-                            <span class="label">Custom No</span>
-                            <div class="search-input-box-wrapper">
-
-                                <div class="search-icon-wrapper">
-                                    <img src="/assets/icons/search.svg" class="search-icon" alt="">
-                                </div>
-                                <input type="text" class="input-box" name="custom" placeholder="Search By Custom No"
-                                       value="">
-                            </div>
-                        </div>
-                        <div class="search-wrapper">
-                            <span class="label">Chasis No</span>
-                            <div class="search-input-box-wrapper">
-
-                                <div class="search-icon-wrapper">
-                                    <img src="/assets/icons/search.svg" class="search-icon" alt="">
-                                </div>
-                                <input type="text" class="input-box" name="chassis" placeholder="Search By Chasis No"
-                                       value="">
-                            </div>
-                        </div>
-                        <div class="search-wrapper">
-                            <span class="label">Policy No</span>
-                            <div class="search-input-box-wrapper">
-
-                                <div class="search-icon-wrapper">
-                                    <img src="/assets/icons/search.svg" class="search-icon" alt="">
-                                </div>
-                                <input type="text" class="input-box" name="policy" placeholder="Search By Policy No"
-                                       value="">
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="search-heading-wrap" style="padding-top:10px">
-                    <button class="button button-secondary" style="width:100%" asp-action="Search">Search</button>
-                    </div>
                     </form>
                 </div>
             </div>
             @if (Model != null && Model.Productions != null && Model.Productions.Count > 0)
             {
-                @foreach (var item in Model.Productions)
-                {
-                    <div class="policy-members">
-                        <div class="heading-card">
-                            <h2 class="heading">All Vehicles</h2>
-                        </div>
+
+                <div class="policy-members">
+                    <div class="heading-card">
+                        <h2 class="heading">All Vehicles</h2>
+                    </div>
+                    @foreach (var item in Model.Productions)
+                    {
                         <div class="accordion-wrapper">
                             <div class="accordion-item-wrapper">
-                                <div class="accordion-header" onclick="memberAccordion('member_1')">
+                                <div class="accordion-header" onclick="memberAccordion('Vehicle_@i')">
                                     <div class="accordion-collapse-icon-wrapper">
                                         <img class="icon-minus" src="/assets/icons/circle-minus.svg">
                                         <img class="icon-plus" src="/assets/icons/circle-plus.svg">
@@ -151,12 +157,12 @@
                                                 <span class="value">@item.policy.BusinessType</span>
                                             </li>
                                             <li class="detailed-item">
-                                                <span class="label">National ID:</span>
-                                                <span class="value">@item.policy.OwnerId</span>
+                                                <span class="label">Policy type:</span>
+                                                <span class="value">@item.policy.PolicyTypeName</span>
                                             </li>
                                             <li class="detailed-item">
-                                                <span class="label"># of Drivers :</span>
-                                                <span class="value">1</span>
+                                                <span class="label">Owner Name :</span>
+                                                <span class="value">@item.policy.OwnerName</span>
                                             </li>
                                         </ul>
                                     </div>
@@ -166,22 +172,22 @@
                                         <span class="user-count">@item.Vehicles.Count</span>
                                     </div>
                                 </div>
-                                <div class="accordion-body" id="member_1">
+                                <div class="accordion-body" id="Vehicle_@(i++)">
                                     <ul class="dates-and-conpany-wrapper">
                                         <li class="column-item">
                                             <img class="support-icon" src="/assets/icons/calendar.svg" />
                                             <span class="label">Effective Date:</span>
-                                            <span class="value">@item.policy.PolicyEffectiveDate.ToString("dd MMM yyyy")</span>
+                                            <span class="value">@HelpersDate.FormatDateNoTime(item.policy.PolicyEffectiveDate)</span>
                                         </li>
                                         <li class="column-item">
                                             <img class="support-icon" src="/assets/icons/calendar.svg" />
                                             <span class="label">Expiry date:</span>
-                                            <span class="value">@item.policy.PolicyExpiryDate.ToString("dd MMM yyyy")</span>
+                                            <span class="value">@HelpersDate.FormatDateNoTime(item.policy.PolicyExpiryDate)</span>
                                         </li>
                                         <li class="column-item">
                                             <img class="support-icon" src="/assets/icons/home.svg" />
-                                            <span class="label">Usage:</span>
-                                            <span class="value">(Complaint No. from CRM as a simple integration)</span>
+                                            <span class="label">Lessee Name:</span>
+                                            <span class="value">@item.policy.LesseeName</span>
                                         </li>
                                     </ul>
 
@@ -191,18 +197,32 @@
                                                 <h2 class="heading">Vehicles</h2>
                                             </div>
                                         </div>
-                                        @foreach(var veh in item.Vehicles)
+                                        @foreach (var veh in item.Vehicles)
                                         {
                                             <div class="dependent-list-body">
                                                 <div class="accordion-header">
                                                     <img src="/assets/motor/Vehicles.png" class="status-icon" />
-                                                    <div class="accordion-heaing-content" style="width:100%;cursor:pointer" onclick="memberAccordion1('member_2')">
+                                                    <div class="accordion-heaing-content" style="width:100%;cursor:pointer" onclick="memberAccordion1('Accident_@j')">
                                                         <div class="heading-wrap">
-                                                            <h2 class="heading">@veh.drivers.FirstOrDefault().Name</h2>
+                                                            <h2 class="heading">@veh.drivers.FirstOrDefault()?.Name</h2>
+                                                            @if (veh.Vehicle.VehicleExpiryDate>=DateTime.Now)
+                                                            {
+                                                                <div class="class-tag">A</div>
+                                                            }else
 
-                                                            <div class="class-tag">A</div>
+                                                            {
+                                                                <div class="class-tag" style="background-color:red;color:white">E</div>
+                                                            }
+
                                                             <div class="request-btn-wrapper">
-                                                                <a href="@Url.Action("Index","Claims",new {policyNo = item.policy.PolicyNumber , chassis = veh.Vehicle.ChassisNo})" class="button button-primary" style="line-height:1rem !important">Select</a>
+                                                                @{
+                                                                    ClaimSearchobj claimSearchobj = new ClaimSearchobj()
+                                                                        {
+                                                                            PolicyId = item.policy.Id,
+                                                                            VehicleId = veh.Vehicle.Id
+                                                                        };
+                                                                }
+                                                                <a href="@Url.Action("Index","Claims",new{obj=MotorClaims.Models.Helpers.Encrypt(JsonConvert.SerializeObject(claimSearchobj))})" class="button button-primary" style="line-height:1rem !important">Select</a>
                                                             </div>
                                                             <div class="total-person">
 
@@ -214,15 +234,15 @@
                                                             <li class="detailed-item">
                                                                 <img class="support-icon" src="/assets/icons/calendar.svg" />
                                                                 <span class="label">Effective Date:</span>
-                                                                <span class="value">@veh.Vehicle.VehicleEffectiveDate.ToString("dd MMM yyyy")</span>
+                                                                <span class="value">@HelpersDate.FormatDateNoTime(veh.Vehicle.VehicleEffectiveDate)</span>
                                                             </li>
                                                             <li class="detailed-item">
                                                                 <span class="label">Make :</span>
-                                                                <span class="value">@veh.Vehicle.Make</span>
+                                                                <span class="value">@veh.Vehicle.MakeDesc</span>
                                                             </li>
                                                             <li class="detailed-item">
                                                                 <span class="label">Model :</span>
-                                                                <span class="value">@veh.Vehicle.Model</span>
+                                                                <span class="value">@veh.Vehicle.ModelDesc</span>
                                                             </li>
                                                             <li class="detailed-item">
                                                                 <span class="label">Manufacture  :</span>
@@ -232,11 +252,11 @@
                                                     </div>
                                                 </div>
 
-                                                @if(veh.lsClaims !=null && veh.lsClaims.Count > 0)
+                                                @if (veh.lsClaims != null && veh.lsClaims.Count > 0)
                                                 {
-                                                    @foreach( var acc in  veh.lsClaims)
+                                                    @foreach (var acc in veh.lsClaims)
                                                     {
-                                                        <div class="dependent-list-body" id="member_2">
+                                                        <div class="dependent-list-body" id="Accident_@(j++)">
                                                             <div class="accordion-header">
                                                                 <img src="/assets/motor/accident.png" class="status-icon" />
                                                                 <div class="accordion-heaing-content" style="width:100%">
@@ -248,7 +268,7 @@
                                                                         <li class="detailed-item">
                                                                             <img class="support-icon" src="/assets/icons/calendar.svg" />
                                                                             <span class="label">Accident Date:</span>
-                                                                            <span class="value">@acc.DateOfLoss.ToString("dd MMM yyyy")</span>
+                                                                            <span class="value">@HelpersDate.FormatDateNoTime(acc.DateOfLoss)</span>
                                                                         </li>
                                                                         <li class="detailed-item">
                                                                             <span class="label">Accident No:</span>
@@ -259,8 +279,20 @@
                                                                             <span class="value">@acc.ClaimStatus</span>
                                                                         </li>
                                                                         <li class="detailed-item">
+                                                                            <span class="label">Claim No :</span>
+                                                                            <span class="value">@acc.ClaimNo</span>
+                                                                        </li>
+                                                                        <li class="detailed-item">
+                                                                            @{
+                                                                                claimSearchobj = new ClaimSearchobj()
+                                                                                    {
+                                                                                        PolicyId = item.policy.Id,
+                                                                                        VehicleId = veh.Vehicle.Id,
+                                                                                        ClaimId = acc.Id
+                                                                                    };
+                                                                            }
                                                                             <div class="request-btn-wrapper">
-                                                                                <a href="@Url.Action("Index","Claims")" class="button button-primary" style="line-height:1rem !important">View</a>
+                                                                                <a href="@Url.Action("ClaimEntry","Claims",new{obj=MotorClaims.Models.Helpers.Encrypt(JsonConvert.SerializeObject(claimSearchobj))})" class="button button-primary" style="line-height:1rem !important">View</a>
                                                                             </div>
                                                                         </li>
                                                                     </ul>
@@ -269,14 +301,15 @@
                                                                 </div>
                                                             </div>
                                                         </div>
+
                                                     }
                                                 }
-                                               
+
 
 
                                             </div>
                                         }
-                                       
+
 
                                     </div>
                                 </div>
@@ -285,26 +318,34 @@
                             </div>
 
                         </div>
-                    </div>
-                }
+                    }
+                </div>
+
+            }
+            else
+            {
+                <div class="ui-state-highlight ui-corner-all" style="background:none !important;margin-top: 1%;">
+                    <span class="ui-icon ui-icon-info" style="float: left"></span>
+                    <span>No results found.</span>
+                </div>
             }
 
         </div>
     </div>
-   
-         <div class="right-sidebar false">
 
-        <div class="inner-wrapper">
-            <div class="membership-detail-wrapper">
-                @if (Model == null)
-                {
-                <div class="membership-inner-wrapper">
-                    <div class="membership-header">
-                        <h2 class="heading-title">Pull Policy</h2>
-                        <p class="membership-id">pull policy from core system by entering policy No#</p>
-                    </div>
+    <div class="right-sidebar false">
+        @if (Model == null)
+        {
+            <div class="inner-wrapper">
+                <div class="membership-detail-wrapper">
+
+                    <div class="membership-inner-wrapper">
+                        <div class="membership-header">
+                            <h2 class="heading-title">Pull Policy</h2>
+                            <p class="membership-id">pull policy from core system by entering policy No#</p>
+                        </div>
                         <div class="search-member">
-                         
+
                             <form asp-controller="Search" method="post">
                                 <div class="search-filter-wrapper">
 
@@ -326,13 +367,20 @@
                                 </div>
                             </form>
                         </div>
-                       
+
                     </div>
-                }
+
                 </div>
             </div>
-        </div>
-   
-    
+        }
+    </div>
+
+
 </div>
 
+<script>
+    $('#txtsequence').ForceIntegerEntry();
+    $('#txtnationalid').ForceIntegerEntry();
+    $('#txtmobile').ForceIntegerEntry();
+    $('#txtcustom').ForceIntegerEntry();
+</script>

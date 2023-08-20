@@ -2032,6 +2032,7 @@ label.radio-card {
 
             .tabs-wrapper .tabs-navigation-wrap .tab-navigation.active {
                 background-color: #F2F3F5;
+                font-weight:bold;
             }
 
     .tabs-wrapper .tabbs-content-wrapper {

@@ -45,11 +45,12 @@ namespace MotorClaims.Models
             None = 1
 
         }
-        public enum PaymentMethod
+        public enum ClaimReportType
         {
 
-            Cash = 1,
-            Credit = 2
+            Najm = 1,
+            Basher = 2,
+            Manual=3
 
         }
         public enum YakeenPlace
