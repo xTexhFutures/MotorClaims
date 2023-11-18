@@ -26,6 +26,7 @@
                 changeYear: true,
                 dateFormat: 'dd-mm-yy',
                 showAnim: 'blind',
+                maxDate: '0',
                 onClose: function (dateText, instance) {
                     if (dateText) {
                         var date;
@@ -102,8 +103,98 @@
     };
 })(jQuery);
 
+
+(function ($) {
+    $.fn.ForceDecimalNegativeEntry = function (type) {
+
+        return this.each(function () {
+
+            $(this).keydown(function (e) {
+                var key = e.charCode || e.keyCode || 0;
+            
+               
+                        if (key == 189 || key == 109) {
+                            var hasMinus = $(this).val().indexOf("-") > -1;
+                            if (hasMinus) {
+                                $(this).val($(this).val().replace("-", ""));
+                                if ($(this).change) {
+                                    $(this).change();
+                                }
+                                return false;
+                            } else {
+                                $(this).val("-" + $(this).val());
+                                if ($(this).val() != "-" && $(this).change) {
+                                    $(this).change();
+                                }
+                                return false;
+                            }
+                        }
+                    
+                    return (
+                        key == 8 ||
+                        key == 9 ||
+                        key == 46 ||
+                        (key >= 37 && key <= 40) ||
+                        (key >= 48 && key <= 57) ||
+                        (key >= 96 && key <= 105));
+                
+            });
+
+
+            $(this).blur(function (e) {
+                if ($(this).val() == "-") {
+                    $(this).val("");
+                }
+                $(this).val(FormatDecimal($(this).val()));
+                return true;
+            });
+        });
+    };
+})(jQuery);
+
+(function ($) {
+    $.fn.ForceDecimalEntry = function (type) {
+
+        return this.each(function () {
+
+            $(this).keydown(function (e) {
+                var key = e.charCode || e.keyCode || 0;
+                if (key == 190 ||
+                    key == 110) {
+                    if ($(this).val()) {
+                        if ($(this).val().indexOf(".") > -1) {
+                            return false;
+                        } else {
+                            return true;
+                        }
+                    } else {
+                        $(this).val("0.");
+                        return false;
+                    }
+                }
+                else {
+                    return (
+                        key == 8 ||
+                        key == 9 ||
+                        key == 46 ||
+                        (key >= 37 && key <= 40) ||
+                        (key >= 48 && key <= 57) ||
+                        (key >= 96 && key <= 105));
+                }
+            });
+        });
+    };
+})(jQuery);
 (function ($) {
     $.fn.UnForceIntegerEntry = function (type) {
+        return this.each(function () {
+            $(this).unbind('keydown');
+            $(this).unbind('blur');
+        });
+    };
+})(jQuery);
+(function ($) {
+    $.fn.UnForceDecimalEntry = function (type) {
         return this.each(function () {
             $(this).unbind('keydown');
             $(this).unbind('blur');
@@ -222,3 +313,37 @@ $('#txtEmail').autocomplete({
         $(this).autocomplete("search");
     }
 });
+
+
+
+$('#txtAssignTo').autocomplete({
+    source: function (request, response) {
+        $.getJSON("/api/Services/GetUsers/", { name: request.term }, function (data) {
+            response($.map(data, function (val, i) {
+                return {
+                    label: val.userName,
+                    ReportGroupId: val.id
+                };
+            }))
+        });
+    },
+    minLength: 1,
+    select: function (event, ui) {
+        $('#txtAssignToId').val(ui.item.ReportGroupId);
+    },
+    change: function (event, ui) {
+        if (!ui.item) {
+            $('#txtAssignTo').val("");
+            $('#txtAssignToId').val("");
+        }
+    }
+}).focus(function () {
+    if ($(this).attr('state') != 'open' && !$('#txtAssignToId').val()) {
+        $(this).autocomplete("search");
+    }
+});
+
+
+
+
+

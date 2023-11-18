@@ -1,5 +1,5 @@
-﻿@using CORE.DTOs.APIs.MotorClaim;
-@model Production
+﻿@using CORE.DTOs.MotorClaim;
+@model ProductionInfo
 @{
     Layout = null;
 }
@@ -14,7 +14,7 @@
 
         </div>
         <div class="action-dropdown">
-            <h3 class="policy-no">@Model.policy.PolicyNumber</h3>
+            <h3 class="policy-no">@Model.PolicyNumber</h3>
         </div>
     </div>
     <div class="policy-detail-body undefined">
@@ -26,7 +26,7 @@
                     </span>
                     <div class="item-content">
                         <span class="label">Policy Type</span>
-                        <h3 class="value ellipsis">@Model.policy.PolicyType</h3>
+                        <h3 class="value ellipsis">@Model.PolicyTypeName</h3>
                     </div>
                 </li>
                 <li class="detailed-item false">
@@ -35,7 +35,7 @@
                     </span>
                     <div class="item-content">
                         <span class="label">Effective Date</span>
-                        <h3 class="value ellipsis">@HelpersDate.FormatDateNoTime(Model.policy.PolicyEffectiveDate)</h3>
+                        <h3 class="value ellipsis">@HelpersDate.FormatDateNoTime(Model.PolicyEffectiveDate)</h3>
                     </div>
                 </li>
                 <li class="detailed-item false">
@@ -44,7 +44,7 @@
                     </span>
                     <div class="item-content">
                         <span class="label">Expiry Date</span>
-                        <h3 class="value ellipsis">@HelpersDate.FormatDateNoTime(Model.policy.PolicyExpiryDate)</h3>
+                        <h3 class="value ellipsis">@HelpersDate.FormatDateNoTime(Model.PolicyExpiryDate)</h3>
                     </div>
                 </li>
 
@@ -54,7 +54,7 @@
                     </span>
                     <div class="item-content">
                         <span class="label">Owner Name</span>
-                        <h3 class="value ellipsis">@Model.policy.OwnerName</h3>
+                        <h3 class="value ellipsis">@Model.OwnerName</h3>
                     </div>
                 </li>
             </ul>
@@ -69,7 +69,7 @@
                     </span>
                     <div class="item-content">
                         <span class="label">Leasee Id</span>
-                        <h3 class="value ellipsis">@Model.policy.LesseeId</h3>
+                        <h3 class="value ellipsis">@Model.LesseeId</h3>
                     </div>
                 </li>
 
@@ -80,7 +80,7 @@
                     </span>
                     <div class="item-content">
                         <span class="label">Leasee Name</span>
-                        <h3 class="value ellipsis">@Model.policy.LesseeName</h3>
+                        <h3 class="value ellipsis">@Model.LesseeName</h3>
                     </div>
                 </li>
                 <li class="detailed-item false">
@@ -89,7 +89,7 @@
                     </span>
                     <div class="item-content">
                         <span class="label">UW Year</span>
-                        <h3 class="value ellipsis">@Model.policy.PolicyUWYear</h3>
+                        <h3 class="value ellipsis">@Model.PolicyUWYear</h3>
                     </div>
                 </li>
                 <li class="detailed-item false">
@@ -98,7 +98,7 @@
                     </span>
                     <div class="item-content">
                         <span class="label">Benificiary</span>
-                        <h3 class="value ellipsis">@Model.policy.BenefecieryName</h3>
+                        <h3 class="value ellipsis">@Model.BenefecieryName</h3>
                     </div>
                 </li>
             </ul>

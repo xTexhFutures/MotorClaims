@@ -1,4 +1,5 @@
-﻿using CORE.DTOs.Authentications;
+﻿using CORE.DTOs.APIs.MotorClaim;
+using CORE.DTOs.Authentications;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Options;
@@ -31,6 +32,7 @@ namespace MotorClaims.Controllers
         [CustomAuthorize(Roles = "Admin,Sales,Brokers,Agency")]
         public IActionResult Index()
         {
+
 
             ViewData["State"] = "Pass";
             ViewData["Error"] = string.Empty;

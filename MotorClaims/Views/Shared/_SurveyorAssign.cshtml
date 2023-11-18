@@ -1,0 +1,214 @@
+﻿@using CORE.DTOs.MotorClaim.Claims;
+@model Claims
+@{
+    Layout = null;
+    string DivName = (string)ViewData["DivName"];
+}
+<div class="popup-body-wrapper">
+    <div class="popup-header">
+        <div class="popup-header-inner">
+            <h3 class="popup-title">Assign Claim</h3>
+            <div class="close-popup-icon" onclick="CloseDialogV('@DivName')">
+                <img class="close-icon" src="/assets/icons/close.svg">
+            </div>
+        </div>
+    </div>
+    <form id="frmUpdateAssign" method="post">
+        <input type="hidden" name="ClaimId" value="@Model.Id" />
+        <input type="hidden" name="Validation" value="1" />
+        <div class="popup-body">
+            <div class="detailed">
+                <div class="detailed-ele">
+                    <div class="detailed-desc">
+                        <h4 class="title">Claim No</h4>
+                        <p class="title-detail">@Model.ClaimNo</p>
+                    </div>
+                </div>
+                <div class="detailed-ele">
+                    <div class="detailed-desc">
+                        <h4 class="title">Owner Name</h4>
+                        <p class="title-detail">@Model.Owner</p>
+                    </div>
+                </div>
+                <div class="detailed-ele">
+                    <!-- <div class="icon-re">
+                        <img src="" alt="" class="ele-icon" />
+                    </div> -->
+                    <div class="detailed-desc">
+                        <h4 class="title">Policy No.</h4>
+                        <p class="title-detail">@Model.PolicyNo</p>
+                    </div>
+                </div>
+                <div class="detailed-ele">
+                    <div class="detailed-desc">
+                        <h4 class="title">Fraud Score</h4>
+                        <p class="title-detail">@Model.FraudScore</p>
+                    </div>
+                </div>
+
+            </div>
+            <div class="detailed edit">
+                <div class="detailed-ele">
+                    <div class="tabs-wrapper">
+                        <ul class="tabs-navigation-wrap">
+                            <li class="tab-navigation tab-custom active" id="tabOne" onclick="selectTabs('tabOne','one') ; Validation(1)">
+                                <div class="tab-item-text">
+                                    Assign To Team
+                                </div>
+                            </li>
+                            <li class="tab-navigation tab-custom" id="tabTwo" onclick="selectTabs('tabTwo','two'); Validation(2)">
+                                <div class="tab-item-text">
+                                    Assign To User
+                                </div>
+                            </li>
+
+                        </ul>
+                        <div class="tabbs-content-wrapper">
+                            <div class="tab-items-container tabs-one-content active" id="one">
+                                <div class="detailed-desc">
+
+                                    <input id="txtId" name="Id" type="hidden" value="@Model.Id">
+                                    <!-- <h4 class="title">Nationality</h4> -->
+                                    <div class="form-field-wrapper">
+                                        <div class="form-input-wrapper" style="border:solid 1px">
+                                            <select class="form-inputbox" name="teamAssign" id="ddlTeamAssign" >
+                                                <option value=""></option>
+                                                <option value="2">Operations</option>
+                                                <option value="3">Surveyors</option>
+                                                <option value="4">Fraud</option>
+                                            </select>
+                                            <label class="form-label non-icon" for="ddlTeamAssign">Assign To</label>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                            </div>
+                            <div class="tab-items-container tabs-one-content" id="two">
+                                <div class="detailed-desc">
+
+                                    <input id="txtId" name="Id" type="hidden" value="@Model.Id">
+                                    <!-- <h4 class="title">Nationality</h4> -->
+                                    <div class="form-field-wrapper">
+                                        <div class="form-input-wrapper" style="border:solid 1px">
+                                            <input class="form-inputbox ui-autocomplete-input" id="txtAssignTo" autocomplete="off" name="AssignTo" type="text" >
+                                            <input id="txtAssignToId" name="AssignToId" type="hidden">
+                                            <label class="form-label non-icon" for="txtAssignTo">Assign To</label>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+
+
+
+                </div>
+
+            </div>
+        </div>
+        <div class="popup-footer">
+            <button type="button" class="button button-secondary-border"
+                    onclick="CloseDialogV('@DivName')">
+                Cancel
+            </button>
+            <button type="submit" class="button button-primary">Update</button>
+        </div>
+    </form>
+</div>
+<script src="~/scripts/Autocomplete.js" type="text/javascript"></script>
+
+<script>
+    function Validation(Id) {
+            if (Id==1) {
+            $("#ddlTeamAssign").prop('required', true);
+            $("#txtAssignTo").prop('required', false);
+            $("#Validation").val(Id);
+        } else if (Id == 2) {
+            $("#ddlTeamAssign").prop('required', false);
+            $("#txtAssignTo").prop('required', true);
+            $("#Validation").val(Id);
+            } 
+    }
+    $(function () {
+        $("#ddlTeamAssign").prop('required', true);
+        $("#txtAssignTo").prop('required', false);
+        $("#frmUpdateAssign").submit(function (event) {
+            $.post("/Operations/UpdateAssign/", $("#frmUpdateAssign").serializeArray(), function () {
+                CloseDialogV('@DivName');
+                window.location.reload();
+            });
+
+        });
+    });
+</script>
+@*<form method="post" asp-action="UpdateReserveTransaction" asp-controller="Surveyor">
+    <div class="slide-popup-inner">
+        <div class="slide-header">
+            <div class="heading-card">
+                <h2 class="heading">Assign Claim</h2>
+            </div>
+        </div>
+        <div class="slide-body">
+            <div class="popup-body-wrapper">
+                <div class="body-content-wrapper">
+                    <div class="delete-content-card">
+                        <div class="body-delete-header">
+                            <h2 class="heading-title">@Model.ClaimNo</h2>
+                        </div>
+                        <ul class="list-detail">
+                            <li class="list-item-delete">
+                                <span class="label">Owner Name:</span>
+                                <span class="value">@Model.Owner</span>
+                            </li>
+                            <li class="list-item-delete">
+                                <span class="label">Policy No:</span>
+                                <span class="value">@Model.PolicyNo</span>
+                            </li>
+                            <li class="list-item-delete">
+                                <span class="label">Plate No:</span>
+                                <span class="value">@Model.PlateNo</span>
+                            </li>
+                            <li class="list-item-delete">
+                                <span class="label">Fraud Score:</span>
+                                <span class="value">@Model.FraudScore</span>
+                            </li>
+                        </ul>
+
+
+
+                        <div class="cancel-declaration">
+                            <h3 class="title-label">Assign To</h3>
+                            <div class="form-field-wrapper">
+                                <div class="form-input-wrapper">
+                                    <input class="form-inputbox ui-autocomplete-input" id="txtAssignTo" autocomplete="off" name="AssignTo" type="text" required>
+                                    <input id="txtAssignToId" name="AssignToId" type="hidden">
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                    </div>
+                </div>
+                <div class="slide-footer">
+                    <div class="slide-inner-footer">
+                        <button type="button" class="button button-secondary-border"
+                                onclick="CloseDialogV('@DivName')">
+                            Cancel
+                        </button>
+                        <button type="submit" class="button button-primary">Update</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+</form>
+<script src="~/scripts/Autocomplete.js" type="text/javascript"></script>*@

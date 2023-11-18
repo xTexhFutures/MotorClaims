@@ -1,0 +1,70 @@
+﻿@*@using CORE.DTOs.MotorClaim.Claims;
+@model AuthorityMatrix
+
+<div class="popup-body-wrapper">
+    <div class="popup-header">
+        <div class="popup-header-inner">
+            <h3 class="popup-title">Authority Matrix</h3>
+            <div class="close-popup-icon" onclick="Close('edit-Delegation-popup')">
+                <img class="close-icon" src="/assets/icons/close.svg">
+            </div>
+        </div>
+        <p class="popup-description">Define Delegation Process</p>
+    </div>
+    <form method="post" asp-action="UpdateAuthority" asp-controller="Setup">
+
+        <div class="popup-body">
+            <div class="detailed edit">
+                <div class="detailed-ele">
+
+                    <div class="detailed-desc">
+
+                        <input id="txtId" name="Id" type="hidden" value="@Model.Id">
+                        <!-- <h4 class="title">Nationality</h4> -->
+                        <div class="form-field-wrapper">
+                            <div class="form-input-wrapper">
+                                <input class="form-inputbox" id="txtUserId" autocomplete="off" name="UserId" type="text" required value="@Model.UserId">
+                                <input id="txthfUserId" name="hfUserId" type="hidden" value="@Model.DelegateFromId">
+                                <label class="form-label non-icon" for="txtDelegateFrom">Delegate From</label>
+                            </div>
+                        </div>
+                        <div class="form-field-wrapper">
+                            <div class="form-input-wrapper">
+                                <input class="form-inputbox" id="txtDelegateTo" autocomplete="off" name="DelegateTo" type="text" required value="@Model.DelegateTo">
+                                <input id="txthfDelegateTo" name="DelegateToId" type="hidden" value="@Model.DelegateToId">
+                                <label class="form-label non-icon" for="txtDelegateTo">Delegate To</label>
+                            </div>
+                        </div>
+                        <div class="form-field-wrapper">
+                            <div class="form-input-wrapper">
+                                <input class="form-inputbox calendar-input" autocomplete="off" id="txtFrom" name="From" type="text" required value="@(Model.Id>0?Model.From.ToString("dd-MM-yyyy"):"")">
+                                <label class="form-label non-icon" for="txtFrom">From</label>
+                            </div>
+                        </div>
+                        <div class="form-field-wrapper">
+                            <div class="form-input-wrapper">
+                                <input class="form-inputbox calendar-input" autocomplete="off" id="txtTo" name="To" type="text" required value="@(Model.Id>0?Model.To.ToString("dd-MM-yyyy"):"")">
+                                <label class="form-label non-icon" for="txtTo">To</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="popup-footer">
+            <button class="button button-secondary" type="button" onclick="Close('edit-Delegation-popup')">Cancel</button>
+            <button class="button button-secondary" type="submit">Submit</button>
+        </div>
+    </form>
+</div>
+
+<script>
+    $(function () {
+        if ('@ViewData["Error"]' != "" && '@ViewData["Error"]' != '') {
+            ErrorAlert('@ViewData["Error"]');
+        }
+    })
+    $('#txtFrom').ForceDateEntry();
+    $('#txtTo').ForceDateEntry();
+</script>*@

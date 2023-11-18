@@ -2,8 +2,6 @@ const memberAccordion = (id) => {
     element = document.getElementById(id);
     element.classList.toggle("active");
     element.parentElement.classList.toggle("active")
-    cardElement = document.getElementById('member_2');
-    cardElement.style.display = 'none'
 }
 
 const memberAccordion1 = (id) => {
@@ -68,6 +66,8 @@ const openHealthPopup = (selectedQuestion) => {
 }
 function CloseDialogV(id) {
     let element = document.getElementById(id);
+    //element.classList.remove('display-block');
+    //element.classList.add('display-none');
     element.classList.toggle('active');
 }
 const closeHealthModal = () => {
@@ -520,6 +520,16 @@ function UpdateDocument(Id) {
         $('#edit-Document-popup').load('/Documents/UpdateDocument/');
     }
 }
+
+function UpdateAuthority(Id) {
+    const element = document.getElementById('edit-Document-popup');
+    element.classList.toggle('active');
+    if (Id > 0) {
+        $('#edit-Document-popup').load('/Setup/UpdateAuthority/' + Id);
+    } else {
+        $('#edit-Document-popup').load('/Setup/UpdateAuthority/');
+    }
+}
 function UpdateDelegation(Id) {
 
     const element = document.getElementById('edit-Delegation-popup');
@@ -615,6 +625,58 @@ function UpdateWorkFlowApprovers(Id) {
     $('#ManageApproversPopup').load('/WorkFlow/LoadWorkFlowApprovers/' + Id);
 }
 
-function LoadClaimantsList(Id) {
-    $('#ClaimantsList').load('/Claims/ClaimantsList/' + Id);
+function LoadClaimantsList(Id, Policy, Vehicle) {
+
+    $('#ClaimantsList').load('/Claims/ClaimantsList/', { Id:Id,PolicyId:Policy,VehicleId:Vehicle });
 }
+
+function LoadDocumentsList(ModuleId, ClaimId, Policy, Vehicle, ClaimantId,Reference) {
+
+    $('#ClaimantsDocumentsUpload').load('/Claims/DocumentsUpload/', { ModuleId: ModuleId, ClaimId: ClaimId, PolicyId: Policy, VehicleId: Vehicle, ClaimantId: ClaimantId, Reference: Reference });
+}
+
+function SurveyorAssign(ClaimId) {
+    let element = document.getElementById('SurveyorAssign');
+    element.classList.remove('display-none');
+    element.classList.add('display-block');
+    element.classList.toggle('active');
+    $('#SurveyorAssign').load('/Surveyor/SurveyorAssign/', { ClaimId: ClaimId });
+}
+
+function OperationAssign(ClaimId) {
+    const element = document.getElementById('OperationAssign');
+    element.classList.toggle('active');
+    $('#OperationAssign').load('/Operations/OperationAssign/', { ClaimId: ClaimId });
+}
+
+function SurveyorReserve(ClaimId) {
+    let element = document.getElementById('UpdateReserve');
+    element.classList.remove('display-none');
+    element.classList.add('display-block');
+    element.classList.toggle('active');
+    $('#UpdateReserve').load('/Surveyor/UpdateReserve/', { ClaimId: ClaimId });
+}
+
+function OperationReserve(ClaimId) {
+    let element = document.getElementById('UpdateReserve');
+    element.classList.remove('display-none');
+    element.classList.add('display-block');
+    element.classList.toggle('active');
+    $('#UpdateReserve').load('/Operations/UpdateReserve/', { ClaimId: ClaimId });
+}
+function SurveyorActions(ClaimId) {
+    let element = document.getElementById('SurveyorActions');
+    element.classList.remove('display-none');
+    element.classList.add('display-block');
+    element.classList.toggle('active');
+    $('#SurveyorActions').load('/Surveyor/SurveyorActions/', { ClaimId: ClaimId });
+}
+function OperationRecovery(ClaimId) {
+    let element = document.getElementById('UpdateRecovery');
+    element.classList.remove('display-none');
+    element.classList.add('display-block');
+    element.classList.toggle('active');
+    $('#UpdateRecovery').load('/Operations/UpdateRecovery/', { ClaimId: ClaimId });
+}
+
+

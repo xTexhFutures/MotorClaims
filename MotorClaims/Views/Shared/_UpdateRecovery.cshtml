@@ -1,0 +1,125 @@
+﻿@using CORE.DTOs.MotorClaim.Claims;
+@model Claims
+@{
+    Layout = null;
+}
+<form id="frmUpdateReserve" method="post" >
+    <input type="hidden" name="ClaimId" value="@Model.Id" />
+    <div class="slide-popup-inner">
+        <div class="slide-header">
+            <div class="heading-card">
+                <h2 class="heading">Update Recovery</h2>
+            </div>
+        </div>
+        <div class="slide-body">
+            <div class="popup-body-wrapper">
+                <div class="body-content-wrapper">
+                    <div class="delete-content-card">
+                        <div class="body-delete-header">
+                            <h2 class="heading-title">@Model.ClaimNo</h2>
+                            <span class="active-employee">Employee</span>
+                        </div>
+                        <ul class="list-detail">
+                            <li class="list-item-delete">
+                                <span class="label">Owner Name:</span>
+                                <span class="value">@Model.Owner</span>
+                            </li>
+                            <li class="list-item-delete">
+                                <span class="label">Policy No:</span>
+                                <span class="value">@Model.PolicyNo</span>
+                            </li>
+                            <li class="list-item-delete">
+                                <span class="label">Plate No:</span>
+                                <span class="value">@Model.PlateNo</span>
+                            </li>
+                            <li class="list-item-delete">
+                                <span class="label">Fraud Score:</span>
+                                <span class="value">@Model.FraudScore</span>
+                            </li>
+                        </ul>
+
+
+                        <div class="cancel-declaration">
+                            <h3 class="title-label">Claimant</h3>
+                            <div class="form-field-wrapper">
+                                <div class="form-input-wrapper">
+                                    <select required class="form-inputbox" name="ClaimantID" id="ddlClaimantID">
+                                        <option value="">Select Claimant</option>
+                                        <option value="3">Claimant 1</option>
+                                        <option value="4">Claimant 2</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="cancel-declaration">
+                            <h3 class="title-label">Spare Part Cost</h3>
+                            <div class="form-field-wrapper">
+                                <div class="form-input-wrapper">
+                                    <input required type="text" name="SparePartCost" autocomplete="off" maxlength="10" class="form-inputbox" id="txtSparePartCost" />
+
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="cancel-declaration">
+                            <h3 class="title-label">Labor Cost</h3>
+                            <div class="form-field-wrapper">
+                                <div class="form-input-wrapper">
+                                    <input required type="text" name="LaborCost" autocomplete="off" maxlength="10" class="form-inputbox" id="txtLaborCost" />
+
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="cancel-declaration">
+                            <h3 class="title-label">Other Cost</h3>
+                            <div class="form-field-wrapper">
+                                <div class="form-input-wrapper">
+                                    <input required type="text" name="OtherCost" autocomplete="off" maxlength="10" class="form-inputbox" id="txtOtherCost" />
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="cancel-declaration">
+                            <h3 class="title-label">Note</h3>
+                            <div class="form-field-wrapper">
+                                <div class="form-input-wrapper">
+                                    <textarea name="Note" id="txtNote" autocomplete="off" class="form-inputbox" maxlength="1024"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="slide-footer">
+                    <div class="slide-inner-footer">
+                        <button type="button" class="button button-secondary-border"
+                                onclick="CloseDialogV('UpdateRecovery')">
+                            Cancel
+                        </button>
+                        <button type="submit" class="button button-primary">Update</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+</form>
+
+<script>
+    $(function () {
+        $("#frmUpdateReserve").submit(function (event) {
+            $.post("/Surveyor/UpdateReserveTransaction/", $("#frmUpdateReserve").serializeArray(),function(){
+                CloseDialogV('UpdateReserve');
+            });
+
+        });
+    });
+    $('#txtSparePartCost').ForceDecimalNegativeEntry();
+    $('#txtLaborCost').ForceDecimalNegativeEntry();
+    $('#txtOtherCost').ForceDecimalNegativeEntry();
+</script>

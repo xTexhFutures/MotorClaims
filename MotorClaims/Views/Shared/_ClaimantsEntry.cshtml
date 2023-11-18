@@ -1,4 +1,5 @@
-﻿@using CORE.DTOs.APIs.MotorClaim;
+﻿
+@using CORE.DTOs.APIs.MotorClaim;
 @using CORE.DTOs.APIs.Setups.MMP;
 @using CORE.DTOs.MotorClaim;
 @using CORE.DTOs.MotorClaim.Claims;
@@ -18,33 +19,24 @@
     <input type="hidden" name="ClaimId" value="@Model.ClaimId" />
     <input type="hidden" name="Serial" value="@(Model!=null? Model.Serial:0)" />
 
-
-    <div class="add-member-detail">
-        <div class="page-heading">
-            <h2 class="page-title">Claimant Entry</h2>
-        </div>
+       <div class="add-member-detail" style="max-width:100% !important">
         <div class="tabs-wrapper">
             <ul class="tabs-navigation-wrap">
-                <li class="tab-navigation tab-custom-two active" id="tabTwoOne" onclick="selectTabsTwo('tabTwoOne','one_1')">
+                <li class="tab-navigation tab-custom-two A active" id="CtabTwoOne" onclick="selectTabsTwo('CtabTwoOne','ClaimantEntry')">
                     <div class="tab-item-text">
                         Claimant entry
                     </div>
                 </li>
-                <li class="tab-navigation tab-custom-two" id="tabTwoTwo" onclick="selectTabsTwo('tabTwoTwo','ClaimantsList'); LoadClaimantsList('@Model.ClaimId','@policy.policy.Id','@vehicle.Vehicle.Id')">
-                    <div class="tab-item-text">
-                        Claimants List
-                    </div>
-                </li>
-                <li class="tab-navigation tab-custom-two" id="tabTwoThree" onclick="selectTabsTwo('tabTwoThree','DocumentsUpload'); LoadDocumentsList('@((int)MotorClaims.Models.Enums.DocumnetType.Claimant)','@Model.ClaimId','@policy.policy.Id','@vehicle.Vehicle.Id','@Model.Id')">
+                <li class="tab-navigation tab-custom-two A" id="CtabTwoTwo" onclick="selectTabsTwo2('CtabTwoTwo','ClaimantsDocumentsUpload');">
                     <div class="tab-item-text">
                         Documents Upload
                     </div>
                 </li>
             </ul>
-            <div class="tabbs-content-wrapper">
-                <div class="tab-items-container tabs-one-content-two active" id="one_1">
+             <div class="tabbs-content-wrapper">
+                <div class="tab-items-container tabs-one-content-two B active" id="ClaimantEntry">
 
-                    <div class="member-summary-container">
+    <div class="member-summary-container">
                         <div class="total-member-list">
                             <h6 class="title">Claimant Info</h6>
                             <div class="member-list-container">
@@ -62,7 +54,7 @@
                                                 </select>
                                             </div>
                                             <div class="form-container Full">
-                                                <span class="label">Damage Type</span>
+                                                <span class="label">Claimant Result</span>
                                                 <select class="form-controlar" required name="DamageType" id="ddlDamageType">
                                                     <option value=""></option>
                                                     @foreach (var item in dDamageType)
@@ -72,7 +64,7 @@
                                                 </select>
                                             </div>
                                             <div class="form-container Full">
-                                                <span class="label">Nature of Loss</span>
+                                                  <span class="label">Nature of Loss</span>
                                                 <select class="form-controlar"  name="NatureofLoss" id="ddlNatureofLoss">
                                                     <option value=""></option>
                                                     <option value="1">Vehicle</option>
@@ -81,13 +73,6 @@
 
                                                 </select>
                                             </div>
-                                      @*      <div class="form-container Full">
-                                                <span class="label">Sub Claim Cause</span>
-                                                <select class="form-controlar" required name="ClaimSubCause" id="ddlClaimSubCause">
-                                                    <option value=""></option>
-                                                    <option value="1">Others</option>
-                                                </select>
-                                            </div>*@
                                         </div>
                                         <div class="vehicle-owner-grid">
 
@@ -100,7 +85,7 @@
                                             </div>
                                             <div class="form-container Full" id="najm">
                                                 <span class="label">Claimant Name</span>
-                                                <input class="form-controlar" autocomplete="off" required type="text" id="txtClaimantName" maxlength="150" placeholder="Claimant Name" name="ClaimantName" />
+                                                <input class="form-controlar" autocomplete="off" required type="text" id="txtClaimantName" maxlength="150" placeholder="Claimant Name" name="ClaimantName" value="@Model.ClaimantName" />
                                             </div>
 
                                             <div class="form-container Full">
@@ -215,30 +200,7 @@
                                                     <label class='tgl-btn' for='IsSurveyRequired'></label>
                                                 </div>
                                             </div>
-                                   @*         <div class="vehicle-owner-grid" style="display:contents !important">
-                                                <span class="label">Beneficiary Type</span>
-                                                <label for="BeneficiaryType1" class="radio-card-v2" style="min-width:20% !important">
-                                                    <input type="radio" value="1" name="BeneficiaryType" id="BeneficiaryType1" @(Model.BeneficiaryType.HasValue && Model.BeneficiaryType.Value == 1 ? "checked" : "") />
-                                                    <div class="card-content-wrapper">
-                                                        <span class="check-icon"></span>
-                                                        <div class="card-content">
-                                                            <h4 class="title">Financial Institution</h4>
-                                                        </div>
-                                                    </div>
-                                                </label>
-                                                <!-- /.radio-card -->
-
-                                                <label for="BeneficiaryType2" class="radio-card-v2" style="min-width:20% !important">
-                                                    <input type="radio" value="2" name="BeneficiaryType" id="BeneficiaryType2" @(Model.Id == 0 ? "checked" : (Model.BeneficiaryType.HasValue && Model.BeneficiaryType.Value == 2 ? "checked" : "")) />
-                                                    <div class="card-content-wrapper">
-                                                        <span class="check-icon"></span>
-                                                        <div class="card-content">
-                                                            <h4 class="title">Other</h4>
-                                                        </div>
-                                                    </div>
-                                                </label>
-
-                                            </div>*@
+                            
                                     
 
                           
@@ -311,105 +273,15 @@
 
 
                     </div>
-                    <div class="footer-actions-handle">
-                        <div class="next-button" style="margin-right:5px">
-                            @if (Model.Id > 0)
-                            {
-                                <button type="submit" class="button button-primary">
-                                    Update
-                                </button>
-                            }
-                            else
-                            {
-                                <button type="submit" class="button button-primary">
-                                    Add New Claimant
-                                </button>
-                            }
-
-                        </div>
-                        <div class="next-button">
-                            <button type="submit" class="button button-primary">
-                                Next
-                            </button>
-                        </div>
+     </div>  
+           <div class="tab-items-container tabs-one-content-two B" id="ClaimantsDocumentsUpload"></div>
+       </div>
                     </div>
-
-                </div>
-
-                <div class="tab-items-container tabs-one-content-two" id="ClaimantsList">
-                </div>
-                <div class="tab-items-container tabs-one-content-two" id="DocumentsUpload">
-                </div>
-            </div>
-
-        </div>
-    </div>
+                    </form>
 
 
-</form>
-
-
-
-
-<div class="aside-right">
-    <div class="inner-wrapper">
-        <div class="vehicle-item">
-            <div class="vehicle-header">
-                <img src="/assets/motor/motor.svg" class="vehicle-icon" />
-                <div class="vehicle-info">
-                    <span class="vehicle-name">@vehicle.Vehicle.MakeDesc @vehicle.Vehicle.ModelDesc / @vehicle.Vehicle.SequanceNo @vehicle.Vehicle.CustomNo</span>
-                    <span class="vehicle-no" style="text-transform:uppercase">Plate Number : @vehicle.Vehicle.PlateNo</span>
-                </div>
-            </div>
-            <div class="vehicle-basic-body">
-                <ul class="detail-list">
-                    <li class="detailed-item">
-                        <span class="detailed-icon-wrap">
-                            <img src="/assets/icons/save.svg" alt="" class="item-icon">
-                        </span>
-                        <div class="item-content">
-                            <span class="label">Policy No</span>
-                            <h3 class="value">@policy.policy.PolicyNumber</h3>
-                        </div>
-                    </li>
-                    <li class="detailed-item">
-                        <span class="detailed-icon-wrap">
-                            <img src="/assets/icons/calendar.svg" alt="" class="item-icon">
-                        </span>
-                        <div class="item-content">
-                            <span class="label">Effective Date</span>
-                            <h3 class="value">@HelpersDate.FormatDateNoTime(policy.policy.PolicyEffectiveDate)</h3>
-                        </div>
-                    </li>
-                    <li class="detailed-item">
-                        <span class="detailed-icon-wrap">
-                            <img src="/assets/icons/calendar.svg" alt="" class="item-icon">
-                        </span>
-                        <div class="item-content">
-                            <span class="label">Year of Manufacturing</span>
-                            <h3 class="value">@vehicle.Vehicle.ManufactureYear</h3>
-                        </div>
-                    </li>
-                    <li class="detailed-item">
-                        <span class="detailed-icon-wrap">
-                            <img src="/assets/icons/calendar.svg" alt="" class="item-icon">
-                        </span>
-                        <div class="item-content">
-                            <span class="label">Expiry Date</span>
-                            <h3 class="value">@HelpersDate.FormatDateNoTime(policy.policy.PolicyExpiryDate)</h3>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-<div id="health-m-modal" class="health-custom-modal"></div>
-
-<script>
-       $(function(){
+  <script>
+      $(function(){
       
           if ('@Model.ClaimantType' == '1'){
  $('#TPRegion').hide();
@@ -422,7 +294,7 @@
     if ('@Model.Id' != '0') {
         $('#ddlDamageType').val('@Model.DamageType');
         $('#ddlClaimantType').val('@Model.ClaimantType');
-        $('#dlNatureofLoss').val('@Model.NatureofLoss');
+        $('#ddlNatureofLoss').val('@Model.NatureofLoss');
         $('#ddlOurPercent').val('@Model.OurPercent');
         $('#txtResponsipility').val('@Model.Responsipility');
 
@@ -562,6 +434,3 @@
         }
     });
 </script>
-
-
-

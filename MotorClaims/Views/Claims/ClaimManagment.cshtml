@@ -1,0 +1,137 @@
+﻿@using CORE.DTOs.APIs.MotorClaim;
+@using CORE.DTOs.MotorClaim;
+@using CORE.DTOs.MotorClaim.Claims;
+@using Newtonsoft.Json;
+@{
+    Production policy = (Production)ViewData["Policy"];
+    VehicleInfos vehicle = (VehicleInfos)ViewData["Vehicle"];
+    Claims claims = (Claims)ViewData["claims"];
+    List<LookupTable> dClaimantType = (List<LookupTable>)ViewData["ClaimantType"];
+    List<LookupTable> dClaimantResult = (List<LookupTable>)ViewData["ClaimantResult"];
+    ClaimSearchobj claimSearchobj = new ClaimSearchobj();
+}
+
+@model List<Claimants>
+<div class="policy-detail-wrapper">
+    <div class="search-member">
+        <div class="search-heading-wrap">
+            <div class="heading-card">
+                <h2 class="heading">Claims List</h2>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div class="transaction-details">
+    <table class="universal-table">
+        <tr>
+            <!-- <th>#</th> -->
+            <th>Claim Segment</th>
+            <th>Policy Type</th>
+            <th>Policy Number</th>
+            <th>Make</th>
+            <th>Model</th>
+            <th>Chassis</th>
+            <th>Creation Date</th>
+            <th>Claim Status</th>
+
+        </tr>
+
+        <tr>
+            @{
+                claimSearchobj = new ClaimSearchobj()
+            {
+                PolicyId = policy.policy.Id,
+                VehicleId = vehicle.Vehicle.Id,
+                ClaimId = claims.Id
+            };
+
+       
+            }
+            <td class="tran"><a href="@Url.Action("ClaimEntry","Claims",new{obj=MotorClaims.Models.Helpers.Encrypt(JsonConvert.SerializeObject(claimSearchobj))})">#@claims.ClaimNo</a></td>
+            <td>@policy.policy.PolicyTypeName</td>
+            <td>@policy.policy.PolicyNumber</td>
+            <td>@vehicle.Vehicle.MakeDesc</td>
+            <td>@vehicle.Vehicle.ModelDesc</td>
+            <td>@vehicle.Vehicle.ChassisNo</td>
+            <td>@HelpersDate.FormatDateNoTime(claims.CreationDate.Value)</td>
+            @{
+                var y = Enum.TryParse(claims.ClaimStatus.ToString(), out MotorClaims.Models.Enums.ClaimStatus parsedEnumValue);
+            }
+            <td>@parsedEnumValue</td>
+        </tr>
+
+
+
+    </table>
+</div>
+<div class="policy-detail-wrapper">
+    <div class="search-member">
+        <div class="search-heading-wrap">
+            <div class="heading-card">
+                <h2 class="heading">Claimants List</h2>
+            </div>
+            @{
+                claimSearchobj = new ClaimSearchobj()
+            {
+                PolicyId = policy.policy.Id,
+                VehicleId = vehicle.Vehicle.Id,
+                ClaimId=claims.Id
+            };
+            }
+            <a class="button button-secondary" href="@Url.Action("ClaimantsEntry","Claims",new{obj=MotorClaims.Models.Helpers.Encrypt(JsonConvert.SerializeObject(claimSearchobj))})">Add Claimant</a>
+
+        </div>
+
+    </div>
+
+</div>
+<div class="transaction-details">
+    <table class="universal-table">
+        <tr>
+            <!-- <th>#</th> -->
+            <th>Claimant Type</th>
+            <th>Claimant Name</th>
+            <th>Loss Type</th>
+            <th>Make</th>
+            <th>Model</th>
+            <th>Chassis</th>
+            <th>Plate No</th>
+            <th>Claimant Status</th>
+
+        </tr>
+
+
+        @foreach (var clm in Model)
+        {
+
+            <tr>
+                @{
+                    claimSearchobj = new ClaimSearchobj()
+                {
+                    PolicyId = policy.policy.Id,
+                    VehicleId = vehicle.Vehicle.Id,
+                    ClaimId = clm.ClaimId,
+                    ClaimantId = clm.Id
+                };
+                    string ClaimantType = dClaimantType.Where(p => p.Code == clm.ClaimantType.Value.ToString()).FirstOrDefault().NameEnglish;
+                    string ClaimantResult = dClaimantResult.Where(p => p.Code == clm.DamageType.Value.ToString()).FirstOrDefault().NameEnglish;
+                }
+                <td class="tran"><a href="@Url.Action("ClaimantsEntry","Claims",new{obj=MotorClaims.Models.Helpers.Encrypt(JsonConvert.SerializeObject(claimSearchobj))})">#@ClaimantType</a></td>
+                <td>@ClaimantResult</td>
+                <td></td>
+                <td>@clm.MakeDesc</td>
+                <td>@clm.ModelDesc</td>
+                <td>@clm.ChassisNo</td>
+                <td>@clm.PlateNo</td>
+                <td>Open</td>
+
+            </tr>
+
+
+        }
+    </table>
+</div>

@@ -1119,7 +1119,7 @@
 .member-summary-container .total-member-list {
   margin-top: 1rem;
   background-color: #ffffff;
-  padding: 1.5rem;
+  /*padding: 1.5rem;*/
   border-radius: 8px;
 }
 

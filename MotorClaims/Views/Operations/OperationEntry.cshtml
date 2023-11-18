@@ -1,0 +1,9 @@
+﻿@using CORE.DTOs.MotorClaim.Claims;
+@model ClaimMaster
+@{
+    await Html.RenderPartialAsync("_PolicyInfo",Model.productionInfo);
+    await Html.RenderPartialAsync("_VehicleInfo", Model.vehiclesInfo);
+    await Html.RenderPartialAsync("_ClaimInfo", Model.claims);
+    await Html.RenderPartialAsync("_ClaimantInfo", Model.claimants);
+    await Html.RenderPartialAsync("_DocumentsInfo", new { Model = Model.vehiclesInfo, Hamza = "FFF" });
+}

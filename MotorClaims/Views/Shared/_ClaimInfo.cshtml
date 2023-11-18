@@ -1,13 +1,10 @@
-﻿@using CORE.DTOs.APIs.MotorClaim;
-@model VehicleInfos
+﻿@using CORE.DTOs.MotorClaim.Claims;
+
+@model Claims
 @{
     Layout = null;
 }
-@if (Model.lsClaims.Count > 0)
-{
 
-    @foreach (var clm in Model.lsClaims)
-    {
         <div class="basic-detail">
             <div class="policy-header">
                 <div class="name-number-wrapper">
@@ -18,7 +15,7 @@
 
                 </div>
                 <div class="action-dropdown">
-                    <h3 class="policy-no">Claim No. @clm.ClaimNo</h3>
+                    <h3 class="policy-no">Claim No. @Model.ClaimNo</h3>
                 </div>
             </div>
             <div class="policy-detail-body undefined">
@@ -30,7 +27,7 @@
                             </span>
                             <div class="item-content">
                                 <span class="label">Claim Number</span>
-                                <h3 class="value ellipsis">@clm.ClaimNo</h3>
+                                <h3 class="value ellipsis">@Model.ClaimNo</h3>
                             </div>
                         </li>
                         <li class="detailed-item false">
@@ -39,7 +36,7 @@
                             </span>
                             <div class="item-content">
                                 <span class="label">Date Of Loss</span>
-                                <h3 class="value ellipsis">@clm.DateOfLoss.ToString("dd MMM yyyy")</h3>
+                                <h3 class="value ellipsis">@Model.DateOfLoss.ToString("dd MMM yyyy")</h3>
                             </div>
                         </li>
                         <li class="detailed-item false">
@@ -48,7 +45,7 @@
                             </span>
                             <div class="item-content">
                                 <span class="label">Report Type</span>
-                                <h3 class="value ellipsis">@clm.ClaimReportType</h3>
+                                <h3 class="value ellipsis">@Model.ClaimReportType</h3>
                             </div>
                         </li>
 
@@ -58,7 +55,7 @@
                             </span>
                             <div class="item-content">
                                 <span class="label">Accident City</span>
-                                <h3 class="value ellipsis">@clm.City</h3>
+                                <h3 class="value ellipsis">@Model.City</h3>
                             </div>
                         </li>
 
@@ -68,7 +65,7 @@
                             </span>
                             <div class="item-content">
                                 <span class="label">Notification date</span>
-                                <h3 class="value ellipsis">@clm.NotificationDate.ToString("dd MMM yyyy")</h3>
+                                <h3 class="value ellipsis">@Model.NotificationDate.ToString("dd MMM yyyy")</h3>
                             </div>
                         </li>
                     </ul>
@@ -83,7 +80,7 @@
                             </span>
                             <div class="item-content">
                                 <span class="label">Geogrphical Area</span>
-                                <h3 class="value ellipsis">@clm.GeagraphicalArea</h3>
+                                <h3 class="value ellipsis">@Model.GeagraphicalArea</h3>
                             </div>
                         </li>
 
@@ -94,7 +91,7 @@
                             </span>
                             <div class="item-content">
                                 <span class="label">Accidental Place</span>
-                                <h3 class="value ellipsis">@clm.City</h3>
+                                <h3 class="value ellipsis">@Model.City</h3>
                             </div>
                         </li>
                         <li class="detailed-item false">
@@ -103,7 +100,7 @@
                             </span>
                             <div class="item-content">
                                 <span class="label">Registration Date</span>
-                                <h3 class="value ellipsis">@clm.RegistrationDate.ToString("dd MMM yyyy")</h3>
+                                <h3 class="value ellipsis">@Model.RegistrationDate.ToString("dd MMM yyyy")</h3>
                             </div>
                         </li>
                         <li class="detailed-item false">
@@ -112,7 +109,7 @@
                             </span>
                             <div class="item-content">
                                 <span class="label">Prefered city of Survey</span>
-                                <h3 class="value ellipsis">@clm.City</h3>
+                                <h3 class="value ellipsis">@Model.City</h3>
                             </div>
                         </li>
                         <li class="detailed-item false">
@@ -121,7 +118,7 @@
                             </span>
                             <div class="item-content">
                                 <span class="label">Claim Event</span>
-                                <h3 class="value ellipsis">@clm.EventId</h3>
+                                <h3 class="value ellipsis">@Model.EventId</h3>
                             </div>
                         </li>
                     </ul>
@@ -129,6 +126,3 @@
 
             </div>
         </div>
-    }
-
-}

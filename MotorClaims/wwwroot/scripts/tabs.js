@@ -37,3 +37,24 @@ const selectTabsTwo = (tab, tabContent) => {
 		}
 	}
 }
+
+
+const selectTabsTwo2 = (tab, tabContent) => {
+	let allTabs = document.querySelectorAll(".A");
+	let allTabsContent = document.querySelectorAll(".B");
+	// let tabItem = document.getElementById(tab);
+	// let tabContentItem = document.getElementById(tabContent);
+	// tabContentItem.classList.add('active');
+	for (let i = 0; i < allTabs.length; i++) {
+		if (allTabs[i].id !== tab) {
+			allTabs[i].classList.remove('active');
+		} else {
+			allTabs[i].classList.add('active');
+		}
+		if (allTabsContent[i].id !== tabContent) {
+			allTabsContent[i].classList.remove('active');
+		} else {
+			allTabsContent[i].classList.add('active');
+		}
+	}
+}

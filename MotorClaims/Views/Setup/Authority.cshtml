@@ -1,6 +1,6 @@
-﻿@using CORE.DTOs.MotorClaim.WorkFlow;
+﻿@using CORE.DTOs.MotorClaim.Claims;
 @{
-    List<DocumentInfo> documentInfos = (List<DocumentInfo>)ViewData["Documents"];
+    List<AuthorityMatrix> authorityMatrices = (List<AuthorityMatrix>)ViewData["AuthorityMatrix"];
     int? Filter = (int?)ViewData["Filter"];
 }
 @{
@@ -11,7 +11,7 @@
 <div class="policy-wrapper">
     <h2 class="heading">Documents Managment</h2>
     <div class="search-member">
-        <form method="post" asp-action="SearchDocuments" asp-controller="Documents">
+        <form method="post" asp-action="SearchAuthorities" asp-controller="Setup">
             <div class="search-filter-wrapper">
                 <select class="common-dropdown" name="Filter" id="ddlFilter">
                     <option value="">All Modules</option>
@@ -33,46 +33,31 @@
 <div class="transaction-details">
     <div class="search-heading-wrap" style="float: right;margin-bottom: 5px;">
 
-        <button class="button button-secondary" onclick="UpdateDocument(0)">Add Document</button>
+        <button class="button button-secondary" onclick="UpdateAuthority(0)">Add Authority Level</button>
     </div>
     <table class="universal-table">
         <tr>
             <!-- <th>#</th> -->
-            <th>Document Name</th>
             <th>Module Name</th>
-            <th>Type</th>
-            <th>Actions</th>
+            <th>User Name</th>
+            <th>Role Name</th>
+            <th>Min Limit</th>
+            <th>Max Limit</th>
         </tr>
-        @if (documentInfos != null)
+        @if (authorityMatrices != null)
 
-            @foreach (var item in documentInfos)
+            @foreach (var item in authorityMatrices)
             {
                 <tr>
-                    <td class="tran" onclick="UpdateDocument(@item.Id)">#@item.Name</td>
                     @{
                         var y = Enum.TryParse(item.ModuleId.ToString(), out MotorClaims.Models.Enums.DocumnetType parsedEnumValue);
                     }
-                    <td>@parsedEnumValue</td>
-                    <td>
+                    <td class="tran" onclick="UpdateAuthority(@item.Id)">#@parsedEnumValue</td>
 
-                        @if (item.IsRequired)
-                        {
-                            <span>Required</span>
-                        }
-                        else
-                        {
-                            <span>Optional</span>
-                        }
-                    </td>
-                    <td>
-                        <div class="resubmit" style="padding-left:10px">
-                            <button class="button button-delete-border" id="delet-Draft-Member" title="Delete" style="border: brown !important"
-                                    onclick="openDeleteDocument(@item.Id)">
-                                <img class="btn-icon" src="/assets/icons/trash-can.svg" />
-                            </button>
-                        </div>
-                    </td>
-
+                    <td>@item.UserId</td>
+                    <td>@item.RoleId</td>
+                    <td>@item.MinLimit</td>
+                    <td>@item.MaxLimit</td>
                 </tr>
             }
 
@@ -87,7 +72,7 @@
 </div>
 <div id="delete-Confirmation" class="delete-dependent-modal"></div>
 <script>
-    var element = document.getElementById("shad3");
+    var element = document.getElementById("shad6");
     element.classList.add("Selected");
     $(function () {
         var filter = '@Filter';

@@ -8,12 +8,14 @@
 
 
 <div class="policy-detail-wrapper">
+
+
     @{
-        await Html.RenderPartialAsync("_PolicyInfo", policy);
+        await Html.RenderPartialAsync("_PolicyInfo", policy.policy);
     }
 
     @{
-        await Html.RenderPartialAsync("_VehicleInfo", vehicle);
+        await Html.RenderPartialAsync("_VehicleInfo", vehicle.Vehicle);
     }
 
     @*   @{
@@ -58,6 +60,7 @@
                 <th>Model</th>
                 <th>Chassis</th>
                 <th>Creation Date</th>
+                <th>Claim Status</th>
 
             </tr>
 
@@ -74,13 +77,17 @@
                         ClaimId = clm.Id
                     };
                     }
-                    <td class="tran"><a href="@Url.Action("ClaimEntry","Claims",new{obj=MotorClaims.Models.Helpers.Encrypt(JsonConvert.SerializeObject(claimSearchobj))})">#@clm.ClaimNo</a></td>
+                    <td class="tran"><a href="@Url.Action("ClaimManagment","Claims",new{obj=MotorClaims.Models.Helpers.Encrypt(JsonConvert.SerializeObject(claimSearchobj))})">#@clm.ClaimNo</a></td>
                     <td>@policy.policy.PolicyTypeName</td>
                     <td>@policy.policy.PolicyNumber</td>
                     <td>@vehicle.Vehicle.MakeDesc</td>
                     <td>@vehicle.Vehicle.ModelDesc</td>
                     <td>@vehicle.Vehicle.ChassisNo</td>
                     <td>@HelpersDate.FormatDateNoTime(clm.CreationDate.Value)</td>
+                    @{
+                        var y = Enum.TryParse(clm.ClaimStatus.ToString(), out MotorClaims.Models.Enums.ClaimStatus parsedEnumValue);
+                    }
+                    <td>@parsedEnumValue</td>
 
                 </tr>
 

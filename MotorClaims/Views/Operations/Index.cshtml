@@ -1,0 +1,247 @@
+﻿@using CORE.DTOs.MotorClaim.Claims;
+@using Newtonsoft.Json;
+@{
+    SearchObj searchObj = (SearchObj)ViewData["searchObj"];
+}
+@model List<ClaimMaster>
+
+<div class="add-member-detail" style="max-height:900px;overflow-y:auto">
+    <div class="policy-wrapper">
+        <div class="basic-detail" style="background:none !important">
+            <h2 class="heading">Operations</h2>
+            <div class="search-member">
+                <form method="post" asp-action="SearchOperations" asp-controller="Operations" style="display:flow-root">
+                    <div class="search-filter-wrapper">
+                        <div class="search-wrapper">
+                            <span class="label">Claim No</span>
+                            <div class="search-input-box-wrapper">
+
+                                <div class="search-icon-wrapper">
+                                    <img src="/assets/icons/empty-file.svg" class="search-icon" alt="">
+                                </div>
+                                <input type="text" class="input-box" autocomplete="off" maxlength="60" name="claimno" placeholder="Search By Claim No"
+                                       value="@searchObj.claimno">
+                            </div>
+                        </div>
+
+                        <div class="search-wrapper">
+                            <span class="label">National Id</span>
+                            <div class="search-input-box-wrapper">
+
+                                <div class="search-icon-wrapper">
+                                    <img src="/assets/icons/empty-file.svg" class="search-icon" alt="">
+                                </div>
+                                <input type="text" class="input-box" autocomplete="off" id="txtnationalid" maxlength="10" name="nationalid" placeholder="Search By National Id"
+                                       value="@searchObj.nationalid">
+                            </div>
+                        </div>
+
+                        <div class="search-wrapper">
+                            <span class="label">Mobile No</span>
+                            <div class="search-input-box-wrapper">
+
+                                <div class="search-icon-wrapper">
+                                    <img src="/assets/icons/empty-file.svg" class="search-icon" alt="">
+                                </div>
+                                <input type="text" class="input-box" autocomplete="off" id="txtmobile" name="mobile" maxlength="9" placeholder="Search By Mobile No 5XXXXX"
+                                       value="@searchObj.mobile">
+                            </div>
+                        </div>
+                        <div class="search-wrapper">
+                            <span class="label">Chasis No</span>
+                            <div class="search-input-box-wrapper">
+
+                                <div class="search-icon-wrapper">
+                                    <img src="/assets/icons/empty-file.svg" class="search-icon" alt="">
+                                </div>
+                                <input type="text" class="input-box" autocomplete="off" maxlength="40" name="chassis" placeholder="Search By Chasis No"
+                                       value="@searchObj.chassis">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="search-filter-wrapper">
+
+
+                        <div class="search-wrapper">
+                            <span class="label">Policy No</span>
+                            <div class="search-input-box-wrapper">
+
+                                <div class="search-icon-wrapper">
+                                    <img src="/assets/icons/empty-file.svg" class="search-icon" alt="">
+                                </div>
+                                <input type="text" class="input-box" autocomplete="off" maxlength="40" name="policy" placeholder="Search By Policy No"
+                                       value="@searchObj.policy">
+                            </div>
+                        </div>
+                        <div class="search-wrapper">
+                            <span class="label">Branch</span>
+
+                            <div class="search-input-box-wrapper">
+                                <div class="search-icon-wrapper">
+                                    <img src="/assets/icons/List.png" class="search-icon" alt="">
+                                </div>
+                                <select class="common-dropdown Full" id="ddlFilter" name="Status">
+                                    <option value="">Select Status</option>
+                                    <option value="1">Active</option>
+                                    <option value="0">In-Active</option>
+                                    <option value="2">Rejected</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="search-wrapper">
+                            <span class="label">Registered From</span>
+                            <div class="search-input-box-wrapper">
+
+                                <div class="search-icon-wrapper">
+                                    <img src="/assets/icons/calendar.svg" class="search-icon" alt="">
+                                </div>
+                                <input class="input-box" autocomplete="off" id="txtFrom" name="RegisteredFrom" type="text" value="@(searchObj.RegisteredFrom.HasValue?searchObj.RegisteredFrom.Value.ToString("dd-MM.yyyy"):"")">
+                            </div>
+                        </div>
+
+
+                        <div class="search-wrapper">
+                            <span class="label">Registered To</span>
+                            <div class="search-input-box-wrapper">
+
+                                <div class="search-icon-wrapper">
+                                    <img src="/assets/icons/calendar.svg" class="search-icon" alt="">
+                                </div>
+                                <input class="input-box" autocomplete="off" id="txtTo" name="RegisteredTo" type="text" value="@(searchObj.RegisteredTo.HasValue?searchObj.RegisteredTo.Value.ToString("dd-MM.yyyy"):"")">
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="search-heading-wrap" style="float: right;margin-top: 10px;">
+
+                        <button class="button button-secondary" type="submit">Search</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    @if (Model != null && Model.Count > 0)
+    {
+        <div class="policy-members">
+            <div class="heading-card">
+                <h2 class="heading">Operation Claims</h2>
+            </div>
+            <div class="transaction-details">
+                <table class="universal-table">
+                    <tr>
+                        <th>Claim Segment</th>
+                        <th>Fraud Indicator</th>
+                        <th>Policy Number</th>
+                        <th>Make</th>
+                        <th>Model</th>
+                        <th>Registered Date</th>
+                        <th>Reserve</th>
+                        <th>Assign To</th>
+                        <th>Recovery</th>
+
+                    </tr>
+
+
+                    @foreach (var clm in Model)
+                    {
+
+                        <tr>
+                            @{
+                                ClaimSearchobj claimSearchobj = new ClaimSearchobj()
+                    {
+                        ClaimId = clm.claims.Id
+                    };
+                            }
+                            <td class="tran"><a href="@Url.Action("OperationEntry","Operations",new{obj=MotorClaims.Models.Helpers.Encrypt(JsonConvert.SerializeObject(claimSearchobj))})">@clm.claims.ClaimNo</a></td>
+
+                            <td>@clm.claims.FraudIndicator</td>
+                            <td>@clm.productionInfo.PolicyNumber</td>
+                            <td>@clm.vehiclesInfo.MakeDesc</td>
+                            <td>@clm.vehiclesInfo.ModelDesc</td>
+                            <td>@HelpersDate.FormatDate(clm.claims.RegistrationDate)</td>
+                            <td class="tran"><a href="#" onclick="OperationReserve(@clm.claims.Id)">Reserve</a></td>
+                            <td class="tran"><a href="#" onclick="OperationAssign(@clm.claims.Id)">Assign</a></td>
+                            <td class="tran"><a href="#" onclick="OperationRecovery(@clm.claims.Id)">Recovery</a></td>
+
+                        </tr>
+
+
+                    }
+                </table>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="ui-state-highlight ui-corner-all" style="background:none !important;margin-top: 1%;">
+            <span class="ui-icon ui-icon-info" style="float: left"></span>
+            <span>No results found.</span>
+        </div>
+    }
+</div>
+<div class="aside-right">
+    <div class="inner-wrapper">
+        <div class="vehicle-item">
+            <div class="vehicle-header">
+                <img src="/assets/motor/motor.svg" class="vehicle-icon" />
+                <div class="vehicle-info">
+                    <span class="vehicle-name">vehicle.Vehicle.MakeDesc vehicle.Vehicle.ModelDesc / vehicle.Vehicle.SequanceNo vehicle.Vehicle.CustomNo</span>
+                    <span class="vehicle-no" style="text-transform:uppercase">Plate Number : vehicle.Vehicle.PlateNo</span>
+                </div>
+            </div>
+            <div class="vehicle-basic-body">
+                <ul class="detail-list">
+                    <li class="detailed-item">
+                        <span class="detailed-icon-wrap">
+                            <img src="/assets/icons/save.svg" alt="" class="item-icon">
+                        </span>
+                        <div class="item-content">
+                            <span class="label">Policy No</span>
+                            <h3 class="value">policy.policy.PolicyNumber</h3>
+                        </div>
+                    </li>
+                    <li class="detailed-item">
+                        <span class="detailed-icon-wrap">
+                            <img src="/assets/icons/calendar.svg" alt="" class="item-icon">
+                        </span>
+                        <div class="item-content">
+                            <span class="label">Effective Date</span>
+                            <h3 class="value">HelpersDate.FormatDateNoTime(policy.policy.PolicyEffectiveDate)</h3>
+                        </div>
+                    </li>
+                    <li class="detailed-item">
+                        <span class="detailed-icon-wrap">
+                            <img src="/assets/icons/calendar.svg" alt="" class="item-icon">
+                        </span>
+                        <div class="item-content">
+                            <span class="label">Year of Manufacturing</span>
+                            <h3 class="value">vehicle.Vehicle.ManufactureYear</h3>
+                        </div>
+                    </li>
+                    <li class="detailed-item">
+                        <span class="detailed-icon-wrap">
+                            <img src="/assets/icons/calendar.svg" alt="" class="item-icon">
+                        </span>
+                        <div class="item-content">
+                            <span class="label">Expiry Date</span>
+                            <h3 class="value">HelpersDate.FormatDateNoTime(policy.policy.PolicyExpiryDate)</h3>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="common-slide-popup" id="UpdateReserve"></div>
+<div class="common-slide-popup" id="UpdateRecovery"></div>
+<div class="edit-member-id-popup" id="OperationAssign"></div>
+<script>
+    $('#txtFrom').ForceDateEntry();
+    $('#txtTo').ForceDateEntry();
+</script>

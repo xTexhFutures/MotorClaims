@@ -1,13 +1,9 @@
-﻿@using CORE.DTOs.APIs.MotorClaim;
-@model VehicleInfos
+﻿@using CORE.DTOs.MotorClaim.Claims;
+@model Claimants
 @{
     Layout = null;
 }
-@if (Model.lsClaims.Count > 0)
-{
 
-    @foreach (var clm in Model.lsClaims)
-    {
         <div class="basic-detail">
             <div class="policy-header">
                 <div class="name-number-wrapper">
@@ -272,5 +268,3 @@
                 </div>
             </div>
         </div>
-    }
-}

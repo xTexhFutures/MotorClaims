@@ -1,0 +1,77 @@
+﻿@using CORE.DTOs.MotorClaim.Claims;
+@model Claims
+@{
+    Layout = null;
+}
+
+<link href="~/styles/Themes/flick/jquery-ui-1.10.1.custom.min.css" rel="stylesheet" />
+<form method="post" asp-action="UpdateReserveTransaction" asp-controller="Surveyor">
+    <div class="slide-popup-inner">
+        <div class="slide-header">
+            <div class="heading-card">
+                <h2 class="heading">Surveyor Actions</h2>
+            </div>
+        </div>
+        <div class="slide-body">
+            <div class="popup-body-wrapper">
+                <div class="body-content-wrapper">
+                    <div class="delete-content-card">
+                        <div class="body-delete-header">
+                            <h2 class="heading-title">@Model.ClaimNo</h2>
+                            <span class="active-employee">Employee</span>
+                        </div>
+                        <ul class="list-detail">
+                            <li class="list-item-delete">
+                                <span class="label">Owner Name:</span>
+                                <span class="value">@Model.Owner</span>
+                            </li>
+                            <li class="list-item-delete">
+                                <span class="label">Policy No:</span>
+                                <span class="value">@Model.PolicyNo</span>
+                            </li>
+                            <li class="list-item-delete">
+                                <span class="label">Plate No:</span>
+                                <span class="value">@Model.PlateNo</span>
+                            </li>
+                            <li class="list-item-delete">
+                                <span class="label">Fraud Score:</span>
+                                <span class="value">@Model.FraudScore</span>
+                            </li>
+                        </ul>
+
+
+
+                        <div class="cancel-declaration">
+                            <h3 class="title-label">Action</h3>
+                            <div class="form-field-wrapper">
+                                <div class="form-input-wrapper">
+                                    <select class="form-inputbox" required name="SurveyorActions">
+                                        <option value=""></option>
+                                        <option value="1">Pending for Surveyor</option>
+                                        <option value="2">Waiting estimations</option>
+                                        <option value="3">Sent to service unit</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                    </div>
+                </div>
+                <div class="slide-footer">
+                    <div class="slide-inner-footer">
+                        <button type="button" class="button button-secondary-border"
+                                onclick="CloseDialogV('SurveyorActions')">
+                            Cancel
+                        </button>
+                        <button type="submit" class="button button-primary">Update</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+</form>

@@ -33,7 +33,17 @@ namespace MotorClaims.Models
             Claimant = 2,
             Fraud = 3,
             Reserve = 4,
-            Payment = 5
+            Payment = 5,
+            Surveyor=6
+
+        }
+
+        public enum ClaimTransactionTypes
+        {
+            Reserve=1,
+            Payment=2,
+            Recovery=3,
+            Collection=4,
 
         }
         public enum FraudLevel
@@ -119,12 +129,24 @@ namespace MotorClaims.Models
             [Display(Name = "UW Rejection")]
             UWRejection = 10
         }
-        public enum CreditLimitStatus
+
+        public enum ClaimStatus
         {
-            [Display(Name = "Normal")]
-            Normal = 1,
-            [Display(Name = "Exceeded Limit")]
-            Exceeded = 2,
+            NeedMoreInfo=0,
+            MissingDocuments=1,
+            Operation=2,
+            Surveyor=3,
+            Payment=4,
+            Workshop=5,
+            Closed=6,
+            InProgress=7
+        }
+        public enum Lookups
+        {
+           City=80,
+           CauseOfLoss=1,
+           ClaimantType=2,
+           DamageType=3
         }
     }
 }

@@ -13,7 +13,7 @@
 
   <ItemGroup>
     <Reference Include="CORE">
-      <HintPath>C:\Users\96659\source\repos\xTechFutures\XBMAPIs\CORE\bin\Debug\net6.0\CORE.dll</HintPath>
+      <HintPath>..\..\xTechFutures\XBMAPIs\CORE\bin\Debug\net6.0\CORE.dll</HintPath>
     </Reference>
   </ItemGroup>
 

@@ -82,40 +82,49 @@
                     <ul class="naigation-list">
                         @*   @if ((int)MotorClaims.Models.Enums.Roles.Admin == users?.Roles?.Id || (int)MotorClaims.Models.Enums.Roles.Sales == users?.Roles?.Id || (int)MotorClaims.Models.Enums.Roles.Broker == users?.Roles?.Id || (int)MotorClaims.Models.Enums.Roles.Agent == users?.Roles?.Id)
                         {*@
-                      
-                            <li class="navigation-item">
 
-                                <a class="menu-item-wrapper active" title="Home" href="@Url.Action("Index","Home")">
-                                    <img src="~/assets/icons/sidebar/home.svg" class="menu-icon" />
-                                </a>
-                            </li>
-                    
+                        <li class="navigation-item">
+
+                            <a class="menu-item-wrapper active" title="Home" href="@Url.Action("Index","Home")">
+                                <img src="~/assets/icons/sidebar/home.svg" class="menu-icon" />
+                            </a>
+                        </li>
+
                         @*  }*@
 
 
-                    
 
-                            <li class="navigation-item">
-                                <a class="menu-item-wrapper" href="@Url.Action("Index","Search")" title="@_localizer["UWApprovals"]" aria-current="page">
-                                    <img src="~/assets/icons/search.svg" class="menu-icon" />
-                                </a>
-                            </li>
-                     
 
                         <li class="navigation-item">
-                            <a class="menu-item-wrapper" href="@Url.Action("ApprovalsHistory","Approvals")" title="@_localizer["ApprovalsHistory"]" aria-current="page">
-                                <img src="~/assets/icons/sidebar/help.svg" class="menu-icon" />
+                            <a class="menu-item-wrapper" href="@Url.Action("Index","Search")" title="Search" aria-current="page">
+                                <img src="~/assets/icons/search.svg" class="menu-icon" />
                             </a>
                         </li>
-                      
-                            <li class="navigation-item">
-                                <a class="menu-item-wrapper" href="@Url.Action("Approvals","Approvals")" title="@_localizer["MyApprovals"]" aria-current="page">
-                                    <img src="~/assets/icons/sidebar/Complaints.svg" class="menu-icon" />
-                                </a>
-                            </li>
-                        
-                      
-                        
+
+
+                        <li class="navigation-item">
+                            <a class="menu-item-wrapper" href="@Url.Action("Index","Operations")" title="Operation" aria-current="page">
+                                <img src="~/assets/icons/Operation.png" class="menu-icon" />
+                            </a>
+                        </li>
+
+                        <li class="navigation-item">
+                            <a class="menu-item-wrapper" href="@Url.Action("Index","Surveyor")" title="Surveyor" aria-current="page">
+                                <img src="~/assets/icons/Survoyer.png" class="menu-icon" />
+                            </a>
+                        </li>
+                             <li class="navigation-item">
+                            <a class="menu-item-wrapper" href="@Url.Action("Index","Towing")" title="Towing" aria-current="page">
+                                <img src="~/assets/icons/Towing.png" class="menu-icon"  />
+                            </a>
+                        </li>              <li class="navigation-item">
+                            <a class="menu-item-wrapper" href="@Url.Action("Index","Approvals")" title="Approvals" aria-current="page">
+                                <img src="~/assets/icons/Approvals.png" class="menu-icon"  />
+                            </a>
+                        </li>
+
+
+
                         <li class="navigation-item">
                             <a class="menu-item-wrapper" href="@Url.Action("Index","Delegation")" title="@_localizer["Setup"]" aria-current="page">
                                 <img src="~/assets/icons/Setup.png" class="menu-icon" />

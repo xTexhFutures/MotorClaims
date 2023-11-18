@@ -4,215 +4,262 @@
 @{
     Production policy = (Production)ViewData["Policy"];
     VehicleInfos vehicle = (VehicleInfos)ViewData["Vehicle"];
+    List<LookupTable> Cities = (List<LookupTable>)ViewData["Cities"];
 }
 @model Claims
-<form method="post" asp-action="InsertClaim" asp-controller="Claims">
-    <input type="hidden" name="PolicyId" value="@policy.policy.Id"/>
-    <input type="hidden" name="VehicleId" value="@vehicle.Vehicle.Id"/>
-    <input type="hidden" name="Id" value="@Model.Id"/>
-    <input type="hidden" name="ClaimNo" value="@Model.ClaimNo" />
+<form id="frmClaimEntry" method="post" asp-controller="Claims">
+    <input type="hidden" form="frmClaimEntry" name="PolicyId" value="@policy.policy.Id" />
+    <input type="hidden" form="frmClaimEntry" name="VehicleId" value="@vehicle.Vehicle.Id" />
+    <input type="hidden" form="frmClaimEntry" name="Id" value="@Model.Id" />
+    <input type="hidden" form="frmClaimEntry" name="ClaimNo" value="@Model.ClaimNo" />
 
     <div class="add-member-detail" style="max-height:900px;overflow-y:auto">
         <div class="page-heading">
             <h2 class="page-title">Claim Entry</h2>
         </div>
-        <div class="member-summary-container">
-            <div class="total-member-list">
-                <h4 class="title">
-                    <h4 class="title">Claim Entry</h4>
-                </h4>
-                <div class="member-list-container">
+        <div class="tabs-wrapper">
+            <ul class="tabs-navigation-wrap">
+                <li class="tab-navigation tab-custom-two active" id="tabTwoOne" onclick="selectTabsTwo('tabTwoOne','one_1')">
+                    <div class="tab-item-text">
+                        Claim entry
+                    </div>
+                </li>
+                 <li class="tab-navigation tab-custom-two " id="tabTwoTwo" onclick="selectTabsTwo('tabTwoTwo','ClaimantsList'); LoadClaimantsList('@Model.Id','@policy.policy.Id','@vehicle.Vehicle.Id')">
+                    <div class="tab-item-text">
+                        Claimants
+                    </div>
+                </li>
+                <li class="tab-navigation tab-custom-two " id="tabTwoThree" onclick="selectTabsTwo('tabTwoThree','DocumentsUpload'); LoadDocumentsList('@((int)MotorClaims.Models.Enums.DocumnetType.Claim)','@Model.Id','@policy.policy.Id','@vehicle.Vehicle.Id',null,'@Model.ClaimNo')">
+                    <div class="tab-item-text">
+                        Documents Upload
+                    </div>
+                </li>
+            </ul>
+            <div class="tabbs-content-wrapper">
+                <div class="tab-items-container tabs-one-content-two active" id="one_1">
+                    <div class="member-summary-container">
+                        <div class="total-member-list">
+                            @*    <h4 class="title">
+                            <h4 class="title">Claim Entry</h4>
+                            </h4>*@
+                            <div class="member-list-container">
 
-                    <div class="member-collapse">
-                        <div class="member-collapse-header" style="display:block">
-                            <div class="vehicle-owner-grid">
-                                <label for="radio-card-v2-11" class="radio-card-v2" style="min-width:30% !important">
-                                    <input type="radio" value="@((int)MotorClaims.Models.Enums.ClaimReportType.Najm)" name="ClaimReportType" id="radio-card-v2-11" @(Model.Id == 0 ? "checked" : (Model.ClaimReportType == (int)MotorClaims.Models.Enums.ClaimReportType.Najm ? "checked":"")) />
-                                    <div class="card-content-wrapper">
-                                        <span class="check-icon"></span>
-                                        <div class="card-content">
-                                            <h4 class="title">@(MotorClaims.Models.Enums.ClaimReportType.Najm)</h4>
+                                <div class="member-collapse">
+                                    <div class="member-collapse-header" style="display:block">
+                                        <div class="vehicle-owner-grid">
+                                            <label for="radio-card-v2-11" class="radio-card-v2" style="min-width:30% !important">
+                                                <input type="radio" value="@((int)MotorClaims.Models.Enums.ClaimReportType.Najm)" name="ClaimReportType" id="radio-card-v2-11" @(Model.Id == 0 ? "checked" : (Model.ClaimReportType == (int)MotorClaims.Models.Enums.ClaimReportType.Najm ? "checked" : "")) />
+                                                <div class="card-content-wrapper">
+                                                    <span class="check-icon"></span>
+                                                    <div class="card-content">
+                                                        <h4 class="title">@(MotorClaims.Models.Enums.ClaimReportType.Najm)</h4>
+                                                    </div>
+                                                </div>
+                                            </label>
+                                            <!-- /.radio-card -->
+
+                                            <label for="radio-card-v2-12" class="radio-card-v2" style="min-width:30% !important">
+                                                <input type="radio" value="@((int)MotorClaims.Models.Enums.ClaimReportType.Basher)" name="ClaimReportType" id="radio-card-v2-12" @(Model.ClaimReportType == (int)MotorClaims.Models.Enums.ClaimReportType.Basher ? "checked" : "") />
+                                                <div class="card-content-wrapper">
+                                                    <span class="check-icon"></span>
+                                                    <div class="card-content">
+                                                        <h4 class="title">@(MotorClaims.Models.Enums.ClaimReportType.Basher)</h4>
+                                                    </div>
+                                                </div>
+                                            </label>
+
+                                            <label for="radio-card-v2-13" class="radio-card-v2" style="min-width:30% !important">
+                                                <input type="radio" value="@((int)MotorClaims.Models.Enums.ClaimReportType.Manual)" name="ClaimReportType" id="radio-card-v2-13" @(Model.ClaimReportType == (int)MotorClaims.Models.Enums.ClaimReportType.Manual ? "checked" : "") />
+                                                <div class="card-content-wrapper">
+                                                    <span class="check-icon"></span>
+                                                    <div class="card-content">
+                                                        <h4 class="title">@(MotorClaims.Models.Enums.ClaimReportType.Manual)</h4>
+                                                    </div>
+                                                </div>
+                                            </label>
                                         </div>
-                                    </div>
-                                </label>
-                                <!-- /.radio-card -->
+                                        <div class="vehicle-owner-grid" id="Service">
 
-                                <label for="radio-card-v2-12" class="radio-card-v2" style="min-width:30% !important">
-                                    <input type="radio" value="@((int)MotorClaims.Models.Enums.ClaimReportType.Basher)" name="ClaimReportType" id="radio-card-v2-12" @(Model.ClaimReportType==(int)MotorClaims.Models.Enums.ClaimReportType.Basher ? "checked" :"") />
-                                    <div class="card-content-wrapper">
-                                        <span class="check-icon"></span>
-                                        <div class="card-content">
-                                            <h4 class="title">@(MotorClaims.Models.Enums.ClaimReportType.Basher)</h4>
-                                        </div>
-                                    </div>
-                                </label>
+                                            <div class="form-container Full">
+                                                <div id="najm">
+                                                    <span class="label">Accident Number</span>
+                                                    <input class="form-controlar" autocomplete="off" type="text" style="text-transform:uppercase" id="txtAccidentNo" maxlength="10" placeholder="Accident Number" name="AccidentNo" value="@Model.AccidentNo" />
 
-                                <label for="radio-card-v2-13" class="radio-card-v2" style="min-width:30% !important">
-                                    <input type="radio" value="@((int)MotorClaims.Models.Enums.ClaimReportType.Manual)" name="ClaimReportType" id="radio-card-v2-13" @(Model.ClaimReportType == (int)MotorClaims.Models.Enums.ClaimReportType.Manual ? "checked" : "") />
-                                    <div class="card-content-wrapper">
-                                        <span class="check-icon"></span>
-                                        <div class="card-content">
-                                            <h4 class="title">@(MotorClaims.Models.Enums.ClaimReportType.Manual)</h4>
-                                        </div>
-                                    </div>
-                                </label>
-                            </div>
-                            <div class="vehicle-owner-grid">
-                                <div class="form-container Full" id="najm">
-                                    <span class="label">Accident Number</span>
-                                    <input class="form-controlar" autocomplete="off" type="text" style="text-transform:uppercase" id="txtAccidentNo" maxlength="10" placeholder="Accident Number" name="AccidentNo" value="@Model.AccidentNo"/>
-                                </div>
-                                <div class="form-container Full" id="Basher">
-                                    <span class="label">Basher No</span>
-                                    <input class="form-controlar" autocomplete="off" maxlength="10" id="txtBasherNo" type="text" placeholder="Basher No" name="BasherNo" value="@Model.BasherNo"/>
-                                </div>
-
-
-
-                            </div>
-                            <div class="vehicle-owner-grid" id="Manual">
-                                <div class="form-container Full">
-                                    <span class="label">Accident Number</span>
-                                    <select class="form-controlar" name="ManualReportType" id="txtManualReportType">
-                                        <option value=""></option>
-                                        <option value="@((int)MotorClaims.Models.Enums.ClaimReportType.Najm)">@(MotorClaims.Models.Enums.ClaimReportType.Najm)</option>
-                                        <option value="@((int)MotorClaims.Models.Enums.ClaimReportType.Basher)">@(MotorClaims.Models.Enums.ClaimReportType.Basher)</option>
-                                    </select>
-                                </div>
-                                <div class="form-container Full">
-                                    <span class="label">Accident Number</span>
-                                    <input class="form-controlar" autocomplete="off" style="text-transform:uppercase" type="text" maxlength="10" id="txtReportNo" placeholder="Accident Number" name="ReportNo" value="@Model.AccidentNo"/>
-                                </div>
-                            </div>
-                            <div class="vehicle-owner-grid">
-                                <div class="form-container Full">
-                                    <span class="label">Loss Date</span>
-                                    <input class="form-controlar calendar-input" autocomplete="off" required type="text" placeholder="Loss Date" id="txtDateOfLoss" name="DateOfLoss" value="@(Model.Id>0? HelpersDate.FormatDateNoTime(Model.DateOfLoss):string.Empty)" />
-                                </div>
-                                <div class="form-container Full">
-                                    <span class="label">Notification Date</span>
-                                    <input class="form-controlar calendar-input" autocomplete="off" required type="text" placeholder="Notification Date" id="txtnotificationdate" name="notificationdate" value="@(Model.Id>0?HelpersDate.FormatDateNoTime(Model.NotificationDate):string.Empty)" />
-                                </div>
-                                <div class="form-container Full">
-                                    <span class="label">Registration Date</span>
-                                    <input class="form-controlar calendar-input" autocomplete="off" required type="text" placeholder="Registration Date" id="txtregistrationdate" name="registrationdate" value="@(Model.Id>0?HelpersDate.FormatDateNoTime(Model.RegistrationDate):string.Empty)" />
-                                </div>
-
-                            </div>
-                            <div class="vehicle-owner-grid">
-                                <div class="form-container Full">
-                                    <span class="label">Geographical Area</span>
-                                    <select class="form-controlar" required name="GeagraphicalArea" id="ddlGeagraphicalArea">
-                                        <option value=""></option>
-                                        <option value="1">KSA</option>
-                                        <option value="2">GCC</option>
-                                    </select>
-                                </div>
-                                <div class="form-container Full">
-                                    <span class="label">City</span>
-                                    <select class="form-controlar" required name="City" id="txtCity" onchange="GetCityName(this);">
-                                        <option value=""></option>
-                                        <option value="1">Riyadh</option>
-                                        <option value="2">Jedh</option>
-                                    </select>
-                                </div>
-                                <div class="form-container Full">
-                                    <span class="label">Survey City</span>
-                                    <select class="form-controlar" required name="SurveyCity" id="ddlSurveyCity">
-                                        <option value=""></option>
-                                        <option value="1">Riyadh</option>
-                                        <option value="2">Jedh</option>
-                                    </select>
-                                </div>
-
-                            </div>
-
-                            <div class="vehicle-owner-grid">
-                                <div class="form-container Full">
-                                    <span class="label">Claim Event</span>
-                                    <select class="form-controlar" name="EventId" id="ddlClaimEvent">
-                                        <option value=""></option>
-                                        <option value="1">Flood</option>
-                                        <option value="2">Fire</option>
-                                    </select>
-                                </div>
-                                <div class="form-container Full" >
-                                    <span class="label">Taqdeer No</span>
-                                    <input class="form-controlar" autocomplete="off" required maxlength="10" style="text-transform:uppercase" id="txtTaqdeerNo" type="text" placeholder="Taqdeer No" name="TaqdeerNo" value="@Model.TaqdeerNo"/>
-                                </div>
-                                <div class="form-container Full">
-                                    <span class="label">Accident Place</span>
-                                    <textarea class="form-controlar" autocomplete="off" name="AccidentPlace" maxlength="1024">@Model.AccidentPlace</textarea>
-                                </div>
-
-
-                            </div>
-                        </div>
-                        <div id="display-dependent_" class="member-collapse-body">
-
-
-                            <div class="dependent-collapse-header">
-                                <div class="dependent-explanation">
-                                    <div class="dependent-explain-info">
-                                        <h3 class="name-info">Name</h3>
-                                        <div class="dependent-info">
-                                            <div class="dependent-detailed-tiles">
-                                                <span class="dependent-info-label">_localizer["IDType"].Value : </span>
-                                                <span class="dependent-info-text"> </span>
-                                            </div>
-                                            <div class="dependent-detailed-tiles">
-                                                <span class="dependent-info-label">_localizer["ID"].Value : </span>
-                                                <span class="dependent-info-text">NationalId</span>
-                                            </div>
-                                            <div class="dependent-detailed-tiles">
-                                                <span class="dependent-info-label">_localizer["DOB"].Value : </span>
-                                                <span class="dependent-info-text"></span>
-                                            </div>
-
-                                            <div class="dependent-detailed-tiles">
-                                                <div class="checkbox-wrapper-34">
-                                                    <input class='tgl tgl-ios' id="q_Dep_NO_" type='checkbox'>
-                                                    <label class='tgl-btn' for='q_Dep_NO_'></label>
+                                                </div>
+                                                <div id="Basher">
+                                                    <span class="label">Basher No</span>
+                                                    <input class="form-controlar" autocomplete="off" maxlength="10" id="txtBasherNo" type="text" placeholder="Basher No" name="BasherNo" value="@Model.BasherNo" />
                                                 </div>
 
-                                                @*       <label for="q_Dep_NO_@i" class="switch">
-                                                <input id="q_Dep_NO_@i" type="checkbox" class="switch-check-box" @(membersDeclarations2 != null ? "checked='checked'" : "") value="true"
-                                                onchange="HealthDeclaration('q_Dep_NO_@i',@Model.LsSuccessMembers[j].dependMember[i].MainMember.Id)">
-                                                <span class="slider round"></span>
-                                                </label>*@
+                                            </div>
+                                            <div class="form-container Full">
+                                                <span class="label">Taqdeer No</span>
+                                                <input class="form-controlar" autocomplete="off" required maxlength="10" style="text-transform:uppercase" id="txtTaqdeerNo" type="text" placeholder="Taqdeer No" name="TaqdeerNo" value="@Model.TaqdeerNo" />
+
+                                            </div>
+                                            @if (Model.Id==0)
+                                            {
+                                                  <div class="form-container Full" style="display:contents">
+                                                <button type="button" onclick="GetNajmDetails()" class="button button-primary">
+                                                    Retrieve
+                                                </button>
+                                            </div>
+                                            }
+                                          
+                                        </div>
+
+
+                                        <div class="vehicle-owner-grid" id="Manual">
+                                            <div class="form-container Full">
+                                                <span class="label">Accident Number</span>
+                                                <select class="form-controlar" name="ManualReportType" id="txtManualReportType">
+                                                    <option value=""></option>
+                                                    <option value="@((int)MotorClaims.Models.Enums.ClaimReportType.Najm)">@(MotorClaims.Models.Enums.ClaimReportType.Najm)</option>
+                                                    <option value="@((int)MotorClaims.Models.Enums.ClaimReportType.Basher)">@(MotorClaims.Models.Enums.ClaimReportType.Basher)</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-container Full">
+                                                <span class="label">Accident Number</span>
+                                                <input class="form-controlar" autocomplete="off" style="text-transform:uppercase" type="text" maxlength="10" id="txtReportNo" placeholder="Accident Number" name="ReportNo" value="@Model.AccidentNo" />
+                                            </div>
+                                        </div>
+                                        <div id="Manual1">
+                                            <div class="vehicle-owner-grid">
+                                                <div class="form-container Full">
+                                                    <span class="label">Loss Date</span>
+                                                    <input class="form-controlar calendar-input" autocomplete="off" required type="text" placeholder="Loss Date" id="txtDateOfLoss" name="DateOfLoss" value="@(Model.Id>0? HelpersDate.FormatDateNoTime(Model.DateOfLoss):string.Empty)" />
+                                                </div>
+                                                <div class="form-container Full">
+                                                    <span class="label">Notification Date</span>
+                                                    <input class="form-controlar calendar-input" autocomplete="off" required type="text" placeholder="Notification Date" id="txtnotificationdate" name="notificationdate" value="@(Model.Id>0?HelpersDate.FormatDateNoTime(Model.NotificationDate):string.Empty)" />
+                                                </div>
+                                                <div class="form-container Full">
+                                                    <span class="label">Registration Date</span>
+                                                    <input class="form-controlar calendar-input" autocomplete="off" required type="text" placeholder="Registration Date" id="txtregistrationdate" name="registrationdate" value="@(Model.Id>0?HelpersDate.FormatDateNoTime(Model.RegistrationDate):string.Empty)" />
+                                                </div>
+
+                                            </div>
+                                            <div class="vehicle-owner-grid">
+                                                <div class="form-container Full">
+                                                    <span class="label">Geographical Area</span>
+                                                    <select class="form-controlar" required name="GeagraphicalArea" id="ddlGeagraphicalArea">
+                                                        <option value=""></option>
+                                                        <option value="1">KSA</option>
+                                                        <option value="2">GCC</option>
+                                                    </select>
+                                                </div>
+                                                <div class="form-container Full">
+                                                    <span class="label">City</span>
+                                                    <select class="form-controlar" required name="City" id="txtCity" onchange="GetCityName(this);">
+                                                        <option value="1">1</option>
+                                                        @foreach (var item in Cities)
+                                                        {
+                                                            <option value="@item.Code">@item.NameEnglish</option>
+                                                        }
+
+                                                    </select>
+                                                </div>
+                                                <div class="form-container Full">
+                                                    <span class="label">Survey City</span>
+                                                    <select class="form-controlar" required name="SurveyCity" id="ddlSurveyCity">
+                                                        <option value="1">1</option>
+                                                        @foreach (var item in Cities)
+                                                        {
+                                                            <option value="@item.Code">@item.NameEnglish</option>
+                                                        }
+                                                    </select>
+                                                </div>
+
+                                            </div>
+
+                                            <div class="vehicle-owner-grid">
+                                                <div class="form-container Full">
+                                                    <span class="label">Claim Event</span>
+                                                    <select class="form-controlar" name="EventId" id="ddlClaimEvent">
+                                                        <option value=""></option>
+                                                        <option value="1">Flood</option>
+                                                        <option value="2">Fire</option>
+                                                    </select>
+                                                </div>
+                                                <div class="form-container Full">
+                                                    <span class="label">Taqdeer No</span>
+                                                    <input class="form-controlar" autocomplete="off" maxlength="10" style="text-transform:uppercase" id="txtTaqdeerNoManual" type="text" placeholder="Taqdeer No" name="TaqdeerNo" value="@Model.TaqdeerNo" />
+
+                                                </div>
+                                                <div class="form-container Full">
+                                                    <span class="label">Accident Place</span>
+                                                    <textarea class="form-controlar" id="txtAccidentPlace" autocomplete="off" name="AccidentPlace" maxlength="1024">@Model.AccidentPlace</textarea>
+                                                </div>
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="display-dependent_" class="member-collapse-body">
+
+
+                                        <div class="dependent-collapse-header">
+                                            <div class="dependent-explanation">
+                                                <div class="dependent-explain-info">
+                                                    <h3 class="name-info">Name</h3>
+                                                    <div class="dependent-info">
+                                                        <div class="dependent-detailed-tiles">
+                                                            <span class="dependent-info-label">_localizer["IDType"].Value : </span>
+                                                            <span class="dependent-info-text"> </span>
+                                                        </div>
+                                                        <div class="dependent-detailed-tiles">
+                                                            <span class="dependent-info-label">_localizer["ID"].Value : </span>
+                                                            <span class="dependent-info-text">NationalId</span>
+                                                        </div>
+                                                        <div class="dependent-detailed-tiles">
+                                                            <span class="dependent-info-label">_localizer["DOB"].Value : </span>
+                                                            <span class="dependent-info-text"></span>
+                                                        </div>
+
+                                                        <div class="dependent-detailed-tiles">
+                                                            <div class="checkbox-wrapper-34">
+                                                                <input class='tgl tgl-ios' id="q_Dep_NO_" type='checkbox'>
+                                                                <label class='tgl-btn' for='q_Dep_NO_'></label>
+                                                            </div>
+
+                                                            @*       <label for="q_Dep_NO_@i" class="switch">
+                                                            <input id="q_Dep_NO_@i" type="checkbox" class="switch-check-box" @(membersDeclarations2 != null ? "checked='checked'" : "") value="true"
+                                                            onchange="HealthDeclaration('q_Dep_NO_@i',@Model.LsSuccessMembers[j].dependMember[i].MainMember.Id)">
+                                                            <span class="slider round"></span>
+                                                            </label>*@
+                                                        </div>
+
+                                                    </div>
+                                                </div>
                                             </div>
 
                                         </div>
+
+
                                     </div>
                                 </div>
 
+
+
                             </div>
-
-
                         </div>
                     </div>
 
-
-
+                </div>
+                 <div class="tab-items-container tabs-one-content-two" id="ClaimantsList">
+                </div>
+                <div class="tab-items-container tabs-one-content-two" id="DocumentsUpload">
                 </div>
             </div>
-
-
-
         </div>
+        <div class="footer-actions-handle">
+            <div class="next-button">
 
-        <div class="add-member-detail">
-        </div>
+                <button form="frmClaimEntry" type="submit" asp-action="InsertClaim" class="button button-primary">
+                    Next
+                </button>
 
-    </div>
-
-    <div class="footer-actions-handle">
-        <div class="next-button">
-
-            <button type="submit" class="button button-primary">
-                Next
-            </button>
-
+            </div>
         </div>
     </div>
 </form>
@@ -271,56 +318,152 @@
                 </ul>
             </div>
         </div>
+
+          <div class="popup-body-wrapper">
+                    <div class="delete-alert">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"
+                            class="alert-icon">
+                            <path
+                                d="M8 7.25C7.80109 7.25 7.61033 7.32902 7.46967 7.46967C7.32902 7.61032 7.25 7.80109 7.25 8V11C7.25 11.1989 7.32902 11.3897 7.46967 11.5303C7.61033 11.671 7.80109 11.75 8 11.75C8.19892 11.75 8.38968 11.671 8.53033 11.5303C8.67099 11.3897 8.75 11.1989 8.75 11V8C8.75 7.80109 8.67099 7.61032 8.53033 7.46967C8.38968 7.32902 8.19892 7.25 8 7.25ZM8.285 4.31C8.10241 4.23499 7.8976 4.23499 7.715 4.31C7.62294 4.3457 7.53883 4.39922 7.4675 4.4675C7.40126 4.5404 7.34799 4.62411 7.31 4.715C7.26802 4.80401 7.24747 4.90162 7.25 5C7.24943 5.0987 7.26835 5.19655 7.30568 5.28793C7.343 5.37931 7.39799 5.46242 7.4675 5.5325C7.5404 5.59875 7.62412 5.65202 7.715 5.69C7.82863 5.73668 7.95198 5.75474 8.07421 5.74258C8.19645 5.73043 8.31383 5.68844 8.41604 5.6203C8.51825 5.55216 8.60215 5.45996 8.66039 5.3518C8.71862 5.24364 8.74939 5.12284 8.75 5C8.74724 4.80142 8.66955 4.61123 8.5325 4.4675C8.46118 4.39922 8.37707 4.3457 8.285 4.31ZM8 0.5C6.51664 0.5 5.0666 0.939867 3.83323 1.76398C2.59986 2.58809 1.63856 3.75943 1.07091 5.12987C0.50325 6.50032 0.354725 8.00832 0.644114 9.46318C0.933503 10.918 1.64781 12.2544 2.6967 13.3033C3.7456 14.3522 5.08197 15.0665 6.53683 15.3559C7.99168 15.6453 9.49968 15.4968 10.8701 14.9291C12.2406 14.3614 13.4119 13.4001 14.236 12.1668C15.0601 10.9334 15.5 9.48336 15.5 8C15.5 7.01509 15.306 6.03982 14.9291 5.12987C14.5522 4.21993 13.9997 3.39314 13.3033 2.6967C12.6069 2.00026 11.7801 1.44781 10.8701 1.0709C9.96019 0.693993 8.98492 0.5 8 0.5ZM8 14C6.81332 14 5.65328 13.6481 4.66658 12.9888C3.67989 12.3295 2.91085 11.3925 2.45673 10.2961C2.0026 9.19974 1.88378 7.99334 2.11529 6.82946C2.3468 5.66557 2.91825 4.59647 3.75736 3.75736C4.59648 2.91824 5.66558 2.3468 6.82946 2.11529C7.99335 1.88378 9.19975 2.0026 10.2961 2.45672C11.3925 2.91085 12.3295 3.67988 12.9888 4.66658C13.6481 5.65327 14 6.81331 14 8C14 9.5913 13.3679 11.1174 12.2426 12.2426C11.1174 13.3679 9.5913 14 8 14Z"
+                                fill="#6B47F5"></path>
+                        </svg>
+                        <div class="delete-alert-content">
+                            <h2 class="highlight-text"> @Model.ClaimStatus</h2>
+
+                            <p class="para-detale-alert"> @Model.StatusReason </p>
+
+                        </div>
+                    </div>
+                </div>
     </div>
 </div>
+
 
 
 <div id="health-m-modal" class="health-custom-modal"></div>
 
 <script>
+
+    function GetNajmDetails() {
+        $.ajax({
+            url: '/Claims/NajmDetails/',
+            data: { Id: $("#txtAccidentNo").val(), Taqdeer: $("#txtTaqdeerNo").val() },
+            type: "POST",
+            dataType: 'json',
+            success: function (data) {
+                if (data.taqdeerNo != null && data.taqdeerNo != '') {
+                    if (data.claimStatus == 1) {
+                        Manual();
+                        $('#txtReportNo').val(data.accidentNo);
+                        $('#txtManualReportType').val(1);
+                        $('#ddlGeagraphicalArea').val(1);
+                        $('#txtTaqdeerNoManual').val(data.taqdeerNo);
+                        $('#txtDateOfLoss').val(data.dateOfLoss);
+                        $('#txtregistrationdate').val(data.registrationDate);
+                        $('#txtAccidentPlace').val(data.accidentPlace);
+                        $('#txtCity').val(data.cityId);
+                        $('#ddlSurveyCity').val(data.cityId);
+                    } else {
+                        ErrorAlert(data.notes);
+                    }
+                } else {
+                    ErrorAlert(data.notes);
+                }
+
+            }
+        });
+    }
+
     $('#txtDateOfLoss').ForceDateEntry();
     $('#txtnotificationdate').ForceDateEntry();
     $('#txtregistrationdate').ForceDateEntry();
-    $('#ddlGeagraphicalArea').val('@Model.GeagraphicalArea');
-    $('#txtCity').val('@Model.City');
-    $('#txtManualReportType').val('@Model.ClaimReportType');
-    $('#ddlSurveyCity').val('@Model.SurveyCity');
-    $('#ddlClaimEvent').val('@Model.EventId');
+
     function GetCityName(sel) {
         var submitButton = document.getElementById("txtCity");
         var userSelectValue = userSelect.options[userSelect.selectedIndex].value;
     }
-    $(document).ready(function () {
+
+    function Najm() {
         $('#najm').show();
         $('#Basher').hide();
         $('#Manual').hide();
+        if('@Model.Id'=='0'){
+  $('#Manual1').hide();
+        }
+      
+        $('#Service').show();
         $("#txtAccidentNo").prop('required', true);
+        $("#txtBasherNo").prop('required', false);
+        $("#txtManualReportType").prop('required', false);
+        $("#txtReportNo").prop('required', false);
+    }
+
+    function Basher() {
+        $('#najm').hide();
+        $('#Basher').show();
+        $('#Manual').hide();
+        $('#Manual1').hide();
+        $('#Service').show();
+        $("#txtAccidentNo").prop('required', false);
+        $("#txtBasherNo").prop('required', true);
+        $("#txtManualReportType").prop('required', false);
+        $("#txtReportNo").prop('required', false);
+    }
+
+    function Manual() {
+        $('#najm').hide();
+        $('#Basher').hide();
+        $('#Service').hide();
+        $('#Manual').show();
+        $('#Manual1').show();
+        $("#txtAccidentNo").prop('required', false);
+        $("#txtBasherNo").prop('required', false);
+        $("#txtManualReportType").prop('required', true);
+        $("#txtReportNo").prop('required', true);
+    }
+
+
+    $(document).ready(function () {
+        if ('@Model.Id' != '0') {
+            $('#ddlGeagraphicalArea').val('@Model.GeagraphicalArea');
+            $('#txtCity').val('@Model.City');
+            if ('@Model.AccidentNo' != null && '@Model.AccidentNo' != '') {
+                $('#txtManualReportType').val('@((int)MotorClaims.Models.Enums.ClaimReportType.Najm)');
+            } else {
+                $('#txtManualReportType').val('@((int)MotorClaims.Models.Enums.ClaimReportType.Basher)');
+            }
+            $('#ddlSurveyCity').val('@Model.SurveyCity');
+            $('#ddlGeagraphicalArea').val(1);
+            $('#txtCity').val('@Model.SurveyCity');
+            $('#ddlClaimEvent').val('@Model.EventId');
+            if ('@Model.ClaimReportType' == '@((int)MotorClaims.Models.Enums.ClaimReportType.Najm)') 
+            {
+                Najm();
+            } else if ('@Model.ClaimReportType' == '@((int)MotorClaims.Models.Enums.ClaimReportType.Basher)') 
+            {
+                Basher();
+            }
+
+            else {
+                Manual();
+            }
+        }else{
+            Najm();
+        }
+        if ('@ViewData["Error"]' != '' || '@ViewData["Error"]' != "") {
+            ErrorAlert('@ViewData["Error"]');
+        }
+
+       
+
         $("input[name='ClaimReportType']").click(function () {
             var radioValue = $("input[name='ClaimReportType']:checked").val();
             if (radioValue == '@((int)MotorClaims.Models.Enums.ClaimReportType.Najm)') {
-                $('#najm').show();
-                $('#Basher').hide();
-                $('#Manual').hide();
-                $("#txtAccidentNo").prop('required', true);
-                $("#txtBasherNo").prop('required', false);
-                $("#txtManualReportType").prop('required', false);
-                $("#txtReportNo").prop('required', false);
+                Najm();
             } else if (radioValue == '@((int)MotorClaims.Models.Enums.ClaimReportType.Basher)') {
-                $('#najm').hide();
-                $('#Basher').show();
-                $('#Manual').hide();
-                $("#txtAccidentNo").prop('required', false);
-                $("#txtBasherNo").prop('required', true);
-                $("#txtManualReportType").prop('required', false);
-                $("#txtReportNo").prop('required', false);
+                Basher();
             } else {
-                $('#najm').hide();
-                $('#Basher').hide();
-                $('#Manual').show();
-                $("#txtAccidentNo").prop('required', false);
-                $("#txtBasherNo").prop('required', false);
-                $("#txtManualReportType").prop('required', true);
-                $("#txtReportNo").prop('required', true);
+                Manual();
             }
         });
     });

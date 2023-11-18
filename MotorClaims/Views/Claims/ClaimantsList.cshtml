@@ -4,6 +4,9 @@
 @model List<Claimants>
 @{
     Layout = null;
+    int VehicleId = (int)ViewData["VehicleId"];
+    int PolicyId = (int)ViewData["PolicyId"];
+    Claims claims = (Claims)ViewData["claims"];
 }
 @if (Model.Count > 0)
 {
@@ -12,12 +15,14 @@
             <tr>
                 <!-- <th>#</th> -->
                 <th>Claim Segment</th>
-                <th>Policy Type</th>
+                <th>Claimant Serial</th>
+                <th>Claimant Name</th>
                 <th>Policy Number</th>
                 <th>Make</th>
                 <th>Model</th>
                 <th>Chassis</th>
-                <th>Creation Date</th>
+                <th>Driver Date of Birth</th>
+                <th>Claimant Status</th>
 
             </tr>
 
@@ -29,18 +34,24 @@
                     @{
                         ClaimSearchobj claimSearchobj = new ClaimSearchobj()
                     {
-                        PolicyId = 0,
-                        VehicleId = 0,
-                        ClaimId = clm.ClaimId
+                        PolicyId = PolicyId,
+                        VehicleId = VehicleId,
+                        ClaimId = clm.ClaimId,
+                        ClaimantId = clm.Id
                     };
                     }
-                    <td class="tran"><a href="@Url.Action("ClaimEntry","Claims",new{obj=MotorClaims.Models.Helpers.Encrypt(JsonConvert.SerializeObject(claimSearchobj))})">#@clm.ClaimId</a></td>
-                    <td>@clm.InsurancePolicyNumber</td>
-                    <td>@clm.InsuranceCompanyName</td>
+                    <td class="tran"><a  onclick="LoadClaimant('@MotorClaims.Models.Helpers.Encrypt(JsonConvert.SerializeObject(claimSearchobj))')" >#@claims.ClaimNo</a></td>
+                    <td>@clm.Serial</td>
+                    <td>@clm.ClaimantName</td>
+                    <td>@claims.PolicyNo</td>
                     <td>@clm.MakeDesc</td>
                     <td>@clm.ModelDesc</td>
                     <td>@clm.ChassisNo</td>
-                    <td>@HelpersDate.FormatDateNoTime(clm.DriverBirthDate.Value)</td>
+                    <td>@(clm.DriverBirthDate.HasValue ? HelpersDate.FormatDateNoTime(clm.DriverBirthDate.Value) : string.Empty)</td>
+                    @{
+                        var y = Enum.TryParse(clm.ClaimantStatus.ToString(), out MotorClaims.Models.Enums.ClaimStatus parsedEnumValue);
+                    }
+                    <td>@parsedEnumValue</td>
 
                 </tr>
 
@@ -56,3 +67,16 @@ else
         <span>No results found.</span>
     </div>
 }
+
+
+                        <div id="ClaimantEntry">
+
+                        </div>
+
+
+                        <script>
+                            function LoadClaimant(Id)
+{
+    $('#ClaimantEntry').load('/Claims/ClaimantsEntry/',{obj:Id});
+}
+                        </script>

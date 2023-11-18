@@ -1,6 +1,9 @@
-﻿using Microsoft.Extensions.Caching.Memory;
+﻿using CORE.DTOs.MotorClaim.Claims;
+using CORE.DTOs.MotorClaim.Integrations.APIs;
+using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
+using System.Linq;
 
 namespace MotorClaims.Models
 {
@@ -8,7 +11,7 @@ namespace MotorClaims.Models
     {
         private static HttpClient client = new HttpClient();
         private readonly AppSettings _appSettings;
-        private const string VehicleListCacheKey = "ServicesLink";
+        private const string lookupCacheKey = "LookupTable";
         private readonly IMemoryCache _memoryCache;
 
 
@@ -22,27 +25,25 @@ namespace MotorClaims.Models
         public async Task StartAsync(CancellationToken cancellationToken)
         {
 
-            //List<CORE.DTOs.APIs.TP_Services.APIsLists> services = new List<CORE.DTOs.APIs.TP_Services.APIsLists>();
-            //HttpResponseMessage response = await client.GetAsync(_appSettings.APIHubPrefix + _appSettings.APIHubURL);
+            List<LookupTable> lookupTables = new List<LookupTable>();
+            SearchLookUp searchLookUp1 = new SearchLookUp();
+            lookupTables = Helpers.ExcutePostAPI<List<LookupTable>>(searchLookUp1, _appSettings.APIHubPrefix + "api/MotorClaim/Loadlookups");
 
-            //if (response.IsSuccessStatusCode)
-            //{
-            //    dynamic t = response.Content.ReadAsStringAsync().Result;
-            //    var response1 = JsonConvert.DeserializeObject<CORE.DTOs.APIs.TP_Services.APIsLists>(t);
 
-            //    var cacheOptions = new MemoryCacheEntryOptions()
-            //    .SetSlidingExpiration(TimeSpan.FromDays(1))
-            //    .SetAbsoluteExpiration(TimeSpan.FromDays(1));
+            if (lookupTables!=null && lookupTables.Count>0)
+            {
+                var cacheOptions = new MemoryCacheEntryOptions()
+                .SetSlidingExpiration(TimeSpan.FromDays(1))
+                .SetAbsoluteExpiration(TimeSpan.FromDays(1));
 
-            //    CORE.DTOs.APIs.TP_Services.APIsLists query = response1;
-            //    _memoryCache.Set(VehicleListCacheKey, query, cacheOptions);
-            //}
+                _memoryCache.Set(lookupCacheKey, lookupTables, cacheOptions);
+            }
 
         }
 
         public async Task StopAsync(CancellationToken cancellationToken)
         {
-            _memoryCache.Remove(VehicleListCacheKey);
+            _memoryCache.Remove(lookupCacheKey);
         }
     }
 }

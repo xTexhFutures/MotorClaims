@@ -1013,6 +1013,7 @@ label.radio-card-v3 {
 label.radio-card-v2 {
     cursor: pointer;
     min-width:30%;
+    padding-left:2%;
 }
 
     label.radio-card-v2 .card-content-wrapper {
@@ -1328,6 +1329,49 @@ label.radio-card {
             display: none;
         }
 
+
+.ducument-detaild-Attachment {
+    margin-left:25%;
+}
+
+    .ducument-detaild-Attachment .document-card {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+        flex-direction: column;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+        cursor: pointer;
+    }
+
+        .ducument-detaild-Attachment .document-card.not-border-user {
+            display: none;
+        }
+
+        .ducument-detaild-Attachment .document-card.not-bedoon-user {
+            display: none;
+        }
+
+        .ducument-detaild-Attachment .document-card .docuemet-icon {
+            width: 2rem;
+            margin: 0 auto;
+            margin-bottom: 0.5rem;
+        }
+
+        .ducument-detaild-Attachment .document-card .document-tile-text {
+            font-size: 1rem;
+            font-weight: 700;
+            text-align: center;
+            color: #000000;
+        }
+
+        .ducument-detaild-Attachment .document-card .ducument-control {
+            display: none;
+        }
 .footer-actions-handle {
     background-color: #ffffff;
     padding: 1rem;
@@ -1352,7 +1396,30 @@ label.radio-card {
         padding: 1rem 3rem;
         font-size: 1rem;
     }
+.footer-actions-handle-Full {
+    background-color: #ffffff;
+    padding: 1rem;
+    width: calc(100% - 11rem);
+    position: fixed;
+    bottom: 0;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: end;
+    -ms-flex-pack: end;
+    justify-content: flex-end;
+    bottom: 0;
+    -webkit-box-shadow: 0 2px 4px 0 rgba(219, 215, 215, 0.04);
+    box-shadow: 0 2px 4px 0 rgba(219, 215, 215, 0.04);
+    left: 8rem;
+    border-top-right-radius: 20px;
+    border-top-left-radius: 20px;
+}
 
+    .footer-actions-handle-Full .next-button .button {
+        padding: 1rem 3rem;
+        font-size: 1rem;
+    }
 @-webkit-keyframes animatetop {
     from {
         top: -300px;

@@ -1,0 +1,160 @@
+﻿@using CORE.DTOs.MotorClaim.Claims;
+@using CORE.DTOs.MotorClaim.WorkFlow;
+@using Newtonsoft.Json;
+
+@model List<Attachments>
+@{
+    Layout = null;
+    int VehicleId = (int)ViewData["VehicleId"];
+    int PolicyId = (int)ViewData["PolicyId"];
+    int ModuleId = (int)ViewData["ModuleId"];
+    int? ClaimId = (int?)ViewData["ClaimId"];
+    int? ClaimantId = (int?)ViewData["ClaimantId"];
+    string? Link = (string?)ViewData["Link"];
+    List<DocumentInfo> documentInfos = (List<DocumentInfo>)ViewData["documentInfos"];
+}
+@if (documentInfos != null && documentInfos.Count > 0)
+{
+    <div class="transaction-details">
+        <table class="universal-table">
+            <tr>
+                <!-- <th>#</th> -->
+                <th>Document Name</th>
+                <th>Module Name</th>
+                <th>Document Type</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+
+
+            @foreach (var doc in documentInfos)
+            {
+
+                <tr>
+                    @{
+                        ClaimSearchobj claimSearchobj = new ClaimSearchobj()
+                    {
+                        PolicyId = PolicyId,
+                        VehicleId = VehicleId,
+                        ClaimId = ClaimId.HasValue ? ClaimId.Value : 0,
+                        ClaimantId = ClaimantId.HasValue ? ClaimantId.Value : 0
+                    };
+                    }
+
+                    @if (Model.Any(p => p.DocumentSetupId == doc.Id))
+                    {
+                        <td class="tran">
+                            <a target="_blank" href="@(Link+"/"+ Model.Where(p=>p.DocumentSetupId==doc.Id).FirstOrDefault().FileName)">@doc.Name</a>
+                        </td>
+
+                    }
+                    else
+                    {
+                        <td>
+                            <span>@doc.Name</span>
+                        </td>
+                    }
+                    <td>@(ClaimId.HasValue ? MotorClaims.Models.Enums.DocumnetType.Claim : MotorClaims.Models.Enums.DocumnetType.Claimant)</td>
+                    <td>
+                        @if (doc.IsRequired)
+                        {
+                            <span>Required</span>
+                        }
+                        else
+                        {
+                            <span>Optional</span>
+                        }
+                    </td>
+                    <td>
+                        @if (Model.Any(p => p.DocumentSetupId == doc.Id))
+                        {
+                            <span>Uploaded</span>
+                        }
+                        else
+                        {
+                            <span>Missing</span>
+                        }
+                    </td>
+                    <td>
+                        @*<form id="frmUploadDocument@(++i)" method="post" asp-action="UploadAttachments" asp-controller="Claims">*@
+                        <input type="hidden" name="ModuleId" value="@ModuleId" />
+                        <input type="hidden" name="PolicyId" value="@PolicyId" />
+                        <input type="hidden" name="VehicleId" value="@VehicleId" />
+                        <input type="hidden" name="ClaimId" value="@ClaimId" />
+                        <input type="hidden" name="ClaimantId" value="@ClaimantId" />
+                        <div class="ducument-detaild-Attachment">
+                            <label for="fromFiles@(doc.Id)" class="document-card">
+                                <img src="/assets/icons/upload.svg" class="docuemet-icon" alt="">
+
+                                @if (Model.Any(p => p.DocumentSetupId == doc.Id))
+                                {
+                                    <p id="Attachment@(doc.Id)" class="document-tile-text">@Model.Where(p=>p.DocumentSetupId==doc.Id).FirstOrDefault().FileName</p>
+                                }
+                                else
+                                {
+                                    <p id="Attachment@(doc.Id)" class="document-tile-text"> Upload Attachment</p>
+                                }
+                                <input onchange="Upload(@doc.Id,@(ClaimId.HasValue?ClaimId.Value:0),@ModuleId,@ClaimantId)" accept="image/png, image/gif, image/jpeg,application/pdf" class="ducument-control" id="fromFiles@(doc.Id)" name="fromFiles" type="file" />
+                            </label>
+
+                        </div>
+                        @*</form>*@
+                    </td>
+                </tr>
+
+
+            }
+        </table>
+    </div>
+}
+else
+{
+    <div class="ui-state-highlight ui-corner-all" style="background:none !important;margin-top: 1%;">
+        <span class="ui-icon ui-icon-info" style="float: left"></span>
+        <span>No results found.</span>
+    </div>
+}
+
+<script>
+    @*    $(function(){
+        document.getElementById("fromFiles1").onchange = function () {
+        document.getElementById("frmMedicalReupload").submit();
+        };
+        });*@
+        function Upload(Id, ClaimId, ModuleId, ClaimantId) {
+
+    @*        const input = document.getElementById('fromFiles' + Id)
+                var $formdata = new FormData();
+                input.addEventListener('change', (event) => {
+                const target = event.target
+                if (target.files && target.files[0]) {
+                $('#Attachment' + Id).text(target.files[0].name);
+                $formdata.append(target.files[0].name, input.files[0]);
+                document.getElementById("frmUploadDocument" + Id).submit();
+                }
+
+                });*@
+                        const input = document.getElementById('fromFiles' + Id)
+            var files = input.files;
+            var $formdata = new FormData();
+
+            for (var i = 0; i != files.length; i++) {
+                $formdata.append("files", files[i]);
+            }
+
+            $.ajax(
+                {
+                    url: "/Claims/UploadAttachments/?Id=" + Id + "&ClaimId=" + ClaimId + "&ModuleId=" + ModuleId + "&ClaimantId=" + ClaimantId,
+                    data: $formdata,
+                    processData: false,
+                    contentType: false,
+                    type: "POST",
+                    success: function (data) {
+                        $('#Attachment' + Id).text($formdata.get("files").name);
+                    }
+                }
+            );
+
+        }
+
+</script>
