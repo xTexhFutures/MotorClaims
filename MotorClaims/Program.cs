@@ -1,5 +1,6 @@
 
 using Microsoft.AspNetCore.Localization;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Options;
 using MotorClaims.Models;
 using System.Globalization;
@@ -64,11 +65,24 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
 app.UseSession();
+//app.UseFileServer(new FileServerOptions
+//{
+//    FileProvider = new PhysicalFileProvider(@"D:/AICCFiles/AB0810232"),
+//    RequestPath = new PathString("/"),
+//    EnableDirectoryBrowsing = false
+//});
+
+app.UseFileServer(new FileServerOptions
+{
+    FileProvider = new PhysicalFileProvider(@"D:/AICCFiles/"),
+    RequestPath = new PathString("/MyPath"),
+    EnableDirectoryBrowsing = false
+});
 app.UseEndpoints(endpoints =>
 {
     endpoints.MapControllerRoute(
         name: "default",
-        pattern: "{controller=Home}/{action=Index}/{id?}");
+        pattern: "{controller=Authenticator}/{action=Login}/{id?}");
 });
 app.UseEndpoints(endpoints =>
 {

@@ -86,7 +86,7 @@
                         <li class="navigation-item">
 
                             <a class="menu-item-wrapper active" title="Home" href="@Url.Action("Index","Home")">
-                                <img src="~/assets/icons/sidebar/home.svg" class="menu-icon" />
+                                <img src="~/assets/icons/home.png" class="menu-icon" />
                             </a>
                         </li>
 
@@ -130,37 +130,41 @@
                                 <img src="~/assets/icons/Setup.png" class="menu-icon" />
                             </a>
                         </li>
-
+                           <li class="navigation-item">
+                            <a class="menu-item-wrapper" href="@Url.Action("eClaims","Operations")" title="@_localizer["eClaims"]" aria-current="page">
+                                <img src="~/assets/icons/eclaim.png" class="menu-icon" />
+                            </a>
+                        </li>
                     </ul>
                 </nav>
             </aside>
         </div>
 
-        <div class="header-logedin">
-            @*            <div class="breadcrumb">
+            <div class="header-logedin">
+            @*  <div class="breadcrumb">
 
             @_localizer["Dashboard"].Value
 
             </div>*@
-            @*         <div class="static-header">
-            <ul class="static-menu-list">
-            <li class="static-item-header">
-            <div class="lang cursor-pointer" onclick="handleLanguagePopup()">
-            <p>@_localizer["LNG"].Value</p>
-            <img src="~/assets/icons/world.svg" alt="world" class="language" />
-            <img src="~/assets/icons/chevron-down.svg" class="language-drop-icon" alt="">
+            <div class="static-header">
+                <ul class="static-menu-list">
+                    <li class="static-item-header">
+                        <div class="lang cursor-pointer" onclick="handleLanguagePopup()">
+                            <p>@_localizer["LNG"].Value</p>
+                            <img src="~/assets/icons/world.svg" alt="world" class="language" />
+                            <img src="~/assets/icons/chevron-down.svg" class="language-drop-icon" alt="">
 
 
-            @{
-            await Html.RenderPartialAsync("_SelectLanguagePartial");
-            }
+                            @{
+                                await Html.RenderPartialAsync("_SelectLanguagePartial");
+                            }
+                        </div>
+                    </li>
+                    <li class="profile">
+                        <img src="~/assets/icons/user.svg" style="cursor:pointer" onclick="OpenLogout()">
+                    </li>
+                </ul>
             </div>
-            </li>
-            <li class="profile">
-            <img src="~/assets/icons/user.svg">
-            </li>
-            </ul>
-            </div>*@
         </div>
         <div class="content-wrapper">
             @RenderBody()

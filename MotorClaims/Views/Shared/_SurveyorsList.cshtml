@@ -1,0 +1,87 @@
+﻿@using CORE.DTOs.MotorClaim;
+@using Newtonsoft.Json;
+
+@{
+    Layout = null;
+    string obj = (string)ViewData["claimSearchobj"];
+    List<Survoyer> survoyers=(List<Survoyer>)ViewData["survoyers"];
+    long ClaimId=(long)ViewData["ClaimId"];
+    int ClaimantId=(int)ViewData["ClaimantId"];
+     Survoyer survoyer = new Survoyer()
+                {
+                    ClaimantId = ClaimantId,
+                    ClaimId = ClaimId
+                };
+}
+
+
+@if (survoyers.Count>0)
+{
+
+<div class="transaction-details">
+    <table class="universal-table">
+        <tr>
+            <!-- <th>#</th> -->
+            <th>Created By</th>
+            <th>Creation Date</th>
+            <th>Estimated SP Amount</th>
+            <th>Estimated Labour Amount</th>
+            <th>Estimated Repair Days</th>
+            <th>Spare Part Amount</th>
+            <th>Labour Amount</th>
+            <th>Note</th>
+            <th>Missing</th>
+
+        </tr>
+
+
+        @foreach (var clm in survoyers)
+        {
+
+            <tr>
+                @{
+                 ClaimSearchobj   claimSearchobj = new ClaimSearchobj()
+                {
+                    ClaimId = clm.ClaimId,
+                    ClaimantId = clm.ClaimantId,
+                    SurvoyerId=clm.Id
+                    
+                };
+                  }
+                <td class="tran"><a onclick="LoadSurveyorEntry('@MotorClaims.Models.Helpers.Encrypt(JsonConvert.SerializeObject(claimSearchobj))')">#@clm.CreatedBy</a></td>
+                <td>@(Helpers.FormatLongDate( clm.CreationDate.Value))</td>
+          
+                <td>@clm.EstimatedSPAmount</td>
+                <td>@clm.EstimatedLabourAmount</td>
+                <td>@clm.EstimatedRepairDays</td>
+                <td>@clm.SparePartAmount</td>
+                <td>@clm.LabourAmount</td>
+                <td>@clm.Note</td>
+                <td class="tran"><a onclick="LoadSurveyorMissing('@MotorClaims.Models.Helpers.Encrypt(JsonConvert.SerializeObject(claimSearchobj))')">#Check List</a></td>
+
+            </tr>
+
+
+        }
+    </table>
+    </div>
+
+}else
+{
+   
+    await Html.RenderPartialAsync("_SurveyorEntry", survoyer);
+}
+ @{
+                 ClaimSearchobj   claimSearchobj1 = new ClaimSearchobj()
+                {
+                    ClaimId = ClaimId,
+                    ClaimantId = ClaimantId
+                    
+                };
+                  }
+
+                  <div class="transaction-details">
+                  <button type="button" class="button button-primary" onclick="LoadSurveyorEntry('@MotorClaims.Models.Helpers.Encrypt(JsonConvert.SerializeObject(claimSearchobj1))')">
+                                    Add New Survey
+                                </button>
+                                </div>

@@ -1,0 +1,54 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Report Access Granted</title>
+    <style>
+        .ReportCode {
+            color: #4892ff;
+            text-decoration: none;
+            font-style: italic;
+            font-size: 9px;
+        }
+
+        body {
+            background-color: #FFFFFF;
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+            font-size: 11px;
+            color: #000000;
+            margin: 25px;
+        }
+
+        a {
+            color: #4892FF;
+            text-decoration: underline;
+            font-size: 11px;
+        }
+
+        .ReportCode {
+            color: #4892FF;
+            text-decoration: none;
+            font-style: italic;
+            font-size: 9px;
+        }
+
+        .ReportDescription {
+            margin-left: 10px;
+            padding: 2px;
+            font-size: 10px;
+            color: #AAAAAA;
+        }
+    </style>
+</head>
+<body>
+    <p>Dear {USER_NAME},</p>
+
+    <p>Kindly note that your Quotation {Draft} has been {Status}</p>
+    <a href="{URL}">{Draft}</a>
+    <div class="ReportDescription">
+        {COMMENT}
+    </div>
+    <p>
+        Thank you
+    </p>
+</body>
+</html>

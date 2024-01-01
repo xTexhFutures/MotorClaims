@@ -634,7 +634,15 @@ function LoadDocumentsList(ModuleId, ClaimId, Policy, Vehicle, ClaimantId,Refere
 
     $('#ClaimantsDocumentsUpload').load('/Claims/DocumentsUpload/', { ModuleId: ModuleId, ClaimId: ClaimId, PolicyId: Policy, VehicleId: Vehicle, ClaimantId: ClaimantId, Reference: Reference });
 }
+function LoadClaimantsReserveList(ModuleId, ClaimId, Policy, Vehicle, ClaimantId, Reference) {
 
+    $('#ClaimantsReserve').load('/Claims/ClaimantReserve/', { ClaimantId: ClaimantId, ClaimId: ClaimId });
+}
+
+function LoadClaimantsRecoveryList(ModuleId, ClaimId, Policy, Vehicle, ClaimantId, Reference) {
+
+    $('#ClaimantsRecovery').load('/Claims/ClaimantRecovery/', { ClaimantId: ClaimantId, ClaimId: ClaimId });
+}
 function SurveyorAssign(ClaimId) {
     let element = document.getElementById('SurveyorAssign');
     element.classList.remove('display-none');
@@ -642,12 +650,28 @@ function SurveyorAssign(ClaimId) {
     element.classList.toggle('active');
     $('#SurveyorAssign').load('/Surveyor/SurveyorAssign/', { ClaimId: ClaimId });
 }
-
-function OperationAssign(ClaimId) {
+function SurveyorActions(ClaimId) {
+    let element = document.getElementById('SurveyorActions');
+    element.classList.remove('display-none');
+    element.classList.add('display-block');
+    element.classList.toggle('active');
+    $('#SurveyorActions').load('/Surveyor/SurveyorActions/', { ClaimId: ClaimId });
+}
+function OperationAssign(ClaimId,ClaimantId) {
     const element = document.getElementById('OperationAssign');
     element.classList.toggle('active');
-    $('#OperationAssign').load('/Operations/OperationAssign/', { ClaimId: ClaimId });
+    $('#OperationAssign').load('/Operations/OperationAssign/', { ClaimId: ClaimId, ClaimantId: ClaimantId });
 }
+
+
+function OperationReOpen(ClaimId) {
+    const element = document.getElementById('OperationReOpen');
+    element.classList.toggle('active');
+    $('#OperationReOpen').load('/Operations/OperationReOpen/', { ClaimId: ClaimId });
+}
+
+
+
 
 function SurveyorReserve(ClaimId) {
     let element = document.getElementById('UpdateReserve');
@@ -678,5 +702,12 @@ function OperationRecovery(ClaimId) {
     element.classList.toggle('active');
     $('#UpdateRecovery').load('/Operations/UpdateRecovery/', { ClaimId: ClaimId });
 }
-
+function LoadPhotos(Id)
+{
+    let element = document.getElementById('Photos');
+    element.classList.remove('display-none');
+    element.classList.add('display-block');
+    element.classList.toggle('active');
+    $('#Photos').load('/Claims/Photos/', { ClaimId: Id });
+}
 

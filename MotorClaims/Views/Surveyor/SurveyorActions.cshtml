@@ -2,6 +2,7 @@
 @model Claims
 @{
     Layout = null;
+    List<Claimants> claimants=(List<Claimants>)ViewData["claimants"];
 }
 
 <link href="~/styles/Themes/flick/jquery-ui-1.10.1.custom.min.css" rel="stylesheet" />
@@ -40,6 +41,21 @@
                         </ul>
 
 
+                              <div class="cancel-declaration">
+                            <h3 class="title-label">Claimant</h3>
+                            <div class="form-field-wrapper">
+                                <div class="form-input-wrapper">
+                                    <select class="form-inputbox" required name="ClaimantId">
+                                        <option value=""></option>
+                          @foreach (var item in claimants)
+                                        {
+                                              <option value="@item.Id">@item.ClaimantName</option>
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
 
                         <div class="cancel-declaration">
                             <h3 class="title-label">Action</h3>
@@ -50,6 +66,7 @@
                                         <option value="1">Pending for Surveyor</option>
                                         <option value="2">Waiting estimations</option>
                                         <option value="3">Sent to service unit</option>
+                                        <option value="4">Waiting Customer to deliver his vehicle</option>
                                     </select>
                                 </div>
                             </div>

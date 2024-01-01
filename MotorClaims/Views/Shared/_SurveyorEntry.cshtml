@@ -1,0 +1,1175 @@
+﻿@using CORE.DTOs.MotorClaim;
+@using Newtonsoft.Json;
+
+@model Survoyer
+@{
+    Layout = null;
+    string obj = (string)ViewData["claimSearchobj"];
+    List<Survoyer> survoyers=(List<Survoyer>)ViewData["survoyers"];
+}
+
+@if (survoyers.Count>0)
+{
+
+<div class="transaction-details">
+    <table class="universal-table">
+        <tr>
+            <!-- <th>#</th> -->
+            <th>Created By</th>
+            <th>Creation Date</th>
+            <th>Estimated SP Amount</th>
+            <th>Estimated Labour Amount</th>
+            <th>Estimated Repair Days</th>
+            <th>Spare Part Amount</th>
+            <th>Labour Amount</th>
+            <th>Note</th>
+            <th>Missing</th>
+
+        </tr>
+
+
+        @foreach (var clm in survoyers)
+        {
+
+            <tr>
+                @{
+                 ClaimSearchobj   claimSearchobj = new ClaimSearchobj()
+                {
+                    ClaimId = clm.ClaimId,
+                    ClaimantId = clm.ClaimantId,
+                    SurvoyerId=clm.Id
+                    
+                };
+                  }
+                <td class="tran"><a onclick="LoadSurveyorEntry('@MotorClaims.Models.Helpers.Encrypt(JsonConvert.SerializeObject(claimSearchobj))')">#@clm.CreatedBy</a></td>
+                <td>@(Helpers.FormatLongDate( clm.CreationDate.Value))</td>
+          
+                <td>@clm.EstimatedSPAmount</td>
+                <td>@clm.EstimatedLabourAmount</td>
+                <td>@clm.EstimatedRepairDays</td>
+                <td>@clm.SparePartAmount</td>
+                <td>@clm.LabourAmount</td>
+                <td>@clm.Note</td>
+                     <td class="tran"><a onclick="LoadSurveyorMissing('@MotorClaims.Models.Helpers.Encrypt(JsonConvert.SerializeObject(claimSearchobj))')">#Check List</a></td>
+
+            </tr>
+
+
+        }
+    </table>
+</div>
+    
+}
+
+ @{
+                 ClaimSearchobj   claimSearchobj1 = new ClaimSearchobj()
+                {
+                    ClaimId =Model.ClaimId,
+                    ClaimantId =Model.ClaimantId
+                    
+                };
+                  }
+
+                  <div class="transaction-details">
+                  <button type="button" class="button button-primary" onclick="LoadSurveyorEntry('@MotorClaims.Models.Helpers.Encrypt(JsonConvert.SerializeObject(claimSearchobj1))')">
+                                    Add New Survey
+                                </button>
+                                </div>
+<div class="policy-detail-wrapper" >
+    <form method="post" asp-controller="Surveyor" >
+        <input type="hidden" name="ClaimId" value="@Model.ClaimId" />
+        <input type="hidden" name="ClaimantId" value="@Model.ClaimantId" />
+        <input type="hidden" name="Id" value="@Model.Id" />
+        <input type="hidden" name="claimSearchobj" value="@obj" />
+        <div class="policy-members">
+            <div class="accordion-wrapper">
+                <div class="accordion-item-wrapper">
+                    <div class="accordion-header" onclick="memberAccordion('Front_1')">
+                        <div class="accordion-collapse-icon-wrapper">
+                            <img class="icon-minus" src="/assets/icons/circle-minus.svg">
+                            <img class="icon-plus" src="/assets/icons/circle-plus.svg">
+                        </div>
+                        <div class="accordion-heaing-content">
+                            <div class="heading-wrap">
+                                <input type="checkbox" class="support-icon" />
+                                <h2 class="heading">Front</h2>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="accordion-body" id="Front_1">
+                        <ul class="dates-and-conpany-wrapper">
+                            <li class="column-item">
+                                <label class="Full">
+                                    <input type="checkbox" name="Front_B_Rubber" class="support-icon" value="true" @(Model.Id > 0 && Model.Front_B_Rubber.HasValue && Model.Front_B_Rubber.Value ? "checked" : "") />
+                                    <span class="value">B.Rubber</span>
+
+                                </label>
+                            </li>
+                            <li class="column-item">
+                                <label class="Full">
+                                    <input type="checkbox" name="Front_B_Reinforcement" value="true" class="support-icon" @(Model.Id > 0 && Model.Front_B_Reinforcement.HasValue && Model.Front_B_Reinforcement.Value ? "checked" : "") />
+                                    <span class="value">B.Reinforcement</span>
+
+                                </label>
+                            </li>
+                            <li class="column-item">
+                                <label class="Full">
+                                    <input type="checkbox" name="Front_B_Guard" value="true" class="support-icon" @(Model.Id > 0 && Model.Front_B_Guard.HasValue && Model.Front_B_Guard.Value ? "checked" : "") />
+                                    <span class="value">B.Guard</span>
+
+                                </label>
+                            </li>
+                            <li class="column-item">
+                                <label class="Full">
+                                    <input type="checkbox" name="Front_H_Panel" value="true" class="support-icon" @(Model.Id > 0 && Model.Front_H_Panel.HasValue && Model.Front_H_Panel.Value ? "checked" : "") />
+                                    <span class="value">H.Panel</span>
+                                </label>
+                            </li>
+                            <li class="column-item">
+                                <label class="Full">
+                                    <input type="checkbox" name="Front_R_Panel" value="true" class="support-icon" @(Model.Id > 0 && Model.Front_R_Panel.HasValue && Model.Front_R_Panel.Value ? "checked" : "") />
+                                    <span class="value">R.Panel</span>
+
+                                </label>
+                            </li>
+                            <li class="column-item">
+                                <label class="Full">
+                                    <input type="checkbox" name="Front_Grill" value="true" class="support-icon" @(Model.Id > 0 && Model.Front_Grill.HasValue && Model.Front_Grill.Value ? "checked" : "") />
+                                    <span class="value">Grill</span>
+
+                                </label>
+                            </li>
+                            <li class="column-item">
+                                <label class="Full">
+                                    <input type="checkbox" name="Front_H_Light" value="true" class="support-icon" @(Model.Id > 0 && Model.Front_H_Light.HasValue && Model.Front_H_Light.Value ? "checked" : "") />
+                                    <span class="value">H.Light</span>
+
+                                </label>
+                            </li>
+                            <li class="column-item">
+                                <label class="Full">
+                                    <input type="checkbox" name="Front_IndicatorLight" value="true" class="support-icon" @(Model.Id > 0 && Model.Front_IndicatorLight.HasValue && Model.Front_IndicatorLight.Value ? "checked" : "") />
+                                    <span class="value">Indicator Light</span>
+
+                                </label>
+                            </li>
+                            <li class="column-item">
+                                <label class="Full">
+                                    <input type="checkbox" name="Front_E_HoobLock" value="true" class="support-icon" @(Model.Id > 0 && Model.Front_E_HoobLock.HasValue && Model.Front_E_HoobLock.Value ? "checked" : "") />
+                                    <span class="value">E.Hoob Lock</span>
+
+                                </label>
+                            </li>
+                            <li class="column-item">
+                                <label class="Full">
+                                    <input type="checkbox" name="Front_WindShield" value="true" class="support-icon" @(Model.Id > 0 && Model.Front_WindShield.HasValue && Model.Front_WindShield.Value ? "checked" : "") />
+                                    <span class="value">Wind Shield</span>
+
+                                </label>
+                            </li>
+                        </ul>
+                        <ul class="dates-and-conpany-wrapper">
+                            <li class="column-item">
+                                <label class="Full">
+                                    <input type="checkbox" name="Front_Wipers" value="true" class="support-icon" @(Model.Id > 0 && Model.Front_Wipers.HasValue && Model.Front_Wipers.Value ? "checked" : "") />
+                                    <span class="value">Wipers</span>
+                                </label>
+                            </li>
+                            <li class="column-item">
+                                <label class="Full">
+                                    <input type="checkbox" name="Front_W_S_Rubber" value="true" class="support-icon" @(Model.Id > 0 && Model.Front_W_S_Rubber.HasValue && Model.Front_W_S_Rubber.Value ? "checked" : "") />
+                                    <span class="value">W.S. Rubber </span>
+
+                                </label>
+                            </li>
+                            <li class="column-item">
+                                <label class="Full">
+                                    <input type="checkbox" name="Front_RightTire" value="true" class="support-icon" @(Model.Id > 0 && Model.Front_RightTire.HasValue && Model.Front_RightTire.Value ? "checked" : "") />
+                                    <span class="value">Right Tire</span>
+
+                                </label>
+                            </li>
+                            <li class="column-item">
+                                <label class="Full">
+                                    <input type="checkbox" name="Front_LeftTire" value="true" class="support-icon" @(Model.Id > 0 && Model.Front_LeftTire.HasValue && Model.Front_LeftTire.Value ? "checked" : "") />
+                                    <span class="value">Left Tire</span>
+                                </label>
+                            </li>
+                            <li class="column-item">
+                                <label class="Full">
+                                    <input type="checkbox" name="Front_RightRim" value="true" class="support-icon" @(Model.Id > 0 && Model.Front_RightRim.HasValue && Model.Front_RightRim.Value ? "checked" : "") />
+                                    <span class="value">Right Rim</span>
+
+                                </label>
+                            </li>
+                            <li class="column-item">
+                                <label class="Full">
+                                    <input type="checkbox" name="Front_LeftRim" value="true" class="support-icon" @(Model.Id > 0 && Model.Front_LeftRim.HasValue && Model.Front_LeftRim.Value ? "checked" : "") />
+                                    <span class="value">Left Rim</span>
+
+                                </label>
+                            </li>
+                            <li class="column-item">
+                                <label class="Full">
+                                    <input type="checkbox" name="Front_RightWheelCaps" value="true" class="support-icon" @(Model.Id > 0 && Model.Front_RightWheelCaps.HasValue && Model.Front_RightWheelCaps.Value ? "checked" : "") />
+                                    <span class="value">Right Wheel Caps</span>
+
+                                </label>
+                            </li>
+                            <li class="column-item">
+                                <label class="Full">
+                                    <input type="checkbox" name="Front_LeftWheelCaps" value="true" class="support-icon" @(Model.Id > 0 && Model.Front_LeftWheelCaps.HasValue && Model.Front_LeftWheelCaps.Value ? "checked" : "") />
+                                    <span class="value">Left Wheel Caps</span>
+
+                                </label>
+                            </li>
+                            <li class="column-item">
+                                <label class="Full">
+                                    <input type="checkbox" name="Front_Others" value="true" class="support-icon" @(Model.Id > 0 && Model.Front_Others.HasValue && Model.Front_Others.Value ? "checked" : "") />
+                                    <span class="value">Others</span>
+
+                                </label>
+                            </li>
+
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="accordion-item-wrapper">
+                    <div class="accordion-header" onclick="memberAccordion('Rear_1')">
+                        <div class="accordion-collapse-icon-wrapper">
+                            <img class="icon-minus" src="/assets/icons/circle-minus.svg">
+                            <img class="icon-plus" src="/assets/icons/circle-plus.svg">
+                        </div>
+                        <div class="accordion-heaing-content">
+                            <div class="heading-wrap">
+                                <input type="checkbox" class="support-icon" />
+                                <h2 class="heading">Rear</h2>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="accordion-body" id="Rear_1">
+                        <ul class="dates-and-conpany-wrapper">
+                            <li class="column-item">
+                                <label class="Full">
+                                    <input type="checkbox" name="Rear_B_Rubber" value="true" class="support-icon" @(Model.Id > 0 && Model.Rear_B_Rubber.HasValue && Model.Rear_B_Rubber.Value ? "checked" : "") />
+                                    <span class="value">B.Rubber</span>
+                                </label>
+                            </li>
+                            <li class="column-item">
+                                <label class="Full">
+                                    <input type="checkbox" name="Rear_B_Reinforcement" value="true" class="support-icon" @(Model.Id > 0 && Model.Rear_B_Reinforcement.HasValue && Model.Rear_B_Reinforcement.Value ? "checked" : "") />
+                                    <span class="value">B.Reinforcement</span>
+
+                                </label>
+                            </li>
+                            <li class="column-item">
+                                <label class="Full">
+                                    <input type="checkbox" name="Rear_Lamps" value="true" class="support-icon" @(Model.Id > 0 && Model.Rear_Lamps.HasValue && Model.Rear_Lamps.Value ? "checked" : "") />
+                                    <span class="value">Lamps</span>
+
+                                </label>
+                            </li>
+                            <li class="column-item">
+                                <label class="Full">
+                                    <input type="checkbox" name="Rear_Truck" value="true" class="support-icon" @(Model.Id > 0 && Model.Rear_Truck.HasValue && Model.Rear_Truck.Value ? "checked" : "") />
+                                    <span class="value">Truck</span>
+                                </label>
+                            </li>
+                            <li class="column-item">
+                                <label class="Full">
+                                    <input type="checkbox" name="Rear_Lid" value="true" class="support-icon" @(Model.Id > 0 && Model.Rear_Lid.HasValue && Model.Rear_Lid.Value ? "checked" : "") />
+                                    <span class="value">Lid</span>
+
+                                </label>
+                            </li>
+                            <li class="column-item">
+                                <label class="Full">
+                                    <input type="checkbox" name="Rear_Glass" value="true" class="support-icon" @(Model.Id > 0 && Model.Rear_Glass.HasValue && Model.Rear_Glass.Value ? "checked" : "") />
+                                    <span class="value">Glass</span>
+
+                                </label>
+                            </li>
+                            <li class="column-item">
+                                <label class="Full">
+                                    <input type="checkbox" name="Rear_Roof" value="true" class="support-icon" @(Model.Id > 0 && Model.Rear_Roof.HasValue && Model.Rear_Roof.Value ? "checked" : "") />
+                                    <span class="value">Roof</span>
+
+                                </label>
+                            </li>
+                            <li class="column-item">
+                                <label class="Full">
+                                    <input type="checkbox" name="Rear_R_Window" value="true" class="support-icon" @(Model.Id > 0 && Model.Rear_R_Window.HasValue && Model.Rear_R_Window.Value ? "checked" : "") />
+                                    <span class="value">R.Window</span>
+
+                                </label>
+                            </li>
+                            <li class="column-item">
+                                <label class="Full">
+                                    <input type="checkbox" name="Rear_R_Rubber" value="true" class="support-icon" @(Model.Id > 0 && Model.Rear_R_Rubber.HasValue && Model.Rear_R_Rubber.Value ? "checked" : "") />
+                                    <span class="value">R.Rubber</span>
+
+                                </label>
+                            </li>
+                            <li class="column-item">
+                                <label class="Full">
+                                    <input type="checkbox" name="Rear_B_Guard" value="true" class="support-icon" @(Model.Id > 0 && Model.Rear_B_Guard.HasValue && Model.Rear_B_Guard.Value ? "checked" : "") />
+                                    <span class="value">B.Guard</span>
+
+                                </label>
+                            </li>
+                        </ul>
+                        <ul class="dates-and-conpany-wrapper">
+                            <li class="column-item">
+                                <label class="Full">
+                                    <input type="checkbox" name="Rear_Others" value="true" class="support-icon" @(Model.Id > 0 && Model.Rear_Others.HasValue && Model.Rear_Others.Value ? "checked" : "") />
+                                    <span class="value">Others</span>
+                                </label>
+                            </li>
+                            <li class="column-item">
+                                <label class="Full">
+                                    <input type="checkbox" name="Rear_W_S_Rubber" value="true" class="support-icon" @(Model.Id > 0 && Model.Rear_W_S_Rubber.HasValue && Model.Rear_W_S_Rubber.Value ? "checked" : "") />
+                                    <span class="value">W.S. Rubber </span>
+
+                                </label>
+                            </li>
+                            <li class="column-item">
+                                <label class="Full">
+                                    <input type="checkbox" name="Rear_RightTire" value="true" class="support-icon" @(Model.Id > 0 && Model.Rear_RightTire.HasValue && Model.Rear_RightTire.Value ? "checked" : "") />
+                                    <span class="value">Right Tire</span>
+
+                                </label>
+                            </li>
+                            <li class="column-item">
+                                <label class="Full">
+                                    <input type="checkbox" name="Rear_LeftTire" value="true" class="support-icon" @(Model.Id > 0 && Model.Rear_LeftTire.HasValue && Model.Rear_LeftTire.Value ? "checked" : "") />
+                                    <span class="value">Left Tire</span>
+                                </label>
+                            </li>
+                            <li class="column-item">
+                                <label class="Full">
+                                    <input type="checkbox" name="Rear_RightRim" value="true" class="support-icon" @(Model.Id > 0 && Model.Rear_RightRim.HasValue && Model.Rear_RightRim.Value ? "checked" : "") />
+                                    <span class="value">Right Rim</span>
+
+                                </label>
+                            </li>
+                            <li class="column-item">
+                                <label class="Full">
+                                    <input type="checkbox" name="Rear_LeftRim" value="true" class="support-icon" @(Model.Id > 0 && Model.Rear_LeftRim.HasValue && Model.Rear_LeftRim.Value ? "checked" : "") />
+                                    <span class="value">Left Rim</span>
+
+                                </label>
+                            </li>
+                            <li class="column-item">
+                                <label class="Full">
+                                    <input type="checkbox" name="Rear_RightWheelCaps" value="true" class="support-icon" @(Model.Id > 0 && Model.Rear_RightWheelCaps.HasValue && Model.Rear_RightWheelCaps.Value ? "checked" : "") />
+                                    <span class="value">Right Wheel Caps</span>
+
+                                </label>
+                            </li>
+                            <li class="column-item">
+                                <label class="Full">
+                                    <input type="checkbox" name="Rear_LeftWheelCaps" value="true" class="support-icon" @(Model.Id > 0 && Model.Rear_LeftWheelCaps.HasValue && Model.Rear_LeftWheelCaps.Value ? "checked" : "") />
+                                    <span class="value">Left Wheel Caps</span>
+
+                                </label>
+                            </li>
+
+
+                        </ul>
+                    </div>
+
+
+                </div>
+
+                <div class="accordion-item-wrapper">
+                    <div class="accordion-header" onclick="memberAccordion('Interior_1')">
+                        <div class="accordion-collapse-icon-wrapper">
+                            <img class="icon-minus" src="/assets/icons/circle-minus.svg">
+                            <img class="icon-plus" src="/assets/icons/circle-plus.svg">
+                        </div>
+                        <div class="accordion-heaing-content">
+                            <div class="heading-wrap">
+                                <input type="checkbox" class="support-icon" />
+                                <h2 class="heading">Interior</h2>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="accordion-body" id="Interior_1">
+                        <ul class="dates-and-conpany-wrapper">
+                            <li class="column-item">
+                                <label class="Full">
+                                    <input type="checkbox" name="Interior_DashBoard" value="true" class="support-icon" @(Model.Id > 0 && Model.Interior_DashBoard.HasValue && Model.Interior_DashBoard.Value ? "checked" : "") />
+                                    <span class="value">Dash Board</span>
+                                </label>
+                            </li>
+                            <li class="column-item">
+                                <label class="Full">
+                                    <input type="checkbox" name="Interior_AirBag" value="true" class="support-icon" @(Model.Id > 0 && Model.Interior_AirBag.HasValue && Model.Interior_AirBag.Value ? "checked" : "") />
+                                    <span class="value">Air Bag</span>
+
+                                </label>
+                            </li>
+                            <li class="column-item">
+                                <label class="Full">
+                                    <input type="checkbox" name="Interior_R_C_Antil" value="true" class="support-icon" @(Model.Id > 0 && Model.Interior_R_C_Antil.HasValue && Model.Interior_R_C_Antil.Value ? "checked" : "") />
+                                    <span class="value">R/C-Antil</span>
+                                </label>
+                            </li>
+                            <li class="column-item">
+                                <label class="Full">
+                                    <input type="checkbox" name="Interior_F_Seats" value="true" class="support-icon" @(Model.Id > 0 && Model.Interior_F_Seats.HasValue && Model.Interior_F_Seats.Value ? "checked" : "") />
+                                    <span class="value">F.Seats</span>
+
+                                </label>
+                            </li>
+                            <li class="column-item">
+                                <label class="Full">
+                                    <input type="checkbox" name="Interior_R_Seats" value="true" class="support-icon" @(Model.Id > 0 && Model.Interior_R_Seats.HasValue && Model.Interior_R_Seats.Value ? "checked" : "") />
+                                    <span class="value">R.Seats</span>
+
+                                </label>
+                            </li>
+                            <li class="column-item">
+                                <label class="Full">
+                                    <input type="checkbox" name="Interior_FloorMats" value="true" class="support-icon" @(Model.Id > 0 && Model.Interior_FloorMats.HasValue && Model.Interior_FloorMats.Value ? "checked" : "") />
+                                    <span class="value">Floor Mats</span>
+
+                                </label>
+                            </li>
+                            <li class="column-item">
+                                <label class="Full">
+                                    <input type="checkbox" name="Interior_DoorTrim" value="true" class="support-icon" @(Model.Id > 0 && Model.Interior_DoorTrim.HasValue && Model.Interior_DoorTrim.Value ? "checked" : "") />
+                                    <span class="value">Door Trim</span>
+
+                                </label>
+                            </li>
+                            <li class="column-item">
+                                <label class="Full">
+                                    <input type="checkbox" name="Interior_Others" value="true" class="support-icon" @(Model.Id > 0 && Model.Interior_Others.HasValue && Model.Interior_Others.Value ? "checked" : "") />
+                                    <span class="value">Others</span>
+
+                                </label>
+                            </li>
+
+                        </ul>
+
+                    </div>
+                </div>
+
+                <div class="accordion-item-wrapper">
+                    <div class="accordion-header" onclick="memberAccordion('Engine_1')">
+                        <div class="accordion-collapse-icon-wrapper">
+                            <img class="icon-minus" src="/assets/icons/circle-minus.svg">
+                            <img class="icon-plus" src="/assets/icons/circle-plus.svg">
+                        </div>
+                        <div class="accordion-heaing-content">
+                            <div class="heading-wrap">
+                                <input type="checkbox" class="support-icon" />
+                                <h2 class="heading">Engine</h2>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="accordion-body" id="Engine_1">
+                        <ul class="dates-and-conpany-wrapper">
+                            <li class="column-item">
+                                <label class="Full">
+                                    <input type="checkbox" name="Engine_Engine" value="true" class="support-icon" @(Model.Id > 0 && Model.Engine_Engine.HasValue && Model.Engine_Engine.Value ? "checked" : "") />
+                                    <span class="value">Engine</span>
+                                </label>
+                            </li>
+                            <li class="column-item">
+                                <label class="Full">
+                                    <input type="checkbox" name="Engine_W_Radiator" value="true" class="support-icon" @(Model.Id > 0 && Model.Engine_W_Radiator.HasValue && Model.Engine_W_Radiator.Value ? "checked" : "") />
+                                    <span class="value">W.Radiator</span>
+
+                                </label>
+                            </li>
+                            <li class="column-item">
+                                <label class="Full">
+                                    <input type="checkbox" name="Engine_A_CRadiator" value="true" class="support-icon" @(Model.Id > 0 && Model.Engine_A_CRadiator.HasValue && Model.Engine_A_CRadiator.Value ? "checked" : "") />
+                                    <span class="value">A/C Radiator</span>
+
+                                </label>
+                            </li>
+                            <li class="column-item">
+                                <label class="Full">
+                                    <input type="checkbox" name="Engine_Fan" value="true" class="support-icon" @(Model.Id > 0 && Model.Engine_Fan.HasValue && Model.Engine_Fan.Value ? "checked" : "") />
+                                    <span class="value">Fan</span>
+                                </label>
+                            </li>
+                            <li class="column-item">
+                                <label class="Full">
+                                    <input type="checkbox" name="Engine_Battery" value="true" class="support-icon" @(Model.Id > 0 && Model.Engine_Battery.HasValue && Model.Engine_Battery.Value ? "checked" : "") />
+                                    <span class="value">Battery</span>
+
+                                </label>
+                            </li>
+                            <li class="column-item">
+                                <label class="Full">
+                                    <input type="checkbox" name="Engine_Others" value="true" class="support-icon" @(Model.Id > 0 && Model.Engine_Others.HasValue && Model.Engine_Others.Value ? "checked" : "") />
+                                    <span class="value">Others</span>
+
+                                </label>
+                            </li>
+
+                        </ul>
+
+                    </div>
+                </div>
+
+                <div class="accordion-item-wrapper">
+                    <div class="accordion-header" onclick="memberAccordion('Underneath_1')">
+                        <div class="accordion-collapse-icon-wrapper">
+                            <img class="icon-minus" src="/assets/icons/circle-minus.svg">
+                            <img class="icon-plus" src="/assets/icons/circle-plus.svg">
+                        </div>
+                        <div class="accordion-heaing-content">
+                            <div class="heading-wrap">
+                                <input type="checkbox" class="support-icon" />
+                                <h2 class="heading">Underneath</h2>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="accordion-body" id="Underneath_1">
+                        <ul class="dates-and-conpany-wrapper">
+                            <li class="column-item">
+                                <label class="Full">
+                                    <input type="checkbox" name="Underneath_LeftSteeringJoint" value="true" class="support-icon" @(Model.Id > 0 && Model.Underneath_LeftSteeringJoint.HasValue && Model.Underneath_LeftSteeringJoint.Value ? "checked" : "") />
+                                    <span class="value">Left Steering Joint</span>
+                                </label>
+                            </li>
+                            <li class="column-item">
+                                <label class="Full">
+                                    <input type="checkbox" name="Underneath_RightSteeringJoint" value="true" class="support-icon" @(Model.Id > 0 && Model.Underneath_RightSteeringJoint.HasValue && Model.Underneath_RightSteeringJoint.Value ? "checked" : "") />
+                                    <span class="value">Right Steering Joint</span>
+
+                                </label>
+                            </li>
+                            <li class="column-item">
+                                <label class="Full">
+                                    <input type="checkbox" name="Underneath_SteeringBox" value="true" v class="support-icon" @(Model.Id > 0 && Model.Underneath_SteeringBox.HasValue && Model.Underneath_SteeringBox.Value ? "checked" : "") />
+                                    <span class="value">Steering Box</span>
+
+                                </label>
+                            </li>
+                            <li class="column-item">
+                                <label class="Full">
+                                    <input type="checkbox" name="Underneath_LeftSuspension" value="true" class="support-icon" @(Model.Id > 0 && Model.Underneath_LeftSuspension.HasValue && Model.Underneath_LeftSuspension.Value ? "checked" : "") />
+                                    <span class="value">Left Suspension</span>
+                                </label>
+                            </li>
+                            <li class="column-item">
+                                <label class="Full">
+                                    <input type="checkbox" name="Underneath_RightSuspension" value="true" class="support-icon" @(Model.Id > 0 && Model.Underneath_RightSuspension.HasValue && Model.Underneath_RightSuspension.Value ? "checked" : "") />
+                                    <span class="value">Right Suspension</span>
+
+                                </label>
+                            </li>
+                            <li class="column-item">
+                                <label class="Full">
+                                    <input type="checkbox" name="Underneath_LeftShockObserver" value="true" class="support-icon" @(Model.Id > 0 && Model.Underneath_LeftShockObserver.HasValue && Model.Underneath_LeftShockObserver.Value ? "checked" : "") />
+                                    <span class="value">Left Shock Observer</span>
+
+                                </label>
+                            </li>
+
+                        </ul>
+                        <ul class="dates-and-conpany-wrapper">
+                            <li class="column-item">
+                                <label class="Full">
+                                    <input type="checkbox" name="Underneath_RightShockObserver" value="true" class="support-icon" />
+                                    <span class="value">Right Shock Observer</span>
+                                </label>
+                            </li>
+                            <li class="column-item">
+                                <label class="Full">
+                                    <input type="checkbox" name="Underneath_Muffler" value="true" class="support-icon" @(Model.Id > 0 && Model.Underneath_Muffler.HasValue && Model.Underneath_Muffler.Value ? "checked" : "") />
+                                    <span class="value">Muffler</span>
+
+                                </label>
+                            </li>
+                            <li class="column-item">
+                                <label class="Full">
+                                    <input type="checkbox" name="Underneath_Pro_Shaft" value="true" class="support-icon" @(Model.Id > 0 && Model.Underneath_Pro_Shaft.HasValue && Model.Underneath_Pro_Shaft.Value ? "checked" : "") />
+                                    <span class="value">Pro-Shaft</span>
+
+                                </label>
+                            </li>
+                            <li class="column-item">
+                                <label class="Full">
+                                    <input type="checkbox" name="Underneath_E_Mounting" value="true" class="support-icon" @(Model.Id > 0 && Model.Underneath_E_Mounting.HasValue && Model.Underneath_E_Mounting.Value ? "checked" : "") />
+                                    <span class="value">E.Mounting</span>
+                                </label>
+                            </li>
+                            <li class="column-item">
+                                <label class="Full">
+                                    <input type="checkbox" name="Underneath_Chassis" value="true" class="support-icon" @(Model.Id > 0 && Model.Underneath_Chassis.HasValue && Model.Underneath_Chassis.Value ? "checked" : "") />
+                                    <span class="value">Chassis</span>
+
+                                </label>
+                            </li>
+                            <li class="column-item">
+                                <label class="Full">
+                                    <input type="checkbox" name="Underneath_Others" value="true" class="support-icon" @(Model.Id > 0 && Model.Underneath_Others.HasValue && Model.Underneath_Others.Value ? "checked" : "") />
+                                    <span class="value">Others</span>
+
+                                </label>
+                            </li>
+
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="accordion-item-wrapper">
+                    <div class="accordion-header" onclick="memberAccordion('Sides_1')">
+                        <div class="accordion-collapse-icon-wrapper">
+                            <img class="icon-minus" src="/assets/icons/circle-minus.svg">
+                            <img class="icon-plus" src="/assets/icons/circle-plus.svg">
+                        </div>
+                        <div class="accordion-heaing-content">
+                            <div class="heading-wrap">
+                                <input type="checkbox" class="support-icon" />
+                                <h2 class="heading">Sides</h2>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="accordion-body" id="Sides_1">
+                        <ul class="dates-and-conpany-wrapper">
+                            <li class="column-item">
+                                <label class="Full">
+                                    <input type="checkbox" name="Sides_F_Fender" value="true" class="support-icon" @(Model.Id > 0 && Model.Sides_F_Fender.HasValue && Model.Sides_F_Fender.Value ? "checked" : "") />
+                                    <span class="value">F.Fender</span>
+                                </label>
+                            </li>
+                            <li class="column-item">
+                                <label class="Full">
+                                    <input type="checkbox" name="Sides_R_Fender" value="true" class="support-icon" @(Model.Id > 0 && Model.Sides_R_Fender.HasValue && Model.Sides_R_Fender.Value ? "checked" : "") />
+                                    <span class="value">R.Fender</span>
+
+                                </label>
+                            </li>
+                            <li class="column-item">
+                                <label class="Full">
+                                    <input type="checkbox" name="Sides_F_Door" value="true" class="support-icon" @(Model.Id > 0 && Model.Sides_F_Door.HasValue && Model.Sides_F_Door.Value ? "checked" : "") />
+                                    <span class="value">F.Door</span>
+
+                                </label>
+                            </li>
+                            <li class="column-item">
+                                <label class="Full">
+                                    <input type="checkbox" name="Sides_R_Door" value="true" class="support-icon" @(Model.Id > 0 && Model.Sides_R_Door.HasValue && Model.Sides_R_Door.Value ? "checked" : "") />
+                                    <span class="value">R.Door</span>
+                                </label>
+                            </li>
+                            <li class="column-item">
+                                <label class="Full">
+                                    <input type="checkbox" name="Sides_CentralPillar" value="true" class="support-icon" @(Model.Id > 0 && Model.Sides_CentralPillar.HasValue && Model.Sides_CentralPillar.Value ? "checked" : "") />
+                                    <span class="value">Central Pillar</span>
+
+                                </label>
+                            </li>
+                            <li class="column-item">
+                                <label class="Full">
+                                    <input type="checkbox" name="Sides_RunningBoard" value="true" class="support-icon" @(Model.Id > 0 && Model.Sides_RunningBoard.HasValue && Model.Sides_RunningBoard.Value ? "checked" : "") />
+                                    <span class="value">Running Board</span>
+
+                                </label>
+                            </li>
+
+                        </ul>
+                        <ul class="dates-and-conpany-wrapper">
+                            <li class="column-item">
+                                <label class="Full">
+                                    <input type="checkbox" name="Sides_F_W_Glass" value="true" class="support-icon" @(Model.Id > 0 && Model.Sides_F_W_Glass.HasValue && Model.Sides_F_W_Glass.Value ? "checked" : "") />
+                                    <span class="value">F.W. Glass</span>
+                                </label>
+                            </li>
+                            <li class="column-item">
+                                <label class="Full">
+                                    <input type="checkbox" name="Sides_R_W_Glass" value="true" class="support-icon" @(Model.Id > 0 && Model.Sides_R_W_Glass.HasValue && Model.Sides_R_W_Glass.Value ? "checked" : "") />
+                                    <span class="value">R.W. Glass</span>
+
+                                </label>
+                            </li>
+                            <li class="column-item">
+                                <label class="Full">
+                                    <input type="checkbox" name="Sides_LeftMirror" value="true" class="support-icon" @(Model.Id > 0 && Model.Sides_LeftMirror.HasValue && Model.Sides_LeftMirror.Value ? "checked" : "") />
+                                    <span class="value">Left Mirror</span>
+
+                                </label>
+                            </li>
+                            <li class="column-item">
+                                <label class="Full">
+                                    <input type="checkbox" name="Sides_RightMirror" value="true" class="support-icon" @(Model.Id > 0 && Model.Sides_RightMirror.HasValue && Model.Sides_RightMirror.Value ? "checked" : "") />
+                                    <span class="value">Right Mirror</span>
+                                </label>
+                            </li>
+
+                            <li class="column-item">
+                                <label class="Full">
+                                    <input type="checkbox" name="Sides_Others" value="true" class="support-icon" @(Model.Id > 0 && Model.Sides_Others.HasValue && Model.Sides_Others.Value ? "checked" : "") />
+                                    <span class="value">Others</span>
+
+                                </label>
+                            </li>
+
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="accordion-item-wrapper">
+                    <div class="accordion-header" onclick="memberAccordion('Photos_1')">
+                        <div class="accordion-collapse-icon-wrapper">
+                            <img class="icon-minus" src="/assets/icons/circle-minus.svg">
+                            <img class="icon-plus" src="/assets/icons/circle-plus.svg">
+                        </div>
+                        <div class="accordion-heaing-content">
+                            <div class="heading-wrap">
+                                <h2 class="heading">Photos</h2>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="accordion-body" id="Photos_1">
+                        <ul class="dates-and-conpany-wrapper">
+                            <li class="column-item">
+                                <span class="value">Front</span>
+                                <div class="ducument-detaild-Attachment">
+                                    <label for="fromFiles1" class="document-card">
+                                        <img src="/assets/icons/upload.svg" class="docuemet-icon" alt="">
+                                        <p id="Attachment1" class="document-tile-text"> Upload Photo</p>
+                                        <input accept="image/*,application/pdf"  class="ducument-control" id="fromFiles1" name="fromFiles" type="file" onchange="UpdateLabel(1)" />
+                                   <img id="1" width="100" />
+                                    </label>
+                                </div>
+
+                            </li>
+
+                            <li class="column-item">
+                                <span class="value">Rear</span>
+                                <div class="ducument-detaild-Attachment">
+                                    <label for="fromFiles2" class="document-card">
+                                        <img src="/assets/icons/upload.svg" class="docuemet-icon" alt="">
+                                        <p id="Attachment2" class="document-tile-text"> Upload Photo</p>
+                                        <input accept="image/*,application/pdf"  class="ducument-control" id="fromFiles2" name="fromFiles" type="file" onchange="UpdateLabel(2)" />
+                                    <img id="2" width="100" />
+                                    </label>
+                                </div>
+
+                            </li>
+                            <li class="column-item">
+                                <span class="value">Left</span>
+                                <div class="ducument-detaild-Attachment">
+                                    <label for="fromFiles3" class="document-card">
+                                        <img src="/assets/icons/upload.svg" class="docuemet-icon" alt="">
+                                        <p id="Attachment3" class="document-tile-text"> Upload Photo</p>
+                                        <input accept="image/*,application/pdf"  class="ducument-control" id="fromFiles3" name="fromFiles" type="file" onchange="UpdateLabel(3)" />
+                                    <img id="3" width="100" />
+                                    </label>
+                                </div>
+
+                            </li>
+                            <li class="column-item">
+
+                                <span class="value">Right</span>
+                                <div class="ducument-detaild-Attachment">
+                                    <label for="fromFiles4" class="document-card">
+                                        <img src="/assets/icons/upload.svg" class="docuemet-icon" alt="">
+                                        <p id="Attachment4" class="document-tile-text"> Upload Photo</p>
+                                        <input accept="image/*,application/pdf"  class="ducument-control" id="fromFiles4" name="fromFiles" type="file" onchange="UpdateLabel(4)" />
+                                   <img id="4" width="100" />
+                                    </label>
+                                </div>
+
+                            </li>
+                            <li class="column-item">
+                                <span class="value">Underneath</span>
+                                <div class="ducument-detaild-Attachment">
+                                    <label for="fromFiles5" class="document-card">
+                                        <img src="/assets/icons/upload.svg" class="docuemet-icon" alt="">
+                                        <p id="Attachment5" class="document-tile-text"> Upload Photo</p>
+                                        <input accept="image/*,application/pdf"  class="ducument-control" id="fromFiles5" name="fromFiles" type="file" onchange="UpdateLabel(5)" />
+                                    <img id="5" width="100" />
+                                    </label>
+                                </div>
+                            </li>
+
+                        </ul>
+                        <ul class="dates-and-conpany-wrapper">
+
+                            <li class="column-item">
+
+                                <span class="value">Under front hood</span>
+                                <div class="ducument-detaild-Attachment">
+                                    <label for="fromFiles6" class="document-card">
+                                        <img src="/assets/icons/upload.svg" class="docuemet-icon" alt="">
+                                        <p id="Attachment6" class="document-tile-text"> Upload Photo</p>
+                                        <input accept="image/*,application/pdf"  class="ducument-control" id="fromFiles6" name="fromFiles" type="file" onchange="UpdateLabel(6)" />
+                                   <img id="6" width="100" />
+                                    </label>
+                                </div>
+                            </li>
+                            <li class="column-item">
+
+                                <span class="value">Part Provider</span>
+                                <div class="ducument-detaild-Attachment">
+                                    <label for="fromFiles7" class="document-card">
+                                        <img src="/assets/icons/upload.svg" class="docuemet-icon" alt="">
+                                        <p id="Attachment7" class="document-tile-text"> Upload Photo</p>
+                                        <input accept="image/*,application/pdf"  class="ducument-control" id="fromFiles7" name="fromFiles" type="file" onchange="UpdateLabel(7)" />
+                                   <img id="7" width="100" />
+                                    </label>
+                                </div>
+
+                            </li>
+                            <li class="column-item">
+
+                                <span class="value">Workshop</span>
+                                <div class="ducument-detaild-Attachment">
+                                    <label for="fromFiles8" class="document-card">
+                                        <img src="/assets/icons/upload.svg" class="docuemet-icon" alt="">
+                                        <p id="Attachment8" class="document-tile-text"> Upload Photo</p>
+                                        <input accept="image/*,application/pdf"  class="ducument-control" id="fromFiles8" name="fromFiles" type="file" onchange="UpdateLabel(8)" />
+                                   <img id="8" width="100" />
+                                    </label>
+                                </div>
+
+                            </li>
+                            <li class="column-item">
+
+                                <span class="value">Interior</span>
+                                <div class="ducument-detaild-Attachment">
+                                    <label for="fromFiles9" class="document-card">
+                                        <img src="/assets/icons/upload.svg" class="docuemet-icon" alt="">
+                                        <p id="Attachment9" class="document-tile-text"> Upload Photo</p>
+                                        <input accept="image/*,application/pdf"  class="ducument-control" id="fromFiles9" name="fromFiles" type="file" onchange="UpdateLabel(9)" />
+                                   <img id="9" width="100" />
+                                    </label>
+                                </div>
+                            </li>
+                            <li class="column-item">
+
+                                <span class="value">Others</span>
+                                <div class="ducument-detaild-Attachment">
+                                    <label for="fromFiles10" class="document-card">
+                                        <img src="/assets/icons/upload.svg" class="docuemet-icon" alt="">
+                                        <p id="Attachment10" class="document-tile-text"> Upload Photo</p>
+                                        <input accept="image/*,application/pdf"  class="ducument-control" id="fromFiles10" name="fromFiles" type="file" onchange="UpdateLabel(10)" />
+                                      <img id="10" width="100" />
+                                    </label>
+                                </div>
+                            </li>
+
+                        </ul>
+                    </div>
+                </div>
+
+
+                <div class="accordion-item-wrapper active">
+                    <div class="accordion-header" onclick="memberAccordion('Surveyor_1')">
+                        <div class="accordion-collapse-icon-wrapper">
+                            <img class="icon-minus" src="/assets/icons/circle-minus.svg">
+                            <img class="icon-plus" src="/assets/icons/circle-plus.svg">
+                        </div>
+                        <div class="accordion-heaing-content">
+                            <div class="heading-wrap">
+                                <h2 class="heading">Surveyor</h2>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="accordion-body active" id="Surveyor_1">
+                        <ul class="dates-and-conpany-wrapper">
+                            <li class="column-item">
+                                <span class="value">Repair Condition</span>
+                                <div class="form-field-wrapper">
+                                    <div class="form-input-wrapper">
+                                        <select class="form-inputbox" required name="RepairCondition" id="ddlModuleId">
+                                            <option value=""></option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                            </li>
+
+                            <li class="column-item">
+
+                                <span class="value">Part Provider</span>
+                                <div class="form-field-wrapper">
+                                    <div class="form-input-wrapper">
+                                        <select class="form-inputbox" required name="PartProvider" id="ddlModuleId">
+                                            <option value=""></option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                            </li>
+                            <li class="column-item">
+                                <span class="value">WorkShop</span>
+                                <div class="form-field-wrapper">
+                                    <div class="form-input-wrapper">
+                                        <select class="form-inputbox" required name="WorkShop" id="ddlModuleId">
+                                            <option value=""></option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                            </li>
+                            <li class="column-item">
+
+                                <span class="value">Recommended</span>
+                                <label for="radio-card-v2-11" class="radio-card-v2">
+                                    <input type="radio" value="1" name="Recommended" id="radio-card-v2-11" @(Model.Recommended.HasValue && Model.Recommended.Value == 1 ? "checked" : "") />
+                                    <div class="card-content-wrapper">
+                                        <span class="check-icon"></span>
+                                        <div class="card-content">
+                                            <h4 class="title">Total Loss</h4>
+                                        </div>
+                                    </div>
+                                </label>
+                                <!-- /.radio-card -->
+
+                                <label for="radio-card-v2-12" class="radio-card-v2">
+                                    <input type="radio" value="0" name="Recommended" id="radio-card-v2-12" @(Model.Id == 0 ? "checked" :(Model.Recommended.HasValue && Model.Recommended.Value == 0 ? "checked" : "")) />
+                                    <div class="card-content-wrapper">
+                                        <span class="check-icon"></span>
+                                        <div class="card-content">
+                                            <h4 class="title">Repair</h4>
+                                        </div>
+                                    </div>
+                                </label>
+
+                            </li>
+                            <li class="column-item">
+
+                                <span class="value">Status</span>
+                                <label for="Status1" class="radio-card-v2">
+                                    <input type="radio" value="1" name="Status" id="Status1" @(Model.Id == 0 ? "checked" : (Model.Status.HasValue && Model.Status.Value == 1 ? "checked" : "")) />
+                                    <div class="card-content-wrapper">
+                                        <span class="check-icon"></span>
+                                        <div class="card-content">
+                                            <h4 class="title">In Progress</h4>
+                                        </div>
+                                    </div>
+                                </label>
+                                <!-- /.radio-card -->
+
+                                <label for="Status2" class="radio-card-v2">
+                                    <input type="radio" value="2" name="Status" id="Status2" @(Model.Status.HasValue && Model.Status.Value == 2 ? "checked" : "") />
+                                    <div class="card-content-wrapper">
+                                        <span class="check-icon"></span>
+                                        <div class="card-content">
+                                            <h4 class="title">Completed</h4>
+                                        </div>
+                                    </div>
+                                </label>
+
+                                <label for="Status3" class="radio-card-v2">
+                                    <input type="radio" value="3" name="Status" id="Status3" @(Model.Status.HasValue && Model.Status.Value == 3 ? "checked" : "") />
+                                    <div class="card-content-wrapper">
+                                        <span class="check-icon"></span>
+                                        <div class="card-content">
+                                            <h4 class="title">Fraud</h4>
+                                        </div>
+                                    </div>
+                                </label>
+
+                            </li>
+
+                        </ul>
+
+                    </div>
+                </div>
+
+                <div class="accordion-item-wrapper active">
+                    <div class="accordion-header" onclick="memberAccordion('Repair_1')">
+                        <div class="accordion-collapse-icon-wrapper">
+                            <img class="icon-minus" src="/assets/icons/circle-minus.svg">
+                            <img class="icon-plus" src="/assets/icons/circle-plus.svg">
+                        </div>
+                        <div class="accordion-heaing-content">
+                            <div class="heading-wrap">
+                                <h2 class="heading">Repair</h2>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="accordion-body active" id="Repair_1">
+                        <ul class="dates-and-conpany-wrapper">
+                            <li class="column-item">
+
+                                <span class="value">Estimated Spare Part Amount </span>
+                                <div class="form-field-wrapper">
+                                    <div class="form-input-wrapper">
+                                        <input class="form-inputbox" required id="txtEstimatedSPAmount" autocomplete="off" name="EstimatedSPAmount" type="text" value="@(Model.Id>0?Model.EstimatedSPAmount:string.Empty)">
+                                    </div>
+                                </div>
+
+                            </li>
+
+                            <li class="column-item">
+
+                                <span class="value">Estimated Labour Amount</span>
+                                <div class="form-field-wrapper">
+                                    <div class="form-input-wrapper">
+                                        <input class="form-inputbox" required id="txtEstimatedLabourAmount" autocomplete="off" name="EstimatedLabourAmount" type="text" value="@(Model.Id>0?Model.EstimatedLabourAmount:string.Empty)">
+                                    </div>
+                                </div>
+
+                            </li>
+                            <li class="column-item">
+
+                                <span class="value">Estimated RepairDays</span>
+                                <div class="form-field-wrapper">
+                                    <div class="form-input-wrapper">
+                                        <input class="form-inputbox" required id="txtEstimatedRepairDays" autocomplete="off" name="EstimatedRepairDays" type="text" value="@(Model.Id>0?Model.EstimatedRepairDays:string.Empty)">
+                                    </div>
+                                </div>
+
+                            </li>
+                            <li class="column-item">
+
+                                <span class="value">Spare Part Amount</span>
+                                <div class="form-field-wrapper">
+                                    <div class="form-input-wrapper">
+                                        <input class="form-inputbox" required id="txtSparePartAmount" autocomplete="off" name="SparePartAmount" type="text" value="@(Model.Id>0?Model.SparePartAmount:string.Empty)">
+                                    </div>
+                                </div>
+
+                            </li>
+                            <li class="column-item">
+
+                                <span class="value">Labour Amount </span>
+                                <div class="form-field-wrapper">
+                                    <div class="form-input-wrapper">
+                                        <input class="form-inputbox" required id="txtLabourAmount" autocomplete="off" name="LabourAmount" type="text" value="@(Model.Id>0?Model.LabourAmount:string.Empty)">
+                                    </div>
+                                </div>
+
+                            </li>
+                            <li class="column-item">
+
+                                <span class="value">Other Amount  </span>
+                                <div class="form-field-wrapper">
+                                    <div class="form-input-wrapper">
+                                        <input class="form-inputbox" required id="txtOtherAmount" autocomplete="off" name="OtherAmount" type="text" value="@(Model.Id>0?Model.OtherAmount:string.Empty)">
+                                    </div>
+                                </div>
+
+                            </li>
+                        </ul>
+                        <ul class="dates-and-conpany-wrapper">
+                            <li class="column-item">
+                                <span class="value">Note </span>
+                                <div class="form-field-wrapper">
+                                    <div class="form-input-wrapper">
+                                        <textarea class="form-inputbox" id="txtNote" autocomplete="off" name="Note">@(Model.Id > 0 ? Model.Note : string.Empty)</textarea>
+
+                                    </div>
+                                </div>
+
+                            </li>
+
+
+                             <li class="column-item" id="liTechnicalNote">
+                                <span class="value">Technical Note </span>
+                                <div class="form-field-wrapper">
+                                    <div class="form-input-wrapper">
+                                        <textarea class="form-inputbox" id="txtTechnicalNote" autocomplete="off" name="TechnicalNote">@(Model.Id > 0 ? Model.Note : string.Empty)</textarea>
+
+                                    </div>
+                                </div>
+
+                            </li>
+                        </ul>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-actions-handle-Full">
+            <div class="next-button">
+@if (Model.Id==0)
+                {
+                      <button asp-action="InsertSurveyor" type="submit" class="button button-primary">
+                    Save
+                </button> 
+                }
+             
+
+            </div>
+        </div>
+    </form>
+</div>
+
+
+<script>
+    function UpdateLabel(Id) {
+          var output = document.getElementById(Id);
+        output.src = URL.createObjectURL(event.target.files[0]);
+        output.onload = function () {
+            URL.revokeObjectURL(output.src) // free memory
+        }
+        const input = document.getElementById('fromFiles' + Id)
+        var files = input.files;
+        var $formdata = new FormData();
+
+        for (var i = 0; i != files.length; i++) {
+            $formdata.append("files", files[i]);
+        }
+   
+        $.ajax(
+            {
+                url: "/Surveyor/UploadAttachments/?Id=" + Id  + "&ClaimId=" + @Model.ClaimId + "&ClaimantId="+@Model.ClaimantId+"&ModuleId=" + @((int)MotorClaims.Models.Enums.DocumnetType.Surveyor),
+                data: $formdata,
+                processData: false,
+                contentType: false,
+                type: "POST",
+                success: function (data) {
+                    $('#Attachment' + Id).text($formdata.get("files").name);
+                }
+            }
+        );
+
+    }
+    $(document).ready(function () {
+           $('#liTechnicalNote').hide();
+        $('input[type="file"]').change(function (e) {
+            var lbl = e.target.files[0].name;
+            $("Attachment10").text(lbl);
+
+        });
+    });
+
+    $('#txtOtherAmount').ForceDecimalEntry();
+    $('#txtLabourAmount').ForceDecimalEntry();
+    $('#txtSparePartAmount').ForceDecimalEntry();
+    $('#txtEstimatedSPAmount').ForceDecimalEntry();
+    $('#txtEstimatedLabourAmount').ForceDecimalEntry();
+    $('#txtEstimatedRepairDays').ForceIntegerEntry();
+
+                  $('input:radio[name="Recommended"]').change(function() {
+        if ($(this).val() == '1') {     
+              $('#txtTechnicalNote').prop('required', true);
+              $('#liTechnicalNote').show();
+
+        } else {
+            $('#liTechnicalNote').hide();
+              $('#txtTechnicalNote').prop('required', false);
+        }
+    });
+    
+</script>

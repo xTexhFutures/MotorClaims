@@ -1,0 +1,32 @@
+﻿@using CORE.DTOs.MotorClaim;
+@model ReserveBalance
+
+<div class="your-service">
+    <h3 class="your-service-heading">Reserve Balance</h3>
+    <div class="deiver-list">
+        <div class="driver">
+            <div class="vehicle-basic-body">
+                <ul class="detail-list detail-list-driver" style="grid-template-columns:repeat(2, 1fr)">
+                    <li class="detailed-item">
+                        <span class="detailed-icon-wrap">
+                            <img src="/assets/icons/save.svg" alt="" class="item-icon">
+                        </span>
+                        <div class="item-content">
+                            <span class="label">Claim Reserve</span>
+                            <h3 class="value">@Model.ClaimLevel SAR</h3>
+                        </div>
+                    </li>
+                    <li class="detailed-item">
+                        <span class="detailed-icon-wrap">
+                            <img src="/assets/icons/save.svg" alt="" class="item-icon">
+                        </span>
+                        <div class="item-content">
+                            <span class="label">Claimant Reserve</span>
+                            <h3 id="ClaimantBalance" class="value">@Model.ClaimantLevel SAR</h3>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,10 +1,12 @@
 ﻿@using CORE.DTOs.APIs.MotorClaim;
 @using CORE.DTOs.MotorClaim;
 @using CORE.DTOs.MotorClaim.Claims;
+@using Newtonsoft.Json;
 @{
     Production policy = (Production)ViewData["Policy"];
     VehicleInfos vehicle = (VehicleInfos)ViewData["Vehicle"];
     List<LookupTable> Cities = (List<LookupTable>)ViewData["Cities"];
+    ClaimSearchobj claimSearchobj = new ClaimSearchobj();
 }
 @model Claims
 <form id="frmClaimEntry" method="post" asp-controller="Claims">
@@ -13,27 +15,41 @@
     <input type="hidden" form="frmClaimEntry" name="Id" value="@Model.Id" />
     <input type="hidden" form="frmClaimEntry" name="ClaimNo" value="@Model.ClaimNo" />
 
-    <div class="add-member-detail" style="max-height:900px;overflow-y:auto">
+    <div class="add-member-detail">
         <div class="page-heading">
             <h2 class="page-title">Claim Entry</h2>
         </div>
+
+         @{
+             claimSearchobj = new ClaimSearchobj()
+                              {
+                                  PolicyId = policy.policy.Id,
+                                  VehicleId = vehicle.Vehicle.Id,
+                                  ClaimId = Model.Id
+                              };
+         }
         <div class="tabs-wrapper">
             <ul class="tabs-navigation-wrap">
-                <li class="tab-navigation tab-custom-two active" id="tabTwoOne" onclick="selectTabsTwo('tabTwoOne','one_1')">
+                <li class="tab-navigation tab-custom-two active" id="tabTwoOne" onclick="selectTabsTwo('tabTwoOne','one_1'); ">
                     <div class="tab-item-text">
-                        Claim entry
+                      <a href="@Url.Action("ClaimEntry","Claims",new{obj=MotorClaims.Models.Helpers.Encrypt(JsonConvert.SerializeObject(claimSearchobj))})">Claim entry</a>  
                     </div>
                 </li>
-                 <li class="tab-navigation tab-custom-two " id="tabTwoTwo" onclick="selectTabsTwo('tabTwoTwo','ClaimantsList'); LoadClaimantsList('@Model.Id','@policy.policy.Id','@vehicle.Vehicle.Id')">
+                @if (Model.Id>0)
+                {
+                    
+               
+                 <li class="tab-navigation tab-custom-two" id="tabTwoTwo" onclick="selectTabsTwo('tabTwoTwo','ClaimantsList'); LoadClaimantsList('@Model.Id','@policy.policy.Id','@vehicle.Vehicle.Id')">
                     <div class="tab-item-text">
                         Claimants
                     </div>
                 </li>
-                <li class="tab-navigation tab-custom-two " id="tabTwoThree" onclick="selectTabsTwo('tabTwoThree','DocumentsUpload'); LoadDocumentsList('@((int)MotorClaims.Models.Enums.DocumnetType.Claim)','@Model.Id','@policy.policy.Id','@vehicle.Vehicle.Id',null,'@Model.ClaimNo')">
+                <li class="tab-navigation tab-custom-two" id="tabTwoThree" onclick="selectTabsTwo('tabTwoThree','DocumentsUpload'); LoadPhotos('@Model.Id')">
                     <div class="tab-item-text">
-                        Documents Upload
+                        Photos
                     </div>
                 </li>
+                 }
             </ul>
             <div class="tabbs-content-wrapper">
                 <div class="tab-items-container tabs-one-content-two active" id="one_1">
@@ -88,13 +104,18 @@
                                                 </div>
                                                 <div id="Basher">
                                                     <span class="label">Basher No</span>
-                                                    <input class="form-controlar" autocomplete="off" maxlength="10" id="txtBasherNo" type="text" placeholder="Basher No" name="BasherNo" value="@Model.BasherNo" />
+                                                    <input class="form-controlar" autocomplete="off" maxlength="20" id="txtBasherNo" type="text" placeholder="Basher No" name="BasherNo" value="@Model.BasherNo" />
                                                 </div>
 
                                             </div>
                                             <div class="form-container Full">
                                                 <span class="label">Taqdeer No</span>
-                                                <input class="form-controlar" autocomplete="off" required maxlength="10" style="text-transform:uppercase" id="txtTaqdeerNo" type="text" placeholder="Taqdeer No" name="TaqdeerNo" value="@Model.TaqdeerNo" />
+                                                <input class="form-controlar" autocomplete="off"  maxlength="20" style="text-transform:uppercase" id="txtTaqdeerNo" type="text" placeholder="Taqdeer No" name="TaqdeerNo" value="@Model.TaqdeerNo" />
+
+                                            </div>
+                                             <div class="form-container Full" id="SequanceNo">
+                                                <span class="label">Sequance No</span>
+                                                <input class="form-controlar" autocomplete="off"  maxlength="20" style="text-transform:uppercase" id="txtSequanceNo" type="text" placeholder="Sequance No" name="SequanceNo" value="" />
 
                                             </div>
                                             @if (Model.Id==0)
@@ -120,7 +141,7 @@
                                             </div>
                                             <div class="form-container Full">
                                                 <span class="label">Accident Number</span>
-                                                <input class="form-controlar" autocomplete="off" style="text-transform:uppercase" type="text" maxlength="10" id="txtReportNo" placeholder="Accident Number" name="ReportNo" value="@Model.AccidentNo" />
+                                                <input class="form-controlar" autocomplete="off" style="text-transform:uppercase" type="text" maxlength="20" id="txtReportNo" placeholder="Accident Number" name="ReportNo" value="@Model.AccidentNo" />
                                             </div>
                                         </div>
                                         <div id="Manual1">
@@ -151,7 +172,7 @@
                                                 <div class="form-container Full">
                                                     <span class="label">City</span>
                                                     <select class="form-controlar" required name="City" id="txtCity" onchange="GetCityName(this);">
-                                                        <option value="1">1</option>
+                                                        <option value=""></option>
                                                         @foreach (var item in Cities)
                                                         {
                                                             <option value="@item.Code">@item.NameEnglish</option>
@@ -162,7 +183,7 @@
                                                 <div class="form-container Full">
                                                     <span class="label">Survey City</span>
                                                     <select class="form-controlar" required name="SurveyCity" id="ddlSurveyCity">
-                                                        <option value="1">1</option>
+                                                        <option value=""></option>
                                                         @foreach (var item in Cities)
                                                         {
                                                             <option value="@item.Code">@item.NameEnglish</option>
@@ -183,7 +204,7 @@
                                                 </div>
                                                 <div class="form-container Full">
                                                     <span class="label">Taqdeer No</span>
-                                                    <input class="form-controlar" autocomplete="off" maxlength="10" style="text-transform:uppercase" id="txtTaqdeerNoManual" type="text" placeholder="Taqdeer No" name="TaqdeerNo" value="@Model.TaqdeerNo" />
+                                                    <input class="form-controlar" autocomplete="off" maxlength="20" style="text-transform:uppercase" id="txtTaqdeerNoManual" type="text" placeholder="Taqdeer No" name="TaqdeerNo" value="@Model.TaqdeerNo" />
 
                                                 </div>
                                                 <div class="form-container Full">
@@ -239,7 +260,26 @@
                                     </div>
                                 </div>
 
+                                
+                        <div class="footer-actions-handle" style="position:inherit !important; width:100%">
+          <div class="next-button" style="margin-right:5px">
+              @if (Model.Id>0)
+            {
+                <button type="submit" asp-action="InsertClaim" class="button button-primary">
+                    Update
+                </button>
+            }
+            else
+            {
+                  <button type="submit" asp-action="InsertClaim" class="button button-primary">
+                                    Save
+                                </button>
+            }
+                              
+                        
 
+                        </div>
+                                </div>
 
                             </div>
                         </div>
@@ -248,19 +288,11 @@
                 </div>
                  <div class="tab-items-container tabs-one-content-two" id="ClaimantsList">
                 </div>
-                <div class="tab-items-container tabs-one-content-two" id="DocumentsUpload">
+                <div class="tab-items-container tabs-one-content-two" id="Photos">
                 </div>
             </div>
         </div>
-        <div class="footer-actions-handle">
-            <div class="next-button">
 
-                <button form="frmClaimEntry" type="submit" asp-action="InsertClaim" class="button button-primary">
-                    Next
-                </button>
-
-            </div>
-        </div>
     </div>
 </form>
 
@@ -345,7 +377,9 @@
 <script>
 
     function GetNajmDetails() {
-        $.ajax({
+        if($("#txtAccidentNo").val().length>0)
+        {
+               $.ajax({
             url: '/Claims/NajmDetails/',
             data: { Id: $("#txtAccidentNo").val(), Taqdeer: $("#txtTaqdeerNo").val() },
             type: "POST",
@@ -372,8 +406,44 @@
 
             }
         });
+        }else  if(($("#txtBasherNo").val().length>0 && $("#txtSequanceNo").val().length>0))
+        {
+               $.ajax({
+            url: '/Claims/BasherDetails/',
+            data: { Id: $("#txtBasherNo").val(),SequanceNo:$("#txtSequanceNo").val(), Taqdeer: $("#txtTaqdeerNo").val() },
+            type: "POST",
+            dataType: 'json',
+            success: function (data) {
+                if (data.taqdeerNo != null && data.taqdeerNo != '') {
+                    if (data.claimStatus == 1) {
+                        Manual();
+                        $('#txtReportNo').val(data.accidentNo);
+                        $('#txtManualReportType').val(2);
+                        $('#ddlGeagraphicalArea').val(2);
+                        $('#txtTaqdeerNoManual').val(data.taqdeerNo);
+                        $('#txtDateOfLoss').val(data.dateOfLoss);
+                        $('#txtregistrationdate').val(data.registrationDate);
+                        $('#txtAccidentPlace').val(data.accidentPlace);
+                        $('#txtCity').val(data.cityId);
+                        $('#ddlSurveyCity').val(data.cityId);
+                    } else {
+                        ErrorAlert(data.notes);
+                    }
+                } else {
+                    ErrorAlert(data.notes);
+                }
+
+            }
+        });
+        }else{
+             ErrorAlert('Accident No is required');
+        }
+     
     }
 
+    $('#txtSequanceNo').ForceIntegerEntry();
+    $('#txtBasherNo').ForceIntegerEntry();
+    $('#txtAccidentNo').ForceIntegerEntry();
     $('#txtDateOfLoss').ForceDateEntry();
     $('#txtnotificationdate').ForceDateEntry();
     $('#txtregistrationdate').ForceDateEntry();
@@ -387,6 +457,7 @@
         $('#najm').show();
         $('#Basher').hide();
         $('#Manual').hide();
+        $('#SequanceNo').hide();
         if('@Model.Id'=='0'){
   $('#Manual1').hide();
         }
@@ -396,16 +467,19 @@
         $("#txtBasherNo").prop('required', false);
         $("#txtManualReportType").prop('required', false);
         $("#txtReportNo").prop('required', false);
+        $("#txtSequanceNo").prop('required', false);
     }
 
     function Basher() {
         $('#najm').hide();
         $('#Basher').show();
+        $('#SequanceNo').show();
         $('#Manual').hide();
         $('#Manual1').hide();
         $('#Service').show();
         $("#txtAccidentNo").prop('required', false);
         $("#txtBasherNo").prop('required', true);
+        $("#txtSequanceNo").prop('required', true);
         $("#txtManualReportType").prop('required', false);
         $("#txtReportNo").prop('required', false);
     }
@@ -414,10 +488,12 @@
         $('#najm').hide();
         $('#Basher').hide();
         $('#Service').hide();
+        $('#SequanceNo').hide();
         $('#Manual').show();
         $('#Manual1').show();
         $("#txtAccidentNo").prop('required', false);
         $("#txtBasherNo").prop('required', false);
+        $("#txtSequanceNo").prop('required', false);
         $("#txtManualReportType").prop('required', true);
         $("#txtReportNo").prop('required', true);
     }
@@ -426,7 +502,7 @@
     $(document).ready(function () {
         if ('@Model.Id' != '0') {
             $('#ddlGeagraphicalArea').val('@Model.GeagraphicalArea');
-            $('#txtCity').val('@Model.City');
+            $('#txtCity').val('@Model.CityId');
             if ('@Model.AccidentNo' != null && '@Model.AccidentNo' != '') {
                 $('#txtManualReportType').val('@((int)MotorClaims.Models.Enums.ClaimReportType.Najm)');
             } else {
@@ -434,18 +510,27 @@
             }
             $('#ddlSurveyCity').val('@Model.SurveyCity');
             $('#ddlGeagraphicalArea').val(1);
-            $('#txtCity').val('@Model.SurveyCity');
             $('#ddlClaimEvent').val('@Model.EventId');
             if ('@Model.ClaimReportType' == '@((int)MotorClaims.Models.Enums.ClaimReportType.Najm)') 
             {
                 Najm();
+                  $("#radio-card-v2-11").prop('disabled', false);
+                  $("#radio-card-v2-12").prop('disabled', true);
+                  $("#radio-card-v2-13").prop('disabled', true);
+
             } else if ('@Model.ClaimReportType' == '@((int)MotorClaims.Models.Enums.ClaimReportType.Basher)') 
             {
                 Basher();
+                 $("#radio-card-v2-11").prop('disabled', true);
+                  $("#radio-card-v2-12").prop('disabled', false);
+                  $("#radio-card-v2-13").prop('disabled', true);
             }
 
             else {
                 Manual();
+                   $("#radio-card-v2-11").prop('disabled', true);
+                  $("#radio-card-v2-12").prop('disabled', true);
+                  $("#radio-card-v2-13").prop('disabled', false);
             }
         }else{
             Najm();

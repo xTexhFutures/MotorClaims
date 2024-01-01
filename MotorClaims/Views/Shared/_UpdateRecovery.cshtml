@@ -2,6 +2,8 @@
 @model Claims
 @{
     Layout = null;
+    int? ClaimantId = (int?)ViewData["claimantId"];
+        List<ClaimMaster> claimMasters=(List<ClaimMaster>)ViewData["ClaimMaster"];
 }
 <form id="frmUpdateReserve" method="post" >
     <input type="hidden" name="ClaimId" value="@Model.Id" />
@@ -44,44 +46,69 @@
                             <div class="form-field-wrapper">
                                 <div class="form-input-wrapper">
                                     <select required class="form-inputbox" name="ClaimantID" id="ddlClaimantID">
-                                        <option value="">Select Claimant</option>
-                                        <option value="3">Claimant 1</option>
-                                        <option value="4">Claimant 2</option>
+                                            <option value="@claimMasters.FirstOrDefault().claimants.Id">@claimMasters.FirstOrDefault().claimants.ClaimantName</option>
                                     </select>
                                 </div>
                             </div>
-                        </div>
+                        </div>          
+                        
                         <div class="cancel-declaration">
-                            <h3 class="title-label">Spare Part Cost</h3>
+                            <h3 class="title-label">Recovery Type</h3>
                             <div class="form-field-wrapper">
                                 <div class="form-input-wrapper">
-                                    <input required type="text" name="SparePartCost" autocomplete="off" maxlength="10" class="form-inputbox" id="txtSparePartCost" />
+  <select required class="form-inputbox" name="RecoveryType" id="ddlRecoveryType">
+      <option value="">Select Recovery Type</option>
+	<option value="1">Insurance Company</option>
+	<option value="2">Individual</option>
+	<option value="3">Selling Scrap</option>
+	<option value="4">Deductible</option>
+	<option value="5">Depreciation</option>
+	<option value="10">Recovery From Insured</option>
+	<option value="11">deductible+depreciation</option>
+	<option value="12">Debitor </option>
+	<option value="14">SAMA new TP policy</option>
 
+</select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="cancel-declaration">
+                            <h3 class="title-label">Recovery Reason</h3>
+                            <div class="form-field-wrapper">
+                                <div class="form-input-wrapper">
+                                      <select class="form-inputbox" name="RecoveryReason" id="ddlRecoveryReason">
+                                        <option value="">Select Recovery Reason</option>
+
+      	<option  value="1">Use of Vehicle usage is different from policy schedule.</option>
+			<option value="2">Exceeding the number of passenger capacity </option>
+			<option value="3">Driven against the direction of traffic</option>
+			<option value="4">Driven under the influence of drugs. </option>
+			<option value="5">Driven by a person under the age 18 year. </option>
+			<option value="6">Driven does not hold a proper class of License.</option>
+			<option value="7">License was expired.</option>
+			<option value="8">Driver escaped the scene of the accident. </option>
+			<option value="9">Running a red light</option>
+			<option value="10">Submitting inaccurate information in proposal form.</option>
+			<option value="11">Proved that the accident was deliberate.</option>
+			<option value="12">Failure to notify within 20 working days of any material.</option>
+			<option value="13">Vehicle was stolen or taken forcibly</option>
+			<option value="14">Not Applicable</option>
+             </select>
                                 </div>
                             </div>
                         </div>
 
 
                         <div class="cancel-declaration">
-                            <h3 class="title-label">Labor Cost</h3>
+                            <h3 class="title-label">Recovery Amount</h3>
                             <div class="form-field-wrapper">
                                 <div class="form-input-wrapper">
-                                    <input required type="text" name="LaborCost" autocomplete="off" maxlength="10" class="form-inputbox" id="txtLaborCost" />
+                                    <input required type="text" name="RecoveryAmount" autocomplete="off" maxlength="10" class="form-inputbox" id="txtRecoveryAmount" />
 
                                 </div>
                             </div>
                         </div>
 
-
-                        <div class="cancel-declaration">
-                            <h3 class="title-label">Other Cost</h3>
-                            <div class="form-field-wrapper">
-                                <div class="form-input-wrapper">
-                                    <input required type="text" name="OtherCost" autocomplete="off" maxlength="10" class="form-inputbox" id="txtOtherCost" />
-
-                                </div>
-                            </div>
-                        </div>
 
                         <div class="cancel-declaration">
                             <h3 class="title-label">Note</h3>
@@ -112,6 +139,10 @@
 
 <script>
     $(function () {
+        if('@ClaimantId'!=null && '@ClaimantId'>0){
+            $('#ddlClaimantID').val('@ClaimantId');
+             $("#ddlClaimantID").prop('disabled', true);
+        }
         $("#frmUpdateReserve").submit(function (event) {
             $.post("/Surveyor/UpdateReserveTransaction/", $("#frmUpdateReserve").serializeArray(),function(){
                 CloseDialogV('UpdateReserve');

@@ -1,8 +1,10 @@
-﻿@using CORE.DTOs.MotorClaim.Claims;
-@model Claims
+﻿@using CORE.DTOs.Authentications;
+@using CORE.DTOs.MotorClaim.Claims;
+@model ClaimMaster
 @{
     Layout = null;
     string DivName = (string)ViewData["DivName"];
+    List<Users> users = (List<Users>)ViewData["AllUsers"];
 }
 <div class="popup-body-wrapper">
     <div class="popup-header">
@@ -14,20 +16,21 @@
         </div>
     </div>
     <form id="frmUpdateAssign" method="post">
-        <input type="hidden" name="ClaimId" value="@Model.Id" />
-        <input type="hidden" name="Validation" value="1" />
+        <input type="hidden" name="ClaimId" value="@Model.claims.Id" />
+        <input type="hidden" name="ClaimantId" value="@Model.claimants.Id" />
+        <input type="hidden" name="Validation" id="Validation" value="1" />
         <div class="popup-body">
             <div class="detailed">
                 <div class="detailed-ele">
                     <div class="detailed-desc">
                         <h4 class="title">Claim No</h4>
-                        <p class="title-detail">@Model.ClaimNo</p>
+                        <p class="title-detail">@Model.claims.ClaimNo</p>
                     </div>
                 </div>
                 <div class="detailed-ele">
                     <div class="detailed-desc">
                         <h4 class="title">Owner Name</h4>
-                        <p class="title-detail">@Model.Owner</p>
+                        <p class="title-detail">@Model.claims.Owner</p>
                     </div>
                 </div>
                 <div class="detailed-ele">
@@ -36,13 +39,16 @@
                     </div> -->
                     <div class="detailed-desc">
                         <h4 class="title">Policy No.</h4>
-                        <p class="title-detail">@Model.PolicyNo</p>
+                        <p class="title-detail">@Model.claims.PolicyNo</p>
                     </div>
                 </div>
                 <div class="detailed-ele">
                     <div class="detailed-desc">
-                        <h4 class="title">Fraud Score</h4>
-                        <p class="title-detail">@Model.FraudScore</p>
+                        <h4 class="title">Assign To</h4>
+                        @{
+                             string UserName = users.Where(p => p.Id == Model.claimants.AssignTo).FirstOrDefault().UserName;
+                        }
+                        <p class="title-detail">@UserName</p>
                     </div>
                 </div>
 
@@ -67,15 +73,16 @@
                             <div class="tab-items-container tabs-one-content active" id="one">
                                 <div class="detailed-desc">
 
-                                    <input id="txtId" name="Id" type="hidden" value="@Model.Id">
+                                    <input id="txtId" name="Id" type="hidden" value="@Model.claims.Id">
                                     <!-- <h4 class="title">Nationality</h4> -->
                                     <div class="form-field-wrapper">
                                         <div class="form-input-wrapper" style="border:solid 1px">
                                             <select class="form-inputbox" name="teamAssign" id="ddlTeamAssign" >
                                                 <option value=""></option>
-                                                <option value="2">Operations</option>
-                                                <option value="3">Surveyors</option>
-                                                <option value="4">Fraud</option>
+                                                <option value="@((int)Enums.TeamAssign.Operations)">@Enums.TeamAssign.Operations.ToString()</option>
+                                                <option value="@((int)Enums.TeamAssign.Surveyors)">@Enums.TeamAssign.Surveyors.ToString()</option>
+                                                <option value="@((int)Enums.TeamAssign.Fraud)">@Enums.TeamAssign.Fraud.ToString()</option>
+
                                             </select>
                                             <label class="form-label non-icon" for="ddlTeamAssign">Assign To</label>
                                         </div>
@@ -87,7 +94,7 @@
                             <div class="tab-items-container tabs-one-content" id="two">
                                 <div class="detailed-desc">
 
-                                    <input id="txtId" name="Id" type="hidden" value="@Model.Id">
+                                    <input id="txtId" name="Id" type="hidden" value="@Model.claims.Id">
                                     <!-- <h4 class="title">Nationality</h4> -->
                                     <div class="form-field-wrapper">
                                         <div class="form-input-wrapper" style="border:solid 1px">

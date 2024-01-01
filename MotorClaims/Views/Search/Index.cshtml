@@ -1,4 +1,12 @@
 ﻿@using Newtonsoft.Json;
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.AspNetCore.Builder
+@using Microsoft.AspNetCore.Localization
+@using Microsoft.Extensions.Options
+@using Microsoft.AspNetCore.Http.Features
+@using System.Globalization
+
+@inject IViewLocalizer _localizer
 @model CORE.DTOs.APIs.MotorClaim.ClaimSearchResult
 @{
     Search search = (Search)ViewData["search"];
@@ -11,36 +19,36 @@
                 <div class="search-member">
                     <div class="search-heading-wrap">
                         <div class="heading-card">
-                            <h2 class="heading">Claims Search</h2>
+                            <h2 class="heading">@_localizer["ClaimsSearch"].Value</h2>
                         </div>
 
                     </div>
                     <form asp-controller="Search" method="post">
                         <div class="search-filter-wrapper">
                             <div class="search-wrapper">
-                                <span class="label">Plate No</span>
+                                <span class="label">@_localizer["PlateNo"].Value</span>
                                 <div class="search-input-box-wrapper">
 
                                     <div class="search-icon-wrapper">
                                         <img src="/assets/icons/search.svg" class="search-icon" alt="">
                                     </div>
-                                    <input type="text" class="input-box" autocomplete="off" name="plate" maxlength="20" placeholder="Search By Plate No"
+                                    <input type="text" class="input-box" autocomplete="off" name="plate" maxlength="20" placeholder="@_localizer["SearchByPlateNo"].Value"
                                            value="@search.plate">
                                 </div>
                             </div>
                             <div class="search-wrapper">
-                                <span class="label">Sequance No</span>
+                                <span class="label">@_localizer["SequanceNo"].Value</span>
                                 <div class="search-input-box-wrapper">
 
                                     <div class="search-icon-wrapper">
                                         <img src="/assets/icons/search.svg" class="search-icon" alt="">
                                     </div>
-                                    <input type="text" class="input-box" autocomplete="off" id="txtsequence" maxlength="20" name="sequence" placeholder="Search By Sequance No"
+                                    <input type="text" class="input-box" autocomplete="off" id="txtsequence" maxlength="20" name="sequence" placeholder="@_localizer["SearchBySequanceNo"].Value"
                                            value="@search.sequence">
                                 </div>
                             </div>
                             <div class="search-wrapper">
-                                <span class="label">Claim No</span>
+                                <span class="label">@_localizer["ClaimNo"].Value</span>
                                 <div class="search-input-box-wrapper">
 
                                     <div class="search-icon-wrapper">
@@ -379,6 +387,11 @@
 </div>
 
 <script>
+    $(function(){
+      if ('@ViewData["Error"]' != '' || '@ViewData["Error"]' != "") {
+            ErrorAlert('@ViewData["Error"]');
+        }
+    });
     $('#txtsequence').ForceIntegerEntry();
     $('#txtnationalid').ForceIntegerEntry();
     $('#txtmobile').ForceIntegerEntry();

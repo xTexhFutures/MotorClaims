@@ -25,7 +25,12 @@ namespace MotorClaims.Models
     }
     public static class Enums
     {
-
+        public enum TeamAssign
+        {
+            Operations = 2,
+            Surveyors = 3,
+            Fraud = 4
+        }
         public enum DocumnetType
         {
 
@@ -34,23 +39,23 @@ namespace MotorClaims.Models
             Fraud = 3,
             Reserve = 4,
             Payment = 5,
-            Surveyor=6
+            Surveyor = 6
 
         }
 
         public enum ClaimTransactionTypes
         {
-            Reserve=1,
-            Payment=2,
-            Recovery=3,
-            Collection=4,
+            Reserve = 1,
+            Payment = 2,
+            Recovery = 3,
+            Collection = 4,
 
         }
         public enum FraudLevel
         {
 
             Error = 4,
-            Warning =3,
+            Warning = 3,
             Low = 2,
             None = 1
 
@@ -60,7 +65,7 @@ namespace MotorClaims.Models
 
             Najm = 1,
             Basher = 2,
-            Manual=3
+            Manual = 3
 
         }
         public enum YakeenPlace
@@ -104,49 +109,47 @@ namespace MotorClaims.Models
             Approval = 7,
             IT = 8
         }
-        public enum ApprovalStatus
+
+        public enum ClaimantStatus
         {
-            [Display(Name = "Pending")]
-            Pending = 1,
-            [Display(Name = "Operational Approval")]
-            WaitingApproval = 2,
-            [Display(Name = "Approved")]
-            Approved = 3,
-            [Display(Name = "Rejected")]
-            Rejected = 4,
-            [Display(Name = "UW Approval")]
-            UWApproval = 5,
-            [Display(Name = "UW Approved")]
-            UWApproved = 7,
-            [Display(Name = "Financial Approval")]
-            FinancialApproval = 6,
-            [Display(Name = "Operation Approval")]
-            Operation = 7,
-            [Display(Name = "Reject By Finance")]
-            FinanceRejection = 8,
-            [Display(Name = "Active")]
-            Active = 9,
-            [Display(Name = "UW Rejection")]
-            UWRejection = 10
+            NeedMoreInfo = 0,
+            MissingDocuments = 1,
+            Operation = 2,
+            Surveyor = 3,
+            Payment = 4,
+            Workshop = 5,
+            Closed = 6,
+            InProgress = 7,
+            Rejected = 8,
+            Reception = 9,
+            ReOpen = 10
         }
 
-        public enum ClaimStatus
-        {
-            NeedMoreInfo=0,
-            MissingDocuments=1,
-            Operation=2,
-            Surveyor=3,
-            Payment=4,
-            Workshop=5,
-            Closed=6,
-            InProgress=7
-        }
+
         public enum Lookups
         {
-           City=80,
-           CauseOfLoss=1,
-           ClaimantType=2,
-           DamageType=3
+            City = 80,
+            CauseOfLoss = 1,
+            ClaimantType = 81,
+            DamageType = 3
+        }
+        public enum ClaimStatus
+        {
+            Pendding = 0,
+            Closed=2,
+            InProgress = 1,
+            Rejected = 3
+        }
+        public enum TransactionCategory
+        {
+            InitialReserve = 1,
+            TowingCost = 2
+        }
+
+        public enum SMSTemplates
+        {
+            Test = 1
+
         }
     }
 }

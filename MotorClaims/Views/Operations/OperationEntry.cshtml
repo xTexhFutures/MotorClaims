@@ -1,9 +1,116 @@
 ﻿@using CORE.DTOs.MotorClaim.Claims;
 @model ClaimMaster
 @{
+    List<LookupTable> lookupTables = (List<LookupTable>)ViewData["query"];
+    string obj=(string)ViewData["obj"];
     await Html.RenderPartialAsync("_PolicyInfo",Model.productionInfo);
     await Html.RenderPartialAsync("_VehicleInfo", Model.vehiclesInfo);
     await Html.RenderPartialAsync("_ClaimInfo", Model.claims);
-    await Html.RenderPartialAsync("_ClaimantInfo", Model.claimants);
-    await Html.RenderPartialAsync("_DocumentsInfo", new { Model = Model.vehiclesInfo, Hamza = "FFF" });
+    await Html.RenderPartialAsync("_ClaimantInfo",new { Model = Model.claimants,Lookups = lookupTables});
+    await Html.RenderPartialAsync("_DocumentsInfo", Model.claimants);
+    await Html.RenderPartialAsync("_ClaimsHistory", Model.claimHistories);
 }
+
+<form id="frmClaimEntry" method="post" asp-controller="Operations">
+    <input type="hidden" form="frmClaimEntry" name="Id" value="@Model.claims.Id" />
+    <input type="hidden" form="frmClaimEntry" name="ClaimantId" value="@Model.claimants.Id" />
+    <input type="hidden" form="frmClaimEntry" name="obj" value="@obj" />
+
+    <div class="add-member-detail" style="max-width:100% !important">
+
+        <div class="tabs-wrapper">
+            <ul class="tabs-navigation-wrap">
+                <li class="tab-navigation tab-custom-two active" id="tabTwoOne" onclick="selectTabsTwo('tabTwoOne','one_1'); ">
+                    <div class="tab-item-text">
+                      <a href="#">Operation entry</a>  
+                    </div>
+                </li>
+            </ul>
+            <div class="tabbs-content-wrapper">
+                <div class="tab-items-container tabs-one-content-two active" id="one_1">
+                    <div class="member-summary-container">
+                        <div class="total-member-list">
+                            <div class="member-list-container">
+
+                                <div class="member-collapse">
+                                    <div class="member-collapse-header" style="display:block">
+                                        <div class="vehicle-owner-grid">
+                                            <label for="radio-card-v2-11" class="radio-card-v2" style="min-width:30% !important">
+                                                <input required type="radio" value="@((int)MotorClaims.Models.Enums.ClaimantStatus.Operation)" name="ClaimStatus" id="radio-card-v2-11" @(Model.claims.Id == 0 ? "checked" : (Model.claims.ClaimStatus == (int)MotorClaims.Models.Enums.ClaimantStatus.Operation ? "checked" : "")) />
+                                                <div class="card-content-wrapper">
+                                                    <span class="check-icon"></span>
+                                                    <div class="card-content">
+                                                        <h4 class="title">@(MotorClaims.Models.Enums.ClaimantStatus.Operation)</h4>
+                                                    </div>
+                                                </div>
+                                            </label>
+                                            <!-- /.radio-card -->
+
+                                            <label for="radio-card-v2-12" class="radio-card-v2" style="min-width:30% !important">
+                                                <input type="radio" value="@((int)MotorClaims.Models.Enums.ClaimantStatus.Rejected)" name="ClaimStatus" id="radio-card-v2-12" @(Model.claims.ClaimStatus == (int)MotorClaims.Models.Enums.ClaimantStatus.Rejected ? "checked" : "") />
+                                                <div class="card-content-wrapper">
+                                                    <span class="check-icon"></span>
+                                                    <div class="card-content">
+                                                        <h4 class="title">@(MotorClaims.Models.Enums.ClaimantStatus.Rejected)</h4>
+                                                    </div>
+                                                </div>
+                                            </label>
+
+                                    
+                                        </div>
+                                      
+                                          <div class="vehicle-owner-grid">
+                                                    <span class="label">Rejection Reason</span>
+                                           <textarea name="RejectionReason" rows="7" id="txtRejectionReason" class="form-inputbox" maxlength="1024"></textarea>
+
+                                    
+                                        </div>
+
+                                      
+                                       
+                                    </div>
+                                 
+                                </div>
+
+                                
+                        <div class="footer-actions-handle" style="position:inherit !important; width:100%">
+          <div class="next-button" style="margin-right:5px">
+
+                  <button type="submit" asp-action="UpdateClaimStatus" class="button button-primary">
+                                    Save
+                                </button>
+        
+                              
+                        
+
+                        </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            
+            </div>
+        </div>
+
+    </div>
+</form>
+
+                  <script>
+
+             
+
+                        $('input:radio[name="ClaimStatus"]').change(function() {
+        if ($(this).val() == '@((int)MotorClaims.Models.Enums.ClaimantStatus.Rejected)') {     
+              $('#txtRejectionReason').prop('required', true);
+              $('#txtRejectionReason').show();
+
+        } else {
+
+              $('#txtRejectionReason').prop('required', false);
+              $('#txtRejectionReason').hide();
+        }
+    });
+                  </script>

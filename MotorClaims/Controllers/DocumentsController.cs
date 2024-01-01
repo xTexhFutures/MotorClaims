@@ -42,6 +42,7 @@ namespace MotorClaims.Controllers
         {
             if (Id > 0)
             {
+                List<int> ints = new List<int>();
                 MainSearchMC mainSearchMC = new MainSearchMC()
                 {
                     Id = Id
@@ -53,6 +54,14 @@ namespace MotorClaims.Controllers
                 };
                 var Documents = Helpers.ExcutePostAPI<List<DocumentInfo>>(setupClaimsRequestcs, _appSettings.APIHubPrefix + "api/MotorClaim/SetupMotorClaim");
 
+                string[] ClaimantsSections =!string.IsNullOrEmpty(Documents.FirstOrDefault().ClaimResult)? Documents.FirstOrDefault().ClaimResult.Split(','):new string[0];
+                foreach (string claimant in ClaimantsSections)
+                {
+                    if (!string.IsNullOrEmpty(claimant))
+                    ints.Add(int.Parse(claimant.Replace(',',' ')));
+                }
+
+                ViewData["ints"] = ints;
                 return View(Documents.FirstOrDefault());
             }
             return View(new DocumentInfo());

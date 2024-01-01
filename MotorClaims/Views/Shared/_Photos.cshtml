@@ -1,0 +1,96 @@
+﻿@{
+    List<string> Location=(List<string>)ViewData["location"];
+    List<string> Location1=(List<string>)ViewData["location1"];
+    string loc = @"file://D:/AICCFiles/AB0810232/";
+    Layout = null;
+}
+
+
+
+@*<link href="~/assets/vendor/aos/aos.css" rel="stylesheet">*@
+<link href="~/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+@*<link href="~/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">*@
+<link href="~/assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+<link href="~/assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+<link href="~/assets/vendor/remixicon/remixicon.css" rel="stylesheet">
+<link href="~/assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+<style>
+    .portfolio-wrap{
+        margin:5px;
+    }
+</style>
+<main id="main">
+
+
+    <!-- ======= Portfolio Section ======= -->
+    <section id="portfolio" class="portfolio">
+        <div class="container">
+
+            <div class="section-title" data-aos="fade-up">
+                <h2>LD Photos</h2>
+            </div>
+          
+
+
+            <div class="row portfolio-container" data-aos="fade-up" data-aos-delay="400">
+                  @foreach (var item in Location)
+            {
+                   <div class="col-lg-4 col-md-6 portfolio-item filter-app">
+                    <div class="portfolio-wrap">
+                         <a href="@Url.Content("/MyPath/AB0810232/"+@item)" data-gallery="portfolioGallery" class="portfolio-lightbox" title="App 1">
+                              <img src="@Url.Content("/MyPath/AB0810232/"+@item)" class="img-fluid" alt="">
+                         </a>
+                    </div>
+                </div>
+            }
+             
+
+           
+            </div>
+
+        </div>
+    </section><!-- End Portfolio Section -->
+
+
+        <!-- ======= Portfolio Section ======= -->
+    <section id="portfolio1" class="portfolio">
+        <div class="container">
+
+            <div class="section-title" data-aos="fade-up">
+                <h2>DA Photos</h2>
+            </div>
+          
+
+
+            <div class="row portfolio-container" data-aos="fade-up" data-aos-delay="400">
+                  @foreach (var item in Location1)
+            {
+                   <div class="col-lg-4 col-md-6 portfolio-item filter-app">
+                    <div class="portfolio-wrap">
+                         <a href="@Url.Content("/MyPath/DA1710235075/"+@item)" data-gallery="portfolioGallery" class="portfolio-lightbox" title="App 1">
+                              <img src="@Url.Content("/MyPath/DA1710235075/"+@item)" class="img-fluid" alt="">
+                         </a>
+                    </div>
+                </div>
+            }
+             
+
+           
+            </div>
+
+        </div>
+    </section><!-- End Portfolio Section -->
+
+</main><!-- End #main -->
+
+                                  <!-- Vendor JS Files -->
+  <script src="~/assets/vendor/purecounter/purecounter_vanilla.js"></script>
+  <script src="~/assets/vendor/aos/aos.js"></script>
+  <script src="~/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="~/assets/vendor/glightbox/js/glightbox.min.js"></script>
+  <script src="~/assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+  <script src="~/assets/vendor/swiper/swiper-bundle.min.js"></script>
+  <script src="~/assets/vendor/php-email-form/validate.js"></script>
+
+  <!-- Template Main JS File -->
+  <script src="~/assets/js/main.js"></script>

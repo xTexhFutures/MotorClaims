@@ -45,9 +45,18 @@ namespace MotorClaims.Controllers
                 SequenceNo = search.sequence,
             };
             ClaimSearchResult claimSearchResult = new ClaimSearchResult();
+            ViewData["search"] = search;
+            if (string.IsNullOrEmpty(search.chassis) && string.IsNullOrEmpty(search.claimno) && string.IsNullOrEmpty(search.complain) 
+                && string.IsNullOrEmpty(search.custom) && string.IsNullOrEmpty(search.mobile) && string.IsNullOrEmpty(search.nationalid)
+                && string.IsNullOrEmpty(search.plate) && string.IsNullOrEmpty(search.policy) && string.IsNullOrEmpty(search.sequence))
+            {
+                ViewData["Error"] = "Fill at least one parameter";
+                return View("Index", claimSearchResult);
+            }
+        
             claimSearchResult = Helpers.ExcutePostAPI<ClaimSearchResult>(searchingObj, _appSettings.APIHubPrefix + "api/MotorClaim/SearchClaimInfo");
             //claimSearchResult = JsonConvert.DeserializeObject<ClaimSearchResult>(JsonConvert.SerializeObject(obj));
-            ViewData["search"] = search;
+        
             HttpContext.Session.SetSessionData("SearchResult", claimSearchResult);
             return View("Index", claimSearchResult);
         }

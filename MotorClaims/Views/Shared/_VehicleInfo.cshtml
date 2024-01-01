@@ -172,12 +172,25 @@
                         </span>
                         <div class="item-content">
                             <span class="label">Claims Count</span>
-                            <h3 class="value ellipsis">0 </h3>
+                            <h3 class="value ellipsis" style="cursor:pointer;color:blue;text-decoration:underline" onclick="ClaimsHistory('delet-member', 'ClaimsHistory','@Model.SequanceNo')"> Details  </h3>
                         </div>
                     </li>
                 </ul>
             </div>
         </div>
     </div>
+<div class="common-slide-popup" id="ClaimsHistory"></div>
 
+  <script>
+
+               function ClaimsHistory(id, body, SequanceNo) {
+    //const element = document.getElementById(id);
+    const deleteMember = document.getElementById(body)
+    //element.classList.toggle('active');
+    deleteMember.classList.toggle('active');
+    $('#ClaimsHistory').load('/Claims/ClaimsHistory/', { SequanceNo: SequanceNo });
+}
+
+     
+    </script>
 

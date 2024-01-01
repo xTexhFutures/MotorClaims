@@ -36,16 +36,19 @@
                             </span>
                             <div class="item-content">
                                 <span class="label">Date Of Loss</span>
-                                <h3 class="value ellipsis">@Model.DateOfLoss.ToString("dd MMM yyyy")</h3>
+                                <h3 class="value ellipsis">@Helpers.FormatDate( Model.DateOfLoss)</h3>
                             </div>
                         </li>
                         <li class="detailed-item false">
                             <span class="detailed-icon-wrap">
                                 <img src="/assets/icons/calendar.svg" alt="" class="item-icon">
                             </span>
+                    @{
+                        var y = Enum.TryParse(Model.ClaimReportType.ToString(), out Enums.ClaimReportType parsedEnumValue);
+                    }
                             <div class="item-content">
                                 <span class="label">Report Type</span>
-                                <h3 class="value ellipsis">@Model.ClaimReportType</h3>
+                        <h3 class="value ellipsis">@parsedEnumValue</h3>
                             </div>
                         </li>
 
@@ -80,7 +83,7 @@
                             </span>
                             <div class="item-content">
                                 <span class="label">Geogrphical Area</span>
-                                <h3 class="value ellipsis">@Model.GeagraphicalArea</h3>
+                                <h3 class="value ellipsis">@(Model.GeagraphicalArea==1?"KSA":"GCC")</h3>
                             </div>
                         </li>
 
@@ -91,7 +94,7 @@
                             </span>
                             <div class="item-content">
                                 <span class="label">Accidental Place</span>
-                                <h3 class="value ellipsis">@Model.City</h3>
+                                <h3 class="value ellipsis">@Model.AccidentPlace</h3>
                             </div>
                         </li>
                         <li class="detailed-item false">
@@ -109,7 +112,7 @@
                             </span>
                             <div class="item-content">
                                 <span class="label">Prefered city of Survey</span>
-                                <h3 class="value ellipsis">@Model.City</h3>
+                                <h3 class="value ellipsis">@Model.SurveyCity</h3>
                             </div>
                         </li>
                         <li class="detailed-item false">

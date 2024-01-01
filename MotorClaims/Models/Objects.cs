@@ -17,7 +17,9 @@
     {
         public int PolicyId { get; set; }
         public int VehicleId { get; set; }
+        public int? Id { get; set; }
         public int? ClaimantId { get; set; }
+        public int? SurvoyerId { get; set; }
         public long? ClaimId { get; set; }
     }
 

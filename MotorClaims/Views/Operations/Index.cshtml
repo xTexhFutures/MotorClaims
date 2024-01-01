@@ -1,11 +1,15 @@
-﻿@using CORE.DTOs.MotorClaim.Claims;
+﻿@using CORE.DTOs.Authentications;
+@using CORE.DTOs.MotorClaim.Claims;
 @using Newtonsoft.Json;
 @{
     SearchObj searchObj = (SearchObj)ViewData["searchObj"];
+    List<Users> users = (List<Users>)ViewData["AllUsers"];
 }
-@model List<ClaimMaster>
+@using X.PagedList.Mvc.Core;
+@using X.PagedList;
+@model IPagedList<ClaimMaster>
 
-<div class="add-member-detail" style="max-height:900px;overflow-y:auto">
+<div class="add-member-detail">
     <div class="policy-wrapper">
         <div class="basic-detail" style="background:none !important">
             <h2 class="heading">Operations</h2>
@@ -74,21 +78,7 @@
                                        value="@searchObj.policy">
                             </div>
                         </div>
-                        <div class="search-wrapper">
-                            <span class="label">Branch</span>
-
-                            <div class="search-input-box-wrapper">
-                                <div class="search-icon-wrapper">
-                                    <img src="/assets/icons/List.png" class="search-icon" alt="">
-                                </div>
-                                <select class="common-dropdown Full" id="ddlFilter" name="Status">
-                                    <option value="">Select Status</option>
-                                    <option value="1">Active</option>
-                                    <option value="0">In-Active</option>
-                                    <option value="2">Rejected</option>
-                                </select>
-                            </div>
-                        </div>
+                   
 
                         <div class="search-wrapper">
                             <span class="label">Registered From</span>
@@ -134,7 +124,8 @@
                 <table class="universal-table">
                     <tr>
                         <th>Claim Segment</th>
-                        <th>Fraud Indicator</th>
+                        <th>Claimant Name</th>
+                        <th>Assign To</th>
                         <th>Policy Number</th>
                         <th>Make</th>
                         <th>Model</th>
@@ -142,6 +133,7 @@
                         <th>Reserve</th>
                         <th>Assign To</th>
                         <th>Recovery</th>
+                        <th>Re-Open</th>
 
                     </tr>
 
@@ -153,25 +145,36 @@
                             @{
                                 ClaimSearchobj claimSearchobj = new ClaimSearchobj()
                     {
-                        ClaimId = clm.claims.Id
+                        ClaimId = clm.claims.Id,
+                        ClaimantId=clm.claimants.Id
                     };
-                            }
-                            <td class="tran"><a href="@Url.Action("OperationEntry","Operations",new{obj=MotorClaims.Models.Helpers.Encrypt(JsonConvert.SerializeObject(claimSearchobj))})">@clm.claims.ClaimNo</a></td>
 
-                            <td>@clm.claims.FraudIndicator</td>
+                                string UserName = users.Where(p => p.Id == clm.claimants.AssignTo).FirstOrDefault().UserName;
+                            }
+                            <td class="tran"><a href="@Url.Action("OperationEntry","Operations",new{obj=MotorClaims.Models.Helpers.Encrypt(JsonConvert.SerializeObject(claimSearchobj))})">@clm.claims.ClaimNo/@clm.claimants.Serial</a></td>
+
+                            <td>@clm.claimants.ClaimantName</td>
+                            <td>@UserName</td>
                             <td>@clm.productionInfo.PolicyNumber</td>
+                               <td>@clm.vehiclesInfo.ModelDesc</td>
                             <td>@clm.vehiclesInfo.MakeDesc</td>
-                            <td>@clm.vehiclesInfo.ModelDesc</td>
+                         
                             <td>@HelpersDate.FormatDate(clm.claims.RegistrationDate)</td>
                             <td class="tran"><a href="#" onclick="OperationReserve(@clm.claims.Id)">Reserve</a></td>
-                            <td class="tran"><a href="#" onclick="OperationAssign(@clm.claims.Id)">Assign</a></td>
+                            <td class="tran"><a href="#" onclick="OperationAssign(@clm.claims.Id,@clm.claimants.Id)">Assign</a></td>
                             <td class="tran"><a href="#" onclick="OperationRecovery(@clm.claims.Id)">Recovery</a></td>
+                            <td class="tran"><a href="#" @(clm.claims.ClaimStatus==(int)Enums.ClaimStatus.Closed?"":"disabled") onclick="OperationReOpen(@clm.claims.Id)">
+                                @(clm.claimants.ClaimantStatus==(int)Enums.ClaimantStatus.Closed?"Re-Open":"")</a></td>
+                            
+                         
 
                         </tr>
 
 
                     }
                 </table>
+                 @Html.PagedListPager((IPagedList)Model,Page=>Url.Action("Index","Operations",new {Page}))
+            Showing @Model.FirstItemOnPage to @Model.LastItemOnPage of @Model.TotalItemCount Claims
             </div>
         </div>
     }
@@ -241,7 +244,13 @@
 <div class="common-slide-popup" id="UpdateReserve"></div>
 <div class="common-slide-popup" id="UpdateRecovery"></div>
 <div class="edit-member-id-popup" id="OperationAssign"></div>
+<div class="common-slide-popup" id="OperationReOpen"></div>
 <script>
+$(function(){
+       if ('@ViewData["Error"]' != '' || '@ViewData["Error"]' != "") {
+            ErrorAlert('@ViewData["Error"]');
+        }
+});
     $('#txtFrom').ForceDateEntry();
     $('#txtTo').ForceDateEntry();
 </script>

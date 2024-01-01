@@ -10,7 +10,7 @@ const editMember = (id, body) => {
 const deleteMember = (id, body) => {
   const element = document.getElementById(id);
   const deleteMember = document.getElementById(body)
-  element.classList.toggle('active');
+
   deleteMember.classList.toggle('active');
 }
 

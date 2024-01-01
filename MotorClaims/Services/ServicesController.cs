@@ -1,10 +1,13 @@
-﻿using CORE.DTOs.Authentications;
+﻿using CORE.DTOs.APIs.MotorClaim;
+using CORE.DTOs.Authentications;
+using CORE.DTOs.MotorClaim;
 using CORE.DTOs.MotorClaim.Claims;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Options;
 using MotorClaims.Models;
+using System.Security.Claims;
 
 namespace MotorClaims.Services
 {
@@ -34,6 +37,27 @@ namespace MotorClaims.Services
             users = Helpers.ExcuteGetAPI<List<Users>>(true, _appSettings.APIHubPrefix + "api/Authenticator/AllUsers", "123");       
             return users;
         }
+
+        [Route("GetReserveBalance")]
+        [HttpPost]
+        public ReserveBalance GetReserveBalance(int name)
+        {
+
+            ReserveBalance reserveBalance=new ReserveBalance();
+            MainSearchMC mainSearchMC = new MainSearchMC()
+            {
+                ClaimantId = name
+            };
+            SetupClaimsRequestcs setupClaimsRequestcs = new SetupClaimsRequestcs()
+            {
+                TransactionType = CORE.Extensions.ClaimTransactionType.ReserveBalance,
+                Request = mainSearchMC
+            };
+            reserveBalance = Helpers.ExcutePostAPI<ReserveBalance>(setupClaimsRequestcs, _appSettings.APIHubPrefix + "api/MotorClaim/ClaimsTransactions");
+
+            return reserveBalance;
+        }
+
         [Route("GetLookup")]
         [HttpGet]
         public List<LookupTable> GetLookup(string name, int enums,int? ParentId=null)

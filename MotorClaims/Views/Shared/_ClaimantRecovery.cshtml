@@ -1,0 +1,114 @@
+﻿@using CORE.DTOs.MotorClaim.Claims;
+@{
+    Layout = null;
+    int Serial = 0;
+    int ClaimId = (int)ViewData["ClaimId"];
+    int ClaimantId = (int)ViewData["ClaimantId"];
+}
+@model List<ClaimTransactions>
+
+     <div class="footer-actions-handle" style="position:inherit !important; width:100%">
+          <div class="next-button" style="margin-right:5px">
+
+                                <button type="button" class="button button-primary" onclick="ClaimantRecovery('delet-member', 'UpdateRecovery','@ClaimId','@ClaimantId')">
+                                    Add New Recovery
+                                </button>
+                        
+
+                        </div>
+                                </div>
+    <div class="transaction-details">
+
+        <table class="universal-table">
+            <tr>
+             <!-- <th>#</th> -->
+            <th>Recovery Serial</th>
+            <th>Transaction Date</th>
+            <th>Transaction Amount</th>
+            <th>Note</th>
+            <th>Fees</th>
+            <th>Created By</th>
+            </tr>
+
+
+            @foreach (var clm in Model)
+            {
+                 
+                <tr>
+                <td class="tran">@(++Serial)</td>
+                <td>@Helpers.FormatLongDate( clm.TransactionDate)</td>
+                <td>@clm.TransactionAmount</td>
+                <td>@clm.Note</td>                
+                <td>@clm.Fees</td>
+                <td>@clm.CreatedBy</td>
+
+                </tr>
+
+
+            }
+        </table>
+    </div>
+
+
+     <div class="common-slide-popup" id="UpdateRecovery">
+        <div class="slide-popup-inner">
+            <div class="slide-header">
+                <div class="heading-card">
+                    <h2 class="heading">Add Recovery</h2>
+                </div>
+            </div>
+             <form method="post" id="frmUpdateRecovery">
+            <input name="ClaimId" value="@ClaimId" type="hidden"/>
+            <input name="ClaimantId" value="@ClaimantId" type="hidden"/>
+            <div class="slide-body">
+                <div class="popup-body-wrapper">
+                    <div class="body-content-wrapper">
+                        <div class="delete-content-card">
+                             <div class="cancel-declaration">
+                                <h3 class="title-label">Reserve Amount</h3>
+                                <div class="form-field-wrapper">
+                                    <div class="form-input-wrapper">
+                                       <input class="form-inputbox" name="TransactionAmount" id="txtTransactionAmount" type="text" required/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="cancel-declaration">
+                                <h3 class="title-label">What is the Reserve reason?</h3>
+                                <div class="form-field-wrapper">
+                                    <div class="form-input-wrapper">
+                                       <textarea class="form-inputbox" required name="Note"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slide-footer">
+                        <div class="slide-inner-footer">
+                            <button class="button button-secondary-border" type="button"
+                                onclick="Close('Add_Reserve-popup')">Cancel</button>
+                            <button  class="button button-primary" type="submit">Save</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+           </form>
+        </div>
+    </div>
+    <script>
+
+               function ClaimantRecovery  (id, body, ClaimId, ClaimantId) {
+    const element = document.getElementById(id);
+    const deleteMember = document.getElementById(body)
+    //element.classList.toggle('active');
+    deleteMember.classList.toggle('active');
+    $('#UpdateRecovery').load('/Operations/UpdateRecovery/', { ClaimId: ClaimId, ClaimantId: ClaimantId });
+}
+        $(function(){
+ 
+         $('#frmUpdateRecovery').on('submit', function(e){
+            
+
+    });
+        });
+    </script>

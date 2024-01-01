@@ -1,9 +1,11 @@
 ﻿@using CORE.DTOs.MotorClaim.Claims;
 @using Newtonsoft.Json;
+@using X.PagedList.Mvc.Core;
+@using X.PagedList;
+@model IPagedList<ClaimMaster>
 
-@model List<ClaimMaster>
 
-<div class="add-member-detail" style="max-height:900px;overflow-y:auto">
+<div class="add-member-detail">
     <div class="policy-wrapper">
         <div class="basic-detail" style="background:none !important">
             <h2 class="heading">Surveyors</h2>
@@ -137,7 +139,6 @@
                         <th>Model</th>
                         <th>Chassis</th>
                         <th>Registered Date</th>
-                        <th>Add Reserve</th>
                         <th>Assign To</th>
                         <th>Actions</th>
 
@@ -162,7 +163,6 @@
                             <td>@clm.vehiclesInfo.ModelDesc</td>
                             <td>@clm.vehiclesInfo.ChassisNo</td>
                             <td>@HelpersDate.FormatDate(clm.claims.RegistrationDate)</td>
-                            <td class="tran"><a href="#" onclick="SurveyorReserve(@clm.claims.Id)">Reserve</a></td>
                             <td class="tran"><a href="#" onclick="SurveyorAssign(@clm.claims.Id)">Assign</a></td>
                             <td class="tran"><a href="#" onclick="SurveyorActions(@clm.claims.Id)">Action</a></td>
 
@@ -171,6 +171,9 @@
 
                     }
                 </table>
+
+            @Html.PagedListPager((IPagedList)Model,Page=>Url.Action("Index","Surveyor",new {Page}))
+            Showing @Model.FirstItemOnPage to @Model.LastItemOnPage of @Model.TotalItemCount Claims
             </div>
         </div>
     }
@@ -236,9 +239,8 @@
     </div>
 </div>
 
-<div class="common-slide-popup" id="UpdateReserve"></div>
-<div class="common-slide-popup" id="SurveyorAssign"></div>
 <div class="common-slide-popup" id="SurveyorActions"></div>
+<div class="edit-member-id-popup" id="SurveyorAssign"></div>
 
 <script>
     $('#txtFrom').ForceDateEntry();

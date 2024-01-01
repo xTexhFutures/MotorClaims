@@ -1,0 +1,456 @@
+﻿
+@using CORE.DTOs.APIs.MotorClaim;
+@using CORE.DTOs.APIs.Setups.MMP;
+@using CORE.DTOs.MotorClaim;
+@using CORE.DTOs.MotorClaim.Claims;
+@using Newtonsoft.Json;
+@{
+    Layout = null;
+    Production policy = (Production)ViewData["Policy"];
+    VehicleInfos vehicle = (VehicleInfos)ViewData["Vehicle"];
+    List<LookupTable> dClaimantType = (List<LookupTable>)ViewData["ClaimantType"];
+    List<LookupTable> dClaimantResult = (List<LookupTable>)ViewData["ClaimantResult"];
+    List<LookupTable> dDamageType = (List<LookupTable>)ViewData["DamageType"];
+}
+@model Claimants
+<form method="post" asp-action="InsertClaimant" asp-controller="Claims">
+    <input type="hidden" name="PolicyId" value="@policy.policy.Id" />
+    <input type="hidden" name="VehicleId" value="@vehicle.Vehicle.Id" />
+    <input type="hidden" name="Id" value="@(Model!=null? Model.Id:0)" />
+    <input type="hidden" name="ClaimId" value="@Model.ClaimId" />
+    <input type="hidden" name="Serial" value="@(Model!=null? Model.Serial:0)" />
+
+
+
+
+    <div class="member-summary-container">
+                        <div class="total-member-list">
+                            <h6 class="title">Claimant Info</h6>
+                            <div class="member-list-container">
+                                <div class="member-collapse">
+                                    <div class="member-collapse-header" style="display:block">
+                                        <div class="vehicle-owner-grid">
+                                            <div class="form-container Full">
+                                                <span class="label">Claimant Type</span>
+                                                <select class="form-controlar" required name="ClaimantType" id="ddlClaimantType">
+                                                    <option value=""></option>
+                                                    @foreach (var item in dClaimantType)
+                                                    {
+                                                        <option value="@item.Code">@item.NameEnglish</option>
+                                                    }
+                                                </select>
+                                            </div>
+                                            <div class="form-container Full">
+                                                <span class="label">Claimant Result</span>
+                                                <select class="form-controlar" required name="DamageType" id="ddlDamageType">
+                                                    <option value=""></option>
+                                                    @foreach (var item in dDamageType)
+                                                    {
+                                                        <option value="@item.Code">@item.NameEnglish</option>
+                                                    }
+                                                </select>
+                                            </div>
+                                            <div class="form-container Full">
+                                                  <span class="label">Nature of Loss</span>
+                                                <select class="form-controlar"  name="NatureofLoss" id="ddlNatureofLoss">
+                                                    <option value=""></option>
+                                                    <option value="1">Vehicle</option>
+                                                    <option value="2">Private Properties</option>
+                                                    <option value="3">Public Properties</option>
+
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="vehicle-owner-grid">
+
+                                            <div class="vehicle-owner-grid" style="width:100%">
+                                                <div class="checkbox-wrapper-34">
+                                                    <span class="label">Is Customer</span>
+                                                    <input class='tgl tgl-ios' name="IsCustomer" id="IsCustomer" type='checkbox' value="true" @(Model.IsCustomer.HasValue && Model.IsCustomer.Value ? "checked" : "")>
+                                                    <label class='tgl-btn' for='IsCustomer'></label>
+                                                </div>
+                                            </div>
+                                            <div class="form-container Full" id="najm">
+                                                <span class="label">Claimant Name</span>
+                                                <input class="form-controlar" autocomplete="off" required type="text" id="txtClaimantName" maxlength="150" placeholder="Claimant Name" name="ClaimantName" value="@Model.ClaimantName" />
+                                            </div>
+
+                                            <div class="form-container Full">
+                                                <span class="label">National ID</span>
+                                                <input class="form-controlar" autocomplete="off" type="text" id="txtNationalId" maxlength="10" placeholder="National Id" name="NationalId" value="@Model.NationalId" />
+                                            </div>
+                                            <div class="form-container Full">
+                                                <span class="label">Our %</span>
+                                                <select class="form-controlar" name="OurPercent" id="ddlOurPercent">
+                                                    <option value=""></option>
+                                                    <option value="0">0</option>
+                                                    <option value="25">25</option>
+                                                    <option value="50">50</option>
+                                                    <option value="75">75</option>
+                                                    <option value="100">100</option>
+                                                </select>
+                                            </div>
+
+
+                                        </div>
+                                        <div class="vehicle-owner-grid">
+
+                                            <div class="form-container Full">
+                                                <span class="label">Responsipility</span>
+                                                <select class="form-controlar" style="pointer-events: none;background-color:rgb(225,225,225) !important" onclick="return false;" onkeydown="return false;" name="Responsipility" id="txtResponsipility">
+                                                    <option value=""></option>
+                                                    <option value="1">US</option>
+                                                    <option value="2">Shared</option>
+                                                    <option value="3">They</option>
+                                                </select>
+
+                                            </div>
+                                            <div class="form-container Full">
+                                                <span class="label">Mobile</span>
+                                                <input class="form-controlar" autocomplete="off" type="text" maxlength="9" id="txtMobileNo" placeholder="5XXXXXXXX" name="MobileNo" value="@Model.MobileNo" />
+                                            </div>
+
+                                            <div class="form-container Full">
+                                                <span class="label">IBAN No</span>
+                                                <input class="form-controlar" style="text-transform:uppercase" autocomplete="off" type="text" id="txtIban" maxlength="50" placeholder="IBAN No" name="Iban" value="@Model.Iban" />
+                                            </div>
+                                            <div class="form-container Full">
+                                                <span class="label">Bank Name</span>
+                                                <input class="form-controlar" style="text-transform:uppercase" autocomplete="off" type="text" id="txtBankName" maxlength="50" placeholder="Bank Name" name="BankName" value="@Model.BankName" />
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                    </div>
+
+                    <div class="member-summary-container">
+                        <div class="total-member-list">
+                            <h6 class="title">Driver Info</h6>
+                            <div class="member-list-container">
+                                <div class="member-collapse">
+                                    <div class="member-collapse-header" style="display:block">
+
+
+                                        <div class="vehicle-owner-grid">
+                                            <div class="form-container Full">
+                                                <span class="label">Driver Birth Date</span>
+                                                <input class="form-controlar calendar-input" autocomplete="off"  type="text" placeholder="Driver Birth Date" id="txtDriverBirthDate" name="DriverBirthDate" value="@(Model.DriverBirthDate.HasValue? HelpersDate.FormatDateNoTime(Model.DriverBirthDate.Value):string.Empty)" />
+                                            </div>
+                                            <div class="form-container Full">
+                                                <span class="label">Age</span>
+                                                <input class="form-controlar" readonly autocomplete="off"  type="text" maxlength="3" placeholder="Driver Age" id="txtDriverAge" name="DriverAge" value="@Model.DriverAge" />
+                                            </div>
+                                            <div class="form-container Full">
+                                                <span class="label">Driver License Expiry</span>
+                                                <input class="form-controlar calendar-input" autocomplete="off"  type="text" placeholder="Driver License Expiry Date" id="txtDriverLicenseExpiryDate" name="DriverLicenseExpiryDate" value="@(Model.DriverLicenseExpiryDate.HasValue? HelpersDate.FormatDateNoTime(Model.DriverLicenseExpiryDate.Value):string.Empty)" />
+                                            </div>
+                                            <div class="form-container Full">
+                                                <span class="label">Driver National Id</span>
+                                                <input class="form-controlar" autocomplete="off" type="text" maxlength="10" id="txtDriverNationalId" placeholder="Driver National Id" name="DriverNationalId" value="@Model.DriverNationalId" />
+                                            </div>
+                                        </div>
+                                        <div class="vehicle-owner-grid">
+
+                                            <div class="form-container Full">
+                                                <span class="label">Owner National Id</span>
+                                                <input class="form-controlar" autocomplete="off" type="text" maxlength="10" id="txtOwnerNationalId" placeholder="Owner National Id" name="OwnerNationalId" value="@Model.OwnerNationalId" />
+                                            </div>
+                                            <div class="form-container Full">
+                                                <span class="label">Beneficiary Name</span>
+                                                <input class="form-controlar" autocomplete="off" type="text" id="txtBenefecieryName" maxlength="150" placeholder="Beneficiary Name" name="BenefecieryName" value="@Model.BenefecieryName" />
+                                            </div>
+                                            <div class="form-container Full">
+                                                <span class="label">Driver Name</span>
+                                                <input class="form-controlar" autocomplete="off" type="text" maxlength="150" id="txtDriverName" placeholder="Driver Name" name="DriverName" value="@Model.DriverName" />
+                                            </div>
+                                            <div class="form-container Full">
+                                                <span class="label">Owner Name</span>
+                                                <input class="form-controlar" autocomplete="off" type="text" maxlength="150" id="txtOwnerName" placeholder="Owner Name" name="OwnerName" value="@Model.OwnerName" />
+                                            </div>
+
+                             
+
+
+                                        </div>
+                                        <div class="vehicle-owner-grid">
+
+                                            <div class="vehicle-owner-grid" style="width:50%">
+                                                <div class="checkbox-wrapper-34">
+                                                    <span class="label">Survey Required</span>
+                                                    <input class='tgl tgl-ios' name="IsSurveyRequired" id="IsSurveyRequired" type='checkbox' value="true" @(Model.IsSurveyRequired.HasValue && Model.IsSurveyRequired.Value ? "checked" : "")>
+                                                    <label class='tgl-btn' for='IsSurveyRequired'></label>
+                                                </div>
+                                            </div>
+                            
+                                    
+                                                 <div class="form-container Full" >
+
+                                                <label for="BeneficiaryType1" class="radio-card-v2" >
+                                                    <div class="card-content-wrapper" style="background-color:@(Model.ClaimantStatus==(int)Enums.ClaimantStatus.Rejected?"red":"");color:@(Model.ClaimantStatus==(int)Enums.ClaimantStatus.Rejected?"white":"")">
+                                                        <span class="label" >@(((Enums.ClaimantStatus)Model.ClaimantStatus).ToString()) / </span>
+                                                        <div class="card-content" >
+                                                            <h4 class="title" style="color:@(Model.ClaimantStatus==(int)Enums.ClaimantStatus.Rejected?"white":"")"> @Model.StatusReason</h4>
+                                                        </div>
+                                                    </div>
+                                                </label> 
+                                                
+                                            </div>
+                          
+                                        </div>
+                               
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                    <div class="member-summary-container" id="TPRegion">
+                        <div class="total-member-list">
+                            <div class="member-list-container">
+                                <div class="member-collapse">
+                                    <div class="member-collapse-header" style="display:block">
+
+                                        <div class="vehicle-owner-grid">
+                                            <div class="form-container Full">
+                                                <span class="label">Vehicle Make</span>
+                                                <input class="form-controlar ui-autocomplete-input" autocomplete="off" type="text" id="txtMakeDesc" placeholder="Vehicle Make" name="MakeDesc" value="@Model.MakeDesc" />
+                                                <input class="form-controlar" type="hidden" id="txtMakeId" name="MakeId" value="@Model.MakeId" />
+                                            </div>
+                                            <div class="form-container Full">
+                                                <span class="label">TP Insurance Company Name</span>
+                                                <input class="form-controlar ui-autocomplete-input" autocomplete="off" type="text" id="txtTpInsuranceCompany" placeholder="Tp Insurance Company" name="InsuranceCompanyName" value="@Model.InsuranceCompanyName" />
+                                                <input class="form-controlar" type="hidden" id="txtInsuranceCompanyNameId" name="InsuranceCompanyNameId" />
+                                            </div>
+                                            <div class="form-container Full">
+                                                <span class="label">TP Insurance Policy Number</span>
+                                                <input class="form-controlar" style="text-transform:uppercase" autocomplete="off" type="text" id="txtInsurancePolicyNumber" placeholder="TP Insurance Policy Number" name="InsurancePolicyNumber" maxlength="100" value="@Model.InsurancePolicyNumber" />
+                                            </div>
+                                            <div class="form-container Full">
+                                                <span class="label">Sequance No</span>
+                                                <input class="form-controlar" autocomplete="off" type="text" maxlength="20" id="txtSequenceNo" placeholder="Sequence No" name="SequenceNo" value="@Model.SequenceNo" />
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="vehicle-owner-grid">
+
+                                        <div class="form-container Full">
+                                            <span class="label">Vehicle Model</span>
+                                            <input class="form-controlar ui-autocomplete-input" autocomplete="off" type="text" id="txtModelDesc" placeholder="Vehicle Model" name="ModelDesc" value="@Model.ModelDesc" />
+                                            <input class="form-controlar" type="hidden" id="txtModelId" name="ModelId" value="@Model.ModelId" />
+                                        </div>
+                                        <div class="form-container Full">
+                                            <span class="label">Production Year</span>
+                                            <input class="form-controlar" autocomplete="off" type="text" maxlength="4" id="txtManifacturing" placeholder="Production Year" name="Manifacturing" value="@Model.Manifacturing" />
+                                        </div>
+
+                                        <div class="form-container Full">
+                                            <span class="label">Vehicle Color</span>
+                                            <input class="form-controlar ui-autocomplete-input" autocomplete="off" type="text" id="txtColorDesc" placeholder="Vehicle Color" name="ColorDesc" value="@Model.ColorDesc" />
+                                            <input class="form-controlar" type="hidden" id="txtColorId" name="ColorId" value="@Model.ColorId" />
+                                        </div>
+                                        <div class="form-container Full">
+                                            <span class="label">Plate No</span>
+                                            <input class="form-controlar" autocomplete="off" type="text" id="txtPlateNo" placeholder="Plate No" name="PlateNo" value="@Model.PlateNo" />
+                                        </div>
+                                        <div class="form-container Full">
+                                            <span class="label">Chassis Number</span>
+                                            <input class="form-controlar" autocomplete="off" type="text" id="txtChassisNo" placeholder="Chassis Number" name="ChassisNo" value="@Model.ChassisNo" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                        <div class="footer-actions-handle" style="position:inherit !important; width:100%">
+          <div class="next-button" style="margin-right:5px">
+              @if (Model.Id>0)
+            {
+                <button type="submit" class="button button-primary" @(Model.ClaimantStatus==(int)Enums.ClaimantStatus.Rejected?"disabled":"")>
+                    Update
+                </button>
+            }
+            else
+            {
+                  <button type="submit" class="button button-primary">
+                                    Save
+                                </button>
+            }
+                              
+                        
+
+                        </div>
+                                </div>
+                             </form>
+
+
+                                             <script>
+      $(function(){
+      
+          if ('@Model.ClaimantType' == '1'){
+ $('#TPRegion').hide();
+          }else{
+               $('#TPRegion').show();
+          }
+         
+      
+      });
+    if ('@Model.Id' != '0') {
+        $('#ddlDamageType').val('@Model.DamageType');
+        $('#ddlClaimantType').val('@Model.ClaimantType');
+        $('#ddlNatureofLoss').val('@Model.NatureofLoss');
+        $('#ddlOurPercent').val('@Model.OurPercent');
+        $('#txtResponsipility').val('@Model.Responsipility');
+
+    }
+    $('#txtNationalId').ForceIntegerEntry();
+    $('#txtDriverNationalId').ForceIntegerEntry();
+    $('#txtOwnerNationalId').ForceIntegerEntry();
+    $('#txtSequenceNo').ForceIntegerEntry();
+    $('#txtMobileNo').ForceIntegerEntry();
+    $('#txtDriverAge').ForceIntegerEntry();
+    $('#txtManifacturing').ForceIntegerEntry();
+
+    $('#txtDriverBirthDate').ForceDateEntry();
+    $('#txtDriverLicenseExpiryDate').ForceDateEntry();
+
+
+    $("#ddlOurPercent").change(function () {
+        var end = this.value;
+        if (end == 25 || end == 50 || end == 75) {
+            $("#txtResponsipility").val(2);
+        }
+        else if (end == 0) {
+            $("#txtResponsipility").val(3);
+        } else { $("#txtResponsipility").val(1); }
+
+    });
+
+
+    $('#txtTpInsuranceCompany').autocomplete({
+        source: function (request, response) {
+            $.getJSON("/api/Services/GetLookup/", { name: request.term ,enums:@((int)SystemEnums.TPInsuranceCompany)}, function (data) {
+                response($.map(data, function (val, i) {
+                    return {
+                        label: val.nameEnglish,
+                        ReportGroupId: val.code
+                    };
+                }))
+            });
+        },
+        minLength: 1,
+        select: function (event, ui) {
+            $('#txtTpInsuranceCompanyId').val(ui.item.ReportGroupId);
+        },
+        change: function (event, ui) {
+            if (!ui.item) {
+                $('#txtTpInsuranceCompany').val("");
+                $('#txtTpInsuranceCompanyId').val("");
+            }
+        }
+    }).focus(function () {
+        if ($(this).attr('state') != 'open' && !$('#txtTpInsuranceCompanyId').val()) {
+            $(this).autocomplete("search");
+        }
+    });
+
+
+    $('#txtMakeDesc').autocomplete({
+        source: function (request, response) {
+            $.getJSON("/api/Services/GetLookup/", { name: request.term, enums: @((int)SystemEnums.VehicleMake)}, function (data) {
+                response($.map(data, function (val, i) {
+                    return {
+                        label: val.nameEnglish,
+                        ReportGroupId: val.code
+                    };
+                }))
+            });
+        },
+        minLength: 1,
+        select: function (event, ui) {
+            $('#txtMakeId').val(ui.item.ReportGroupId);
+        },
+        change: function (event, ui) {
+            if (!ui.item) {
+                $('#txtMakeDesc').val("");
+                $('#txtMakeId').val("");
+            }
+        }
+    }).focus(function () {
+        if ($(this).attr('state') != 'open' && !$('#txtMakeId').val()) {
+            $(this).autocomplete("search");
+        }
+    });
+
+
+    $('#txtModelDesc').autocomplete({
+        source: function (request, response) {
+            $.getJSON("/api/Services/GetLookup/", { name: request.term, enums: @((int)SystemEnums.VehicleType), ParentId: $('#txtMakeId').val() }, function (data) {
+                response($.map(data, function (val, i) {
+                    return {
+                        label: val.nameEnglish,
+                        ReportGroupId: val.code
+                    };
+                }))
+            });
+        },
+        minLength: 1,
+        select: function (event, ui) {
+            $('#txtModelId').val(ui.item.ReportGroupId);
+        },
+        change: function (event, ui) {
+            if (!ui.item) {
+                $('#txtModelDesc').val("");
+                $('#txtModelId').val("");
+            }
+        }
+    }).focus(function () {
+        if ($(this).attr('state') != 'open' && !$('#txtModelId').val()) {
+            $(this).autocomplete("search");
+        }
+    });
+
+
+    $('#txtColorDesc').autocomplete({
+        source: function (request, response) {
+            $.getJSON("/api/Services/GetLookup/", { name: request.term, enums: @((int)SystemEnums.Color)}, function (data) {
+                response($.map(data, function (val, i) {
+                    return {
+                        label: val.nameEnglish,
+                        ReportGroupId: val.code
+                    };
+                }))
+            });
+        },
+        minLength: 1,
+        select: function (event, ui) {
+            $('#ColorId').val(ui.item.ReportGroupId);
+        },
+        change: function (event, ui) {
+            if (!ui.item) {
+                $('#txtColorDesc').val("");
+                $('#ColorId').val("");
+            }
+        }
+    }).focus(function () {
+        if ($(this).attr('state') != 'open' && !$('#ColorId').val()) {
+            $(this).autocomplete("search");
+        }
+    });
+
+//                            function LoadClaimantEntryPartial(Id)
+//{
+//    $('#ClaimantEntry').load('/Claims/ClaimantsEntry/',{obj:Id});
+//}
+
+</script>

@@ -1,6 +1,8 @@
 ﻿@using CORE.DTOs.MotorClaim.WorkFlow;
 @model DocumentInfo
-
+@{
+    List<int> ints=(List<int>) ViewData["ints"];
+}
 <div class="popup-body-wrapper">
     <div class="popup-header">
         <div class="popup-header-inner">
@@ -27,7 +29,7 @@
                         </div>
                         <div class="form-field-wrapper">
                             <div class="form-input-wrapper">
-                                <select class="form-inputbox" name="ModuleId" id="ddlModuleId">
+                                <select class="form-inputbox" required name="ModuleId" id="ddlModuleId">
                                     <option value="">All Modules</option>
                                     <option value="@((int)MotorClaims.Models.Enums.DocumnetType.Claim)">@MotorClaims.Models.Enums.DocumnetType.Claim</option>
                                     <option value="@((int)MotorClaims.Models.Enums.DocumnetType.Claimant)">@MotorClaims.Models.Enums.DocumnetType.Claimant</option>
@@ -35,9 +37,34 @@
                                     <option value="@((int)MotorClaims.Models.Enums.DocumnetType.Reserve)">@MotorClaims.Models.Enums.DocumnetType.Reserve</option>
                                     <option value="@((int)MotorClaims.Models.Enums.DocumnetType.Payment)">@MotorClaims.Models.Enums.DocumnetType.Payment</option>
                                 </select>
-                                <label class="form-label non-icon" for="txtDelegateTo">Modules</label>
+          
                             </div>
                         </div>
+
+
+                            <div class="form-field-wrapper" id="divClaimResult">
+                            <div class="form-input-wrapper" style="display: inline-block;">
+
+@{
+    bool Exist1 = ints.Contains(1);
+    bool Exist2 = ints.Contains(2);
+    bool Exist3 = ints.Contains(3);
+    bool Exist4 = ints.Contains(4);
+    bool Exist5 = ints.Contains(5);
+}
+                             <span>Bodaly</span><input type="checkbox" value="1" name="chClaimResult" id="chClaimResult1" @(Exist1?"checked":"") />
+                             <span>Death</span><input type="checkbox" value="2" name="chClaimResult" id="chClaimResult2"  @(Exist2?"checked":"") />
+                             <span>Vehicle</span><input type="checkbox" value="3" name="chClaimResult" id="chClaimResult3"  @(Exist3?"checked":"") /></br>
+                             <span>Private Property</span><input type="checkbox" value="4" name="chClaimResult" id="chClaimResult4"  @(Exist4?"checked":"") />
+                             <span>Public Property</span><input type="checkbox" value="5" name="chClaimResult" id="chClaimResult5"  @(Exist5?"checked":"") />
+                             
+                             
+                             
+                             <input type="hidden" id="txtClaimResult"  name="ClaimResult" value="@Model.ClaimResult"/>
+                            </div>
+                        </div>
+
+
                         <div class="vehicle-owner-grid">
                             <label for="radio-card-v2-11" class="radio-card-v2" style="min-width:50% !important">
                                 <input type="radio" value="true" name="IsRequired" id="radio-card-v2-11" @(Model.Id > 0 ? (Model.IsRequired ? "checked" : "") : "checked") />
@@ -75,6 +102,29 @@
 
 <script>
     $(function () {
+        $("#divClaimResult").hide();
+
+        if('@Model.Id'>0 && '@Model.ModuleId'=='@((int)MotorClaims.Models.Enums.DocumnetType.Claimant)'){
+   $("#divClaimResult").show();
+        }
+        $('#ddlModuleId').on('change', function() {
+  if(this.value=='@((int)MotorClaims.Models.Enums.DocumnetType.Claimant)')
+  {
+        //$("#txtClaimResult").prop('required', true);
+        $("#divClaimResult").show();
+  }else{
+      $("#divClaimResult").hide();
+       //$("#txtClaimResult").prop('required', false);
+  }
+});
+     $("[name='chClaimResult']").on('change', function() {
+   if(this.checked) {
+           $('#txtClaimResult').val(  $('#txtClaimResult').val()+this.value+',');
+        }else{
+            var tex=$('#txtClaimResult').val().replace(this.value+',','');
+            $('#txtClaimResult').val(tex);
+        }
+});
         $('#ddlModuleId').val('@Model.ModuleId');
     });
 </script>

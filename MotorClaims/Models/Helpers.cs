@@ -1,7 +1,16 @@
-﻿using Newtonsoft.Json;
+﻿using CORE.DTOs.APIs.Authenticator;
+using CORE.DTOs.APIs.MotorClaim;
+using CORE.DTOs.APIs.TP_Services;
+using CORE.DTOs.APIs.TPServices;
+using CORE.DTOs.MotorClaim;
+using CORE.DTOs.MotorClaim.Claims;
+using CORE.Interfaces;
+using Newtonsoft.Json;
 using OfficeOpenXml;
 using OfficeOpenXml.Table;
+using System;
 using System.ComponentModel;
+using System.Drawing;
 using System.Globalization;
 using System.Security.Cryptography;
 using System.Text;
@@ -10,7 +19,14 @@ namespace MotorClaims.Models
 {
     public static class Helpers
     {
-
+        private static string[] allFormats ={"yyyy/MM/dd","yyyy/M/d",
+            "dd/MM/yyyy","d/M/yyyy",
+            "dd/M/yyyy","d/MM/yyyy","yyyy-MM-dd",
+            "yyyy-M-d","dd-MM-yyyy","d-M-yyyy",
+            "dd-M-yyyy","d-MM-yyyy","yyyy MM dd",
+            "yyyy M d","dd MM yyyy","d M yyyy",
+            "dd M yyyy","d MM yyyy"};
+        private static CultureInfo arCul;
         public static T getSessionData<T>(this ISession session, string key)
         {
             try
@@ -38,7 +54,6 @@ namespace MotorClaims.Models
             T? resultValue = JsonConvert.DeserializeObject<T>(json);
             return (T)Convert.ChangeType(resultValue, typeof(T));
         }
-
         public static T PostAPICall<T>(object request, string APILink)
         {
 
@@ -69,7 +84,6 @@ namespace MotorClaims.Models
 
 
         }
-
         public static T ExcuteGetAPI<T>(object request, string APILink, string token = null)
         {
 
@@ -89,13 +103,14 @@ namespace MotorClaims.Models
             return Deserilize<T>(responsePost.Content.ReadAsStringAsync().Result);
         }
 
+
+
+
         public static string ReplaceEmailTemplate(string Body, string UserName, string Status, string URL, string Draft, string Comment)
         {
             Body = Body.Replace("{USER_NAME}", UserName).Replace("{URL}", URL).Replace("{Status}", Status).Replace("{Draft}", Draft).Replace("{COMMENT}", Comment);
             return Body;
         }
-
-
         public static string ReplaceUpdateStatusEmailTemplate(string Body, string PolicyNumber, string RequestStatus, string URL)
         {
             Body = Body.Replace("{PolicyNumber}", PolicyNumber).Replace("{URL}", URL).Replace("{RequestStatus}", RequestStatus);
@@ -106,11 +121,34 @@ namespace MotorClaims.Models
             Body = Body.Replace("{PolicyNumber}", SeqmentCode).Replace("{GrossAmount}", NetPremium).Replace("{LINK}", URL);
             return Body;
         }
-
         public static string ReplaceRejectionEmailTemplate(string Body, string SeqmentCode, string Comment, string Category, string URL)
         {
             Body = Body.Replace("{PolicyNumber}", SeqmentCode).Replace("{MainCategory}", Category).Replace("{LINK}", URL).Replace("{Comments}", Comment).Replace("{RequestStatus}", "Rejected");
             return Body;
+        }
+        
+        
+        public static DateTime HijriToGreg(string hijri)
+        {
+            arCul = new CultureInfo("ar-SA");
+            if (hijri.Length <= 0)
+            {
+
+                return DateTime.Now;
+            }
+            try
+            {
+                string dt = hijri.Substring(6, 2) + "/" + hijri.Substring(4, 2) + "/" + hijri.Substring(0, 4);
+                DateTime tempDate = DateTime.ParseExact(dt,
+                   allFormats, arCul.DateTimeFormat, DateTimeStyles.AllowWhiteSpaces);
+                return tempDate;
+
+            }
+            catch (Exception ex)
+            {
+
+                return DateTime.Now;
+            }
         }
         public static Dictionary<string, object> GetPropertiesNameOfClass(object pObject)
         {
@@ -124,7 +162,6 @@ namespace MotorClaims.Models
             }
             return propertyList;
         }
-
         public static T ExcutePostAPI<T>(object request, string APILink, string token = null)
         {
             HttpClient client = new HttpClient();
@@ -187,9 +224,6 @@ namespace MotorClaims.Models
 
             return decryptedResult;
         }
-
-
-
         public static int DecryptionNo(int num)
         {
             int NumResult = DateTime.Now.Year - num;
@@ -280,7 +314,6 @@ namespace MotorClaims.Models
 
             return encryptedResult;
         }
-
         public static int GetRelation(string relation)
         {
             switch (relation)
@@ -373,6 +406,14 @@ namespace MotorClaims.Models
                     return "Others";
             }
         }
+        public static string FormatDate(DateTime oDate)
+        {
+            return oDate.ToString("dd-MM-yyyy h:mm tt");
+        }
+        public static string FormatLongDate(DateTime oDate)
+        {
+            return oDate.ToString("dd-MM-yyyy h:mm tt");
+        }
         public static byte[] ExporttoExcel<T>(List<T> table, string filename)
         {
             ExcelPackage.LicenseContext = OfficeOpenXml.LicenseContext.NonCommercial;
@@ -381,8 +422,6 @@ namespace MotorClaims.Models
             ws.Cells["A1"].LoadFromCollection(table, true, TableStyles.Light1);
             return pack.GetAsByteArray();
         }
-
-
         public static DateTime ConvertDate(string dr)
         {
             DateTime DateOfBirth;
@@ -452,6 +491,111 @@ namespace MotorClaims.Models
             }
 
             return DateOfBirth;
+        }
+        public static DateTime? CallDate(string dt)
+        {
+            if (string.IsNullOrEmpty(dt) || dt.Length < 8)
+            {
+                return (DateTime?)null;
+            }
+            int year = Convert.ToInt32(dt.Substring(0, 4));
+            int Month = Convert.ToInt32(dt.Substring(4, 2));
+            int Day = Convert.ToInt32(dt.Substring(6, 2));
+
+            return new DateTime(year, Month, Day);
+        }
+        public static string GetLookups(string Key,int Type,List<LookupTable> lookupsTables) 
+        { 
+            string Result=string.Empty;
+            Result = lookupsTables.Where(p => p.Code == Key && p.MajorCode == Type).FirstOrDefault().NameEnglish;
+            return Result;
+        }
+        public static string FormatLongDateNoTime(DateTime? oDate)
+        {
+            if (oDate.HasValue)
+            {
+                return oDate.Value.ToString("dd-MM-yyyy");
+            }
+            else
+            {
+                return string.Empty;
+            }
+         
+        }
+        public static void RegisterHistory(AppSettings appSettings,long ClaimId ,string Reason,string LoggedUser)
+        {
+            ClaimHistory claimHistory = new ClaimHistory()
+            {
+                ChangeDate = DateTime.Now,
+                ClaimId = ClaimId,
+                Reason = Reason,
+                Status = 1,
+                UserName = LoggedUser
+            };
+            SetupClaimsRequestcs setupClaimsRequestcs = new SetupClaimsRequestcs()
+            {
+                TransactionType = CORE.Extensions.ClaimTransactionType.InsertClaimHistory,
+                Request = claimHistory
+            };
+            var  claims = Helpers.ExcutePostAPI<ClaimHistory>(setupClaimsRequestcs, appSettings.APIHubPrefix + "api/MotorClaim/SetupMotorClaim");
+
+        }
+        public static void AssignClaim(int UserId,int ClaimId, AppSettings appSettings)
+        {
+            MainSearchMC mainSearchMC = new MainSearchMC()
+            {
+                Id = ClaimId
+            };
+            SetupClaimsRequestcs setupClaimsRequestcs = new SetupClaimsRequestcs()
+            {
+                TransactionType = CORE.Extensions.ClaimTransactionType.LoadClaim,
+                Request = mainSearchMC
+            };
+            var claim = Helpers.ExcutePostAPI<Claims>(setupClaimsRequestcs, appSettings.APIHubPrefix + "api/MotorClaim/ClaimsTransactions");
+
+            //claim.AssignTo = UserId;
+             setupClaimsRequestcs = new SetupClaimsRequestcs()
+            {
+                TransactionType = CORE.Extensions.ClaimTransactionType.InsertUpdateClaim,
+                Request = claim
+            };
+            var claims = Helpers.ExcutePostAPI<Claims>(setupClaimsRequestcs, appSettings.APIHubPrefix + "api/MotorClaim/ClaimsTransactions");
+
+        }
+        public static void SendSMSTemplate(int TemplateId,Dictionary<string,string> Parameters,string MobileNo, AppSettings _appSettings)
+        {        
+            SMSTemplates sMSTemplates = new SMSTemplates();
+
+            SMSInput sMSInput = new SMSInput()
+           {
+               MessageBody = "" ,
+               Mobile = MobileNo,
+               message = "11",
+               TemplateId = TemplateId
+               
+           };
+            sMSTemplates = Helpers.ExcutePostAPI<SMSTemplates>(sMSInput, _appSettings.APIHubPrefix + "api/MotorClaim/GetSMSTemplate");
+            string MessageBody = sMSTemplates.ArSMS;
+
+            foreach (var param in Parameters)
+            {
+                MessageBody=MessageBody.Replace("{"+param.Key+"}", param.Value);
+            }
+            sMSInput.MessageBody = MessageBody;
+            var results = Helpers.ExcutePostAPI<CORE.DTOs.APIs.Unified_Response.Results>(sMSInput, _appSettings.APIHubPrefix + "api/ExternalAPIs/SendSms");
+        }
+
+        public static void SendNotificationMail(string Language,AppSettings _appSettings,string Email,string ClaimNo)
+        {
+            string EmailBody = Language == "AR-JO" ? System.IO.File.ReadAllText(Path.Combine(_appSettings.EmailsFolder, "Notification-AR.html")) : System.IO.File.ReadAllText(Path.Combine(_appSettings.EmailsFolder, "Notification-EN.html"));
+
+            EmailInput emailInput = new EmailInput()
+            {
+                Body = EmailBody,
+                Subject = Language == "AR-JO" ? "تنبيه مطالبة - " + ClaimNo : "Claim Notification - " + ClaimNo,
+                ToEmail = Email
+            };
+            var PostingResult = Helpers.ExcutePostAPI<CORE.DTOs.APIs.Unified_Response.Results>(emailInput, _appSettings.APIHubPrefix + "api/ExternalAPIs/SendEmail");
         }
     }
 }

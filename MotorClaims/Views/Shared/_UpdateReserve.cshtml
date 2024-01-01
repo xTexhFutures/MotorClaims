@@ -1,7 +1,17 @@
 ﻿@using CORE.DTOs.MotorClaim.Claims;
+@using CORE.DTOs.MotorClaim;
 @model Claims
 @{
     Layout = null;
+    List<ClaimMaster> claimMasters=(List<ClaimMaster>)ViewData["ClaimMaster"];
+        ClaimMaster master = new ClaimMaster();
+    master = claimMasters.Where(p => p.claims.Id == Model.Id).FirstOrDefault();
+    ReserveBalance reserveBalance = new ReserveBalance()
+    {
+    ClaimLevel=Model.ReserveBalance.HasValue?Model.ReserveBalance.Value:0,
+ClaimantLevel=master.claimants.ReserveBalance.HasValue?master.claimants.ReserveBalance.Value:0
+    };  
+
 }
 <form id="frmUpdateReserve" method="post" >
     <input type="hidden" name="ClaimId" value="@Model.Id" />
@@ -51,15 +61,17 @@
                             </li>
                         </ul>
 
-
+                        @{
+                            await Html.RenderPartialAsync("_ReserveSummary",reserveBalance);
+                        }
                         <div class="cancel-declaration">
                             <h3 class="title-label">Claimant</h3>
                             <div class="form-field-wrapper">
                                 <div class="form-input-wrapper">
                                     <select required class="form-inputbox" name="ClaimantID" id="ddlClaimantID">
-                                        <option value="">Select Claimant</option>
-                                        <option value="3">Claimant 1</option>
-                                        <option value="4">Claimant 2</option>
+                                        <option value="@master.claimants.Id">@master.claimants.ClaimantName</option>
+
+                                    
                                     </select>
                                 </div>
                             </div>
@@ -132,6 +144,17 @@
 
         });
     });
+
+    $("#ddlClaimantID").change(function () {               
+        var second = $(this).val();         
+        $.post('/Operations/GetReserveBalance/' + second,function(data){
+        $('#ClaimantBalance').text(data.claimantLevel);
+        });
+ 
+
+    });
+
+
     $('#txtSparePartCost').ForceDecimalNegativeEntry();
     $('#txtLaborCost').ForceDecimalNegativeEntry();
     $('#txtOtherCost').ForceDecimalNegativeEntry();

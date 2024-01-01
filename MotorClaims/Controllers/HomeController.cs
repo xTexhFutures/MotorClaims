@@ -42,8 +42,15 @@ namespace MotorClaims.Controllers
                 CultureInfo cultureInfo = Thread.CurrentThread.CurrentCulture;
                 HttpContext.Session.SetSessionData("Lang", cultureInfo);
             }
-
-
+           
+            List<Users> users = new List<Users>();
+            users = HttpContext.Session.getSessionData<List<Users>>("AllUsers");
+            if (users == null )
+            {
+                users = Helpers.ExcuteGetAPI<List<Users>>(true, _appSettings.APIHubPrefix + "api/Authenticator/AllUsers", "123");
+                HttpContext.Session.SetSessionData("AllUsers", users);
+            }
+          
             return View();
         }
 

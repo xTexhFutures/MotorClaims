@@ -7,15 +7,17 @@
     int VehicleId = (int)ViewData["VehicleId"];
     int PolicyId = (int)ViewData["PolicyId"];
     Claims claims = (Claims)ViewData["claims"];
+    List<LookupTable> lookupTables = (List<LookupTable>)ViewData["query"];
 }
-@if (Model.Count > 0)
+@if (Model !=null && Model.Count > 0)
 {
     <div class="transaction-details">
+
         <table class="universal-table">
             <tr>
                 <!-- <th>#</th> -->
                 <th>Claim Segment</th>
-                <th>Claimant Serial</th>
+                <th>Claimant Type</th>
                 <th>Claimant Name</th>
                 <th>Policy Number</th>
                 <th>Make</th>
@@ -39,9 +41,12 @@
                         ClaimId = clm.ClaimId,
                         ClaimantId = clm.Id
                     };
+
+                            var ClaimantType = Helpers.GetLookups(clm.ClaimantType.ToString(), (int)Enums.Lookups.ClaimantType, lookupTables);
+
                     }
                     <td class="tran"><a  onclick="LoadClaimant('@MotorClaims.Models.Helpers.Encrypt(JsonConvert.SerializeObject(claimSearchobj))')" >#@claims.ClaimNo</a></td>
-                    <td>@clm.Serial</td>
+                    <td>@ClaimantType</td>
                     <td>@clm.ClaimantName</td>
                     <td>@claims.PolicyNo</td>
                     <td>@clm.MakeDesc</td>
@@ -67,8 +72,24 @@ else
         <span>No results found.</span>
     </div>
 }
+    <div class="footer-actions-handle" style="position:inherit !important; width:100%">
+          <div class="next-button" style="margin-right:5px">
+                    @{
+                        ClaimSearchobj claimSearchobj2 = new ClaimSearchobj()
+                    {
+                        PolicyId = PolicyId,
+                        VehicleId = VehicleId,
+                        ClaimId = claims.Id,
+                        ClaimantId = 0
+                    };
+                    }
+                                <button type="button" class="button button-primary" onclick="LoadClaimant('@MotorClaims.Models.Helpers.Encrypt(JsonConvert.SerializeObject(claimSearchobj2))')">
+                                    Add New Claimant
+                                </button>
+                        
 
-
+                        </div>
+                                </div>
                         <div id="ClaimantEntry">
 
                         </div>

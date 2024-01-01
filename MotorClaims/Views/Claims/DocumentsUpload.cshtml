@@ -44,7 +44,7 @@
                     @if (Model.Any(p => p.DocumentSetupId == doc.Id))
                     {
                         <td class="tran">
-                            <a target="_blank" href="@(Link+"/"+ Model.Where(p=>p.DocumentSetupId==doc.Id).FirstOrDefault().FileName)">@doc.Name</a>
+                            <a target="_blank" href="@(Link+ Model.Where(p=>p.DocumentSetupId==doc.Id).FirstOrDefault().FileName)">@doc.Name</a>
                         </td>
 
                     }
