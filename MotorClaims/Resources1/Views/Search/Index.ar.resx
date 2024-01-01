@@ -123,6 +123,9 @@
   <data name="ClaimsSearch" xml:space="preserve">
     <value>البحث عن طريق المطالبة</value>
   </data>
+  <data name="g" xml:space="preserve">
+    <value>g</value>
+  </data>
   <data name="PlateNo" xml:space="preserve">
     <value>رقم اللوحة</value>
   </data>
