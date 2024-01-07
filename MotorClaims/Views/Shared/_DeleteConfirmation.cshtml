@@ -1,4 +1,12 @@
-﻿@{
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.AspNetCore.Builder
+@using Microsoft.AspNetCore.Localization
+@using Microsoft.Extensions.Options
+@using Microsoft.AspNetCore.Http.Features
+@using System.Globalization
+
+@inject IViewLocalizer _localizer
+@{
     string Controller = ViewData["Controller"].ToString();
     string Action = ViewData["Action"].ToString();
 }
@@ -8,18 +16,30 @@
 <form asp-controller="@Controller" asp-action="@Action" method="post">
     <div class="modal-content">
         <div class="modal-header">
-            <span class="close-delete-dependent" onclick="Close('delete-Confirmation')">&times;</span>
-            <h2>Delete Confirmation</h2>
+            <span class="close-delete-dependent" onclick="Close('delete-Confirmation')">
+                &times;
+            </span>
+            <h2>
+                @_localizer["DeleteConfirmation"].Value
+                
+            </h2>
         </div>
         <div class="modal-body">
             <input type="hidden" name="Id" value="@Model" />
             <p class="delete-text">
-                Are You Sure ?
+                @_localizer["AreYouSure?"].Value
+                
             </p>
         </div>
         <div class="modal-footer">
-            <button onclick="Close('delete-Confirmation')" type="button" class="button button-secondary-border">Cancel</button>
-            <button class="button button-primary" type="submit">OK</button>
+            <button onclick="Close('delete-Confirmation')" type="button" class="button button-secondary-border">
+                @_localizer["Cancel"].Value
+                
+            </button>
+            <button class="button button-primary" type="submit">
+                @_localizer["OK"].Value
+                
+            </button>
         </div>
     </div>
 </form>

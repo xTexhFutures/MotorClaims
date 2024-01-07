@@ -1,15 +1,25 @@
-﻿@using CORE.DTOs.MotorClaim.WorkFlow;
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.AspNetCore.Builder
+@using Microsoft.AspNetCore.Localization
+@using Microsoft.Extensions.Options
+@using Microsoft.AspNetCore.Http.Features
+@using System.Globalization
+
+@inject IViewLocalizer _localizer
+
+
+@using CORE.DTOs.MotorClaim.WorkFlow;
 @model DelegationSetup
 
 <div class="popup-body-wrapper">
     <div class="popup-header">
         <div class="popup-header-inner">
-            <h3 class="popup-title">Delegation</h3>
+            <h3 class="popup-title">@_localizer["Delegation"].Value</h3>
             <div class="close-popup-icon" onclick="Close('edit-Delegation-popup')">
                 <img class="close-icon" src="/assets/icons/close.svg">
             </div>
         </div>
-        <p class="popup-description">Define Delegation Process</p>
+        <p class="popup-description">@_localizer["DefineDelegationProcess"].Value</p>
     </div>
     <form method="post" asp-action="UpdateDelegation" asp-controller="Delegation">
 
@@ -25,26 +35,26 @@
                             <div class="form-input-wrapper">
                                 <input class="form-inputbox" id="txtDelegateFrom" autocomplete="off" name="DelegateFrom" type="text" required value="@Model.DelegateFrom">
                                 <input id="txthfDelegateFrom" name="DelegateFromId" type="hidden" value="@Model.DelegateFromId">
-                                <label class="form-label non-icon" for="txtDelegateFrom">Delegate From</label>
+                                <label class="form-label non-icon" for="txtDelegateFrom">@_localizer["DelegateFrom"].Value</label>
                             </div>
                         </div>
                         <div class="form-field-wrapper">
                             <div class="form-input-wrapper">
                                 <input class="form-inputbox" id="txtDelegateTo" autocomplete="off" name="DelegateTo" type="text" required value="@Model.DelegateTo">
                                 <input id="txthfDelegateTo" name="DelegateToId" type="hidden" value="@Model.DelegateToId">
-                                <label class="form-label non-icon" for="txtDelegateTo">Delegate To</label>
+                                <label class="form-label non-icon" for="txtDelegateTo">@_localizer["DelegateTo"].Value</label>
                             </div>
                         </div>
                         <div class="form-field-wrapper">
                             <div class="form-input-wrapper">
                                 <input class="form-inputbox calendar-input" autocomplete="off" id="txtFrom" name="From" type="text" required value="@(Model.Id>0?Model.From.ToString("dd-MM-yyyy"):"")">
-                                <label class="form-label non-icon" for="txtFrom">From</label>
+                                <label class="form-label non-icon" for="txtFrom">@_localizer["From"].Value</label>
                             </div>
                         </div>
                         <div class="form-field-wrapper">
                             <div class="form-input-wrapper">
                                 <input class="form-inputbox calendar-input" autocomplete="off" id="txtTo" name="To" type="text" required value="@(Model.Id>0?Model.To.ToString("dd-MM-yyyy"):"")">
-                                <label class="form-label non-icon" for="txtTo">To</label>
+                                <label class="form-label non-icon" for="txtTo">@_localizer["To"].Value</label>
                             </div>
                         </div>
                     </div>
@@ -54,7 +64,7 @@
         </div>
         <div class="popup-footer">
             <button class="button button-secondary" type="button" onclick="Close('edit-Delegation-popup')">Cancel</button>
-            <button class="button button-secondary" type="submit">Submit</button>
+            <button class="button button-secondary" type="submit">@_localizer["Submit"].Value</button>
         </div>
     </form>
 </div>

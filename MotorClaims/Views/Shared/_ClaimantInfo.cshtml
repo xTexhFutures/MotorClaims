@@ -1,4 +1,12 @@
-﻿@using CORE.DTOs.MotorClaim.Claims;
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.AspNetCore.Builder
+@using Microsoft.AspNetCore.Localization
+@using Microsoft.Extensions.Options
+@using Microsoft.AspNetCore.Http.Features
+@using System.Globalization
+
+@inject IViewLocalizer _localizer
+@using CORE.DTOs.MotorClaim.Claims;
 
 @{
     Layout = null;
@@ -12,7 +20,9 @@
             <div class="name-number-wrapper">
                 <div class="policy-name-wrapper">
                     <img src="/assets/icons/empty-file.svg" class="policy-icon" />
-                    <p class="policy-name">Claimants Info</p>
+                <p class="policy-name">
+                    @_localizer["ClaimantsInfo"].Value
+                </p>
                 </div>
 
             </div>
@@ -31,7 +41,9 @@
                             var ClaimantType = Helpers.GetLookups(item.ClaimantType.ToString(), (int)Enums.Lookups.ClaimantType, Model.Lookups);
                         }
                         <div class="item-content">
-                            <span class="label">Claimant Type</span>
+                        <span class="label">
+                            @_localizer["ClaimantType"].Value
+                        </span>
                             <h3 class="value ellipsis">@ClaimantType</h3>
                         </div>
                     </li>
@@ -43,7 +55,9 @@
                             var damage = Helpers.GetLookups(item.DamageType.ToString(), (int)Enums.Lookups.DamageType, Model.Lookups);
                         }
                         <div class="item-content">
-                            <span class="label">Damage Type</span>
+                        <span class="label">
+                            @_localizer["DamageType"].Value
+                        </span>
                             <h3 class="value ellipsis">@damage</h3>
                         </div>
                     </li>
@@ -55,7 +69,9 @@
                             var NatureofLoss = Helpers.GetLookups(item.NatureofLoss.ToString(), (int)Enums.Lookups.CauseOfLoss, Model.Lookups);
                         }
                         <div class="item-content">
-                            <span class="label">Nature of Loss</span>
+                        <span class="label">
+                            @_localizer["NatureofLoss"].Value
+                        </span>
                             <h3 class="value ellipsis">@NatureofLoss</h3>
                         </div>
                     </li>
@@ -66,7 +82,9 @@
                             <img src="/assets/icons/save.svg" alt="" class="item-icon">
                         </span>
                         <div class="item-content">
-                            <span class="label">Claimant Name</span>
+                        <span class="label">
+                            @_localizer["ClaimantName"].Value
+                        </span>
                             <h3 class="value ellipsis">@item.ClaimantName</h3>
                         </div>
                     </li>
@@ -81,7 +99,9 @@
                             <img src="/assets/icons/save.svg" alt="" class="item-icon">
                         </span>
                         <div class="item-content">
-                            <span class="label">National Id</span>
+                        <span class="label">
+                            @_localizer["NationalId"].Value
+                        </span>
                             <h3 class="value ellipsis">@item.NationalId</h3>
                         </div>
                     </li>
@@ -92,7 +112,9 @@
                             <img src="/assets/icons/save.svg" alt="" class="item-icon">
                         </span>
                         <div class="item-content">
-                            <span class="label">Our %</span>
+                        <span class="label">
+                            @_localizer["Our%"].Value
+                        </span>
                             <h3 class="value ellipsis">@item.OurPercent %</h3>
                         </div>
                     </li>
@@ -101,7 +123,9 @@
                             <img src="/assets/icons/save.svg" alt="" class="item-icon">
                         </span>
                         <div class="item-content">
-                            <span class="label">Responsibility</span>
+                        <span class="label">
+                            @_localizer["Responsibility"].Value
+                        </span>
                             <h3 class="value ellipsis">@(item.Responsipility == 1 ? "US" : (item.Responsipility==2?"Shared":"They"))</h3>
                         </div>
                     </li>
@@ -110,7 +134,9 @@
                             <img src="/assets/icons/save.svg" alt="" class="item-icon">
                         </span>
                         <div class="item-content">
-                            <span class="label">Mobile No</span>
+                        <span class="label">
+                            @_localizer["MobileNo"].Value
+                        </span>
                             <h3 class="value ellipsis">@item.MobileNo</h3>
                         </div>
                     </li>
@@ -119,7 +145,9 @@
                             <img src="/assets/icons/save.svg" alt="" class="item-icon">
                         </span>
                         <div class="item-content">
-                            <span class="label">Driver Name</span>
+                        <span class="label">
+                            @_localizer["DriverName"].Value
+                        </span>
                             <h3 class="value ellipsis">@item.DriverName</h3>
                         </div>
                     </li>
@@ -134,7 +162,9 @@
                             <img src="/assets/icons/save.svg" alt="" class="item-icon">
                         </span>
                         <div class="item-content">
-                            <span class="label">Owner Name</span>
+                        <span class="label">
+                            @_localizer["OwnerName"].Value
+                        </span>
                             <h3 class="value ellipsis">@item.OwnerName</h3>
                         </div>
                     </li>
@@ -145,7 +175,9 @@
                             <img src="/assets/icons/calendar.svg" alt="" class="item-icon">
                         </span>
                         <div class="item-content">
-                            <span class="label">Driver Date of Birth</span>
+                        <span class="label">
+                            @_localizer["DriverDateofBirth"].Value
+                        </span>
                             <h3 class="value ellipsis">@(Helpers.FormatLongDateNoTime(item.DriverBirthDate))</h3>
                         </div>
                     </li>
@@ -154,7 +186,9 @@
                             <img src="/assets/icons/save.svg" alt="" class="item-icon">
                         </span>
                         <div class="item-content">
-                            <span class="label">Age</span>
+                        <span class="label">
+                            @_localizer["Age"].Value
+                        </span>
                             <h3 class="value ellipsis">@item.DriverAge</h3>
                         </div>
                     </li>
@@ -163,7 +197,9 @@
                             <img src="/assets/icons/save.svg" alt="" class="item-icon">
                         </span>
                         <div class="item-content">
-                            <span class="label">Driver License Expiry Date</span>
+                        <span class="label">
+                            @_localizer["DriverLicenseExpiryDate"].Value
+                        </span>
                             <h3 class="value ellipsis">@Helpers.FormatLongDateNoTime(item.DriverLicenseExpiryDate)</h3>
                         </div>
                     </li>
@@ -172,7 +208,9 @@
                             <img src="/assets/icons/save.svg" alt="" class="item-icon">
                         </span>
                         <div class="item-content">
-                            <span class="label">IBAN</span>
+                        <span class="label">
+                            @_localizer["IBAN"].Value
+                        </span>
                             <h3 class="value ellipsis">@item.Iban</h3>
                         </div>
                     </li>
@@ -188,7 +226,9 @@
                             <img src="/assets/icons/save.svg" alt="" class="item-icon">
                         </span>
                         <div class="item-content">
-                            <span class="label">Bank Name</span>
+                        <span class="label">
+                            @_localizer["BankName"].Value
+                        </span>
                             <h3 class="value ellipsis">@item.BankName</h3>
                         </div>
                     </li>
@@ -199,7 +239,9 @@
                             <img src="/assets/icons/calendar.svg" alt="" class="item-icon">
                         </span>
                         <div class="item-content">
-                            <span class="label">Beneficiary Name</span>
+                        <span class="label">
+                            @_localizer["BeneficiaryName"].Value
+                        </span>
                             <h3 class="value ellipsis">@item.BenefecieryName</h3>
                         </div>
                     </li>
@@ -208,8 +250,10 @@
                             <img src="/assets/icons/save.svg" alt="" class="item-icon">
                         </span>
                         <div class="item-content">
-                            <span class="label">Missing Documents</span>
-                            <h3 class="value ellipsis"></h3>
+                            <span class="label">
+                            @_localizer["MissingDocuments"].Value
+                        </span>
+                        <h3 class="value ellipsis"></h3>
                         </div>
                     </li>
                     <li class="detailed-item false">
@@ -217,7 +261,9 @@
                             <img src="/assets/icons/save.svg" alt="" class="item-icon">
                         </span>
                         <div class="item-content">
-                            <span class="label">Fraud</span>
+                        <span class="label">
+                            @_localizer["Fraud"].Value
+                        </span>
                             <h3 class="value ellipsis">Low</h3>
                         </div>
                     </li>
@@ -226,7 +272,9 @@
                             <img src="/assets/icons/save.svg" alt="" class="item-icon">
                         </span>
                         <div class="item-content">
-                            <span class="label">Make/Model/Manufacture</span>
+                        <span class="label">
+                            @_localizer["Make/Model/Manufacture"].Value
+                        </span>
                             <h3 class="value ellipsis">@item.MakeDesc/@item.ModelDesc/@item.Manifacturing </h3>
                         </div>
                     </li>
@@ -242,7 +290,9 @@
                             <img src="/assets/icons/save.svg" alt="" class="item-icon">
                         </span>
                         <div class="item-content">
-                            <span class="label">Color</span>
+                        <span class="label">
+                            @_localizer["Color"].Value
+                        </span>
                             <h3 class="value ellipsis">@item.ColorDesc</h3>
                         </div>
                     </li>
@@ -253,7 +303,9 @@
                             <img src="/assets/icons/calendar.svg" alt="" class="item-icon">
                         </span>
                         <div class="item-content">
-                            <span class="label">Plate Number</span>
+                        <span class="label">
+                            @_localizer["PlateNumber"].Value
+                        </span>
                             <h3 class="value ellipsis">@item.PlateNo</h3>
                         </div>
                     </li>
@@ -262,7 +314,9 @@
                             <img src="/assets/icons/save.svg" alt="" class="item-icon">
                         </span>
                         <div class="item-content">
-                            <span class="label">Chassis No</span>
+                        <span class="label">
+                            @_localizer["ChassisNo"].Value
+                        </span>
                             <h3 class="value ellipsis">@item.ChassisNo</h3>
                         </div>
                     </li>

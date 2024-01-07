@@ -20,7 +20,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>login</title>
+    <title>@_localizer["login"].Value </title>
     <!-- styles -->
     <link href="~/styles/commonStyle.css" rel="stylesheet" />
     <link href="~/styles/loginstyle/loginStyle.css" rel="stylesheet" />
@@ -264,7 +264,7 @@
         <div class="auth-wrapper">
             <div class="auth-inner-wrapper">
                 <div class="auth-form-component">
-                    <h2 class="auth-heading">Login</h2>
+                    <h2 class="auth-heading">@_localizer["Login"].Value </h2>
                     <div class="form-wrapper">
                         <div class="form-field-wrapper">
                             <div class="form-input-wrapper">
@@ -275,7 +275,7 @@
 
                                 <input class="form-inputbox" id="userName" name="userName" type="text" required=""
                                     maxlength="12" value="">
-                                <label class="form-label" for="userName">Policy No.</label>
+                                <label class="form-label" for="userName">@_localizer["PolicyNo"].Value </label>
                             </div>
                         </div>
                         <div class="form-field-wrapper">
@@ -285,7 +285,7 @@
                                 </div>
                                 <input class="form-inputbox" id="password" name="password" type="password" required=""
                                     maxlength="12" value="">
-                                <label class="form-label" for="password">Password</label>
+                                <label class="form-label" for="password">@_localizer["Password"].Value </label>
                                 <div class="icon-hide-show display-none">
                                     <img src="./assets/icons/eye.svg" class="icon-hide-show" alt="">
                                 </div>
@@ -302,18 +302,20 @@
                         <div class="Toastify"></div>
                     </div>
                     <div class="terms-wrapper">
-                        <p class="term">By continuing, you agree to Tawuniya's <a class="term-link" href="#"
-                                target="_blank">Terms of
-                                Services</a>
+                        <p class="term">
+                            @_localizer["BycontinuingyouagreetoTawuniyas"].Value<a class="term-link" href="#"
+                                                                                   target="_blank">
+                                @_localizer["TermsofServices"].Value 
+                                </a>
                         </p>
                     </div>
                     <div class="forgot-password">
-                        <a class="forgot-password-link" href="./new-forgot-password.html">Forgot Password</a>
+                        <a class="forgot-password-link" href="./new-forgot-password.html">@_localizer["ForgotPassword"].Value </a>
                     </div>
                 </div>
                 <div class="auth-content-reference">
                     <div class="reference-content-wrapper">
-                        <h2 class="ref-heading">Welcome to Website</h2>
+                        <h2 class="ref-heading">@_localizer["WelcometoWebsite"].Value </h2>
                         <!-- <p class="ref-tagline">Lorem Ipsum is simply dummy text of the printing and typesetting
                             industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,</p> -->
                         <img src="./assets/illustration/login_illustration.svg" alt="">
@@ -324,12 +326,12 @@
         <div class="auth-footer">
             <div class="content-footer">
                 <div class="copy-right">
-                    <p>Copyright © Tawuniya 2022, all rights reserved</p>
+                    <p>@_localizer["Copyright © Tawuniya 2022, all rights reserved"].Value </p>
                 </div>
                 <div class="footer-link">
-                    <p class="footer-link-text">Terms and Conditions</p>
-                    <p class="footer-link-text">Privacy Policy</p>
-                    <p class="footer-link-text">Cookie Policy</p>
+                    <p class="footer-link-text">@_localizer["TermsandConditions"].Value </p>
+                    <p class="footer-link-text">@_localizer["PrivacyPolicy"].Value </p>
+                    <p class="footer-link-text">@_localizer["CookiePolicy"].Value </p>
                 </div>
             </div>
             <div class="side-content-footer undefined false">

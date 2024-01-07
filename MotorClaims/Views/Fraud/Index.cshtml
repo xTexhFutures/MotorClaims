@@ -1,4 +1,12 @@
-﻿@using CORE.DTOs.MotorClaim.Frauds;
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.AspNetCore.Builder
+@using Microsoft.AspNetCore.Localization
+@using Microsoft.Extensions.Options
+@using Microsoft.AspNetCore.Http.Features
+@using System.Globalization
+
+@inject IViewLocalizer _localizer
+@using CORE.DTOs.MotorClaim.Frauds;
 @{
     int? Filter = (int?)ViewData["Filter"];
     List<FraudSetup> fraudSetups = (List<FraudSetup>)ViewData["FraudSetup"];
@@ -14,7 +22,7 @@
             <div class="name-number-wrapper">
                 <div class="policy-name-wrapper">
                     <img src="/assets/icons/Fraud.png" class="policy-icon" />
-                    <p class="policy-name">Fraud Setup</p>
+                    <p class="policy-name">@_localizer["FraudSetup"].Value </p>
                 </div>
             </div>
             <div class="action-dropdown">
@@ -52,21 +60,21 @@
 </div>
 
 <div class="policy-wrapper">
-    <h2 class="heading">Fraud Managment</h2>
+    <h2 class="heading">@_localizer["FraudManagment"].Value </h2>
     <div class="search-member">
         <form method="post" asp-action="SearchFrauds" asp-controller="Fraud">
 
         <div class="search-filter-wrapper">
             
                 <select class="common-dropdown " id="ddlFilter" name="Filter">
-                <option  value="">Status</option>
-                <option value="1">Active</option>
-                <option value="0">In-Active</option>
+                    <option value="">@_localizer["Status"].Value </option>
+                    <option value="1">@_localizer["Active"].Value </option>
+                    <option value="0">@_localizer["In-Active"].Value </option>
             </select>
 
             <div class="search-heading-wrap">
 
-                <button class="button button-secondary" type="submit">Search</button>
+                    <button class="button button-secondary" type="submit">@_localizer["Khallad"].Value Search</button>
             </div>
           
 
@@ -85,11 +93,11 @@
     <table class="universal-table">
         <tr>
             <!-- <th>#</th> -->
-            <th>Stage Name</th>
-            <th>Score</th>
-            <th>Is Active</th>
-            <th>Policy Type</th>
-            <th>Actions</th>
+            <th>@_localizer["StageName"].Value </th>
+            <th>@_localizer["Score"].Value </th>
+            <th>@_localizer["IsActive"].Value </th>
+            <th>@_localizer["PolicyType"].Value </th>
+            <th>@_localizer["Actions"].Value </th>
         </tr>
         @if (fraudIndicators != null)
         @foreach (var item in fraudIndicators)
@@ -100,24 +108,24 @@
                 <td>
                         @if (item.IsActive)
                         {
-                            <span>Active</span>
+                            <span>@_localizer["Active"].Value </span>
                         }
                         else
                         {
-                            <span>In-Active</span>
+                            <span>@_localizer["In-Active"].Value </span>
                         }
                 </td>
                 <td>
                         @if (item.PolicyType==1)
                         {
-                            <span>TPL</span>
+                            <span>@_localizer["TPL"].Value </span>
                         }
                         else if (item.PolicyType == 2)
                         {
-                            <span>Comp</span>
+                            <span>@_localizer["Comp"].Value </span>
                         }else
                         {
-                            <span>Both</span>
+                            <span>@_localizer["Both"].Value </span>
                         }
                 </td>
 

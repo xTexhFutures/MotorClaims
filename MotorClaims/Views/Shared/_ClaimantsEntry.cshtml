@@ -1,4 +1,11 @@
-﻿
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.AspNetCore.Builder
+@using Microsoft.AspNetCore.Localization
+@using Microsoft.Extensions.Options
+@using Microsoft.AspNetCore.Http.Features
+@using System.Globalization
+
+@inject IViewLocalizer _localizer
 @using CORE.DTOs.APIs.MotorClaim;
 @using CORE.DTOs.APIs.Setups.MMP;
 @using CORE.DTOs.MotorClaim;
@@ -23,24 +30,30 @@
        <div class="add-member-detail" style="max-width:100% !important">
         <div class="tabs-wrapper">
             <ul class="tabs-navigation-wrap">
-                <li class="tab-navigation tab-custom-two2 A active" id="CtabTwoOne" onclick="selectTabsTwo2('CtabTwoOne','ClaimantEntryPartial');LoadClaimantEntryPartial('@MotorClaims.Models.Helpers.Encrypt(JsonConvert.SerializeObject(claimSearchobj))')">
+                <li class="tab-navigation tab-custom-two2 A active" id="CtabTwoOne" onclick=
+                "selectTabsTwo2('CtabTwoOne','ClaimantEntryPartial');LoadClaimantEntryPartial('@MotorClaims.Models.Helpers.Encrypt(JsonConvert.SerializeObject(claimSearchobj))')">
                     <div class="tab-item-text">
-                        Claimant entry
+                    @_localizer["ClaimantEntry"].Value
+                    
+                    
                     </div>
                 </li>
                 <li class="tab-navigation tab-custom-two2 A" id="CtabTwoTwo" onclick="selectTabsTwo2('CtabTwoTwo','ClaimantsDocumentsUpload'); LoadDocumentsList('@((int)MotorClaims.Models.Enums.DocumnetType.Claimant)','@Model.ClaimId','@policy.policy.Id','@vehicle.Vehicle.Id','@Model.Id')">
                     <div class="tab-item-text">
-                        Documents Upload
+                    @_localizer["DocumentsUpload"].Value
+                    
                     </div>
                 </li>
                   <li class="tab-navigation tab-custom-two2 A" id="CtabTwoThree" onclick="selectTabsTwo2('CtabTwoThree','ClaimantsReserve'); LoadClaimantsReserveList('@((int)MotorClaims.Models.Enums.DocumnetType.Claimant)','@Model.ClaimId','@policy.policy.Id','@vehicle.Vehicle.Id','@Model.Id')">
                     <div class="tab-item-text">
-                        Reserve
+                    @_localizer["Reserve"].Value
+                    
                     </div>
                 </li>
                   <li class="tab-navigation tab-custom-two2 A" id="CtabTwoFour" onclick="selectTabsTwo2('CtabTwoFour','ClaimantsRecovery'); LoadClaimantsRecoveryList('@((int)MotorClaims.Models.Enums.DocumnetType.Claimant)','@Model.ClaimId','@policy.policy.Id','@vehicle.Vehicle.Id','@Model.Id')">
                     <div class="tab-item-text">
-                        Recovery
+                    @_localizer["Recovery"].Value
+                    
                     </div>
                 </li>
             </ul>

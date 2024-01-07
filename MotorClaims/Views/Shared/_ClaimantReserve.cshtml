@@ -1,4 +1,12 @@
-﻿@using CORE.DTOs.MotorClaim.Claims;
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.AspNetCore.Builder
+@using Microsoft.AspNetCore.Localization
+@using Microsoft.Extensions.Options
+@using Microsoft.AspNetCore.Http.Features
+@using System.Globalization
+
+@inject IViewLocalizer _localizer
+@using CORE.DTOs.MotorClaim.Claims;
 @{
     Layout = null;
     int Serial = 0;
@@ -11,7 +19,9 @@
           <div class="next-button" style="margin-right:5px">
 
                                 <button type="button" class="button button-primary" onclick="deleteMember('delet-member', 'Add_Reserve-popup')">
-                                    Add New Reserve
+            @_localizer["AddNewReserve"].Value
+
+                                    
                                 </button>
                         
 
@@ -22,12 +32,30 @@
         <table class="universal-table">
             <tr>
                 <!-- <th>#</th> -->
-                <th>Reserve Serial</th>
-            <th>Transaction Date</th>
-            <th>Transaction Amount</th>
-            <th>Note</th>
-            <th>Fees</th>
-            <th>Created By</th>
+            <th>
+                @_localizer["ReserveSerial"].Value
+                
+            </th>
+            <th>
+                @_localizer["TransactionDate"].Value
+                
+            </th>
+            <th>
+                @_localizer["TransactionAmount"].Value
+                
+            </th>
+            <th>
+                @_localizer["Note"].Value
+                
+            </th>
+            <th>
+                @_localizer["Fees"].Value
+                
+            </th>
+            <th>
+                @_localizer["CreatedBy"].Value
+                
+            </th>
 
             </tr>
 
@@ -55,7 +83,10 @@
         <div class="slide-popup-inner">
             <div class="slide-header">
                 <div class="heading-card">
-                    <h2 class="heading">Add Reserve</h2>
+                <h2 class="heading">
+                    @_localizer["AddReserve"].Value
+                    
+                </h2>
                 </div>
             </div>
              <form method="post" id="frmUpdateReserve">
@@ -66,7 +97,10 @@
                     <div class="body-content-wrapper">
                         <div class="delete-content-card">
                              <div class="cancel-declaration">
-                                <h3 class="title-label">Reserve Amount</h3>
+                                <h3 class="title-label">
+                                    @_localizer["ReserveAmount"].Value
+                                    
+                                </h3>
                                 <div class="form-field-wrapper">
                                     <div class="form-input-wrapper">
                                        <input class="form-inputbox" name="TransactionAmount" id="txtTransactionAmount" type="text" required/>
@@ -74,7 +108,10 @@
                                 </div>
                             </div>
                             <div class="cancel-declaration">
-                                <h3 class="title-label">What is the Reserve reason?</h3>
+                                <h3 class="title-label">
+                                    @_localizer["WhatistheReservereason?"].Value
+                                    
+                                </h3>
                                 <div class="form-field-wrapper">
                                     <div class="form-input-wrapper">
                                        <textarea class="form-inputbox" required name="Note"></textarea>
@@ -86,8 +123,14 @@
                     <div class="slide-footer">
                         <div class="slide-inner-footer">
                             <button class="button button-secondary-border" type="button"
-                                onclick="Close('Add_Reserve-popup')">Cancel</button>
-                            <button  class="button button-primary" type="submit">Save</button>
+                                    onclick="Close('Add_Reserve-popup')">
+                                @_localizer["Cancel"].Value
+                                
+                            </button>
+                            <button class="button button-primary" type="submit">
+                                @_localizer["Save"].Value
+                                
+                            </button>
                         </div>
                     </div>
                 </div>

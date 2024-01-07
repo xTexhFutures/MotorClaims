@@ -1,4 +1,12 @@
-﻿@using CORE.DTOs.APIs.MotorClaim;
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.AspNetCore.Builder
+@using Microsoft.AspNetCore.Localization
+@using Microsoft.Extensions.Options
+@using Microsoft.AspNetCore.Http.Features
+@using System.Globalization
+
+@inject IViewLocalizer _localizer
+@using CORE.DTOs.APIs.MotorClaim;
 @using CORE.DTOs.MotorClaim;
 @using Newtonsoft.Json;
 @{
@@ -31,7 +39,10 @@
     <div class="search-member">
         <div class="search-heading-wrap">
             <div class="heading-card">
-                <h2 class="heading">Claims List</h2>
+                <h2 class="heading">
+                    @_localizer["ClaimsList"].Value
+                    
+                </h2>
             </div>
             @{
                 ClaimSearchobj claimSearchobj = new ClaimSearchobj()
@@ -53,14 +64,38 @@
         <table class="universal-table">
             <tr>
                 <!-- <th>#</th> -->
-                <th>Claim Segment</th>
-                <th>Policy Type</th>
-                <th>Policy Number</th>
-                <th>Make</th>
-                <th>Model</th>
-                <th>Chassis</th>
-                <th>Creation Date</th>
-                <th>Claim Status</th>
+                <th>
+                    @_localizer["ClaimSegment"].Value
+                    
+                </th>
+                <th>
+                    @_localizer["PolicyType"].Value
+                    
+                </th>
+                <th>
+                    @_localizer["PolicyNumber"].Value
+                    
+                </th>
+                <th>
+                    @_localizer["Make"].Value
+                    
+                </th>
+                <th>
+                    @_localizer["Model"].Value
+                    
+                </th>
+                <th>
+                    @_localizer["Chassis"].Value
+                    
+                </th>
+                <th>
+                    @_localizer["CreationDate"].Value
+                    
+                </th>
+                <th>
+                    @_localizer["ClaimStatus"].Value
+                    
+                </th>
 
             </tr>
 
@@ -100,7 +135,10 @@ else
 {
     <div class="ui-state-highlight ui-corner-all" style="background:none !important;margin-top: 1%;">
         <span class="ui-icon ui-icon-info" style="float: left"></span>
-        <span>No results found.</span>
+        <span>
+            @_localizer["Noresultsfound"].Value
+            .
+        </span>
     </div>
 }
 

@@ -1,4 +1,12 @@
-﻿@using CORE.DTOs.APIs.MotorClaim;
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.AspNetCore.Builder
+@using Microsoft.AspNetCore.Localization
+@using Microsoft.Extensions.Options
+@using Microsoft.AspNetCore.Http.Features
+@using System.Globalization
+
+@inject IViewLocalizer _localizer
+@using CORE.DTOs.APIs.MotorClaim;
 @using CORE.DTOs.MotorClaim;
 @using CORE.DTOs.MotorClaim.Claims;
 @using Newtonsoft.Json;
@@ -17,7 +25,7 @@
 
     <div class="add-member-detail">
         <div class="page-heading">
-            <h2 class="page-title">Claim Entry</h2>
+            <h2 class="page-title">@_localizer["ClaimEntry"].Value </h2>
         </div>
 
          @{
@@ -98,23 +106,23 @@
 
                                             <div class="form-container Full">
                                                 <div id="najm">
-                                                    <span class="label">Accident Number</span>
+                                                    <span class="label"> @_localizer["AccidentNumber"].Value </span>
                                                     <input class="form-controlar" autocomplete="off" type="text" style="text-transform:uppercase" id="txtAccidentNo" maxlength="10" placeholder="Accident Number" name="AccidentNo" value="@Model.AccidentNo" />
 
                                                 </div>
                                                 <div id="Basher">
-                                                    <span class="label">Basher No</span>
+                                                    <span class="label"> @_localizer["BasherNo"].Value </span>
                                                     <input class="form-controlar" autocomplete="off" maxlength="20" id="txtBasherNo" type="text" placeholder="Basher No" name="BasherNo" value="@Model.BasherNo" />
                                                 </div>
 
                                             </div>
                                             <div class="form-container Full">
-                                                <span class="label">Taqdeer No</span>
+                                                <span class="label"> @_localizer["TaqdeerNo"].Value </span>
                                                 <input class="form-controlar" autocomplete="off"  maxlength="20" style="text-transform:uppercase" id="txtTaqdeerNo" type="text" placeholder="Taqdeer No" name="TaqdeerNo" value="@Model.TaqdeerNo" />
 
                                             </div>
                                              <div class="form-container Full" id="SequanceNo">
-                                                <span class="label">Sequance No</span>
+                                                <span class="label"> @_localizer["SequanceNo"].Value </span>
                                                 <input class="form-controlar" autocomplete="off"  maxlength="20" style="text-transform:uppercase" id="txtSequanceNo" type="text" placeholder="Sequance No" name="SequanceNo" value="" />
 
                                             </div>
@@ -132,7 +140,7 @@
 
                                         <div class="vehicle-owner-grid" id="Manual">
                                             <div class="form-container Full">
-                                                <span class="label">Accident Number</span>
+                                                <span class="label"> @_localizer["AccidentNumber"].Value </span>
                                                 <select class="form-controlar" name="ManualReportType" id="txtManualReportType">
                                                     <option value=""></option>
                                                     <option value="@((int)MotorClaims.Models.Enums.ClaimReportType.Najm)">@(MotorClaims.Models.Enums.ClaimReportType.Najm)</option>
@@ -140,37 +148,37 @@
                                                 </select>
                                             </div>
                                             <div class="form-container Full">
-                                                <span class="label">Accident Number</span>
+                                                <span class="label"> @_localizer["AccidentNumber"].Value </span>
                                                 <input class="form-controlar" autocomplete="off" style="text-transform:uppercase" type="text" maxlength="20" id="txtReportNo" placeholder="Accident Number" name="ReportNo" value="@Model.AccidentNo" />
                                             </div>
                                         </div>
                                         <div id="Manual1">
                                             <div class="vehicle-owner-grid">
                                                 <div class="form-container Full">
-                                                    <span class="label">Loss Date</span>
+                                                    <span class="label">@_localizer["LossDate"].Value </span>
                                                     <input class="form-controlar calendar-input" autocomplete="off" required type="text" placeholder="Loss Date" id="txtDateOfLoss" name="DateOfLoss" value="@(Model.Id>0? HelpersDate.FormatDateNoTime(Model.DateOfLoss):string.Empty)" />
                                                 </div>
                                                 <div class="form-container Full">
-                                                    <span class="label">Notification Date</span>
+                                                    <span class="label">@_localizer["NotificationDate"].Value </span>
                                                     <input class="form-controlar calendar-input" autocomplete="off" required type="text" placeholder="Notification Date" id="txtnotificationdate" name="notificationdate" value="@(Model.Id>0?HelpersDate.FormatDateNoTime(Model.NotificationDate):string.Empty)" />
                                                 </div>
                                                 <div class="form-container Full">
-                                                    <span class="label">Registration Date</span>
+                                                    <span class="label"> @_localizer["RegistrationDate"].Value </span>
                                                     <input class="form-controlar calendar-input" autocomplete="off" required type="text" placeholder="Registration Date" id="txtregistrationdate" name="registrationdate" value="@(Model.Id>0?HelpersDate.FormatDateNoTime(Model.RegistrationDate):string.Empty)" />
                                                 </div>
 
                                             </div>
                                             <div class="vehicle-owner-grid">
                                                 <div class="form-container Full">
-                                                    <span class="label">Geographical Area</span>
+                                                    <span class="label"> @_localizer["GeographicalArea"].Value </span>
                                                     <select class="form-controlar" required name="GeagraphicalArea" id="ddlGeagraphicalArea">
                                                         <option value=""></option>
-                                                        <option value="1">KSA</option>
-                                                        <option value="2">GCC</option>
+                                                        <option value="1">@_localizer["KSA"].Value </option>
+                                                        <option value="2">@_localizer["GCC"].Value </option>
                                                     </select>
                                                 </div>
                                                 <div class="form-container Full">
-                                                    <span class="label">City</span>
+                                                    <span class="label">@_localizer["City"].Value </span>
                                                     <select class="form-controlar" required name="City" id="txtCity" onchange="GetCityName(this);">
                                                         <option value=""></option>
                                                         @foreach (var item in Cities)
@@ -181,7 +189,7 @@
                                                     </select>
                                                 </div>
                                                 <div class="form-container Full">
-                                                    <span class="label">Survey City</span>
+                                                    <span class="label"> @_localizer["SurveyCity"].Value </span>
                                                     <select class="form-controlar" required name="SurveyCity" id="ddlSurveyCity">
                                                         <option value=""></option>
                                                         @foreach (var item in Cities)
@@ -195,20 +203,20 @@
 
                                             <div class="vehicle-owner-grid">
                                                 <div class="form-container Full">
-                                                    <span class="label">Claim Event</span>
+                                                    <span class="label">@_localizer["ClaimEvent"].Value </span>
                                                     <select class="form-controlar" name="EventId" id="ddlClaimEvent">
                                                         <option value=""></option>
-                                                        <option value="1">Flood</option>
+                                                        <option value="1"> @_localizer["Flood"].Value </option>
                                                         <option value="2">Fire</option>
                                                     </select>
                                                 </div>
                                                 <div class="form-container Full">
-                                                    <span class="label">Taqdeer No</span>
+                                                    <span class="label"> @_localizer["TaqdeerNo"].Value </span>
                                                     <input class="form-controlar" autocomplete="off" maxlength="20" style="text-transform:uppercase" id="txtTaqdeerNoManual" type="text" placeholder="Taqdeer No" name="TaqdeerNo" value="@Model.TaqdeerNo" />
 
                                                 </div>
                                                 <div class="form-container Full">
-                                                    <span class="label">Accident Place</span>
+                                                    <span class="label"> @_localizer["AccidentPlace"].Value </span>
                                                     <textarea class="form-controlar" id="txtAccidentPlace" autocomplete="off" name="AccidentPlace" maxlength="1024">@Model.AccidentPlace</textarea>
                                                 </div>
 
@@ -222,18 +230,18 @@
                                         <div class="dependent-collapse-header">
                                             <div class="dependent-explanation">
                                                 <div class="dependent-explain-info">
-                                                    <h3 class="name-info">Name</h3>
+                                                    <h3 class="name-info"> @_localizer["Name"].Value </h3>
                                                     <div class="dependent-info">
                                                         <div class="dependent-detailed-tiles">
-                                                            <span class="dependent-info-label">_localizer["IDType"].Value : </span>
+                                                            <span class="dependent-info-label">@_localizer["IDType"].Value : </span>
                                                             <span class="dependent-info-text"> </span>
                                                         </div>
                                                         <div class="dependent-detailed-tiles">
-                                                            <span class="dependent-info-label">_localizer["ID"].Value : </span>
-                                                            <span class="dependent-info-text">NationalId</span>
+                                                            <span class="dependent-info-label">@_localizer["ID"].Value : </span>
+                                                            <span class="dependent-info-text">@_localizer["Flood"].Value NationalId</span>
                                                         </div>
                                                         <div class="dependent-detailed-tiles">
-                                                            <span class="dependent-info-label">_localizer["DOB"].Value : </span>
+                                                            <span class="dependent-info-label">@_localizer["DOB"].Value : </span>
                                                             <span class="dependent-info-text"></span>
                                                         </div>
 
@@ -316,7 +324,7 @@
                             <img src="/assets/icons/save.svg" alt="" class="item-icon">
                         </span>
                         <div class="item-content">
-                            <span class="label">Policy No</span>
+                            <span class="label"> @_localizer["PolicyNo"].Value </span>
                             <h3 class="value">@policy.policy.PolicyNumber</h3>
                         </div>
                     </li>
@@ -325,7 +333,7 @@
                             <img src="/assets/icons/calendar.svg" alt="" class="item-icon">
                         </span>
                         <div class="item-content">
-                            <span class="label">Effective Date</span>
+                            <span class="label"> @_localizer["EffectiveDate"].Value </span>
                             <h3 class="value">@HelpersDate.FormatDateNoTime(policy.policy.PolicyEffectiveDate)</h3>
                         </div>
                     </li>
@@ -334,7 +342,7 @@
                             <img src="/assets/icons/calendar.svg" alt="" class="item-icon">
                         </span>
                         <div class="item-content">
-                            <span class="label">Year of Manufacturing</span>
+                            <span class="label"> @_localizer["YearofManufacturing"].Value </span>
                             <h3 class="value">@vehicle.Vehicle.ManufactureYear</h3>
                         </div>
                     </li>
@@ -343,7 +351,7 @@
                             <img src="/assets/icons/calendar.svg" alt="" class="item-icon">
                         </span>
                         <div class="item-content">
-                            <span class="label">Expiry Date</span>
+                            <span class="label"> @_localizer["ExpiryDate"].Value </span>
                             <h3 class="value">@HelpersDate.FormatDateNoTime(policy.policy.PolicyExpiryDate)</h3>
                         </div>
                     </li>

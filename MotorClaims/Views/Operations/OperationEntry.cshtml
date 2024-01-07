@@ -1,4 +1,12 @@
-﻿@using CORE.DTOs.MotorClaim.Claims;
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.AspNetCore.Builder
+@using Microsoft.AspNetCore.Localization
+@using Microsoft.Extensions.Options
+@using Microsoft.AspNetCore.Http.Features
+@using System.Globalization
+
+@inject IViewLocalizer _localizer
+@using CORE.DTOs.MotorClaim.Claims;
 @model ClaimMaster
 @{
     List<LookupTable> lookupTables = (List<LookupTable>)ViewData["query"];
@@ -22,7 +30,7 @@
             <ul class="tabs-navigation-wrap">
                 <li class="tab-navigation tab-custom-two active" id="tabTwoOne" onclick="selectTabsTwo('tabTwoOne','one_1'); ">
                     <div class="tab-item-text">
-                      <a href="#">Operation entry</a>  
+                        <a href="#">@_localizer["Operationentry"].Value </a>
                     </div>
                 </li>
             </ul>
@@ -60,7 +68,7 @@
                                         </div>
                                       
                                           <div class="vehicle-owner-grid">
-                                                    <span class="label">Rejection Reason</span>
+                                            <span class="label">@_localizer["RejectionReason"].Value </span>
                                            <textarea name="RejectionReason" rows="7" id="txtRejectionReason" class="form-inputbox" maxlength="1024"></textarea>
 
                                     

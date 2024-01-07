@@ -1,15 +1,25 @@
-﻿
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.AspNetCore.Builder
+@using Microsoft.AspNetCore.Localization
+@using Microsoft.Extensions.Options
+@using Microsoft.AspNetCore.Http.Features
+@using System.Globalization
+
+@inject IViewLocalizer _localizer
 
 
 
 <div class="slide-popup-inner">
     <div class="slide-header">
         <div class="heading-card">
-            <h2 class="heading">Delete Employee</h2>
+            <h2 class="heading">
+                @_localizer["DeleteEmployee"].Value
+                
+            </h2>
         </div>
     </div>
     <div class="slide-body">
-        <p class="body-heading">Please provide the reason of deletion</p>
+        <p class="body-heading">@_localizer["Pleaseprovidethereasonofdeletion"].Value </p>
         <div class="popup-body-wrapper">
             <div class="delete-alert">
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"
@@ -19,59 +29,61 @@
                 </svg>
                 <div class="delete-alert-content">
                     <h2 class="highlight-text">
-                        Deleting this employee means that all dependents will be deleted
-                        too.
+                        @_localizer["Deletingthisemployeemeansthatalldependentswillbedeletedtoo."].Value
+                        
+                        
                     </h2>
                     <p class="para-detale-alert">
-                        This action is permanent and cannot be undone. verify first to
-                        continue with employee deletion.
+                        @_localizer["Thisactionispermanentandcannotbeundone.verifyfirsttocontinuewithemployeedeletion."].Value
+                        
+                        
                     </p>
-                    <h2 class="highlight-text">Dependents: </h2>
+                    <h2 class="highlight-text">@_localizer["Dependents:"].Value  </h2>
                     <ul class="alert-point-delete">
-                        <li class="item-alert">TYLER DENNIS</li>
-                        <li class="item-alert">JORGE WARE</li>
-                        <li class="item-alert">SARA MOHAMMED</li>
+                        <li class="item-alert">@_localizer["TYLERDENNIS"].Value </li>
+                        <li class="item-alert">@_localizer["JORGEWARE"].Value </li>
+                        <li class="item-alert">@_localizer["SARAMOHAMMED"].Value </li>
                     </ul>
                 </div>
             </div>
             <div class="body-content-wrapper">
                 <div class="delete-content-card">
                     <div class="body-delete-header">
-                        <h2 class="heading-title">JENNIFER SCOTT</h2>
-                        <span class="active-class">SL/A</span>
-                        <span class="active-employee">Employee</span>
+                        <h2 class="heading-title">@_localizer["JENNIFERSCOTT"].Value </h2>
+                        <span class="active-class">@_localizer["SL/A"].Value </span>
+                        <span class="active-employee">@_localizer["Employee"].Value </span>
                     </div>
                     <ul class="list-detail">
                         <li class="list-item-delete">
-                            <span class="label">ID Type:</span>
+                            <span class="label">@_localizer["IDType:"].Value </span>
                             <span class="value"></span>
                         </li>
                         <li class="list-item-delete">
-                            <span class="label">ID:</span>
+                            <span class="label">@_localizer["ID:"].Value </span>
                             <span class="value"></span>
                         </li>
                         <li class="list-item-delete">
-                            <span class="label">Card Code:</span>
+                            <span class="label">@_localizer["CardCode:"].Value </span>
                             <span class="value">001004938468001</span>
                         </li>
                         <li class="list-item-delete">
-                            <span class="label">Birth Date:</span>
-                            <span class="value">19 Sep 1984</span>
+                            <span class="label">@_localizer["BirthDate:"].Value </span>
+                            <span class="value">@_localizer["19Sep1984"].Value </span>
                         </li>
                     </ul>
                     <div class="cancel-declaration">
-                        <h3 class="title-label">What is the cancellation reason?</h3>
+                        <h3 class="title-label">@_localizer["Whatisthecancellationreason?"].Value </h3>
                         <div class="form-field-wrapper">
                             <div class="form-input-wrapper">
                                 <select class="form-inputbox">
-                                    <option selected disabled>Select Reason</option>
-                                    <option>Reason 1</option>
-                                    <option>Reason 2</option>
-                                    <option>Reason 3</option>
-                                    <option>Reason 4</option>
-                                    <option>Reason 5</option>
-                                    <option>Reason 6</option>
-                                    <option>Reason 7</option>
+                                    <option selected disabled>@_localizer["SelectReason"].Value </option>
+                                    <option>@_localizer["Reason1"].Value </option>
+                                    <option>@_localizer["Reason2"].Value </option>
+                                    <option>@_localizer["Reason3"].Value </option>
+                                    <option>@_localizer["Reason4"].Value </option>
+                                    <option>@_localizer["Reason5"].Value </option>
+                                    <option>@_localizer["Reason6"].Value </option>
+                                    <option>@_localizer["Reason7"].Value </option>
                                 </select>
                             </div>
                         </div>
@@ -84,7 +96,7 @@
                             onclick="deleteMember('delet-member', 'delet-member-popup')">
                         Cancel
                     </button>
-                    <button disabled="" class="button button-primary">Delete</button>
+                    <button disabled="" class="button button-primary">@_localizer["Delete"].Value </button>
                 </div>
             </div>
         </div>

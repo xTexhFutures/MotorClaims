@@ -1,4 +1,11 @@
-﻿
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.AspNetCore.Builder
+@using Microsoft.AspNetCore.Localization
+@using Microsoft.Extensions.Options
+@using Microsoft.AspNetCore.Http.Features
+@using System.Globalization
+
+@inject IViewLocalizer _localizer
 @using CORE.DTOs.APIs.MotorClaim;
 @using CORE.DTOs.MotorClaim;
 @using Newtonsoft.Json;
@@ -12,12 +19,12 @@
 <div class="add-member-detail">
     <div class="policy-wrapper">
         <div class="basic-detail" style="background:none !important">
-            <h2 class="heading">eClaims</h2>
+            <h2 class="heading">@_localizer["eClaims"].Value </h2>
             <div class="search-member">
                 <form method="post" asp-action="SearcheClaims" asp-controller="Operations" style="display:flow-root">
                     <div class="search-filter-wrapper">
                         <div class="search-wrapper">
-                            <span class="label">Accident Report</span>
+                            <span class="label">@_localizer["AccidentReport"].Value </span>
                             <div class="search-input-box-wrapper">
 
                                 <div class="search-icon-wrapper">
@@ -29,7 +36,7 @@
                         </div>
 
                         <div class="search-wrapper">
-                            <span class="label">Reference</span>
+                            <span class="label">@_localizer["Reference"].Value </span>
                             <div class="search-input-box-wrapper">
 
                                 <div class="search-icon-wrapper">
@@ -41,7 +48,7 @@
                         </div>
 
                         <div class="search-wrapper">
-                            <span class="label">Sequence Number</span>
+                            <span class="label">@_localizer["SequenceNumber"].Value </span>
                             <div class="search-input-box-wrapper">
 
                                 <div class="search-icon-wrapper">
@@ -52,7 +59,7 @@
                             </div>
                         </div>
                         <div class="search-wrapper">
-                            <span class="label">Taqdeer Number</span>
+                            <span class="label">@_localizer["TaqdeerNumber"].Value </span>
                             <div class="search-input-box-wrapper">
 
                                 <div class="search-icon-wrapper">
@@ -68,7 +75,7 @@
 
 
                         <div class="search-wrapper">
-                            <span class="label">Owner National ID</span>
+                            <span class="label">@_localizer["OwnerNationalID"].Value </span>
                             <div class="search-input-box-wrapper">
 
                                 <div class="search-icon-wrapper">
@@ -80,23 +87,23 @@
                         </div>
 
                         <div class="search-wrapper">
-                            <span class="label">Status</span>
+                            <span class="label">@_localizer["Status"].Value </span>
 
                             <div class="search-input-box-wrapper">
                                 <div class="search-icon-wrapper">
                                     <img src="/assets/icons/List.png" class="search-icon" alt="">
                                 </div>
                                 <select class="common-dropdown Full" id="ddlFilter" name="Status">
-                                    <option value="">Select Status</option>
-                                    <option value="1">Transfered</option>
-                                    <option value="0">Invalid Policy Number</option>
-                                    <option value="2">Invalid Claimant</option>
+                                    <option value="">@_localizer["SelectStatus"].Value </option>
+                                    <option value="1">@_localizer["Transfered"].Value </option>
+                                    <option value="0">@_localizer["InvalidPolicyNumber"].Value </option>
+                                    <option value="2">@_localizer["InvalidClaimant"].Value </option>
                                 </select>
                             </div>
                         </div>
 
                         <div class="search-wrapper">
-                            <span class="label">Registered From</span>
+                            <span class="label">@_localizer["RegisteredFrom"].Value </span>
                             <div class="search-input-box-wrapper">
 
                                 <div class="search-icon-wrapper">
@@ -108,7 +115,7 @@
 
 
                         <div class="search-wrapper">
-                            <span class="label">Registered To</span>
+                            <span class="label">@_localizer["RegisteredTo"].Value </span>
                             <div class="search-input-box-wrapper">
 
                                 <div class="search-icon-wrapper">
@@ -121,7 +128,7 @@
                     </div>
                     <div class="search-heading-wrap" style="float: right;margin-top: 10px;">
 
-                        <button class="button button-secondary" type="submit">Search</button>
+                        <button class="button button-secondary" type="submit">@_localizer["Search"].Value </button>
                     </div>
                 </form>
             </div>
@@ -133,15 +140,15 @@
     {
         <div class="policy-members">
             <div class="heading-card">
-                <h2 class="heading">eClaims Result</h2>
+                <h2 class="heading">@_localizer["eClaimsResult"].Value </h2>
             </div>
             <div class="transaction-details">
                 <table class="universal-table">
                     <tr>
-                        <th>Accident Report</th>
-                        <th>Sequence Number</th>
-                        <th>Taqdeer Number</th>
-                        <th>Owner National ID</th>
+                        <th>@_localizer["AccidentReport"].Value </th>
+                        <th>@_localizer["SequenceNumber"].Value </th>
+                        <th>@_localizer["TaqdeerNumber"].Value </th>
+                        <th>@_localizer["OwnerNationalID"].Value </th>
 
                     </tr>
 
@@ -170,7 +177,7 @@
     {
         <div class="ui-state-highlight ui-corner-all" style="background:none !important;margin-top: 1%;">
             <span class="ui-icon ui-icon-info" style="float: left"></span>
-            <span>No results found.</span>
+            <span>@_localizer["Noresultsfound"].Value .</span>
         </div>
     }
 </div>
@@ -181,7 +188,7 @@
                 <img src="/assets/motor/motor.svg" class="vehicle-icon" />
                 <div class="vehicle-info">
                     <span class="vehicle-name">vehicle.Vehicle.MakeDesc vehicle.Vehicle.ModelDesc / vehicle.Vehicle.SequanceNo vehicle.Vehicle.CustomNo</span>
-                    <span class="vehicle-no" style="text-transform:uppercase">Plate Number : vehicle.Vehicle.PlateNo</span>
+                    <span class="vehicle-no" style="text-transform:uppercase">@_localizer["PlateNumber:vehicle.Vehicle.PlateNo"].Value </span>
                 </div>
             </div>
             <div class="vehicle-basic-body">
@@ -191,8 +198,8 @@
                             <img src="/assets/icons/save.svg" alt="" class="item-icon">
                         </span>
                         <div class="item-content">
-                            <span class="label">Policy No</span>
-                            <h3 class="value">policy.policy.PolicyNumber</h3>
+                            <span class="label">@_localizer["PolicyNo"].Value </span>
+                            <h3 class="value">@_localizer["policy.policy.PolicyNumber"].Value </h3>
                         </div>
                     </li>
                     <li class="detailed-item">
@@ -200,7 +207,7 @@
                             <img src="/assets/icons/calendar.svg" alt="" class="item-icon">
                         </span>
                         <div class="item-content">
-                            <span class="label">Effective Date</span>
+                            <span class="label">@_localizer["EffectiveDate"].Value </span>
                             <h3 class="value">HelpersDate.FormatDateNoTime(policy.policy.PolicyEffectiveDate)</h3>
                         </div>
                     </li>
@@ -209,8 +216,8 @@
                             <img src="/assets/icons/calendar.svg" alt="" class="item-icon">
                         </span>
                         <div class="item-content">
-                            <span class="label">Year of Manufacturing</span>
-                            <h3 class="value">vehicle.Vehicle.ManufactureYear</h3>
+                            <span class="label">@_localizer["YearofManufacturing"].Value </span>
+                            <h3 class="value">@_localizer["vehicle.Vehicle.ManufactureYear"].Value </h3>
                         </div>
                     </li>
                     <li class="detailed-item">
@@ -218,7 +225,7 @@
                             <img src="/assets/icons/calendar.svg" alt="" class="item-icon">
                         </span>
                         <div class="item-content">
-                            <span class="label">Expiry Date</span>
+                            <span class="label">@_localizer["ExpiryDate"].Value </span>
                             <h3 class="value">HelpersDate.FormatDateNoTime(policy.policy.PolicyExpiryDate)</h3>
                         </div>
                     </li>

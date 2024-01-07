@@ -1,4 +1,13 @@
-﻿@using CORE.DTOs.MotorClaim.WorkFlow;
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.AspNetCore.Builder
+@using Microsoft.AspNetCore.Localization
+@using Microsoft.Extensions.Options
+@using Microsoft.AspNetCore.Http.Features
+@using System.Globalization
+
+@inject IViewLocalizer _localizer
+
+@using CORE.DTOs.MotorClaim.WorkFlow;
 @{
     List<DelegationSetup> delegationSetups=(List<DelegationSetup>) ViewData["Delegations"];
     int? Filter = (int?)ViewData["Filter"];
@@ -9,21 +18,21 @@
     }
 
         <div class="policy-wrapper">
-            <h2 class="heading">Delegations Managment</h2>
+    <h2 class="heading">@_localizer["DelegationsManagment"].Value</h2>
             <div class="search-member">
         <form method="post" asp-action="SearchDelegations" asp-controller="Delegation">
                 <div class="search-filter-wrapper">
 
 
                     <select class="common-dropdown" id="ddlFilter" name="Filter">
-                        <option  value="" >Status</option>
-                        <option value="1" >Active</option>
-                        <option value="0">In-Active</option>
+                    <option value="">@_localizer["Status"].Value</option>
+                    <option value="1">@_localizer["Active"].Value</option>
+                    <option value="0">@_localizer["In-Active"].Value </option>
                    </select>
 
                     <div class="search-heading-wrap">
 
-                        <button class="button button-secondary" type="submit">Search</button>
+                    <button class="button button-secondary" type="submit">@_localizer["Search"].Value </button>
                     </div>
 
 
@@ -36,17 +45,17 @@
         <div class="transaction-details">
             <div class="search-heading-wrap" style="float: right;margin-bottom: 5px;">
 
-                <button class="button button-secondary" onclick="UpdateDelegation(0)">Add Delegation</button>
+        <button class="button button-secondary" onclick="UpdateDelegation(0)">@_localizer["AddDelegation"].Value</button>
             </div>
             <table class="universal-table">
                 <tr>
                     <!-- <th>#</th> -->
-                    <th>From</th>
-                    <th>To</th>
-                    <th>Delegated From </th>
-                    <th>Delegated To</th>
-                    <th>Status</th>
-                    <th>Actions</th>
+            <th>@_localizer["From"].Value</th>
+            <th>@_localizer["To"].Value</th>
+            <th>@_localizer["DelegatedFrom"].Value</th>
+            <th>@_localizer["DelegatedTo"].Value</th>
+            <th>@_localizer["Status"].Value</th>
+            <th>@_localizer["Actions"].Value</th>
                 </tr>
         @if (delegationSetups!=null)
         {

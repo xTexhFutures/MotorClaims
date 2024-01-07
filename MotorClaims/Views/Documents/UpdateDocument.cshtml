@@ -1,4 +1,12 @@
-﻿@using CORE.DTOs.MotorClaim.WorkFlow;
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.AspNetCore.Builder
+@using Microsoft.AspNetCore.Localization
+@using Microsoft.Extensions.Options
+@using Microsoft.AspNetCore.Http.Features
+@using System.Globalization
+
+@inject IViewLocalizer _localizer
+@using CORE.DTOs.MotorClaim.WorkFlow;
 @model DocumentInfo
 @{
     List<int> ints=(List<int>) ViewData["ints"];
@@ -6,12 +14,12 @@
 <div class="popup-body-wrapper">
     <div class="popup-header">
         <div class="popup-header-inner">
-            <h3 class="popup-title">Documents Managment</h3>
+            <h3 class="popup-title"> @_localizer["DocumentsManagment"].Value </h3>
             <div class="close-popup-icon" onclick="Close('edit-Document-popup')">
                 <img class="close-icon" src="/assets/icons/close.svg">
             </div>
         </div>
-        <p class="popup-description">Control documents per Module</p>
+        <p class="popup-description">@_localizer["ControldocumentsperModule"].Value </p>
     </div>
     <form asp-action="UpdateDocument" asp-controller="Documents" method="post">
         <div class="popup-body">
@@ -24,13 +32,13 @@
                         <div class="form-field-wrapper">
                             <div class="form-input-wrapper">
                                 <input class="form-inputbox" id="txtDcumentName" autocomplete="off" name="Name" type="text" required value="@Model.Name">
-                                <label class="form-label non-icon" for="txtDcumentName">Dcument Name</label>
+                                <label class="form-label non-icon" for="txtDcumentName">@_localizer["DcumentName"].Value </label>
                             </div>
                         </div>
                         <div class="form-field-wrapper">
                             <div class="form-input-wrapper">
                                 <select class="form-inputbox" required name="ModuleId" id="ddlModuleId">
-                                    <option value="">All Modules</option>
+                                    <option value="">@_localizer["AllModules"].Value </option>
                                     <option value="@((int)MotorClaims.Models.Enums.DocumnetType.Claim)">@MotorClaims.Models.Enums.DocumnetType.Claim</option>
                                     <option value="@((int)MotorClaims.Models.Enums.DocumnetType.Claimant)">@MotorClaims.Models.Enums.DocumnetType.Claimant</option>
                                     <option value="@((int)MotorClaims.Models.Enums.DocumnetType.Fraud)">@MotorClaims.Models.Enums.DocumnetType.Fraud</option>
@@ -52,11 +60,11 @@
     bool Exist4 = ints.Contains(4);
     bool Exist5 = ints.Contains(5);
 }
-                             <span>Bodaly</span><input type="checkbox" value="1" name="chClaimResult" id="chClaimResult1" @(Exist1?"checked":"") />
-                             <span>Death</span><input type="checkbox" value="2" name="chClaimResult" id="chClaimResult2"  @(Exist2?"checked":"") />
-                             <span>Vehicle</span><input type="checkbox" value="3" name="chClaimResult" id="chClaimResult3"  @(Exist3?"checked":"") /></br>
-                             <span>Private Property</span><input type="checkbox" value="4" name="chClaimResult" id="chClaimResult4"  @(Exist4?"checked":"") />
-                             <span>Public Property</span><input type="checkbox" value="5" name="chClaimResult" id="chClaimResult5"  @(Exist5?"checked":"") />
+                                <span>@_localizer["Bodaly"].Value </span><input type="checkbox" value="1" name="chClaimResult" id="chClaimResult1" @(Exist1 ? "checked" : "") />
+                                <span>@_localizer["Death"].Value </span><input type="checkbox" value="2" name="chClaimResult" id="chClaimResult2" @(Exist2 ? "checked" : "") />
+                                <span>@_localizer["Vehicle"].Value </span><input type="checkbox" value="3" name="chClaimResult" id="chClaimResult3" @(Exist3 ? "checked" : "") /></br>
+                                <span>@_localizer["PrivateProperty"].Value </span><input type="checkbox" value="4" name="chClaimResult" id="chClaimResult4" @(Exist4 ? "checked" : "") />
+                                <span>@_localizer["PublicProperty"].Value </span><input type="checkbox" value="5" name="chClaimResult" id="chClaimResult5" @(Exist5 ? "checked" : "") />
                              
                              
                              
@@ -71,7 +79,7 @@
                                 <div class="card-content-wrapper">
                                     <span class="check-icon"></span>
                                     <div class="card-content">
-                                        <h4 class="title">Required</h4>
+                                        <h4 class="title">@_localizer["Required"].Value </h4>
                                     </div>
                                 </div>
                             </label>
@@ -82,7 +90,7 @@
                                 <div class="card-content-wrapper">
                                     <span class="check-icon"></span>
                                     <div class="card-content">
-                                        <h4 class="title">Optional</h4>
+                                        <h4 class="title">@_localizer["Optional"].Value </h4>
                                     </div>
                                 </div>
                             </label>
@@ -95,7 +103,7 @@
         </div>
         <div class="popup-footer">
             <button class="button button-secondary" type="button" onclick="Close('edit-Document-popup')">Cancel</button>
-            <button class="button button-secondary" type="submit">Submit</button>
+            <button class="button button-secondary" type="submit">@_localizer["Submit"].Value </button>
         </div>
     </form>
 </div>

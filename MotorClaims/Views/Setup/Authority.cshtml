@@ -1,4 +1,12 @@
-﻿@using CORE.DTOs.MotorClaim.Claims;
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.AspNetCore.Builder
+@using Microsoft.AspNetCore.Localization
+@using Microsoft.Extensions.Options
+@using Microsoft.AspNetCore.Http.Features
+@using System.Globalization
+
+@inject IViewLocalizer _localizer
+@using CORE.DTOs.MotorClaim.Claims;
 @{
     List<AuthorityMatrix> authorityMatrices = (List<AuthorityMatrix>)ViewData["AuthorityMatrix"];
     int? Filter = (int?)ViewData["Filter"];
@@ -9,12 +17,18 @@
 }
 
 <div class="policy-wrapper">
-    <h2 class="heading">Documents Managment</h2>
+    <h2 class="heading">
+        @_localizer["DocumentsManagment"].Value
+        
+    </h2>
     <div class="search-member">
         <form method="post" asp-action="SearchAuthorities" asp-controller="Setup">
             <div class="search-filter-wrapper">
                 <select class="common-dropdown" name="Filter" id="ddlFilter">
-                    <option value="">All Modules</option>
+                    <option value="">
+                        @_localizer["AllModules"].Value
+                        
+                    </option>
                     <option value="@((int)MotorClaims.Models.Enums.DocumnetType.Claim)">@MotorClaims.Models.Enums.DocumnetType.Claim</option>
                     <option value="@((int)MotorClaims.Models.Enums.DocumnetType.Claimant)">@MotorClaims.Models.Enums.DocumnetType.Claimant</option>
                     <option value="@((int)MotorClaims.Models.Enums.DocumnetType.Fraud)">@MotorClaims.Models.Enums.DocumnetType.Fraud</option>
@@ -22,7 +36,10 @@
                     <option value="@((int)MotorClaims.Models.Enums.DocumnetType.Payment)">@MotorClaims.Models.Enums.DocumnetType.Payment</option>
                 </select>
                 <div class="search-heading-wrap">
-                    <button class="button button-secondary" type="submit">Search</button>
+                    <button class="button button-secondary" type="submit">
+                        @_localizer["Search"].Value
+                        
+                    </button>
                 </div>
             </div>
         </form>
@@ -33,16 +50,34 @@
 <div class="transaction-details">
     <div class="search-heading-wrap" style="float: right;margin-bottom: 5px;">
 
-        <button class="button button-secondary" onclick="UpdateAuthority(0)">Add Authority Level</button>
+        <button class="button button-secondary" onclick="UpdateAuthority(0)">
+            @_localizer["AddAuthorityLevel"].Value
+            
+        </button>
     </div>
     <table class="universal-table">
         <tr>
             <!-- <th>#</th> -->
-            <th>Module Name</th>
-            <th>User Name</th>
-            <th>Role Name</th>
-            <th>Min Limit</th>
-            <th>Max Limit</th>
+            <th>
+                @_localizer["ModuleName"].Value
+                
+            </th>
+            <th>
+                @_localizer["Khallad"].Value
+                UserName
+            </th>
+            <th>
+                @_localizer["RoleName"].Value
+                
+            </th>
+            <th>
+                @_localizer["MinLimit"].Value
+                
+            </th>
+            <th>
+                @_localizer["MaxLimit"].Value
+                
+            </th>
         </tr>
         @if (authorityMatrices != null)
 

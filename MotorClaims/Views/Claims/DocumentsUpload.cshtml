@@ -1,4 +1,12 @@
-﻿@using CORE.DTOs.MotorClaim.Claims;
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.AspNetCore.Builder
+@using Microsoft.AspNetCore.Localization
+@using Microsoft.Extensions.Options
+@using Microsoft.AspNetCore.Http.Features
+@using System.Globalization
+
+@inject IViewLocalizer _localizer
+@using CORE.DTOs.MotorClaim.Claims;
 @using CORE.DTOs.MotorClaim.WorkFlow;
 @using Newtonsoft.Json;
 
@@ -19,11 +27,26 @@
         <table class="universal-table">
             <tr>
                 <!-- <th>#</th> -->
-                <th>Document Name</th>
-                <th>Module Name</th>
-                <th>Document Type</th>
-                <th>Status</th>
-                <th>Action</th>
+                <th>
+                    @_localizer["DocumentName"].Value
+                    
+                </th>
+                <th>
+                    @_localizer["ModuleName"].Value
+                    
+                </th>
+                <th>
+                    @_localizer["DocumentType"].Value
+                    
+                </th>
+                <th>
+                    @_localizer["Status"].Value
+                    
+                </th>
+                <th>
+                    @_localizer["Action"].Value
+                    
+                </th>
             </tr>
 
 
@@ -58,21 +81,33 @@
                     <td>
                         @if (doc.IsRequired)
                         {
-                            <span>Required</span>
+                            <span>
+                                @_localizer["Required"].Value
+                                
+                            </span>
                         }
                         else
                         {
-                            <span>Optional</span>
+                            <span>
+                                @_localizer["Optional"].Value
+                                
+                            </span>
                         }
                     </td>
                     <td>
                         @if (Model.Any(p => p.DocumentSetupId == doc.Id))
                         {
-                            <span>Uploaded</span>
+                            <span>
+                                @_localizer["Uploaded"].Value
+                                
+                            </span>
                         }
                         else
                         {
-                            <span>Missing</span>
+                            <span>
+                                @_localizer["Missing"].Value
+                                
+                            </span>
                         }
                     </td>
                     <td>
@@ -111,7 +146,10 @@ else
 {
     <div class="ui-state-highlight ui-corner-all" style="background:none !important;margin-top: 1%;">
         <span class="ui-icon ui-icon-info" style="float: left"></span>
-        <span>No results found.</span>
+        <span>
+            @_localizer["Noresultsfound"].Value
+            
+        </span>
     </div>
 }
 

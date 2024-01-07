@@ -1,5 +1,15 @@
-﻿<div class="policy-wrapper">
-    <h2 class="heading">Sytem Setup</h2>
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.AspNetCore.Builder
+@using Microsoft.AspNetCore.Localization
+@using Microsoft.Extensions.Options
+@using Microsoft.AspNetCore.Http.Features
+@using System.Globalization
+
+@inject IViewLocalizer _localizer
+<div class="policy-wrapper">
+    <h2 class="heading">
+        @_localizer["SytemSetup"].Value
+    </h2>
     <div class="policy-carousel-wrapper">
         <a href="@Url.Action("Index","Delegation")" class="policy-card cursor-pointer" >
 
@@ -10,7 +20,9 @@
                     </div>
                 </div>
                 <div class="policy-card-body">
-                    <h3 class="policy-name">Delegation</h3>
+                    <h3 class="policy-name">
+                        @_localizer["Delegation"].Value
+                    </h3>
                 </div>
 
             </div>
@@ -25,7 +37,9 @@
                     </div>
                 </div>
                 <div class="policy-card-body">
-                    <h3 class="policy-name">WorkFlow</h3>
+                    <h3 class="policy-name">
+                        @_localizer["WorkFlow"].Value
+                    </h3>
                 </div>
 
        
@@ -41,7 +55,9 @@
 
                 </div>
                 <div class="policy-card-body">
-                    <h3 class="policy-name">Documents</h3>
+                    <h3 class="policy-name">
+                        @_localizer["Documents"].Value
+                    </h3>
                 </div>
 
        
@@ -57,7 +73,9 @@
 
                 </div>
                 <div class="policy-card-body">
-                    <h3 class="policy-name">Fraud</h3>
+                    <h3 class="policy-name">
+                        @_localizer["Fraud"].Value
+                    </h3>
                 </div>
 
             </div>
@@ -73,7 +91,9 @@
 
                 </div>
                 <div class="policy-card-body">
-                    <h3 class="policy-name">Access</h3>
+                    <h3 class="policy-name">
+                        @_localizer["Access"].Value
+                    </h3>
                 </div>
 
             </div>
@@ -90,7 +110,9 @@
 
                 </div>
                 <div class="policy-card-body">
-                    <h3 class="policy-name">Authority</h3>
+                    <h3 class="policy-name">
+                        @_localizer["Authority"].Value
+                    </h3>
                 </div>
 
             </div>

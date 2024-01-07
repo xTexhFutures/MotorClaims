@@ -1,14 +1,28 @@
-﻿@using CORE.DTOs.MotorClaim.Frauds;
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.AspNetCore.Builder
+@using Microsoft.AspNetCore.Localization
+@using Microsoft.Extensions.Options
+@using Microsoft.AspNetCore.Http.Features
+@using System.Globalization
+
+@inject IViewLocalizer _localizer
+@using CORE.DTOs.MotorClaim.Frauds;
 @model FraudIndicators
 <div class="popup-body-wrapper" style="max-width:50% !important;display:grid">
     <div class="popup-header">
         <div class="popup-header-inner">
-            <h3 class="popup-title">Fraud Indicator</h3>
+            <h3 class="popup-title">
+                @_localizer["FraudIndicator"].Value
+                
+            </h3>
             <div class="close-popup-icon" onclick="Close('edit-FraudIndicator-popup')">
                 <img class="close-icon" src="/assets/icons/close.svg">
             </div>
         </div>
-        <p class="popup-description">Define New Fraud Indicator</p>
+        <p class="popup-description">
+            @_localizer["DefineNewFraudIndicator"].Value
+            
+        </p>
     </div>
     <form method="post" asp-action="UpdateFraudIndicator" asp-controller="Fraud" style="display:grid">
     <div class="popup-body">
@@ -23,13 +37,19 @@
                         <div class="form-field-wrapper">
                             <div class="form-input-wrapper">
                                 <input class="form-inputbox" id="txtIndicatorName" name="Name" type="text" required maxlength="140" value="@Model.Name">
-                                <label class="form-label non-icon" for="txtIndicatorName">Indicator Name</label>
+                                    <label class="form-label non-icon" for="txtIndicatorName">
+                                        @_localizer["IndicatorName"].Value
+                                        
+                                    </label>
                             </div>
                         </div>
                         <div class="form-field-wrapper">
                             <div class="form-input-wrapper">
                                 <textarea class="form-inputbox" id="txtDescription" name="Description" maxlength="1024" rows="5">@Model.Description</textarea>
-                                <label class="form-label non-icon" for="txtDescription">Description</label>
+                                    <label class="form-label non-icon" for="txtDescription">
+                                        @_localizer["Description"].Value
+                                        
+                                    </label>
                             </div>
                         </div>
                         <div class="vehicle-owner-grid">
@@ -38,7 +58,10 @@
                                 <div class="card-content-wrapper">
                                     <span class="check-icon"></span>
                                     <div class="card-content">
-                                        <h4 class="title">Active</h4>
+                                            <h4 class="title">
+                                                @_localizer["Active"].Value
+                                                
+                                            </h4>
                                     </div>
                                 </div>
                             </label>
@@ -49,7 +72,10 @@
                                 <div class="card-content-wrapper">
                                     <span class="check-icon"></span>
                                     <div class="card-content">
-                                        <h4 class="title">In Active</h4>
+                                            <h4 class="title">
+                                                @_localizer["InActive"].Value
+                                                
+                                            </h4>
                                     </div>
                                 </div>
                             </label>
@@ -60,7 +86,10 @@
                         <div class="form-field-wrapper">
                             <div class="form-input-wrapper">
                                 <input class="form-inputbox" id="txtScore" name="Score" type="text" required maxlength="3" value="@(Model.Id==0?string.Empty:Model.Score)">
-                                <label class="form-label non-icon" for="txtScore">Score</label>
+                                    <label class="form-label non-icon" for="txtScore">
+                                        @_localizer["Score"].Value
+                                        
+                                    </label>
                             </div>
                         </div>
 
@@ -83,7 +112,10 @@
                                 <div class="card-content-wrapper">
                                     <span class="check-icon"></span>
                                     <div class="card-content">
-                                        <h4 class="title">TPL</h4>
+                                            <h4 class="title">
+                                                @_localizer["TPL"].Value
+                                                
+                                            </h4>
                                     </div>
                                 </div>
                             </label>
@@ -94,7 +126,10 @@
                                 <div class="card-content-wrapper">
                                     <span class="check-icon"></span>
                                     <div class="card-content">
-                                        <h4 class="title">COMP</h4>
+                                            <h4 class="title">
+                                                @_localizer["COMP"].Value
+                                                
+                                            </h4>
                                     </div>
                                 </div>
                             </label>
@@ -104,7 +139,10 @@
                                 <div class="card-content-wrapper">
                                     <span class="check-icon"></span>
                                     <div class="card-content">
-                                        <h4 class="title">Both</h4>
+                                            <h4 class="title">
+                                                @_localizer["Both"].Value
+                                                
+                                            </h4>
                                     </div>
                                 </div>
                             </label>
@@ -113,7 +151,10 @@
                         <div class="form-field-wrapper">
                             <div class="form-input-wrapper">
                                 <textarea class="form-inputbox" id="txtQuery" name="Query" required maxlength="2024" rows="6">@Model.Query</textarea>
-                                <label class="form-label non-icon" for="txtDescription">Query</label>
+                                    <label class="form-label non-icon" for="txtDescription">
+                                        @_localizer["Query"].Value
+                                        
+                                    </label>
                             </div>
                         </div>
 
@@ -121,14 +162,29 @@
                             <div class="form-input-wrapper">
                                 <select id="ddlOutComeType" name="OutComeType" required class="form-inputbox">
                                     <option></option>
-                                    <option value="1">Boolean</option>
-                                    <option value="2">Date</option>
-                                    <option value="3">Number</option>
-                                    <option value="4">String</option>
+                                        <option value="1">
+                                            @_localizer["Boolean"].Value
+                                            
+                                        </option>
+                                        <option value="2">
+                                            @_localizer["Date"].Value
+                                            
+                                        </option>
+                                        <option value="3">
+                                            @_localizer["Number"].Value
+                                            
+                                        </option>
+                                        <option value="4">
+                                            @_localizer["String"].Value
+                                            
+                                        </option>
 
 
                                 </select>
-                                <label class="form-label non-icon" for="ddlOutComeType">OutCome Type</label>
+                                    <label class="form-label non-icon" for="ddlOutComeType">
+                                        @_localizer["OutComeType"].Value
+                                        
+                                    </label>
                             </div>
                         </div>
 
@@ -136,21 +192,42 @@
                             <div class="form-input-wrapper">
                                 <select id="ddlOperator" name="Operator" required class="form-inputbox">
                                     <option></option>
-                                    <option value="1">Greater</option>
-                                    <option value="2">GreaterOrEqual</option>
-                                    <option value="3">Equal</option>
-                                    <option value="4">Less</option>
-                                    <option value="5">LessOrEqual</option>
+                                        <option value="1">
+                                            @_localizer["Greater"].Value
+                                            
+                                        </option>
+                                        <option value="2">
+                                            @_localizer["GreaterOrEqual"].Value
+                                            
+                                        </option>
+                                        <option value="3">
+                                            @_localizer["Equal"].Value
+                                            
+                                        </option>
+                                        <option value="4">
+                                            @_localizer["Less"].Value
+                                            
+                                        </option>
+                                        <option value="5">
+                                            @_localizer["LessOrEqual"].Value
+                                            
+                                        </option>
 
 
                                 </select>
-                                <label class="form-label non-icon" for="ddlOperator">Operator</label>
+                                    <label class="form-label non-icon" for="ddlOperator">
+                                        @_localizer["Operator"].Value
+                                        
+                                    </label>
                             </div>
                         </div>
                         <div class="form-field-wrapper">
                             <div class="form-input-wrapper">
                                 <input class="form-inputbox" id="txtComparingValue" name="ComparingValue" type="text" required maxlength="100" value="@(Model.Id==0?string.Empty:Model.ComparingValue)">
-                                <label class="form-label non-icon" for="txtComparingValue">Comparing Value</label>
+                                    <label class="form-label non-icon" for="txtComparingValue">
+                                        @_localizer["ComparingValue"].Value
+                                        
+                                    </label>
                             </div>
                         </div>
 
@@ -163,8 +240,14 @@
     </div>
 
     <div class="popup-footer">
-        <button class="button button-secondary" type="button" onclick="Close('edit-FraudIndicator-popup')">Cancel</button>
-        <button class="button button-secondary" type="submit">Submit</button>
+            <button class="button button-secondary" type="button" onclick="Close('edit-FraudIndicator-popup')">
+                @_localizer["Cancel"].Value
+                
+            </button>
+            <button class="button button-secondary" type="submit">
+                @_localizer["Submit"].Value
+                
+            </button>
     </div>
     </form>
 </div>

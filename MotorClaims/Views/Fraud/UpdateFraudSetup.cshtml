@@ -1,14 +1,22 @@
-﻿@using CORE.DTOs.MotorClaim.Frauds;
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.AspNetCore.Builder
+@using Microsoft.AspNetCore.Localization
+@using Microsoft.Extensions.Options
+@using Microsoft.AspNetCore.Http.Features
+@using System.Globalization
+
+@inject IViewLocalizer _localizer
+@using CORE.DTOs.MotorClaim.Frauds;
 @model FraudSetup
 <div class="popup-body-wrapper">
     <div class="popup-header">
         <div class="popup-header-inner">
-            <h3 class="popup-title">Fraud Setup</h3>
+            <h3 class="popup-title">@_localizer["FraudSetup"].Value </h3>
             <div class="close-popup-icon" onclick="Close('edit-FraudSetup-popup')">
                 <img class="close-icon" src="/assets/icons/close.svg">
             </div>
         </div>
-        <p class="popup-description">Define Fraud range appearance</p>
+        <p class="popup-description">@_localizer["DefineFraudrangeappearance"].Value </p>
     </div>
     <form method="post" asp-action="UpdateFraudSetup" asp-controller="Fraud">
         <input type="hidden" name="Id" value="@Model.Id" />
@@ -23,32 +31,32 @@
                         <div class="form-field-wrapper">
                             <div class="form-input-wrapper">
                                 <input class="form-inputbox" id="txtScoreFrom" name="ScoreFrom" type="text" maxlength="3" required value="@Model.ScoreFrom">
-                                <label class="form-label non-icon" for="txtScoreFrom">Score From</label>
+                                <label class="form-label non-icon" for="txtScoreFrom">@_localizer["ScoreFrom"].Value </label>
                             </div>
                         </div>
                         <div class="form-field-wrapper">
                             <div class="form-input-wrapper">
                                 <input class="form-inputbox" id="txtScoreTo" name="ScoreTo" type="text" maxlength="3" required value="@Model.ScoreTo">
-                                <label class="form-label non-icon" for="txtScoreTo">Score To</label>
+                                <label class="form-label non-icon" for="txtScoreTo">@_localizer["ScoreTo"].Value </label>
                             </div>
                         </div>
                         <div class="form-field-wrapper">
                             <div class="form-input-wrapper">
                                 <select class="form-inputbox" required name="FraudResult" id="ddlFraudResult">
-                                    <option selected disabled value="">Result Type</option>
+                                    <option selected disabled value="">@_localizer["ResultType"].Value </option>
                                     <option value="@((int)MotorClaims.Models.Enums.FraudLevel.Error)">@MotorClaims.Models.Enums.FraudLevel.Error</option>
                                     <option value="@((int)MotorClaims.Models.Enums.FraudLevel.Warning)">@MotorClaims.Models.Enums.FraudLevel.Warning</option>
                                     <option value="@((int)MotorClaims.Models.Enums.FraudLevel.Low)">@MotorClaims.Models.Enums.FraudLevel.Low</option>
                                     <option value="@((int)MotorClaims.Models.Enums.FraudLevel.None)">@MotorClaims.Models.Enums.FraudLevel.None</option>
 
                                 </select>
-                                <label class="form-label non-icon" for="ddlFraudResult">Fraud Result</label>
+                                <label class="form-label non-icon" for="ddlFraudResult">@_localizer["FraudResult"].Value </label>
                             </div>
                         </div>
                         <div class="form-field-wrapper">
                             <div class="form-input-wrapper">
                                 <input class="form-inputbox" id="txtColor" name="Color" type="color" required value="@Model.Color">
-                                <label class="form-label non-icon" for="txtColor">Color</label>
+                                <label class="form-label non-icon" for="txtColor">@_localizer["Color"].Value </label>
                             </div>
                         </div>
                     </div>
@@ -57,8 +65,8 @@
             </div>
         </div>
         <div class="popup-footer">
-            <button class="button button-secondary" type="button" onclick="Close('edit-FraudSetup-popup')">Cancel</button>
-            <button class="button button-secondary" type="submit">Submit</button>
+            <button class="button button-secondary" type="button" onclick="Close('edit-FraudSetup-popup')">@_localizer["Cancel"].Value </button>
+            <button class="button button-secondary" type="submit">@_localizer["Submit"].Value </button>
         </div>
     </form>
 </div>

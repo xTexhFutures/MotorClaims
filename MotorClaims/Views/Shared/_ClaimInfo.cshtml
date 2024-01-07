@@ -1,4 +1,12 @@
-﻿@using CORE.DTOs.MotorClaim.Claims;
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.AspNetCore.Builder
+@using Microsoft.AspNetCore.Localization
+@using Microsoft.Extensions.Options
+@using Microsoft.AspNetCore.Http.Features
+@using System.Globalization
+
+@inject IViewLocalizer _localizer
+@using CORE.DTOs.MotorClaim.Claims;
 
 @model Claims
 @{
@@ -10,7 +18,10 @@
                 <div class="name-number-wrapper">
                     <div class="policy-name-wrapper">
                         <img src="/assets/icons/empty-file.svg" class="policy-icon" />
-                        <p class="policy-name">Claim Info</p>
+                <p class="policy-name">
+                    @_localizer["ClaimInfo"].Value
+                    
+                </p>
                     </div>
 
                 </div>
@@ -26,7 +37,10 @@
                                 <img src="/assets/icons/save.svg" alt="" class="item-icon">
                             </span>
                             <div class="item-content">
-                                <span class="label">Claim Number</span>
+                        <span class="label">
+                            @_localizer["ClaimNumber"].Value
+                            
+                        </span>
                                 <h3 class="value ellipsis">@Model.ClaimNo</h3>
                             </div>
                         </li>
@@ -35,7 +49,10 @@
                                 <img src="/assets/icons/calendar.svg" alt="" class="item-icon">
                             </span>
                             <div class="item-content">
-                                <span class="label">Date Of Loss</span>
+                        <span class="label">
+                            @_localizer["DateOfLoss"].Value
+                            
+                        </span>
                                 <h3 class="value ellipsis">@Helpers.FormatDate( Model.DateOfLoss)</h3>
                             </div>
                         </li>
@@ -47,7 +64,10 @@
                         var y = Enum.TryParse(Model.ClaimReportType.ToString(), out Enums.ClaimReportType parsedEnumValue);
                     }
                             <div class="item-content">
-                                <span class="label">Report Type</span>
+                        <span class="label">
+                            @_localizer["ReportType"].Value
+                            
+                        </span>
                         <h3 class="value ellipsis">@parsedEnumValue</h3>
                             </div>
                         </li>
@@ -57,7 +77,10 @@
                                 <img src="/assets/icons/save.svg" alt="" class="item-icon">
                             </span>
                             <div class="item-content">
-                                <span class="label">Accident City</span>
+                        <span class="label">
+                            @_localizer["AccidentCity"].Value
+                            
+                        </span>
                                 <h3 class="value ellipsis">@Model.City</h3>
                             </div>
                         </li>
@@ -67,7 +90,10 @@
                                 <img src="/assets/icons/calendar.svg" alt="" class="item-icon">
                             </span>
                             <div class="item-content">
-                                <span class="label">Notification date</span>
+                        <span class="label">
+                            @_localizer["NotIficationDate"].Value
+                            
+                        </span>
                                 <h3 class="value ellipsis">@Model.NotificationDate.ToString("dd MMM yyyy")</h3>
                             </div>
                         </li>
@@ -82,7 +108,10 @@
                                 <img src="/assets/icons/save.svg" alt="" class="item-icon">
                             </span>
                             <div class="item-content">
-                                <span class="label">Geogrphical Area</span>
+                        <span class="label">
+                            @_localizer["GeogrphicalArea"].Value
+                            
+                        </span>
                                 <h3 class="value ellipsis">@(Model.GeagraphicalArea==1?"KSA":"GCC")</h3>
                             </div>
                         </li>
@@ -93,7 +122,10 @@
                                 <img src="/assets/icons/save.svg" alt="" class="item-icon">
                             </span>
                             <div class="item-content">
-                                <span class="label">Accidental Place</span>
+                        <span class="label">
+                            @_localizer["AccidentalPlace"].Value
+                            
+                        </span>
                                 <h3 class="value ellipsis">@Model.AccidentPlace</h3>
                             </div>
                         </li>
@@ -102,7 +134,10 @@
                                 <img src="/assets/icons/calendar.svg" alt="" class="item-icon">
                             </span>
                             <div class="item-content">
-                                <span class="label">Registration Date</span>
+                        <span class="label">
+                            @_localizer["RegistrationDate"].Value
+                            
+                        </span>
                                 <h3 class="value ellipsis">@Model.RegistrationDate.ToString("dd MMM yyyy")</h3>
                             </div>
                         </li>
@@ -111,7 +146,10 @@
                                 <img src="/assets/icons/save.svg" alt="" class="item-icon">
                             </span>
                             <div class="item-content">
-                                <span class="label">Prefered city of Survey</span>
+                        <span class="label">
+                            @_localizer["PreferedcityofSurvey"].Value
+                            
+                        </span>
                                 <h3 class="value ellipsis">@Model.SurveyCity</h3>
                             </div>
                         </li>
@@ -120,7 +158,10 @@
                                 <img src="/assets/icons/save.svg" alt="" class="item-icon">
                             </span>
                             <div class="item-content">
-                                <span class="label">Claim Event</span>
+                        <span class="label">
+                            @_localizer["ClaimEvent"].Value
+                            
+                        </span>
                                 <h3 class="value ellipsis">@Model.EventId</h3>
                             </div>
                         </li>

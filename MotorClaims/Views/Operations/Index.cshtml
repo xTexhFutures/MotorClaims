@@ -12,12 +12,12 @@
 <div class="add-member-detail">
     <div class="policy-wrapper">
         <div class="basic-detail" style="background:none !important">
-            <h2 class="heading">Operations</h2>
+            <h2 class="heading">@_localizer["Operations"].Value </h2>
             <div class="search-member">
                 <form method="post" asp-action="SearchOperations" asp-controller="Operations" style="display:flow-root">
                     <div class="search-filter-wrapper">
                         <div class="search-wrapper">
-                            <span class="label">Claim No</span>
+                            <span class="label">@_localizer["ClaimNo"].Value </span>
                             <div class="search-input-box-wrapper">
 
                                 <div class="search-icon-wrapper">
@@ -29,7 +29,7 @@
                         </div>
 
                         <div class="search-wrapper">
-                            <span class="label">National Id</span>
+                            <span class="label">@_localizer["NationalId"].Value </span>
                             <div class="search-input-box-wrapper">
 
                                 <div class="search-icon-wrapper">
@@ -41,7 +41,7 @@
                         </div>
 
                         <div class="search-wrapper">
-                            <span class="label">Mobile No</span>
+                            <span class="label">@_localizer["MobileNo"].Value </span>
                             <div class="search-input-box-wrapper">
 
                                 <div class="search-icon-wrapper">
@@ -52,7 +52,7 @@
                             </div>
                         </div>
                         <div class="search-wrapper">
-                            <span class="label">Chasis No</span>
+                            <span class="label">@_localizer["ChasisNo"].Value </span>
                             <div class="search-input-box-wrapper">
 
                                 <div class="search-icon-wrapper">
@@ -68,7 +68,7 @@
 
 
                         <div class="search-wrapper">
-                            <span class="label">Policy No</span>
+                            <span class="label">@_localizer["PolicyNo"].Value </span>
                             <div class="search-input-box-wrapper">
 
                                 <div class="search-icon-wrapper">
@@ -81,7 +81,7 @@
                    
 
                         <div class="search-wrapper">
-                            <span class="label">Registered From</span>
+                            <span class="label">@_localizer["RegisteredFrom"].Value </span>
                             <div class="search-input-box-wrapper">
 
                                 <div class="search-icon-wrapper">
@@ -93,7 +93,7 @@
 
 
                         <div class="search-wrapper">
-                            <span class="label">Registered To</span>
+                            <span class="label">@_localizer["RegisteredTo"].Value </span>
                             <div class="search-input-box-wrapper">
 
                                 <div class="search-icon-wrapper">
@@ -106,7 +106,7 @@
                     </div>
                     <div class="search-heading-wrap" style="float: right;margin-top: 10px;">
 
-                        <button class="button button-secondary" type="submit">Search</button>
+                        <button class="button button-secondary" type="submit">@_localizer["Search"].Value </button>
                     </div>
                 </form>
             </div>
@@ -123,17 +123,17 @@
             <div class="transaction-details">
                 <table class="universal-table">
                     <tr>
-                        <th>Claim Segment</th>
-                        <th>Claimant Name</th>
-                        <th>Assign To</th>
-                        <th>Policy Number</th>
-                        <th>Make</th>
-                        <th>Model</th>
-                        <th>Registered Date</th>
-                        <th>Reserve</th>
-                        <th>Assign To</th>
-                        <th>Recovery</th>
-                        <th>Re-Open</th>
+                        <th>@_localizer["ClaimSegment"].Value </th>
+                        <th>@_localizer["ClaimantName"].Value </th>
+                        <th>@_localizer["AssignTo"].Value </th>
+                        <th>@_localizer["PolicyNumber"].Value </th>
+                        <th>@_localizer["Make"].Value </th>
+                        <th>@_localizer["Model"].Value </th>
+                        <th>@_localizer["RegisteredDate"].Value </th>
+                        <th>@_localizer["Reserve"].Value </th>
+                        <th>@_localizer["AssignTo"].Value </th>
+                        <th>@_localizer["Recovery"].Value </th>
+                        <th>@_localizer["Re-Open"].Value </th>
 
                     </tr>
 
@@ -203,7 +203,7 @@
                             <img src="/assets/icons/save.svg" alt="" class="item-icon">
                         </span>
                         <div class="item-content">
-                            <span class="label">Policy No</span>
+                            <span class="label">@_localizer["PolicyNo"].Value </span>
                             <h3 class="value">policy.policy.PolicyNumber</h3>
                         </div>
                     </li>
@@ -212,7 +212,7 @@
                             <img src="/assets/icons/calendar.svg" alt="" class="item-icon">
                         </span>
                         <div class="item-content">
-                            <span class="label">Effective Date</span>
+                            <span class="label">@_localizer["EffectiveDate"].Value </span>
                             <h3 class="value">HelpersDate.FormatDateNoTime(policy.policy.PolicyEffectiveDate)</h3>
                         </div>
                     </li>
@@ -221,8 +221,8 @@
                             <img src="/assets/icons/calendar.svg" alt="" class="item-icon">
                         </span>
                         <div class="item-content">
-                            <span class="label">Year of Manufacturing</span>
-                            <h3 class="value">vehicle.Vehicle.ManufactureYear</h3>
+                            <span class="label">@_localizer["YearofManufacturing"].Value </span>
+                            <h3 class="value">@_localizer["Khallad"].Value vehicle.Vehicle.ManufactureYear</h3>
                         </div>
                     </li>
                     <li class="detailed-item">
@@ -230,8 +230,8 @@
                             <img src="/assets/icons/calendar.svg" alt="" class="item-icon">
                         </span>
                         <div class="item-content">
-                            <span class="label">Expiry Date</span>
-                            <h3 class="value">HelpersDate.FormatDateNoTime(policy.policy.PolicyExpiryDate)</h3>
+                            <span class="label">@_localizer["ExpiryDate"].Value </span>
+                            <h3 class="value">@_localizer["HelpersDate.FormatDateNoTime(policy.policy.PolicyExpiryDate)"].Value </h3>
                         </div>
                     </li>
                 </ul>
