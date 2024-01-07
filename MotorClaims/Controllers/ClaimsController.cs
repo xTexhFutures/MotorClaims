@@ -17,6 +17,7 @@ using Microsoft.Extensions.Options;
 using MotorClaims.Models;
 using Newtonsoft.Json;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Net.Mail;
 using System.Reflection;
@@ -78,21 +79,10 @@ namespace MotorClaims.Controllers
             //keyValuePairs.Add("PlateNo", claims.PlateNo);
             //Helpers.SendSMSTemplate(2, keyValuePairs, "+966592032990", _appSettings);
 
-            List<LookupTable> lookupTables = new List<LookupTable>();
-            lookupTables = query.Where(p => p.MajorCode == (int)Enums.Lookups.City).ToList();
-            if (lookupTables == null)
-            {
-                SearchLookUp searchLookUp = new SearchLookUp()
-                {
-                    MajorCode = SystemEnums.City
-                };
-                lookupTables = Helpers.ExcutePostAPI<List<LookupTable>>(searchLookUp, _appSettings.APIHubPrefix + "api/MotorClaim/Loadlookups");
-            }
-
-            HttpContext.Session.SetSessionData("Cities", lookupTables);
+          
             ViewData["Policy"] = policy;
             ViewData["Vehicle"] = Vehicle;
-            ViewData["Cities"] = lookupTables;
+            ViewData["Cities"] = HttpContext.Session.getSessionData<List<LookupTable>>("Cities");
             return View(claims);
         }
 
@@ -294,6 +284,16 @@ namespace MotorClaims.Controllers
             };
             claimSearchResult = HttpContext.Session.getSessionData<ClaimSearchResult>("SearchResult");
             claimSearchResult = new ClaimSearchResult();
+
+            AutoAssignObj autoAssignObj = new AutoAssignObj()
+            {
+                ClaimantId = claimants.Id,
+                RoleId = (int)Models.Enums.ClaimantStatus.Operation,
+                Status =  2
+            };
+            claimants = Helpers.ExcutePostAPI<Claimants>(autoAssignObj, _appSettings.APIHubPrefix + "api/MotorClaim/AutoAssign");
+
+
             return RedirectToAction("ClaimEntry", new { obj = Helpers.Encrypt(JsonConvert.SerializeObject(claimSearchobj)) });
         }
 

@@ -665,6 +665,13 @@ function OperationAssign(ClaimId,ClaimantId) {
     $('#OperationAssign').load('/Operations/OperationAssign/', { ClaimId: ClaimId, ClaimantId: ClaimantId });
 }
 
+function TowingLetter(ClaimId, ClaimantId) {
+    const element = document.getElementById('TowingLetter');
+    element.classList.toggle('active');
+    $('#TowingLetter').load('/Towing/TowingLetter/', { ClaimId: ClaimId, ClaimantId: ClaimantId });
+}
+
+
 
 function OperationReOpen(ClaimId) {
     const element = document.getElementById('OperationReOpen');

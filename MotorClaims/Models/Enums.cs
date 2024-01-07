@@ -155,5 +155,33 @@ namespace MotorClaims.Models
             WaitingCustomertodeliverhisvehicle = 4
 
         }
+
+        public enum VehicleLocation
+        {
+            AgencyOrWorkshop=1,
+            Client=2,
+            Branch=3,
+            Provider=4,
+            Workshop=5,
+            Other=6
+        }
+
+        public enum TowingStatus
+        {
+            [Display(Name = "Client Refuse")]
+            ClientRefuse = 1,
+            [Display(Name = "Vehicle Not Found in the Location")]
+            VehicleNotFound = 2,
+            [Display(Name = "Arrested In Baladeyah")]
+            ArrestedInBaladeyah = 3,
+            [Display(Name = "Arrested In Morror")]
+            ArrestedInMorror = 4,
+            [Display(Name = "Wrong Phone Number")]
+            WrongPhone = 5,
+            [Display(Name = "Client Not Coordinating")]
+            ClientNotCoordinating = 6,
+            [Display(Name = "Others")]
+            Others = 7,
+        }
     }
 }

@@ -1,0 +1,243 @@
+﻿@using CORE.DTOs.MotorClaim.Claims;
+@model ClaimMaster
+@{
+    Layout = null;
+    int? ClaimantId = (int?)ViewData["claimantId"];
+  List<LookupTable> Cities = (List<LookupTable>)ViewData["Cities"];
+  Towings towings=(Towings)ViewData["towings"];
+}
+<form id="frmUpdateTowings" method="post" >
+    <input type="hidden" name="ClaimId" value="@Model.claims.Id" />
+    <input type="hidden" name="Id" value="@towings.Id" />
+    <div class="slide-popup-inner">
+        <div class="slide-header">
+            <div class="heading-card">
+                <h2 class="heading">Towing Letter</h2>
+            </div>
+        </div>
+        <div class="slide-body">
+            <div class="popup-body-wrapper">
+                <div class="body-content-wrapper">
+                    <div class="delete-content-card">
+                        <div class="body-delete-header">
+                            <h2 class="heading-title">@Model.claims.ClaimNo</h2>
+                            <span class="active-employee">Employee</span>
+                        </div>
+                        <ul class="list-detail">
+                            <li class="list-item-delete">
+                                <span class="label">Owner Name:</span>
+                                <span class="value">@Model.claims.Owner</span>
+                            </li>
+                            <li class="list-item-delete">
+                                <span class="label">Policy No:</span>
+                                <span class="value">@Model.claims.PolicyNo</span>
+                            </li>
+                            <li class="list-item-delete">
+                                <span class="label">Plate No:</span>
+                                <span class="value">@Model.claims.PlateNo</span>
+                            </li>
+                            <li class="list-item-delete">
+                                <span class="label">Fraud Score:</span>
+                                <span class="value">@Model.claims.FraudScore</span>
+                            </li>
+                        </ul>
+
+
+                        <div class="cancel-declaration">
+                            <h3 class="title-label">Claimant</h3>
+                            <div class="form-field-wrapper">
+                                <div class="form-input-wrapper">
+                                    <select required class="form-inputbox" name="ClaimantId" id="ddlClaimantID">
+                                            <option value="@Model.claimants.Id">@Model.claimants.ClaimantName</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>          
+                        
+                        <div class="cancel-declaration">
+                            <h3 class="title-label">Car Towing Supplier</h3>
+                            <div class="form-field-wrapper">
+                                <div class="form-input-wrapper">
+  <select required class="form-inputbox"  name="TowingSupplier" id="ddlTowingSupplier">
+      <option value="">Select Towing Supplier</option>
+	<option value="1">Test</option>
+
+
+</select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="cancel-declaration">
+                            <h3 class="title-label">Vehicle Location</h3>
+                            <div class="form-field-wrapper">
+                                <div class="form-input-wrapper">
+                                     <label for="VehicleLocation-11" class="radio-card-v2" style="min-width:30% !important">
+                                                <input type="radio" required value="@((int)MotorClaims.Models.Enums.VehicleLocation.AgencyOrWorkshop)" name="VehicleLocation" id="VehicleLocation-11" @(towings.Id>0 && towings.VehicleLocation==(int)MotorClaims.Models.Enums.VehicleLocation.AgencyOrWorkshop?"checked":"")/>
+                                                <div class="card-content-wrapper">
+                                                    <span class="check-icon"></span>
+                                                    <div class="card-content">
+                                                        <h4 class="title">@(MotorClaims.Models.Enums.VehicleLocation.AgencyOrWorkshop)</h4>
+                                                    </div>
+                                                </div>
+                                            </label>
+                                            <!-- /.radio-card -->
+
+                                            <label for="VehicleLocation-12" class="radio-card-v2" style="min-width:30% !important">
+                                                <input type="radio" required value="@((int)MotorClaims.Models.Enums.VehicleLocation.Client)" name="VehicleLocation" id="VehicleLocation-12" @(towings.Id>0 && towings.VehicleLocation==(int)MotorClaims.Models.Enums.VehicleLocation.Client?"checked":"") />
+                                                <div class="card-content-wrapper">
+                                                    <span class="check-icon"></span>
+                                                    <div class="card-content">
+                                                        <h4 class="title">@(MotorClaims.Models.Enums.VehicleLocation.Client)</h4>
+                                                    </div>
+                                                </div>
+                                            </label>
+
+                                           
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="cancel-declaration">
+                            <span class="label">City</span>
+                                                    <select class="form-controlar" required name="City" id="txtCity" onchange="GetCityName(this);">
+                                                        <option value=""></option>
+                                                        @foreach (var item in Cities)
+                                                        {
+                                                            <option value="@item.Code">@item.NameEnglish</option>
+                                                        }
+
+                                                    </select>
+                        </div>
+
+
+                        <div class="cancel-declaration">
+                            <h3 class="title-label">Note</h3>
+                            <div class="form-field-wrapper">
+                                <div class="form-input-wrapper">
+                                    <textarea name="Note" id="txtNote" autocomplete="off" class="form-inputbox" maxlength="1024">@towings.Note</textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                           <div class="cancel-declaration">
+                            <h3 class="title-label">Town From</h3>
+                            <div class="form-field-wrapper">
+                                <div class="form-input-wrapper" style="display: block;">
+                                     <label for="VehicleLocationTo-11" class="radio-card-v2" style="min-width:30% !important">
+                                                <input type="radio" required value="@((int)MotorClaims.Models.Enums.VehicleLocation.AgencyOrWorkshop)" name="VehicleLocationTo" id="VehicleLocationTo-11" @(towings.Id>0 && towings.VehicleLocationTo==(int)MotorClaims.Models.Enums.VehicleLocation.AgencyOrWorkshop?"checked":"")/>
+                                                <div class="card-content-wrapper">
+                                                    <span class="check-icon"></span>
+                                                    <div class="card-content">
+                                                        <h4 class="title">@(MotorClaims.Models.Enums.VehicleLocation.AgencyOrWorkshop)</h4>
+                                                    </div>
+                                                </div>
+                                            </label>
+                                            <!-- /.radio-card -->
+
+                                            <label for="VehicleLocationTo-12" class="radio-card-v2" style="min-width:30% !important">
+                                                <input type="radio" required value="@((int)MotorClaims.Models.Enums.VehicleLocation.Provider)" name="VehicleLocationTo" id="VehicleLocationTo-12"  @(towings.Id>0 && towings.VehicleLocationTo==(int)MotorClaims.Models.Enums.VehicleLocation.Provider?"checked":"")/>
+                                                <div class="card-content-wrapper">
+                                                    <span class="check-icon"></span>
+                                                    <div class="card-content">
+                                                        <h4 class="title">@(MotorClaims.Models.Enums.VehicleLocation.Provider)</h4>
+                                                    </div>
+                                                </div>
+                                            </label>
+                                             <label for="VehicleLocationTo-13" class="radio-card-v2" style="min-width:30% !important">
+                                                <input type="radio" required value="@((int)MotorClaims.Models.Enums.VehicleLocation.Branch)" name="VehicleLocationTo" id="VehicleLocationTo-13"  @(towings.Id>0 && towings.VehicleLocationTo==(int)MotorClaims.Models.Enums.VehicleLocation.Branch?"checked":"")/>
+                                                <div class="card-content-wrapper">
+                                                    <span class="check-icon"></span>
+                                                    <div class="card-content">
+                                                        <h4 class="title">@(MotorClaims.Models.Enums.VehicleLocation.Branch)</h4>
+                                                    </div>
+                                                </div>
+                                            </label>
+                                              <label for="VehicleLocationTo-14" class="radio-card-v2" style="min-width:30% !important">
+                                                <input type="radio" required value="@((int)MotorClaims.Models.Enums.VehicleLocation.Other)" name="VehicleLocationTo" id="VehicleLocationTo-14"  @(towings.Id>0 && towings.VehicleLocationTo==(int)MotorClaims.Models.Enums.VehicleLocation.Other?"checked":"")/>
+                                                <div class="card-content-wrapper">
+                                                    <span class="check-icon"></span>
+                                                    <div class="card-content">
+                                                        <h4 class="title">@(MotorClaims.Models.Enums.VehicleLocation.Other)</h4>
+                                                    </div>
+                                                </div>
+                                            </label>
+                                           
+                                </div>
+                            </div>
+                        </div>
+                           <div class="cancel-declaration">
+                            <h3 class="title-label">Towing To</h3>
+                            <div class="form-field-wrapper">
+                                <div class="form-input-wrapper">
+  <select required class="form-inputbox" name="TowingTo" id="ddlTowingTo">
+      <option value="">Select Towing To</option>
+	<option value="1">Test</option>
+
+
+</select>
+                                </div>
+                            </div>
+                        </div>
+
+                          <div class="cancel-declaration">
+                            <h3 class="title-label">Towing Status</h3>
+                            <div class="form-field-wrapper">
+                                <div class="form-input-wrapper">
+  <select  class="form-inputbox" name="TowingAction" id="ddlTowingAction">
+      <option value="0">Select Towing Action</option>
+	<option value="@((int)Enums.TowingStatus.ClientRefuse)">@Enums.TowingStatus.ClientRefuse.DisplayName()</option>
+	<option value="@((int)Enums.TowingStatus.VehicleNotFound)">@Enums.TowingStatus.VehicleNotFound.DisplayName()</option>
+	<option value="@((int)Enums.TowingStatus.ArrestedInBaladeyah)">@Enums.TowingStatus.ArrestedInBaladeyah.DisplayName()</option>
+	<option value="@((int)Enums.TowingStatus.ArrestedInMorror)">@Enums.TowingStatus.ArrestedInMorror.DisplayName()</option>
+	<option value="@((int)Enums.TowingStatus.WrongPhone)">@Enums.TowingStatus.WrongPhone.DisplayName()</option>
+	<option value="@((int)Enums.TowingStatus.ClientNotCoordinating)">@Enums.TowingStatus.ClientNotCoordinating.DisplayName()</option>
+	<option value="@((int)Enums.TowingStatus.Others)">@Enums.TowingStatus.Others.DisplayName()</option>
+
+
+</select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="slide-footer">
+                    <div class="slide-inner-footer">
+                        <button type="button" class="button button-secondary-border"
+                                onclick="CloseDialogV('TowingLetter')">
+                            Cancel
+                        </button>
+                        <button type="submit" class="button button-primary">Update</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+</form>
+
+<script>
+
+      function GetCityName(sel)
+      {
+        var submitButton = document.getElementById("txtCity");
+        var userSelectValue = userSelect.options[userSelect.selectedIndex].value;
+      }
+    $(function () {
+        if('@towings'!=null && '@towings.Id'>0){
+            $('#ddlTowingTo').val('@towings.TowingTo');
+            $('#ddlTowingSupplier').val('@towings.TowingSupplier');
+            $('#txtCity').val('@towings.City');
+            $('#ddlTowingAction').val('@towings.TowingAction');
+   
+        }
+            $("#frmUpdateTowings").submit(function (event) {
+            $.post("/Towing/UpdateTowing/", $("#frmUpdateTowings").serializeArray(),function(){
+                CloseDialogV('TowingLetter');
+            });
+
+        });
+    });
+</script>

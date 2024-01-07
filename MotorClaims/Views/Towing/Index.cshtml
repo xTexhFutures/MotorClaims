@@ -5,14 +5,16 @@
     SearchObj searchObj = (SearchObj)ViewData["searchObj"];
     List<Users> users = (List<Users>)ViewData["AllUsers"];
 }
-@model List<ClaimMaster>
+@using X.PagedList.Mvc.Core;
+@using X.PagedList;
+@model IPagedList<ClaimMaster>
 
 <div class="add-member-detail" style="max-height:900px;overflow-y:auto">
     <div class="policy-wrapper">
         <div class="basic-detail" style="background:none !important">
-            <h2 class="heading">Operations</h2>
+            <h2 class="heading">Towings</h2>
             <div class="search-member">
-                <form method="post" asp-action="SearchOperations" asp-controller="Operations" style="display:flow-root">
+                <form method="post" asp-action="SearchTowings" asp-controller="Towing" style="display:flow-root">
                     <div class="search-filter-wrapper">
                         <div class="search-wrapper">
                             <span class="label">Claim No</span>
@@ -111,24 +113,24 @@
         </div>
     </div>
 
+   
     @if (Model != null && Model.Count > 0)
     {
         <div class="policy-members">
             <div class="heading-card">
-                <h2 class="heading">All Claims</h2>
+                <h2 class="heading">Towing Claims</h2>
             </div>
             <div class="transaction-details">
                 <table class="universal-table">
                     <tr>
                         <th>Claim Segment</th>
-                        <th>Fraud Indicator</th>
+                        <th>Claimant Name</th>
+                        <th>Assign To</th>
                         <th>Policy Number</th>
                         <th>Make</th>
                         <th>Model</th>
-                        <th>Chassis</th>
                         <th>Registered Date</th>
-                        <th>Add Reserve</th>
-                        <th>Assign To</th>
+                        <th>Towing Letter</th>
 
                     </tr>
 
@@ -139,26 +141,31 @@
                         <tr>
                             @{
                                 ClaimSearchobj claimSearchobj = new ClaimSearchobj()
-                    {
-                        PolicyId = clm.PolicyId.HasValue ? clm.PolicyId.Value : 0,
-                        ClaimId = clm.Id
-                    };
-                            }
-                            <td class="tran"><a href="@Url.Action("SurveyorEntry","Surveyor",new{obj=MotorClaims.Models.Helpers.Encrypt(JsonConvert.SerializeObject(claimSearchobj))})">@clm.ClaimNo</a></td>
-                            <td>clm.PolicyTypeName</td>
-                            <td>clm.PolicyNumber</td>
-                            <td>clm.MakeDesc</td>
-                            <td>clm.ModelDesc</td>
-                            <td>clm.ChassisNo</td>
-                            <td>e(clm.CreationDate.Value)</td>
-                            <td class="tran"><a href="#" onclick="SurveyorReserve()">Reserve</a></td>
-                            <td class="tran"><a href="#" onclick="SurveyorAssign()">Assign</a></td>
+                                                                {
+                                                                    ClaimId = clm.claims.Id,
+                                                                    ClaimantId=clm.claimants.Id
+                                                                };
 
+                                string UserName = users.Where(p => p.Id == clm.claimants.AssignTo).FirstOrDefault().UserName;
+                            }
+                            <td>@clm.claims.ClaimNo/@clm.claimants.Serial</td>
+
+                            <td>@clm.claimants.ClaimantName</td>
+                            <td>@UserName</td>
+                            <td>@clm.productionInfo.PolicyNumber</td>
+                               <td>@clm.vehiclesInfo.ModelDesc</td>
+                            <td>@clm.vehiclesInfo.MakeDesc</td>
+                         
+                            <td>@HelpersDate.FormatDate(clm.claims.RegistrationDate)</td>
+                            <td class="tran"><a href="#" onclick="TowingLetter(@clm.claims.Id,@clm.claimants.Id)">Towing Letter</a></td>
+                         
                         </tr>
 
 
                     }
                 </table>
+                 @Html.PagedListPager((IPagedList)Model,Page=>Url.Action("Index","Operations",new {Page}))
+            Showing @Model.FirstItemOnPage to @Model.LastItemOnPage of @Model.TotalItemCount Claims
             </div>
         </div>
     }
@@ -224,8 +231,7 @@
     </div>
 </div>
 
-<div class="common-slide-popup" id="UpdateReserve"></div>
-<div class="common-slide-popup" id="SurveyorAssign"></div>
+<div class="common-slide-popup" id="TowingLetter"></div>
 
 <script>
     $('#txtFrom').ForceDateEntry();
