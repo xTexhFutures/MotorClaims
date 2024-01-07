@@ -1,14 +1,18 @@
-﻿@using CORE.DTOs.MotorClaim.Claims;
+﻿@using CORE.DTOs.Authentications;
+@using CORE.DTOs.MotorClaim.Claims;
 @using Newtonsoft.Json;
-
-@model List<Claims>
+@{
+    SearchObj searchObj = (SearchObj)ViewData["searchObj"];
+    List<Users> users = (List<Users>)ViewData["AllUsers"];
+}
+@model List<ClaimMaster>
 
 <div class="add-member-detail" style="max-height:900px;overflow-y:auto">
     <div class="policy-wrapper">
         <div class="basic-detail" style="background:none !important">
-            <h2 class="heading">Towing</h2>
+            <h2 class="heading">Operations</h2>
             <div class="search-member">
-                <form method="post" asp-action="SearchSurveyors" asp-controller="Surveyor" style="display:flow-root">
+                <form method="post" asp-action="SearchOperations" asp-controller="Operations" style="display:flow-root">
                     <div class="search-filter-wrapper">
                         <div class="search-wrapper">
                             <span class="label">Claim No</span>
@@ -18,7 +22,7 @@
                                     <img src="/assets/icons/empty-file.svg" class="search-icon" alt="">
                                 </div>
                                 <input type="text" class="input-box" autocomplete="off" maxlength="60" name="claimno" placeholder="Search By Claim No"
-                                       value="">
+                                       value="@searchObj.claimno">
                             </div>
                         </div>
 
@@ -30,7 +34,7 @@
                                     <img src="/assets/icons/empty-file.svg" class="search-icon" alt="">
                                 </div>
                                 <input type="text" class="input-box" autocomplete="off" id="txtnationalid" maxlength="10" name="nationalid" placeholder="Search By National Id"
-                                       value="">
+                                       value="@searchObj.nationalid">
                             </div>
                         </div>
 
@@ -42,7 +46,7 @@
                                     <img src="/assets/icons/empty-file.svg" class="search-icon" alt="">
                                 </div>
                                 <input type="text" class="input-box" autocomplete="off" id="txtmobile" name="mobile" maxlength="9" placeholder="Search By Mobile No 5XXXXX"
-                                       value="">
+                                       value="@searchObj.mobile">
                             </div>
                         </div>
                         <div class="search-wrapper">
@@ -53,7 +57,7 @@
                                     <img src="/assets/icons/empty-file.svg" class="search-icon" alt="">
                                 </div>
                                 <input type="text" class="input-box" autocomplete="off" maxlength="40" name="chassis" placeholder="Search By Chasis No"
-                                       value="">
+                                       value="@searchObj.chassis">
                             </div>
                         </div>
                     </div>
@@ -69,23 +73,10 @@
                                     <img src="/assets/icons/empty-file.svg" class="search-icon" alt="">
                                 </div>
                                 <input type="text" class="input-box" autocomplete="off" maxlength="40" name="policy" placeholder="Search By Policy No"
-                                       value="">
+                                       value="@searchObj.policy">
                             </div>
                         </div>
-                        <div class="search-wrapper">
-                            <span class="label">Branch</span>
 
-                            <div class="search-input-box-wrapper">
-                                <div class="search-icon-wrapper">
-                                    <img src="/assets/icons/List.png" class="search-icon" alt="">
-                                </div>
-                                <select class="common-dropdown Full" id="ddlFilter" name="Filter">
-                                    <option value="">Select Branch</option>
-                                    <option value="1">Active</option>
-                                    <option value="0">In-Active</option>
-                                </select>
-                            </div>
-                        </div>
 
                         <div class="search-wrapper">
                             <span class="label">Registered From</span>
@@ -94,7 +85,7 @@
                                 <div class="search-icon-wrapper">
                                     <img src="/assets/icons/calendar.svg" class="search-icon" alt="">
                                 </div>
-                                <input class="input-box" autocomplete="off" id="txtFrom" name="From" type="text" value="">
+                                <input class="input-box" autocomplete="off" id="txtFrom" name="RegisteredFrom" type="text" value="@(searchObj.RegisteredFrom.HasValue?searchObj.RegisteredFrom.Value.ToString("dd-MM.yyyy"):"")">
                             </div>
                         </div>
 
@@ -106,7 +97,7 @@
                                 <div class="search-icon-wrapper">
                                     <img src="/assets/icons/calendar.svg" class="search-icon" alt="">
                                 </div>
-                                <input class="input-box" autocomplete="off" id="txtTo" name="To" type="text" value="">
+                                <input class="input-box" autocomplete="off" id="txtTo" name="RegisteredTo" type="text" value="@(searchObj.RegisteredTo.HasValue?searchObj.RegisteredTo.Value.ToString("dd-MM.yyyy"):"")">
                             </div>
                         </div>
 
@@ -119,7 +110,6 @@
             </div>
         </div>
     </div>
-
 
     @if (Model != null && Model.Count > 0)
     {

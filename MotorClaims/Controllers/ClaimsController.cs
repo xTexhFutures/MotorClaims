@@ -21,6 +21,7 @@ using System.IO;
 using System.Net.Mail;
 using System.Reflection;
 using System.Security.Claims;
+using System.Security.Principal;
 
 namespace MotorClaims.Controllers
 {
@@ -72,10 +73,10 @@ namespace MotorClaims.Controllers
                 var claim = Helpers.ExcutePostAPI<List<Claims>>(setupClaimsRequestcs, _appSettings.APIHubPrefix + "api/MotorClaim/ClaimsTransactions");
                 claims = claim.FirstOrDefault();
             }
-            Dictionary<string,string> keyValuePairs = new Dictionary<string,string>();
-            keyValuePairs.Add("ClaimNo", claims.ClaimNo);
-            keyValuePairs.Add("PlateNo", claims.PlateNo);
-            Helpers.SendSMSTemplate(2, keyValuePairs, "+966592032990", _appSettings);
+            //Dictionary<string,string> keyValuePairs = new Dictionary<string,string>();
+            //keyValuePairs.Add("ClaimNo", claims.ClaimNo);
+            //keyValuePairs.Add("PlateNo", claims.PlateNo);
+            //Helpers.SendSMSTemplate(2, keyValuePairs, "+966592032990", _appSettings);
 
             List<LookupTable> lookupTables = new List<LookupTable>();
             lookupTables = query.Where(p => p.MajorCode == (int)Enums.Lookups.City).ToList();
@@ -352,20 +353,21 @@ namespace MotorClaims.Controllers
             List<Attachments> attachments = new List<Attachments>();
             mainSearchMC = new MainSearchMC()
             {
-                ModuleId = ModuleId
+               Id=(int)ClaimId,
+               ClaimantId=ClaimantId
             };
             setupClaimsRequestcs = new SetupClaimsRequestcs()
             {
-                TransactionType = CORE.Extensions.ClaimTransactionType.LoadAttachment,
+                TransactionType = CORE.Extensions.ClaimTransactionType.LoadClaimsMaster,
                 Request = mainSearchMC
             };
-            attachments = Helpers.ExcutePostAPI<List<Attachments>>(setupClaimsRequestcs, _appSettings.APIHubPrefix + "api/MotorClaim/SetupMotorClaim");
-            ViewData["Link"] = _appSettings.DocumentsLink + Reference;
-            return View(attachments);
+            var claims = Helpers.ExcutePostAPI<List<ClaimMaster>>(setupClaimsRequestcs, _appSettings.APIHubPrefix + "api/MotorClaim/ClaimsTransactions");
+            ViewData["Link"] = _appSettings.DocumentsLink +"/"+ claims.FirstOrDefault().claims.ClaimNo+"/"+ claims.FirstOrDefault().claimants.Serial+"/";
+            return View(claims.FirstOrDefault());
         }
 
         [HttpPost]
-        public async Task<IActionResult> UploadAttachments(int Id, int ClaimId, int ModuleId, int? ClaimantId, IList<IFormFile> files)
+        public async Task<IActionResult> UploadAttachments(int Id, int ClaimId, int ModuleId, int? ClaimantId,int attachId,int serial, IList<IFormFile> files)
         {
             int VehicleId = Convert.ToInt32(HttpContext.Request.Form["VehicleId"]);
             int PolicyId = Convert.ToInt32(HttpContext.Request.Form["PolicyId"]);
@@ -391,8 +393,9 @@ namespace MotorClaims.Controllers
                     ModuleId = ModuleId,
                     FileName = Path.GetFileName(files[0].FileName),
                     ContentType = files[0].ContentType,
-                    CreatedBy = "Test",
-                    IsDeleted = false
+                    CreatedBy = HttpContext.Session.getSessionData<Users>("LoggedUser").UserName,
+                    IsDeleted = false,
+                    Id= attachId
                 };
                 SetupClaimsRequestcs setupClaimsRequestcs = new SetupClaimsRequestcs()
                 {
@@ -403,7 +406,8 @@ namespace MotorClaims.Controllers
 
                 foreach (IFormFile file in files)
                 {
-                    string pathMDF = _appSettings.ExcelPath;
+
+                    string pathMDF = _appSettings.ClaimSubmissionPath;
                     string fieNameWithExt = attachment.Id.ToString() + "_" + Path.GetFileName(file.FileName);
                     System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
                     if (file.Length > 0)
@@ -413,12 +417,12 @@ namespace MotorClaims.Controllers
                             TransactionType = CORE.Extensions.ClaimTransactionType.LoadClaim,
                             Request = new MainSearchMC()
                             {
-                                Id = attachment.ClaimId
+                                Id =(int)attachment.ClaimId
                             }
                         };
                         claims = Helpers.ExcutePostAPI<List<Claims>>(mainSearch, _appSettings.APIHubPrefix + "api/MotorClaim/ClaimsTransactions");
 
-                        string directory = Path.Combine(pathMDF, claims.FirstOrDefault().ClaimNo);
+                        string directory = Path.Combine(pathMDF, claims.FirstOrDefault().ClaimNo,serial.ToString());
                         bool folderExists = Directory.Exists(directory);
                         if (!folderExists)
                             Directory.CreateDirectory(directory);
@@ -671,31 +675,50 @@ namespace MotorClaims.Controllers
             return PartialView("_ClaimantReserve", claimTransactions);
         }
 
-        public IActionResult Photos()
+        public IActionResult Photos(int Id)
         {
-            DirectoryInfo d = new DirectoryInfo(@"D:\AICCFiles\AB0810232"); //Assuming Test is your Folder
 
-            FileInfo[] Files = d.GetFiles("*.jpg"); //Getting Text files
+            MainSearchMC mainSearchMC = new MainSearchMC()
+            {
+                Id = Convert.ToInt32(Id)
+            };
+            SetupClaimsRequestcs setupClaimsRequestcs = new SetupClaimsRequestcs()
+            {
+                TransactionType = CORE.Extensions.ClaimTransactionType.LoadClaim,
+                Request = mainSearchMC
+            };
+            var claim = Helpers.ExcutePostAPI<List<Claims>>(setupClaimsRequestcs, _appSettings.APIHubPrefix + "api/MotorClaim/ClaimsTransactions");
+            DirectoryInfo d = new DirectoryInfo(string.Concat(_appSettings.NajmImagesPath, "\\LD\\", claim.FirstOrDefault().AccidentNo)); //Assuming Test is your Folder
             List<string> location = new List<string>();
-            string str = "";
-
-            foreach (FileInfo file in Files)
+            ViewData["Claims"] = claim.FirstOrDefault();
+            try
             {
-                location.Add(file.Name);
+                FileInfo[] Files = d.GetFiles("*.jpg"); //Getting Text files
+
+                string str = "";
+
+                foreach (FileInfo file in Files)
+                {
+                    location.Add(file.Name);
+                }
+                ViewData["location"] = location;
+
+
+                d = new DirectoryInfo(string.Concat(_appSettings.NajmImagesPath, "\\DA\\", claim.FirstOrDefault().TaqdeerNo)); //Assuming Test is your Folder
+
+                Files = d.GetFiles("*.jpg"); //Getting Text files
+                location = new List<string>();
+
+                foreach (FileInfo file in Files)
+                {
+                    location.Add(file.Name);
+                }
+                ViewData["location1"] = location;
             }
-            ViewData["location"] = location;
-
-
-            d = new DirectoryInfo(@"D:\AICCFiles\DA1710235075"); //Assuming Test is your Folder
-
-            Files = d.GetFiles("*.jpg"); //Getting Text files
-            location = new List<string>();
-
-            foreach (FileInfo file in Files)
+            catch (Exception)
             {
-                location.Add(file.Name);
             }
-            ViewData["location1"] = location;
+         
 
             return PartialView("_Photos");
         }
@@ -704,7 +727,7 @@ namespace MotorClaims.Controllers
         {
 
             var claim = Helpers.ExcutePostAPI<List<Claims>>(SequanceNo, _appSettings.APIHubPrefix + "api/MotorClaim/ClaimHistoryCount");
-            return PartialView("_ClaimsHistory", claim);
+            return PartialView("_ClaimsCount", claim);
         }
     }
 }

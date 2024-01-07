@@ -1,8 +1,12 @@
-﻿using CORE.DTOs.MotorClaim.Claims;
+﻿using CORE.DTOs.Authentications;
+using CORE.DTOs.MotorClaim.Claims;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Options;
 using MotorClaims.Models;
+using OfficeOpenXml.FormulaParsing.Excel.Functions.Engineering;
+using X.PagedList;
 
 namespace MotorClaims.Controllers
 {
@@ -23,9 +27,15 @@ namespace MotorClaims.Controllers
             _memoryCache.TryGetValue(VehicleListCacheKey, out query);
         }
 
-        public IActionResult Index()
+        public IActionResult Index(int page=1, string err=null)
         {
-            return View(new List<Claims>());
+            ViewData["searchObj"] = new SearchObj();
+            ViewData["Error"] = err;
+            List<ClaimMaster> claim = new List<ClaimMaster>();
+            claim = HttpContext.Session.getSessionData<List<ClaimMaster>>("ClaimMasterTowing");
+            ViewData["AllUsers"] = HttpContext.Session.getSessionData<List<Users>>("AllUsers");
+            IPagedList<ClaimMaster> claims = claim.ToPagedList(page, _appSettings.PageSize);
+            return View(claims);
         }
     }
 }

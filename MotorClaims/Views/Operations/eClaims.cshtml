@@ -5,7 +5,7 @@
 @using X.PagedList;
 @using X.PagedList.Mvc.Core;
 @{
-    eClaimsObj searchObj = (eClaimsObj)ViewData["searchObj"];
+    eClaimsObj searchObj = (eClaimsObj)ViewData["eClaims"];
 }
 @model IPagedList<eClaims>
 
@@ -15,85 +15,12 @@
             <h2 class="heading">eClaims</h2>
             <div class="search-member">
                 <form method="post" asp-action="SearcheClaims" asp-controller="Operations" style="display:flow-root">
-                    <div class="search-filter-wrapper">
-                        <div class="search-wrapper">
-                            <span class="label">Accident Report</span>
-                            <div class="search-input-box-wrapper">
-
-                                <div class="search-icon-wrapper">
-                                    <img src="/assets/icons/empty-file.svg" class="search-icon" alt="">
-                                </div>
-                                <input type="text" class="input-box" autocomplete="off" maxlength="100" name="AccidentReport" placeholder="Search By Accident Report"
-                                       value="@searchObj.AccidentReport">
-                            </div>
-                        </div>
-
-                        <div class="search-wrapper">
-                            <span class="label">Reference</span>
-                            <div class="search-input-box-wrapper">
-
-                                <div class="search-icon-wrapper">
-                                    <img src="/assets/icons/empty-file.svg" class="search-icon" alt="">
-                                </div>
-                                <input type="text" class="input-box" autocomplete="off" id="txtReference" maxlength="100" name="Reference" placeholder="Search By Reference"
-                                       value="@searchObj.Reference">
-                            </div>
-                        </div>
-
-                        <div class="search-wrapper">
-                            <span class="label">Sequence Number</span>
-                            <div class="search-input-box-wrapper">
-
-                                <div class="search-icon-wrapper">
-                                    <img src="/assets/icons/empty-file.svg" class="search-icon" alt="">
-                                </div>
-                                <input type="text" class="input-box" autocomplete="off" id="txtSequenceNumber" name="SequenceNumber" maxlength="100" placeholder="Search By Sequence Number"
-                                       value="@searchObj.SequenceNumber">
-                            </div>
-                        </div>
-                        <div class="search-wrapper">
-                            <span class="label">Taqdeer Number</span>
-                            <div class="search-input-box-wrapper">
-
-                                <div class="search-icon-wrapper">
-                                    <img src="/assets/icons/empty-file.svg" class="search-icon" alt="">
-                                </div>
-                                <input type="text" class="input-box" autocomplete="off" maxlength="100" name="TaqdeerNumber" placeholder="Search By Taqdeer Number"
-                                       value="@searchObj.TaqdeerNumber">
-                            </div>
-                        </div>
-                    </div>
+      
 
                     <div class="search-filter-wrapper">
 
 
-                        <div class="search-wrapper">
-                            <span class="label">Owner National ID</span>
-                            <div class="search-input-box-wrapper">
-
-                                <div class="search-icon-wrapper">
-                                    <img src="/assets/icons/empty-file.svg" class="search-icon" alt="">
-                                </div>
-                                <input type="text" class="input-box" autocomplete="off" maxlength="40" name="OwnerNationalID" placeholder="Search By Owner National ID"
-                                       value="@searchObj.OwnerNationalID">
-                            </div>
-                        </div>
-
-                        <div class="search-wrapper">
-                            <span class="label">Status</span>
-
-                            <div class="search-input-box-wrapper">
-                                <div class="search-icon-wrapper">
-                                    <img src="/assets/icons/List.png" class="search-icon" alt="">
-                                </div>
-                                <select class="common-dropdown Full" id="ddlFilter" name="Status">
-                                    <option value="">Select Status</option>
-                                    <option value="1">Transfered</option>
-                                    <option value="0">Invalid Policy Number</option>
-                                    <option value="2">Invalid Claimant</option>
-                                </select>
-                            </div>
-                        </div>
+                      
 
                         <div class="search-wrapper">
                             <span class="label">Registered From</span>

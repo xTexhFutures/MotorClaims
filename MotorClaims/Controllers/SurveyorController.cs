@@ -60,15 +60,19 @@ namespace MotorClaims.Controllers
             };
             var claim = Helpers.ExcutePostAPI<List<ClaimMaster>>(setupClaimsRequestcs, _appSettings.APIHubPrefix + "api/MotorClaim/ClaimsTransactions");
             ViewData["query"] = query;
+            ViewData["DocumentsLink"]= _appSettings.DocumentsLink;
 
-           
+
             return View(claim.FirstOrDefault());
         }
 
         [HttpPost]
         public IActionResult SearchSurveyors(int page=1)
         {
-            MainSearchMC mainSearchMC = new MainSearchMC();
+            MainSearchMC mainSearchMC = new MainSearchMC()
+            {
+                ClaimStatus = (int)Enums.ClaimantStatus.Surveyor
+            };
             SetupClaimsRequestcs setupClaimsRequestcs = new SetupClaimsRequestcs()
             {
                 TransactionType = CORE.Extensions.ClaimTransactionType.LoadClaimsMaster,
@@ -128,7 +132,7 @@ namespace MotorClaims.Controllers
             };
             claimTransactions = Helpers.ExcutePostAPI<ClaimTransactions>(setupClaimsRequestcs, _appSettings.APIHubPrefix + "api/MotorClaim/ClaimsTransactions");
 
-            Helpers.RegisterHistory(_appSettings, survoyer.ClaimId, "Update Claim Reserve to " + Diff, HttpContext.Session.getSessionData<Users>("LoggedUser").UserName);
+            Helpers.RegisterHistory(_appSettings, survoyer.ClaimId, "Update Claim Reserve to " + Diff, HttpContext.Session.getSessionData<Users>("LoggedUser").UserName, 1);
 
             return RedirectToAction("SurveyorEntry",new { obj = obj });
         }
@@ -182,50 +186,39 @@ namespace MotorClaims.Controllers
 
         }
 
-        public IActionResult SurveyorAssign(int ClaimId)
+        public IActionResult SurveyorAssign(int ClaimId,int ClaimantId)
         {
             ViewData["DivName"] = "SurveyorAssign";
+            ViewData["AllUsers"] = HttpContext.Session.getSessionData<List<Users>>("AllUsers");
             MainSearchMC mainSearchMC = new MainSearchMC()
             {
-                Id = ClaimId
+                Id = ClaimId,
+                ClaimantId= ClaimantId
             };
             SetupClaimsRequestcs setupClaimsRequestcs = new SetupClaimsRequestcs()
             {
-                TransactionType = CORE.Extensions.ClaimTransactionType.LoadClaim,
+                TransactionType = CORE.Extensions.ClaimTransactionType.LoadClaimsMaster,
                 Request = mainSearchMC
             };
-            var claim = Helpers.ExcutePostAPI<List<Claims>>(setupClaimsRequestcs, _appSettings.APIHubPrefix + "api/MotorClaim/ClaimsTransactions");
+            var claim = Helpers.ExcutePostAPI<List<ClaimMaster>>(setupClaimsRequestcs, _appSettings.APIHubPrefix + "api/MotorClaim/ClaimsTransactions");
             return View("_SurveyorAssign", claim.FirstOrDefault());
         }      
         
   
 
-        public IActionResult SurveyorActions(int ClaimId)
+        public IActionResult SurveyorActions(int ClaimId,int ClaimantId)
         {
-            List<Claimants> claimants = new List<Claimants>();
             MainSearchMC mainSearchMC = new MainSearchMC()
             {
-                Id = ClaimId
+                Id = ClaimId,
+                ClaimantId= ClaimantId
             };
             SetupClaimsRequestcs setupClaimsRequestcs = new SetupClaimsRequestcs()
             {
-                TransactionType = CORE.Extensions.ClaimTransactionType.LoadClaim,
+                TransactionType = CORE.Extensions.ClaimTransactionType.LoadClaimsMaster,
                 Request = mainSearchMC
             };
-            var claim = Helpers.ExcutePostAPI<List<Claims>>(setupClaimsRequestcs, _appSettings.APIHubPrefix + "api/MotorClaim/ClaimsTransactions");
-
-             mainSearchMC = new MainSearchMC()
-            {
-                ClaimId = ClaimId
-            };
-             setupClaimsRequestcs = new SetupClaimsRequestcs()
-            {
-                TransactionType = CORE.Extensions.ClaimTransactionType.LoadClaimants,
-                Request = mainSearchMC
-            };
-            claimants = Helpers.ExcutePostAPI<List<Claimants>>(setupClaimsRequestcs, _appSettings.APIHubPrefix + "api/MotorClaim/ClaimsTransactions");
-
-            ViewData["claimants"] = claimants;
+            var claim = Helpers.ExcutePostAPI<List<ClaimMaster>>(setupClaimsRequestcs, _appSettings.APIHubPrefix + "api/MotorClaim/ClaimsTransactions");
             return View(claim.FirstOrDefault());
         }
         public IActionResult UpdateReserve(int ClaimId)
@@ -241,6 +234,43 @@ namespace MotorClaims.Controllers
             };
             var claim = Helpers.ExcutePostAPI<List<Claims>>(setupClaimsRequestcs, _appSettings.APIHubPrefix + "api/MotorClaim/ClaimsTransactions");
             return View("_UpdateReserve", claim.FirstOrDefault());
+        }
+
+        [HttpPost]
+        public void UpdateClaimantActions()
+        {
+            int ClaimId=Convert.ToInt32(HttpContext.Request.Form["Id"]);
+            int ClaimantId = Convert.ToInt32(HttpContext.Request.Form["ClaimantId"]);
+            int SurveyorActions = Convert.ToInt32(HttpContext.Request.Form["SurveyorActions"]);
+            string hfSurveyorActions = HttpContext.Request.Form["hfSurveyorActions"];
+            Claimants claimants = new Claimants();
+
+            MainSearchMC mainSearchMC = new MainSearchMC()
+            {
+                ClaimId = ClaimId,
+                ClaimantId=ClaimantId
+            };
+            SetupClaimsRequestcs setupClaimsRequestcs = new SetupClaimsRequestcs()
+            {
+                TransactionType = CORE.Extensions.ClaimTransactionType.LoadClaimants,
+                Request = mainSearchMC
+            };
+
+            var clm = Helpers.ExcutePostAPI<List<Claimants>>(setupClaimsRequestcs, _appSettings.APIHubPrefix + "api/MotorClaim/ClaimsTransactions");
+            claimants = clm.FirstOrDefault();
+
+            claimants.LastClaimantAction = SurveyorActions;
+
+            setupClaimsRequestcs = new SetupClaimsRequestcs()
+            {
+                TransactionType = CORE.Extensions.ClaimTransactionType.InsertUpdateClaimants,
+                Request = claimants
+            };
+            claimants = Helpers.ExcutePostAPI<Claimants>(setupClaimsRequestcs, _appSettings.APIHubPrefix + "api/MotorClaim/ClaimsTransactions");
+
+
+            Helpers.RegisterHistory(_appSettings, ClaimId, "Change Claimant Action To " + hfSurveyorActions, HttpContext.Session.getSessionData<Users>("LoggedUser").UserName, ClaimantId);
+
         }
 
 

@@ -1,6 +1,8 @@
-﻿@{
+﻿@using CORE.DTOs.MotorClaim.Claims;
+@{
     List<string> Location=(List<string>)ViewData["location"];
     List<string> Location1=(List<string>)ViewData["location1"];
+    Claims claims = (Claims)ViewData["Claims"];
     string loc = @"file://D:/AICCFiles/AB0810232/";
     Layout = null;
 }
@@ -33,16 +35,20 @@
 
 
             <div class="row portfolio-container" data-aos="fade-up" data-aos-delay="400">
-                  @foreach (var item in Location)
-            {
-                   <div class="col-lg-4 col-md-6 portfolio-item filter-app">
-                    <div class="portfolio-wrap">
-                         <a href="@Url.Content("/MyPath/AB0810232/"+@item)" data-gallery="portfolioGallery" class="portfolio-lightbox" title="App 1">
-                              <img src="@Url.Content("/MyPath/AB0810232/"+@item)" class="img-fluid" alt="">
-                         </a>
-                    </div>
-                </div>
-            }
+                @if (Location!=null)
+                {
+                    @foreach (var item in Location)
+                    {
+                        <div class="col-lg-4 col-md-6 portfolio-item filter-app">
+                            <div class="portfolio-wrap">
+                                <a href="@Url.Content("/MyPath/LD/"+claims.AccidentNo+"/"+@item)" data-gallery="portfolioGallery" class="portfolio-lightbox" title="App 1">
+                                    <img src="@Url.Content("/MyPath/LD/"+claims.AccidentNo+"/"+@item)" class="img-fluid" alt="">
+                                </a>
+                            </div>
+                        </div>
+                    }
+                }
+            
              
 
            
@@ -63,16 +69,20 @@
 
 
             <div class="row portfolio-container" data-aos="fade-up" data-aos-delay="400">
-                  @foreach (var item in Location1)
-            {
-                   <div class="col-lg-4 col-md-6 portfolio-item filter-app">
-                    <div class="portfolio-wrap">
-                         <a href="@Url.Content("/MyPath/DA1710235075/"+@item)" data-gallery="portfolioGallery" class="portfolio-lightbox" title="App 1">
-                              <img src="@Url.Content("/MyPath/DA1710235075/"+@item)" class="img-fluid" alt="">
-                         </a>
-                    </div>
-                </div>
-            }
+                @if (Location1!=null)
+                {
+                    @foreach (var item in Location1)
+                    {
+                        <div class="col-lg-4 col-md-6 portfolio-item filter-app">
+                            <div class="portfolio-wrap">
+                                <a href="@Url.Content("/MyPath/"+claims.TaqdeerNo+"/"+@item)" data-gallery="portfolioGallery" class="portfolio-lightbox" title="App 1">
+                                    <img src="@Url.Content("/MyPath/"+claims.TaqdeerNo+"/"+@item)" class="img-fluid" alt="">
+                                </a>
+                            </div>
+                        </div>
+                    }
+                }
+        
              
 
            

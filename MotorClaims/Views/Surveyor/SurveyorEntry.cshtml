@@ -4,11 +4,13 @@
 @model ClaimMaster
 @{
     List<LookupTable> lookupTables = (List<LookupTable>)ViewData["query"];
+        string DocumentsLink=(string)ViewData["DocumentsLink"];
     await Html.RenderPartialAsync("_PolicyInfo",Model.productionInfo);
     await Html.RenderPartialAsync("_VehicleInfo", Model.vehiclesInfo);
     await Html.RenderPartialAsync("_ClaimInfo", Model.claims);
     await Html.RenderPartialAsync("_ClaimantInfo",new { Model = Model.claimants,Lookups = lookupTables});
-    await Html.RenderPartialAsync("_DocumentsInfo", Model.claimants);
+    await Html.RenderPartialAsync("_DocumentsInfo",new { Model = Model.attachments, Link = DocumentsLink,ClaimNo=string.Concat(Model.claims.ClaimNo,"/",Model.claimants.Serial),Documents=Model.documentInfos});
+
 }
 
 <div class="transaction-details">

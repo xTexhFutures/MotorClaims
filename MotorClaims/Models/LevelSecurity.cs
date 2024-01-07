@@ -13,26 +13,26 @@ namespace MotorClaims.Models
         }
         public override void OnActionExecuting(ActionExecutingContext actionExecutingContext)
         {
-            //string name = (string)actionExecutingContext.RouteData.Values["Controller"];
-            //if (name != "Authenticator" && name != "Payment" && name != "Managing")
-            //{
-            //    Users users = new Users();
+            string name = (string)actionExecutingContext.RouteData.Values["Controller"];
+            if (name != "Authenticator" && name != "Payment" && name != "Managing")
+            {
+                Users users = new Users();
 
-            //    users = actionExecutingContext.HttpContext.Session.getSessionData<Users>("LoggedUser");
-            //    if (users == null)
-            //    {
-            //        actionExecutingContext.Result = new RedirectToRouteResult(new RouteValueDictionary(new
-            //        {
-            //            controller = "Authenticator",
-            //            action = "Login"
-            //        }));
-            //    }
+                users = actionExecutingContext.HttpContext.Session.getSessionData<Users>("LoggedUser");
+                if (users == null)
+                {
+                    actionExecutingContext.Result = new RedirectToRouteResult(new RouteValueDictionary(new
+                    {
+                        controller = "Authenticator",
+                        action = "Login"
+                    }));
+                }
 
-            //}
-            //else
-            //{
-            //    actionExecutingContext.HttpContext.Session.SetSessionData("CopyRight", _appSettings.CopyRight);
-            //}
+            }
+            else
+            {
+                actionExecutingContext.HttpContext.Session.SetSessionData("CopyRight", _appSettings.CopyRight);
+            }
         }
     }
 }

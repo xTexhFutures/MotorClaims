@@ -643,19 +643,21 @@ function LoadClaimantsRecoveryList(ModuleId, ClaimId, Policy, Vehicle, ClaimantI
 
     $('#ClaimantsRecovery').load('/Claims/ClaimantRecovery/', { ClaimantId: ClaimantId, ClaimId: ClaimId });
 }
-function SurveyorAssign(ClaimId) {
+function SurveyorAssign(ClaimId, ClaimantId) {
+
     let element = document.getElementById('SurveyorAssign');
     element.classList.remove('display-none');
     element.classList.add('display-block');
     element.classList.toggle('active');
-    $('#SurveyorAssign').load('/Surveyor/SurveyorAssign/', { ClaimId: ClaimId });
+    $('#SurveyorAssign').load('/Surveyor/SurveyorAssign/', { ClaimId: ClaimId, ClaimantId: ClaimantId });
 }
-function SurveyorActions(ClaimId) {
+function SurveyorActions(ClaimId, ClaimantId) {
+    debugger;
     let element = document.getElementById('SurveyorActions');
     element.classList.remove('display-none');
     element.classList.add('display-block');
     element.classList.toggle('active');
-    $('#SurveyorActions').load('/Surveyor/SurveyorActions/', { ClaimId: ClaimId });
+    $('#SurveyorActions').load('/Surveyor/SurveyorActions/', { ClaimId: ClaimId, ClaimantId: ClaimantId });
 }
 function OperationAssign(ClaimId,ClaimantId) {
     const element = document.getElementById('OperationAssign');
@@ -688,13 +690,7 @@ function OperationReserve(ClaimId) {
     element.classList.toggle('active');
     $('#UpdateReserve').load('/Operations/UpdateReserve/', { ClaimId: ClaimId });
 }
-function SurveyorActions(ClaimId) {
-    let element = document.getElementById('SurveyorActions');
-    element.classList.remove('display-none');
-    element.classList.add('display-block');
-    element.classList.toggle('active');
-    $('#SurveyorActions').load('/Surveyor/SurveyorActions/', { ClaimId: ClaimId });
-}
+
 function OperationRecovery(ClaimId) {
     let element = document.getElementById('UpdateRecovery');
     element.classList.remove('display-none');
@@ -708,6 +704,6 @@ function LoadPhotos(Id)
     element.classList.remove('display-none');
     element.classList.add('display-block');
     element.classList.toggle('active');
-    $('#Photos').load('/Claims/Photos/', { ClaimId: Id });
+    $('#Photos').load('/Claims/Photos/'+ Id );
 }
 

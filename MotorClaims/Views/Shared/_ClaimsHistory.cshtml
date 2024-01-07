@@ -1,5 +1,4 @@
-﻿
-@using CORE.DTOs.MotorClaim.Claims;
+﻿@using CORE.DTOs.MotorClaim.Claims;
 @{
     Layout = null;
 }
@@ -11,7 +10,7 @@
         <div class="name-number-wrapper">
             <div class="policy-name-wrapper">
                 <img src="/assets/icons/empty-file.svg" class="policy-icon" />
-                <p class="policy-name">Documents Info</p>
+                <p class="policy-name">Claim History</p>
             </div>
 
         </div>
@@ -19,40 +18,58 @@
     </div>
     <div class="policy-detail-body undefined">
         <div class="inner-clild-wrap">
-              @foreach (var clm in Model)
-            {
 
             <ul class="detail-list">
+                <li class="detailed-item false">
+                    <span class="detailed-icon-wrap">
+                        <img src="/assets/icons/calendar.svg" alt="" class="item-icon">
+                    </span>
+                    <div class="item-content">
+                        <span class="label">Creation Date</span>
+                    </div>
+                </li>
                 <li class="detailed-item false">
                     <span class="detailed-icon-wrap">
                         <img src="/assets/icons/save.svg" alt="" class="item-icon">
                     </span>
                     <div class="item-content">
-                        <span class="label">Claim Number</span>
-                            <h3 class="value ellipsis"><a href="_app">@Helpers.FormatLongDate(clm.ChangeDate)</a></h3>
+                        <span class="label">Created By</span>
                     </div>
                 </li>
-                    <li class="detailed-item false">
-                        <span class="detailed-icon-wrap">
-                            <img src="/assets/icons/save.svg" alt="" class="item-icon">
-                        </span>
-                        <div class="item-content">
-                            <span class="label">Claim Number</span>
-                            <h3 class="value ellipsis"><a href="_app">clm.UserName</a></h3>
-                        </div>
-                    </li>
-                    <li class="detailed-item false">
-                        <span class="detailed-icon-wrap">
-                            <img src="/assets/icons/save.svg" alt="" class="item-icon">
-                        </span>
-                        <div class="item-content">
-                            <span class="label">Claim Number</span>
-                            <h3 class="value ellipsis"><a href="_app">clm.Reason</a></h3>
-                        </div>
-                    </li>
+                <li class="detailed-item false">
+                    <span class="detailed-icon-wrap">
+                        <img src="/assets/icons/save.svg" alt="" class="item-icon">
+                    </span>
+                    <div class="item-content">
+                        <span class="label">Comments</span>
+                    </div>
+                </li>
+
             </ul>
-                            }
-            
+            @foreach (var clm in Model)
+            {
+
+                <ul class="detail-list">
+                    <li class="detailed-item false">
+
+                        <div class="item-content">
+                            <h3 class="value ellipsis">@Helpers.FormatLongDate(clm.ChangeDate)</h3>
+                        </div>
+                    </li>
+                    <li class="detailed-item false">
+                        <div class="item-content">
+                            <h3 class="value ellipsis">@clm.UserName</h3>
+                        </div>
+                    </li>
+                    <li class="detailed-item false">
+
+                        <div class="item-content">
+                            <h3 class="value ellipsis">@clm.Reason</h3>
+                        </div>
+                    </li>
+                </ul>
+            }
+
         </div>
 
     </div>

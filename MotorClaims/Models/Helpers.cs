@@ -211,8 +211,8 @@ namespace MotorClaims.Models
         public static string Decryption(string hashed)
         {
             byte[] bytesToBeDecrypted = Convert.FromBase64String(hashed);
-            byte[] passwordBytesdecrypt = Encoding.UTF8.GetBytes("XBM##@@" + DateTime.Today.Year.ToString() + "$$");
-            byte[] passwordBytes = Encoding.UTF8.GetBytes("XBM##@@" + DateTime.Today.Year.ToString() + "$$");
+            byte[] passwordBytesdecrypt = Encoding.UTF8.GetBytes("XBM##@@2023$$");
+            byte[] passwordBytes = Encoding.UTF8.GetBytes("XBM##@@2023$$");
 
             // Hash the password with SHA256
             passwordBytes = SHA256.Create().ComputeHash(passwordBytes);
@@ -303,7 +303,7 @@ namespace MotorClaims.Models
         public static string Encrypt(string phrase)
         {
             byte[] bytesToBeEncrypted = Encoding.UTF8.GetBytes(phrase);
-            byte[] passwordBytes = Encoding.UTF8.GetBytes("XBM##@@" + DateTime.Today.Year.ToString() + "$$");
+            byte[] passwordBytes = Encoding.UTF8.GetBytes("XBM##@@2023$$");
 
             // Hash the password with SHA256
             passwordBytes = SHA256.Create().ComputeHash(passwordBytes);
@@ -522,7 +522,7 @@ namespace MotorClaims.Models
             }
          
         }
-        public static void RegisterHistory(AppSettings appSettings,long ClaimId ,string Reason,string LoggedUser)
+        public static void RegisterHistory(AppSettings appSettings,long ClaimId ,string Reason,string LoggedUser,int ClaimantId)
         {
             ClaimHistory claimHistory = new ClaimHistory()
             {
@@ -530,6 +530,7 @@ namespace MotorClaims.Models
                 ClaimId = ClaimId,
                 Reason = Reason,
                 Status = 1,
+                ClaimantId= ClaimantId,
                 UserName = LoggedUser
             };
             SetupClaimsRequestcs setupClaimsRequestcs = new SetupClaimsRequestcs()
