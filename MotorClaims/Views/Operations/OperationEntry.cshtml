@@ -11,11 +11,12 @@
 @{
     List<LookupTable> lookupTables = (List<LookupTable>)ViewData["query"];
     string obj=(string)ViewData["obj"];
+    string DocumentsLink=(string)ViewData["DocumentsLink"];
     await Html.RenderPartialAsync("_PolicyInfo",Model.productionInfo);
     await Html.RenderPartialAsync("_VehicleInfo", Model.vehiclesInfo);
     await Html.RenderPartialAsync("_ClaimInfo", Model.claims);
     await Html.RenderPartialAsync("_ClaimantInfo",new { Model = Model.claimants,Lookups = lookupTables});
-    await Html.RenderPartialAsync("_DocumentsInfo", Model.claimants);
+    await Html.RenderPartialAsync("_DocumentsInfo",new { Model = Model.attachments, Link = DocumentsLink,ClaimNo=string.Concat(Model.claims.ClaimNo,"/",Model.claimants.Serial),Documents=Model.documentInfos});
     await Html.RenderPartialAsync("_ClaimsHistory", Model.claimHistories);
 }
 
@@ -44,7 +45,7 @@
                                     <div class="member-collapse-header" style="display:block">
                                         <div class="vehicle-owner-grid">
                                             <label for="radio-card-v2-11" class="radio-card-v2" style="min-width:30% !important">
-                                                <input required type="radio" value="@((int)MotorClaims.Models.Enums.ClaimantStatus.Operation)" name="ClaimStatus" id="radio-card-v2-11" @(Model.claims.Id == 0 ? "checked" : (Model.claims.ClaimStatus == (int)MotorClaims.Models.Enums.ClaimantStatus.Operation ? "checked" : "")) />
+                                                <input required type="radio" value="@((int)MotorClaims.Models.Enums.ClaimantStatus.Operation)" name="ClaimStatus" id="radio-card-v2-11" @(Model.claimants.Id == 0 ? "checked" : (Model.claimants.ClaimantStatus == (int)MotorClaims.Models.Enums.ClaimantStatus.Operation ? "checked" : "")) />
                                                 <div class="card-content-wrapper">
                                                     <span class="check-icon"></span>
                                                     <div class="card-content">
@@ -55,7 +56,7 @@
                                             <!-- /.radio-card -->
 
                                             <label for="radio-card-v2-12" class="radio-card-v2" style="min-width:30% !important">
-                                                <input type="radio" value="@((int)MotorClaims.Models.Enums.ClaimantStatus.Rejected)" name="ClaimStatus" id="radio-card-v2-12" @(Model.claims.ClaimStatus == (int)MotorClaims.Models.Enums.ClaimantStatus.Rejected ? "checked" : "") />
+                                                <input type="radio" value="@((int)MotorClaims.Models.Enums.ClaimantStatus.Rejected)" name="ClaimStatus" id="radio-card-v2-12" @(Model.claimants.ClaimantStatus == (int)MotorClaims.Models.Enums.ClaimantStatus.Rejected ? "checked" : "") />
                                                 <div class="card-content-wrapper">
                                                     <span class="check-icon"></span>
                                                     <div class="card-content">

@@ -1,12 +1,16 @@
 ﻿@using CORE.DTOs.MotorClaim.Claims;
-@model Claims
+
+
 @{
     Layout = null;
-    List<Claimants> claimants=(List<Claimants>)ViewData["claimants"];
 }
+@model ClaimMaster
 
-<link href="~/styles/Themes/flick/jquery-ui-1.10.1.custom.min.css" rel="stylesheet" />
-<form method="post" asp-action="UpdateReserveTransaction" asp-controller="Surveyor">
+<form method="post" asp-action="UpdateClaimantActions" asp-controller="Surveyor">
+
+    <input type="hidden" name="Id" value="@Model.claims.Id"/>
+    <input type="hidden" id="hfSurveyorActions" name="hfSurveyorActions"/>
+
     <div class="slide-popup-inner">
         <div class="slide-header">
             <div class="heading-card">
@@ -18,50 +22,42 @@
                 <div class="body-content-wrapper">
                     <div class="delete-content-card">
                         <div class="body-delete-header">
-                            <h2 class="heading-title">@Model.ClaimNo</h2>
+                            <h2 class="heading-title">@Model.claims.ClaimNo</h2>
                             <span class="active-employee">Employee</span>
                         </div>
                         <ul class="list-detail">
                             <li class="list-item-delete">
                                 <span class="label">Owner Name:</span>
-                                <span class="value">@Model.Owner</span>
+                                <span class="value">@Model.claims.Owner</span>
                             </li>
                             <li class="list-item-delete">
                                 <span class="label">Policy No:</span>
-                                <span class="value">@Model.PolicyNo</span>
+                                <span class="value">@Model.claims.PolicyNo</span>
                             </li>
                             <li class="list-item-delete">
                                 <span class="label">Plate No:</span>
-                                <span class="value">@Model.PlateNo</span>
+                                <span class="value">@Model.claims.PlateNo</span>
                             </li>
                             <li class="list-item-delete">
                                 <span class="label">Fraud Score:</span>
-                                <span class="value">@Model.FraudScore</span>
+                                <span class="value">@Model.claims.FraudScore</span>
                             </li>
                         </ul>
-
-
                               <div class="cancel-declaration">
                             <h3 class="title-label">Claimant</h3>
                             <div class="form-field-wrapper">
                                 <div class="form-input-wrapper">
                                     <select class="form-inputbox" required name="ClaimantId">
-                                        <option value=""></option>
-                          @foreach (var item in claimants)
-                                        {
-                                              <option value="@item.Id">@item.ClaimantName</option>
-                                        }
+                                      <option value="@Model.claimants.Id">@Model.claimants.ClaimantName</option>
                                     </select>
                                 </div>
                             </div>
                         </div>
-
-
                         <div class="cancel-declaration">
                             <h3 class="title-label">Action</h3>
                             <div class="form-field-wrapper">
                                 <div class="form-input-wrapper">
-                                    <select class="form-inputbox" required name="SurveyorActions">
+                                    <select class="form-inputbox" required id="ddlSurveyorActions" name="SurveyorActions">
                                         <option value=""></option>
                                         <option value="1">Pending for Surveyor</option>
                                         <option value="2">Waiting estimations</option>
@@ -71,9 +67,6 @@
                                 </div>
                             </div>
                         </div>
-
-
-
                     </div>
                 </div>
                 <div class="slide-footer">
@@ -92,3 +85,11 @@
     </div>
 
 </form>
+
+<script>
+    $(function(){
+        $('#ddlSurveyorActions').on('change', function() {
+ $('#hfSurveyorActions').val($( "#ddlSurveyorActions option:selected" ).text());
+});
+    });
+</script>

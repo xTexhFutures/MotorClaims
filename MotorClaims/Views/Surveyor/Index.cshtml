@@ -133,11 +133,12 @@
                 <table class="universal-table">
                     <tr>
                         <th>Claim Segment</th>
-                        <th>Fraud Indicator</th>
+                        <th>Claimant Name</th>
                         <th>Policy Number</th>
                         <th>Make</th>
                         <th>Model</th>
                         <th>Chassis</th>
+                        <th>Current Action</th>
                         <th>Registered Date</th>
                         <th>Assign To</th>
                         <th>Actions</th>
@@ -157,14 +158,15 @@
                     };
                             }
                             <td class="tran"><a href="@Url.Action("SurveyorEntry","Surveyor",new{obj=MotorClaims.Models.Helpers.Encrypt(JsonConvert.SerializeObject(claimSearchobj))})">@clm.claims.ClaimNo</a></td>
-                            <td>@clm.claims.FraudScore</td>
+                            <td>@clm.claimants.ClaimantName</td>
                             <td>@clm.productionInfo.PolicyNumber</td>
                             <td>@clm.vehiclesInfo.MakeDesc</td>
                             <td>@clm.vehiclesInfo.ModelDesc</td>
                             <td>@clm.vehiclesInfo.ChassisNo</td>
+                            <td>@clm.claimants.LastClaimantAction</td>
                             <td>@HelpersDate.FormatDate(clm.claims.RegistrationDate)</td>
-                            <td class="tran"><a href="#" onclick="SurveyorAssign(@clm.claims.Id)">Assign</a></td>
-                            <td class="tran"><a href="#" onclick="SurveyorActions(@clm.claims.Id)">Action</a></td>
+                            <td class="tran"><a href="#" onclick="SurveyorAssign(@clm.claims.Id,@clm.claimants.Id)">Assign</a></td>
+                            <td class="tran"><a href="#" onclick="SurveyorActions(@clm.claims.Id,@clm.claimants.Id)">Action</a></td>
 
                         </tr>
 

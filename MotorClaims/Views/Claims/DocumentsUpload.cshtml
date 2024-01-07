@@ -10,7 +10,7 @@
 @using CORE.DTOs.MotorClaim.WorkFlow;
 @using Newtonsoft.Json;
 
-@model List<Attachments>
+@model ClaimMaster
 @{
     Layout = null;
     int VehicleId = (int)ViewData["VehicleId"];
@@ -64,10 +64,10 @@
                     };
                     }
 
-                    @if (Model.Any(p => p.DocumentSetupId == doc.Id))
+                    @if (Model.attachments.Any(p => p.DocumentSetupId == doc.Id))
                     {
                         <td class="tran">
-                            <a target="_blank" href="@(Link+ Model.Where(p=>p.DocumentSetupId==doc.Id).FirstOrDefault().FileName)">@doc.Name</a>
+                            <a target="_blank" href="@(Link+ Model.attachments.Where(p=>p.DocumentSetupId==doc.Id).FirstOrDefault().FileName)">@doc.Name</a>
                         </td>
 
                     }
@@ -95,7 +95,7 @@
                         }
                     </td>
                     <td>
-                        @if (Model.Any(p => p.DocumentSetupId == doc.Id))
+                        @if (Model.attachments.Any(p => p.DocumentSetupId == doc.Id))
                         {
                             <span>
                                 @_localizer["Uploaded"].Value
@@ -121,15 +121,15 @@
                             <label for="fromFiles@(doc.Id)" class="document-card">
                                 <img src="/assets/icons/upload.svg" class="docuemet-icon" alt="">
 
-                                @if (Model.Any(p => p.DocumentSetupId == doc.Id))
+                                @if (Model.attachments.Any(p => p.DocumentSetupId == doc.Id))
                                 {
-                                    <p id="Attachment@(doc.Id)" class="document-tile-text">@Model.Where(p=>p.DocumentSetupId==doc.Id).FirstOrDefault().FileName</p>
+                                    <p id="Attachment@(doc.Id)" class="document-tile-text">@Model.attachments.Where(p=>p.DocumentSetupId==doc.Id).FirstOrDefault().FileName</p>
                                 }
                                 else
                                 {
                                     <p id="Attachment@(doc.Id)" class="document-tile-text"> Upload Attachment</p>
                                 }
-                                <input onchange="Upload(@doc.Id,@(ClaimId.HasValue?ClaimId.Value:0),@ModuleId,@ClaimantId)" accept="image/png, image/gif, image/jpeg,application/pdf" class="ducument-control" id="fromFiles@(doc.Id)" name="fromFiles" type="file" />
+                                <input onchange="Upload(@doc.Id,@(ClaimId.HasValue?ClaimId.Value:0),@ModuleId,@ClaimantId,@Model.attachments.Where(p=>p.DocumentSetupId==doc.Id).FirstOrDefault().Id,@Model.claimants.Serial)" accept="image/png, image/gif, image/jpeg,application/pdf" class="ducument-control" id="fromFiles@(doc.Id)" name="fromFiles" type="file" />
                             </label>
 
                         </div>
@@ -159,7 +159,7 @@ else
         document.getElementById("frmMedicalReupload").submit();
         };
         });*@
-        function Upload(Id, ClaimId, ModuleId, ClaimantId) {
+        function Upload(Id, ClaimId, ModuleId, ClaimantId,attachId,Serial) {
 
     @*        const input = document.getElementById('fromFiles' + Id)
                 var $formdata = new FormData();
@@ -182,7 +182,7 @@ else
 
             $.ajax(
                 {
-                    url: "/Claims/UploadAttachments/?Id=" + Id + "&ClaimId=" + ClaimId + "&ModuleId=" + ModuleId + "&ClaimantId=" + ClaimantId,
+                    url: "/Claims/UploadAttachments/?Id=" + Id + "&ClaimId=" + ClaimId + "&ModuleId=" + ModuleId + "&ClaimantId=" + ClaimantId+"&attachId="+attachId+"&Serial="+Serial,
                     data: $formdata,
                     processData: false,
                     contentType: false,

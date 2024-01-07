@@ -1,55 +1,94 @@
-﻿@using Microsoft.AspNetCore.Mvc.Localization
-@using Microsoft.AspNetCore.Builder
-@using Microsoft.AspNetCore.Localization
-@using Microsoft.Extensions.Options
-@using Microsoft.AspNetCore.Http.Features
-@using System.Globalization
-
-@inject IViewLocalizer _localizer
-@using CORE.DTOs.APIs.MotorClaim;
+﻿@using CORE.DTOs.MotorClaim.Claims;
+@using CORE.DTOs.MotorClaim.WorkFlow;
 @{
     Layout = null;
+    List<DocumentInfo> doc = (List<DocumentInfo>)Model.Documents;
 }
 
-
- 
-        <div class="basic-detail">
-            <div class="policy-header">
-                <div class="name-number-wrapper">
-                    <div class="policy-name-wrapper">
-                        <img src="/assets/icons/empty-file.svg" class="policy-icon" />
-                <p class="policy-name">
-                    @_localizer["Khallad"].Value
-                    DocumentsInfo
-                </p>
-                    </div>
-
-                </div>
-
+<div class="basic-detail">
+    <div class="policy-header">
+        <div class="name-number-wrapper">
+            <div class="policy-name-wrapper">
+                <img src="/assets/icons/empty-file.svg" class="policy-icon" />
+                <p class="policy-name">Documents History</p>
             </div>
-            <div class="policy-detail-body undefined">
-                <div class="inner-clild-wrap">
-              @*  @foreach (var clm in Model.Model)
-                {*@
-                    <ul class="detail-list">
-                        <li class="detailed-item false">
-                            <span class="detailed-icon-wrap">
-                                <img src="/assets/icons/save.svg" alt="" class="item-icon">
-                            </span>
-                            <div class="item-content">
-                        <span class="label">
-                            @_localizer["Khallad"].Value
-                            ClaimNumber
-                        </span>
-                                <h3 class="value ellipsis"><a href="_app">Model.Hamza</a></h3>
-                            </div>
-                        </li>
-                    </ul>
-@*                }
-*@
-                </div>
-               
-            </div>
+
         </div>
 
+    </div>
+    <div class="policy-detail-body undefined">
+        <div class="inner-clild-wrap">
 
+            <ul class="detail-list">
+           
+                <li class="detailed-item false">
+                    <span class="detailed-icon-wrap">
+                        <img src="/assets/icons/save.svg" alt="" class="item-icon">
+                    </span>
+                    <div class="item-content">
+                        <span class="label tran">File Name</span>
+                    </div>
+                </li>
+                <li class="detailed-item false">
+                    <span class="detailed-icon-wrap">
+                        <img src="/assets/icons/calendar.svg" alt="" class="item-icon">
+                    </span>
+                    <div class="item-content">
+                        <span class="label">Creation Date</span>
+                    </div>
+                </li>
+                <li class="detailed-item false">
+                    <span class="detailed-icon-wrap">
+                        <img src="/assets/icons/save.svg" alt="" class="item-icon">
+                    </span>
+                    <div class="item-content">
+                        <span class="label">Uploaded By</span>
+                    </div>
+                </li>
+                <li class="detailed-item false">
+                    <span class="detailed-icon-wrap">
+                        <img src="/assets/icons/save.svg" alt="" class="item-icon">
+                    </span>
+                    <div class="item-content">
+                        <span class="label">Document Type</span>
+                    </div>
+                </li>
+            </ul>
+            @foreach (var clm in Model.Model)
+            {
+
+                <ul class="detail-list">
+                
+                    <li class="detailed-item false">
+                        <div class="item-content">
+                            <h3 class="value ellipsis " style="cursor:pointer;color:blue;text-decoration:underline"><a target="_blank" href="@Model.Link/@Model.ClaimNo/@clm.FileName">@clm.FileName</a></h3>
+                        </div>
+                    </li>
+                    <li class="detailed-item false">
+
+                        <div class="item-content">
+                            <h3 class="value ellipsis">@Helpers.FormatLongDate(clm.CreationDate)</h3>
+                        </div>
+                    </li>
+                    <li class="detailed-item false">
+
+                        <div class="item-content">
+                            <h3 class="value ellipsis">@clm.CreatedBy</h3>
+                        </div>
+                    </li>
+                    <li class="detailed-item false">
+                        @{
+
+                            string Doc = doc.Where(p => p.Id == clm.DocumentSetupId).FirstOrDefault().Name;
+                        }
+                        <div class="item-content">
+                            <h3 class="value ellipsis">@Doc</h3>
+                        </div>
+                    </li>
+                </ul>
+            }
+
+        </div>
+
+    </div>
+</div>

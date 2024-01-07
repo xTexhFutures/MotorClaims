@@ -1,0 +1,46 @@
+﻿@using CORE.DTOs.MotorClaim.Claims;
+@{
+    Layout = null;
+}
+
+@model List<Claims>
+
+  <div class="transaction-details">
+
+        <table class="universal-table">
+            <tr>
+                <!-- <th>#</th> -->
+                <th>Claim No</th>
+            <th>Owner</th>
+            <th>Registration Date</th>
+                <th>Policy Number</th>
+
+
+            </tr>
+
+
+            @foreach (var clm in Model)
+            {
+
+                <tr>
+                    <td>@clm.ClaimNo</td>
+                    <td>@clm.Owner</td>
+                    <td>@(Helpers.FormatLongDate(clm.RegistrationDate))</td>
+                <td>@clm.PolicyNo</td>
+                </tr>
+
+
+            }
+        </table>
+
+          <div class="slide-footer">
+                    <div class="slide-inner-footer">
+                        <button type="button" class="button button-secondary-border"
+                                onclick="CloseDialogV('ClaimsHistory')">
+                            Cancel
+                        </button>
+                    </div>
+                </div>
+    </div>
+
+

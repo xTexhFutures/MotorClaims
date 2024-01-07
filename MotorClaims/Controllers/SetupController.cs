@@ -107,5 +107,11 @@ namespace MotorClaims.Controllers
             ViewData["Filter"] = Status;
             return View("Authority");
         }
+
+
+        public IActionResult Reports()
+        {
+            return View();
+        }
     }
 }

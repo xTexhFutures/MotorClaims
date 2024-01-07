@@ -33,5 +33,8 @@
         public string PaymentURL { set; get; }
         public string UWEmail { set; get; }
         public string FinanceEmail { set; get; }
+        public string ClaimSubmissionPath { set; get; }
+        public string NajmImages { set; get; }
+        public string NajmImagesPath { set; get; }
     }
 }

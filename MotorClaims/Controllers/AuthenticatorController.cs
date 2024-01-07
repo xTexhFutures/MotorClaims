@@ -2,6 +2,8 @@
 using CORE.DTOs.APIs.TP_Services;
 using CORE.DTOs.Authentications;
 using CORE.DTOs.Authentications.APIs;
+using CORE.DTOs.MotorClaim.Claims;
+using CORE.DTOs.MotorClaim.Integrations.APIs;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
@@ -18,16 +20,16 @@ namespace MotorClaims.Controllers
     {
         private static HttpClient client = new HttpClient();
         private readonly AppSettings _appSettings;
-        private const string VehicleListCacheKey = "ServicesLink";
+        private const string LookupTable = "LookupTable";
         private readonly IMemoryCache _memoryCache;
         public static IWebHostEnvironment _environment;
-        private CORE.DTOs.APIs.TP_Services.APIsLists query = new CORE.DTOs.APIs.TP_Services.APIsLists();
+        List<LookupTable> query = new List<LookupTable>();
         public AuthenticatorController(IOptions<AppSettings> appSettings, IWebHostEnvironment environment, IMemoryCache memoryCache)
         {
             _environment = environment;
             _appSettings = appSettings.Value;
             _memoryCache = memoryCache;
-            _memoryCache.TryGetValue(VehicleListCacheKey, out query);
+            _memoryCache.TryGetValue(LookupTable, out query);
         }
         public IActionResult AccessDeny()
         {
@@ -159,6 +161,18 @@ namespace MotorClaims.Controllers
 
                 if (OTP == HttpContext.Session.getSessionData<string>("OTP"))
                 {
+                    List<LookupTable> lookupTables = new List<LookupTable>();
+                    lookupTables = query.Where(p => p.MajorCode == (int)Enums.Lookups.City).ToList();
+                    if (lookupTables == null)
+                    {
+                        SearchLookUp searchLookUp = new SearchLookUp()
+                        {
+                            MajorCode = SystemEnums.City
+                        };
+                        lookupTables = Helpers.ExcutePostAPI<List<LookupTable>>(searchLookUp, _appSettings.APIHubPrefix + "api/MotorClaim/Loadlookups");
+                    }
+
+                    HttpContext.Session.SetSessionData("Cities", lookupTables);
                     loginObj.Employees.Add(loginObj.Users);
                     HttpContext.Session.SetSessionData("OrginalUser", usr);
                     HttpContext.Session.SetSessionData("LoggedUser", usr);
@@ -399,7 +413,7 @@ namespace MotorClaims.Controllers
                     Username = usr.UserName
                 };
                 UserInfoAPI userInfoAPI = new UserInfoAPI();
-                userInfoAPI = Helpers.ExcutePostAPI<UserInfoAPI>(updatePassword, _appSettings.APIHubPrefix + query.services.Where(p => p.Name == "UpdatePassword").FirstOrDefault().Link);
+                userInfoAPI = Helpers.ExcutePostAPI<UserInfoAPI>(updatePassword, _appSettings.APIHubPrefix + "api/Authenticator/UpdatePassword");
                 return RedirectToAction("Login");
             }
 
@@ -476,7 +490,7 @@ namespace MotorClaims.Controllers
             string UserName = HttpContext.Request.Form["Email"];
 
             CORE.DTOs.APIs.Authenticator.LoginObj loginObj = new CORE.DTOs.APIs.Authenticator.LoginObj();
-            loginObj = Helpers.ExcutePostAPI<CORE.DTOs.APIs.Authenticator.LoginObj>(UserName, _appSettings.APIHubPrefix + query.services.Where(p => p.Name == "LoadUser").FirstOrDefault().Link);
+            loginObj = Helpers.ExcutePostAPI<CORE.DTOs.APIs.Authenticator.LoginObj>(UserName, _appSettings.APIHubPrefix + "api/Authenticator/LoadUser");
 
             if (loginObj != null && loginObj.Users != null && loginObj.Users.Id > 0)
             {
@@ -498,7 +512,7 @@ namespace MotorClaims.Controllers
                     Mobile = loginObj.Users.Mobile,
                     message = "11"
                 };
-                results = Helpers.ExcutePostAPI<CORE.DTOs.APIs.Unified_Response.Results>(sMS, _appSettings.APIHubPrefix + query.services.Where(p => p.Name == "SMS").FirstOrDefault().Link);
+                results = Helpers.ExcutePostAPI<CORE.DTOs.APIs.Unified_Response.Results>(sMS, _appSettings.APIHubPrefix + "api/Authenticator/SMS");
                 //sMSResponseModel = _svcSMS.SendSMS(_appSettings, "Reset password OTP is : " + otpPick, usr.Mobile);
                 // _svcSMS.InsertSMS(sMSResponseModel, out error);
 

@@ -36,20 +36,8 @@ namespace MotorClaims.Controllers
             ViewData["Error"] = err;
             List<ClaimMaster> claim = new List<ClaimMaster>();
             claim = HttpContext.Session.getSessionData<List<ClaimMaster>>("ClaimMaster");
+            ViewData["AllUsers"] = HttpContext.Session.getSessionData<List<Users>>("AllUsers");
             IPagedList<ClaimMaster> claims = claim.ToPagedList(page, _appSettings.PageSize);
-
-            //MainSearchMC mainSearchMC = new MainSearchMC()
-            //{
-            //    ClaimStatus = (int)Enums.ClaimStatus.Operation
-
-            //};
-            //SetupClaimsRequestcs setupClaimsRequestcs = new SetupClaimsRequestcs()
-            //{
-            //    TransactionType = CORE.Extensions.ClaimTransactionType.LoadClaimsMaster,
-            //    Request = mainSearchMC
-            //};
-            //var claim = Helpers.ExcutePostAPI<List<ClaimMaster>>(setupClaimsRequestcs, _appSettings.APIHubPrefix + "api/MotorClaim/ClaimsTransactions");
-
             return View(claims);
         }
         [HttpPost]
@@ -104,6 +92,7 @@ namespace MotorClaims.Controllers
             var claim = Helpers.ExcutePostAPI<List<ClaimMaster>>(setupClaimsRequestcs, _appSettings.APIHubPrefix + "api/MotorClaim/ClaimsTransactions");
             ViewData["query"] = query;
             ViewData["obj"] = obj;
+            ViewData["DocumentsLink"] = _appSettings.DocumentsLink;
             
             return View(claim.FirstOrDefault());
         }
@@ -217,7 +206,7 @@ namespace MotorClaims.Controllers
             };
             claim = Helpers.ExcutePostAPI<Claims>(setupClaimsRequestcs, _appSettings.APIHubPrefix + "api/MotorClaim/ClaimsTransactions");
 
-            Helpers.RegisterHistory(_appSettings, claim.Id, Reason, HttpContext.Session.getSessionData<Users>("LoggedUser").UserName);
+            Helpers.RegisterHistory(_appSettings, claim.Id, Reason, HttpContext.Session.getSessionData<Users>("LoggedUser").UserName,1);
             Helpers.SendNotificationMail(Language, _appSettings, _appSettings.OperationEmail, claim.ClaimNo);
 
             return View("_OperationReOpen", claim);
@@ -302,7 +291,7 @@ namespace MotorClaims.Controllers
         {
             eClaimsObj eClaims = new eClaimsObj();
             List<eClaims> eClaims1 = new List<eClaims>();
-                ViewData["searchObj"] = eClaims;
+            ViewData["eClaims"] = eClaims;
             IPagedList<eClaims> lclaims = eClaims1.ToPagedList(page, _appSettings.PageSize);
             return View(lclaims);
         }
@@ -312,7 +301,7 @@ namespace MotorClaims.Controllers
         public IActionResult SearcheClaims(eClaimsObj obj,int page=1)
         {
             var claim = Helpers.ExcutePostAPI<List<eClaims>>(obj, _appSettings.APIHubPrefix + "api/MotorClaim/LoadeClaims");
-            ViewData["searchObj"] = obj;
+            ViewData["eClaims"] = obj;
             IPagedList<eClaims> lclaims = claim.ToPagedList(page, _appSettings.PageSize);
             return View("eClaims", lclaims);
         }
@@ -366,8 +355,8 @@ namespace MotorClaims.Controllers
                     TransactionType = CORE.Extensions.ClaimTransactionType.InsertUpdateClaimants,
                     Request = claimants.FirstOrDefault()
                 };
-                var claim = Helpers.ExcutePostAPI<Claimants>(setupClaimsRequestcs, _appSettings.APIHubPrefix + "api/MotorClaim/ClaimsTransactions");
-                Helpers.RegisterHistory(_appSettings, claim.ClaimId, "Update Claim status to " + ((Enums.ClaimantStatus)ClaimStatus).ToString(), HttpContext.Session.getSessionData<Users>("LoggedUser").UserName);
+                var claimant = Helpers.ExcutePostAPI<Claimants>(setupClaimsRequestcs, _appSettings.APIHubPrefix + "api/MotorClaim/ClaimsTransactions");
+                Helpers.RegisterHistory(_appSettings, claimant.ClaimId, "Update Claim status to " + ((Enums.ClaimantStatus)ClaimStatus).ToString(), HttpContext.Session.getSessionData<Users>("LoggedUser").UserName, claimant.Id);
             }
             return RedirectToAction("OperationEntry", new { obj = obj });
         }

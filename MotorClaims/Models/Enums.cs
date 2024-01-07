@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Reflection;
 using System.Xml.Linq;
 
@@ -29,18 +30,17 @@ namespace MotorClaims.Models
         {
             Operations = 2,
             Surveyors = 3,
-            Fraud = 4
+            Fraud = 4,
+            Salvage=11,
         }
         public enum DocumnetType
         {
-
             Claim = 1,
             Claimant = 2,
             Fraud = 3,
             Reserve = 4,
             Payment = 5,
             Surveyor = 6
-
         }
 
         public enum ClaimTransactionTypes
@@ -49,35 +49,27 @@ namespace MotorClaims.Models
             Payment = 2,
             Recovery = 3,
             Collection = 4,
-
         }
         public enum FraudLevel
         {
-
             Error = 4,
             Warning = 3,
             Low = 2,
             None = 1
-
         }
         public enum ClaimReportType
         {
-
             Najm = 1,
             Basher = 2,
             Manual = 3
-
         }
         public enum YakeenPlace
         {
-
             Policy = 1,
             Quotation = 0
-
         }
         public enum Gender
         {
-
             Male = 1,
             Female = 2
         }
@@ -96,7 +88,6 @@ namespace MotorClaims.Models
             WaitingApproval = 2,
             Paid = 3,
             Rejected = 4
-
         }
         public enum Roles
         {
@@ -122,7 +113,8 @@ namespace MotorClaims.Models
             InProgress = 7,
             Rejected = 8,
             Reception = 9,
-            ReOpen = 10
+            ReOpen = 10,
+            Salvage=11
         }
 
 
@@ -149,7 +141,47 @@ namespace MotorClaims.Models
         public enum SMSTemplates
         {
             Test = 1
+        }
 
+        public enum SurveyorActions
+        {
+            [Display(Name = "Pending for Surveyor")]
+            PendingforSurveyor = 1,
+            [Display(Name = "Waiting estimations")]
+            Waitingestimations = 2,
+            [Display(Name = "Sent to service unit")]
+            Senttoserviceunit = 3,
+            [Display(Name = "Waiting Customer to deliver his vehicle")]
+            WaitingCustomertodeliverhisvehicle = 4
+
+        }
+
+        public enum VehicleLocation
+        {
+            AgencyOrWorkshop=1,
+            Client=2,
+            Branch=3,
+            Provider=4,
+            Workshop=5,
+            Other=6
+        }
+
+        public enum TowingStatus
+        {
+            [Display(Name = "Client Refuse")]
+            ClientRefuse = 1,
+            [Display(Name = "Vehicle Not Found in the Location")]
+            VehicleNotFound = 2,
+            [Display(Name = "Arrested In Baladeyah")]
+            ArrestedInBaladeyah = 3,
+            [Display(Name = "Arrested In Morror")]
+            ArrestedInMorror = 4,
+            [Display(Name = "Wrong Phone Number")]
+            WrongPhone = 5,
+            [Display(Name = "Client Not Coordinating")]
+            ClientNotCoordinating = 6,
+            [Display(Name = "Others")]
+            Others = 7,
         }
     }
 }
