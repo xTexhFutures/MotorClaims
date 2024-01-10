@@ -1,12 +1,10 @@
 ﻿@using CORE.DTOs.MotorClaim.Claims;
-@model Claims
+@model ClaimMaster
 @{
     Layout = null;
-    int? ClaimantId = (int?)ViewData["claimantId"];
-        List<ClaimMaster> claimMasters=(List<ClaimMaster>)ViewData["ClaimMaster"];
 }
 <form id="frmUpdateReserve" method="post" >
-    <input type="hidden" name="ClaimId" value="@Model.Id" />
+    <input type="hidden" name="ClaimId" value="@Model.claims.Id" />
     <div class="slide-popup-inner">
         <div class="slide-header">
             <div class="heading-card">
@@ -18,25 +16,25 @@
                 <div class="body-content-wrapper">
                     <div class="delete-content-card">
                         <div class="body-delete-header">
-                            <h2 class="heading-title">@Model.ClaimNo</h2>
+                            <h2 class="heading-title">@Model.claims.ClaimNo/@Model.claimants.Serial</h2>
                             <span class="active-employee">Employee</span>
                         </div>
                         <ul class="list-detail">
                             <li class="list-item-delete">
                                 <span class="label">Owner Name:</span>
-                                <span class="value">@Model.Owner</span>
+                                <span class="value">@Model.claims.Owner</span>
                             </li>
                             <li class="list-item-delete">
                                 <span class="label">Policy No:</span>
-                                <span class="value">@Model.PolicyNo</span>
+                                <span class="value">@Model.claims.PolicyNo</span>
                             </li>
                             <li class="list-item-delete">
                                 <span class="label">Plate No:</span>
-                                <span class="value">@Model.PlateNo</span>
+                                <span class="value">@Model.claims.PlateNo</span>
                             </li>
                             <li class="list-item-delete">
                                 <span class="label">Fraud Score:</span>
-                                <span class="value">@Model.FraudScore</span>
+                                <span class="value">@Model.claims.FraudScore</span>
                             </li>
                         </ul>
 
@@ -46,7 +44,7 @@
                             <div class="form-field-wrapper">
                                 <div class="form-input-wrapper">
                                     <select required class="form-inputbox" name="ClaimantID" id="ddlClaimantID">
-                                            <option value="@claimMasters.FirstOrDefault().claimants.Id">@claimMasters.FirstOrDefault().claimants.ClaimantName</option>
+                                            <option value="@Model.claimants.Id">@Model.claimants.ClaimantName</option>
                                     </select>
                                 </div>
                             </div>
@@ -139,10 +137,7 @@
 
 <script>
     $(function () {
-        if('@ClaimantId'!=null && '@ClaimantId'>0){
-            $('#ddlClaimantID').val('@ClaimantId');
-             $("#ddlClaimantID").prop('disabled', true);
-        }
+
         $("#frmUpdateReserve").submit(function (event) {
             $.post("/Surveyor/UpdateReserveTransaction/", $("#frmUpdateReserve").serializeArray(),function(){
                 CloseDialogV('UpdateReserve');

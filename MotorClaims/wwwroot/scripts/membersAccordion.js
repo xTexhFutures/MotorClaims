@@ -671,39 +671,45 @@ function TowingLetter(ClaimId, ClaimantId) {
     $('#TowingLetter').load('/Towing/TowingLetter/', { ClaimId: ClaimId, ClaimantId: ClaimantId });
 }
 
+function WarehouseLetter(ClaimId, ClaimantId) {
+    const element = document.getElementById('WarehouseLetter');
+    element.classList.toggle('active');
+    $('#WarehouseLetter').load('/Warehouse/WarehouseLetter/', { ClaimId: ClaimId, ClaimantId: ClaimantId });
+}
+
 
 
 function OperationReOpen(ClaimId) {
     const element = document.getElementById('OperationReOpen');
     element.classList.toggle('active');
-    $('#OperationReOpen').load('/Operations/OperationReOpen/', { ClaimId: ClaimId });
+    $('#OperationReOpen').load('/Operations/OperationReOpen/', { ClaimId: ClaimId, ClaimantId: ClaimantId });
 }
 
 
 
 
-function SurveyorReserve(ClaimId) {
+function SurveyorReserve(ClaimId, ClaimantId) {
     let element = document.getElementById('UpdateReserve');
     element.classList.remove('display-none');
     element.classList.add('display-block');
     element.classList.toggle('active');
-    $('#UpdateReserve').load('/Surveyor/UpdateReserve/', { ClaimId: ClaimId });
+    $('#UpdateReserve').load('/Surveyor/UpdateReserve/', { ClaimId: ClaimId, ClaimantId: ClaimantId });
 }
 
-function OperationReserve(ClaimId) {
+function OperationReserve(ClaimId, ClaimantId) {
     let element = document.getElementById('UpdateReserve');
     element.classList.remove('display-none');
     element.classList.add('display-block');
     element.classList.toggle('active');
-    $('#UpdateReserve').load('/Operations/UpdateReserve/', { ClaimId: ClaimId });
+    $('#UpdateReserve').load('/Operations/UpdateReserve/', { ClaimId: ClaimId, ClaimantId: ClaimantId });
 }
 
-function OperationRecovery(ClaimId) {
+function OperationRecovery(ClaimId, ClaimantId) {
     let element = document.getElementById('UpdateRecovery');
     element.classList.remove('display-none');
     element.classList.add('display-block');
     element.classList.toggle('active');
-    $('#UpdateRecovery').load('/Operations/UpdateRecovery/', { ClaimId: ClaimId });
+    $('#UpdateRecovery').load('/Operations/UpdateRecovery/', { ClaimId: ClaimId, ClaimantId: ClaimantId });
 }
 function LoadPhotos(Id)
 {

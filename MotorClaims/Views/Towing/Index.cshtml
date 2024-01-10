@@ -164,7 +164,7 @@
 
                     }
                 </table>
-                 @Html.PagedListPager((IPagedList)Model,Page=>Url.Action("Index","Operations",new {Page}))
+                 @Html.PagedListPager((IPagedList)Model,Page=>Url.Action("Index","Towing",new {Page}))
             Showing @Model.FirstItemOnPage to @Model.LastItemOnPage of @Model.TotalItemCount Claims
             </div>
         </div>
@@ -234,6 +234,11 @@
 <div class="common-slide-popup" id="TowingLetter"></div>
 
 <script>
+    $(function(){
+       if ('@ViewData["Error"]' != '' || '@ViewData["Error"]' != "") {
+            ErrorAlert('@ViewData["Error"]');
+        }
+});
     $('#txtFrom').ForceDateEntry();
     $('#txtTo').ForceDateEntry();
 </script>

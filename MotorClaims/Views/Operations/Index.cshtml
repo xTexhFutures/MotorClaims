@@ -1,4 +1,12 @@
-﻿@using CORE.DTOs.Authentications;
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.AspNetCore.Builder
+@using Microsoft.AspNetCore.Localization
+@using Microsoft.Extensions.Options
+@using Microsoft.AspNetCore.Http.Features
+@using System.Globalization
+
+@inject IViewLocalizer _localizer
+@using CORE.DTOs.Authentications;
 @using CORE.DTOs.MotorClaim.Claims;
 @using Newtonsoft.Json;
 @{
@@ -160,9 +168,9 @@
                             <td>@clm.vehiclesInfo.MakeDesc</td>
                          
                             <td>@HelpersDate.FormatDate(clm.claims.RegistrationDate)</td>
-                            <td class="tran"><a href="#" onclick="OperationReserve(@clm.claims.Id)">Reserve</a></td>
+                            <td class="tran"><a href="#" onclick="OperationReserve(@clm.claims.Id,@clm.claimants.Id)">Reserve</a></td>
                             <td class="tran"><a href="#" onclick="OperationAssign(@clm.claims.Id,@clm.claimants.Id)">Assign</a></td>
-                            <td class="tran"><a href="#" onclick="OperationRecovery(@clm.claims.Id)">Recovery</a></td>
+                            <td class="tran"><a href="#" onclick="OperationRecovery(@clm.claims.Id,@clm.claimants.Id)">Recovery</a></td>
                             <td class="tran"><a href="#" @(clm.claims.ClaimStatus==(int)Enums.ClaimStatus.Closed?"":"disabled") onclick="OperationReOpen(@clm.claims.Id)">
                                 @(clm.claimants.ClaimantStatus==(int)Enums.ClaimantStatus.Closed?"Re-Open":"")</a></td>
                             

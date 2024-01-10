@@ -1,20 +1,17 @@
 ﻿@using CORE.DTOs.MotorClaim.Claims;
 @using CORE.DTOs.MotorClaim;
-@model Claims
+@model ClaimMaster
 @{
     Layout = null;
-    List<ClaimMaster> claimMasters=(List<ClaimMaster>)ViewData["ClaimMaster"];
-        ClaimMaster master = new ClaimMaster();
-    master = claimMasters.Where(p => p.claims.Id == Model.Id).FirstOrDefault();
     ReserveBalance reserveBalance = new ReserveBalance()
     {
-    ClaimLevel=Model.ReserveBalance.HasValue?Model.ReserveBalance.Value:0,
-ClaimantLevel=master.claimants.ReserveBalance.HasValue?master.claimants.ReserveBalance.Value:0
+    ClaimLevel=Model.claims.ReserveBalance.HasValue?Model.claims.ReserveBalance.Value:0,
+ClaimantLevel=Model.claimants.ReserveBalance.HasValue?Model.claimants.ReserveBalance.Value:0
     };  
 
 }
 <form id="frmUpdateReserve" method="post" >
-    <input type="hidden" name="ClaimId" value="@Model.Id" />
+    <input type="hidden" name="ClaimId" value="@Model.claims.Id" />
     <div class="slide-popup-inner">
         <div class="slide-header">
             <div class="heading-card">
@@ -39,25 +36,25 @@ ClaimantLevel=master.claimants.ReserveBalance.HasValue?master.claimants.ReserveB
                 <div class="body-content-wrapper">
                     <div class="delete-content-card">
                         <div class="body-delete-header">
-                            <h2 class="heading-title">@Model.ClaimNo</h2>
+                            <h2 class="heading-title">@Model.claims.ClaimNo/@Model.claimants.Serial</h2>
                             <span class="active-employee">Employee</span>
                         </div>
                         <ul class="list-detail">
                             <li class="list-item-delete">
                                 <span class="label">Owner Name:</span>
-                                <span class="value">@Model.Owner</span>
+                                <span class="value">@Model.claims.Owner</span>
                             </li>
                             <li class="list-item-delete">
                                 <span class="label">Policy No:</span>
-                                <span class="value">@Model.PolicyNo</span>
+                                <span class="value">@Model.claims.PolicyNo</span>
                             </li>
                             <li class="list-item-delete">
                                 <span class="label">Plate No:</span>
-                                <span class="value">@Model.PlateNo</span>
+                                <span class="value">@Model.claims.PlateNo</span>
                             </li>
                             <li class="list-item-delete">
                                 <span class="label">Fraud Score:</span>
-                                <span class="value">@Model.FraudScore</span>
+                                <span class="value">@Model.claims.FraudScore</span>
                             </li>
                         </ul>
 
@@ -69,7 +66,7 @@ ClaimantLevel=master.claimants.ReserveBalance.HasValue?master.claimants.ReserveB
                             <div class="form-field-wrapper">
                                 <div class="form-input-wrapper">
                                     <select required class="form-inputbox" name="ClaimantID" id="ddlClaimantID">
-                                        <option value="@master.claimants.Id">@master.claimants.ClaimantName</option>
+                                        <option value="@Model.claimants.Id">@Model.claimants.ClaimantName</option>
 
                                     
                                     </select>
