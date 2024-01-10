@@ -114,63 +114,50 @@ namespace MotorClaims.Controllers
             ViewData["AllUsers"] = HttpContext.Session.getSessionData<List<Users>>("AllUsers");
             return View("_SurveyorAssign", claim.FirstOrDefault());
         }
-        public IActionResult UpdateReserve(int ClaimId)
+        public IActionResult UpdateReserve(int ClaimId,int  ClaimantId)
         {
             MainSearchMC mainSearchMC = new MainSearchMC()
             {
-                Id = ClaimId
+                Id = ClaimId,
+                ClaimantId=ClaimantId
             };
             SetupClaimsRequestcs setupClaimsRequestcs = new SetupClaimsRequestcs()
             {
-                TransactionType = CORE.Extensions.ClaimTransactionType.LoadClaim,
+                TransactionType = CORE.Extensions.ClaimTransactionType.LoadClaimsMaster,
                 Request = mainSearchMC
             };
-            var claim = Helpers.ExcutePostAPI<List<Claims>>(setupClaimsRequestcs, _appSettings.APIHubPrefix + "api/MotorClaim/ClaimsTransactions");
-            ViewData["ClaimMaster"] = HttpContext.Session.getSessionData<List<ClaimMaster>>("ClaimMaster");
+            var claim = Helpers.ExcutePostAPI<List<ClaimMaster>>(setupClaimsRequestcs, _appSettings.APIHubPrefix + "api/MotorClaim/ClaimsTransactions");
             return View("_UpdateReserve", claim.FirstOrDefault());
         }  
         
-        public IActionResult OperationReOpen(int ClaimId)
+        public IActionResult OperationReOpen(int ClaimId, int ClaimantId)
         {
             MainSearchMC mainSearchMC = new MainSearchMC()
             {
-                Id = ClaimId
+                Id = ClaimId,
+                ClaimantId = ClaimantId
             };
             SetupClaimsRequestcs setupClaimsRequestcs = new SetupClaimsRequestcs()
             {
-                TransactionType = CORE.Extensions.ClaimTransactionType.LoadClaim,
+                TransactionType = CORE.Extensions.ClaimTransactionType.LoadClaimsMaster,
                 Request = mainSearchMC
             };
-            var claim = Helpers.ExcutePostAPI<List<Claims>>(setupClaimsRequestcs, _appSettings.APIHubPrefix + "api/MotorClaim/ClaimsTransactions");
-
-            mainSearchMC = new MainSearchMC()
-            {
-                ClaimId = ClaimId
-            };
-            setupClaimsRequestcs = new SetupClaimsRequestcs()
-            {
-                TransactionType = CORE.Extensions.ClaimTransactionType.LoadClaimants,
-                Request = mainSearchMC
-            };
-            var claimants = Helpers.ExcutePostAPI<List<Claimants>>(setupClaimsRequestcs, _appSettings.APIHubPrefix + "api/MotorClaim/ClaimsTransactions");
-            ViewData["claimants"] = claimants;
-            ViewData["ClaimMaster"] = HttpContext.Session.getSessionData<List<ClaimMaster>>("ClaimMaster");
+            var claim = Helpers.ExcutePostAPI<List<ClaimMaster>>(setupClaimsRequestcs, _appSettings.APIHubPrefix + "api/MotorClaim/ClaimsTransactions");
             return View("_OperationReOpen", claim.FirstOrDefault());
         }
         public IActionResult UpdateRecovery(int ClaimId,int? ClaimantId=null)
         {
             MainSearchMC mainSearchMC = new MainSearchMC()
             {
-                Id = ClaimId
+                Id = ClaimId,
+                ClaimantId= ClaimantId
             };
             SetupClaimsRequestcs setupClaimsRequestcs = new SetupClaimsRequestcs()
             {
-                TransactionType = CORE.Extensions.ClaimTransactionType.LoadClaim,
+                TransactionType = CORE.Extensions.ClaimTransactionType.LoadClaimsMaster,
                 Request = mainSearchMC
             };
-            var claim = Helpers.ExcutePostAPI<List<Claims>>(setupClaimsRequestcs, _appSettings.APIHubPrefix + "api/MotorClaim/ClaimsTransactions");
-            ViewData["claimantId"] = ClaimantId;
-            ViewData["ClaimMaster"] = HttpContext.Session.getSessionData<List<ClaimMaster>>("ClaimMaster");
+            var claim = Helpers.ExcutePostAPI<List<ClaimMaster>>(setupClaimsRequestcs, _appSettings.APIHubPrefix + "api/MotorClaim/ClaimsTransactions");
             return View("_UpdateRecovery", claim.FirstOrDefault());
         }
 

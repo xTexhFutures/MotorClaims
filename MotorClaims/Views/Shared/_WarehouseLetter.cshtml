@@ -1,0 +1,199 @@
+﻿@using CORE.DTOs.MotorClaim.Claims;
+@model ClaimMaster
+@{
+    Layout = null;
+    int? ClaimantId = (int?)ViewData["claimantId"];
+  List<LookupTable> Cities = (List<LookupTable>)ViewData["Cities"];
+  Warehouse warehouse=(Warehouse)ViewData["Warehouse"];
+}
+<form id="frmUpdateWarehouse" method="post" >
+    <input type="hidden" name="ClaimId" value="@Model.claims.Id" />
+    <input type="hidden" name="Id" value="@warehouse.Id" />
+    <div class="slide-popup-inner">
+        <div class="slide-header">
+            <div class="heading-card">
+                <h2 class="heading">Towing Letter</h2>
+            </div>
+        </div>
+        <div class="slide-body">
+            <div class="popup-body-wrapper">
+                <div class="body-content-wrapper">
+                    <div class="delete-content-card">
+                        <div class="body-delete-header">
+                            <h2 class="heading-title">@Model.claims.ClaimNo/@Model.claimants.Serial</h2>
+                            <span class="active-employee">Employee</span>
+                        </div>
+                        <ul class="list-detail">
+                            <li class="list-item-delete">
+                                <span class="label">Owner Name:</span>
+                                <span class="value">@Model.claims.Owner</span>
+                            </li>
+                            <li class="list-item-delete">
+                                <span class="label">Policy No:</span>
+                                <span class="value">@Model.claims.PolicyNo</span>
+                            </li>
+                            <li class="list-item-delete">
+                                <span class="label">Plate No:</span>
+                                <span class="value">@Model.claims.PlateNo</span>
+                            </li>
+                            <li class="list-item-delete">
+                                <span class="label">Fraud Score:</span>
+                                <span class="value">@Model.claims.FraudScore</span>
+                            </li>
+                        </ul>
+
+
+                        <div class="cancel-declaration">
+                            <h3 class="title-label">Claimant</h3>
+                            <div class="form-field-wrapper">
+                                <div class="form-input-wrapper">
+                                    <select required class="form-inputbox" name="ClaimantId" id="ddlClaimantID">
+                                            <option value="@Model.claimants.Id">@Model.claimants.ClaimantName</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>          
+                        
+
+                   
+
+                           <div class="cancel-declaration">
+                            <h3 class="title-label">Missing Parts</h3>
+                            <div class="form-field-wrapper">
+                                <div class="form-input-wrapper" style="display: grid;">
+                                       <span class="text plan-select-check">
+                                                    <input class="styled-checkbox" type="checkbox" value="true" name="FrontPlate" id="FrontPlate-11" @(warehouse.Id>0 && warehouse.FrontPlate.HasValue && warehouse.FrontPlate.Value?"checked":"")>
+                                                    <label for="FrontPlate-11" class="plan-check-wrapper">
+                                                        <span class="title">@(MotorClaims.Models.Enums.MissingPartsList.FrontPlate.DisplayName())</span>
+                                                  
+                                                    </label>
+                                                </span>
+
+
+
+                                                  <span class="text plan-select-check">
+                                                    <input class="styled-checkbox" type="checkbox" value="true" name="RearPlate" id="RearPlate-12" @(warehouse.Id>0 && warehouse.RearPlate.HasValue && warehouse.RearPlate.Value?"checked":"")>
+                                                    <label for="RearPlate-12" class="plan-check-wrapper">
+                                                        <span class="title">@(MotorClaims.Models.Enums.MissingPartsList.RearPlate.DisplayName())</span>
+                                                  
+                                                    </label>
+                                                </span>
+                                          
+                                                  <span class="text plan-select-check">
+                                                    <input class="styled-checkbox" type="checkbox" value="true" name="SpareTire" id="SpareTire-13" @(warehouse.Id>0 && warehouse.SpareTire.HasValue && warehouse.SpareTire.Value?"checked":"")>
+                                                    <label for="SpareTire-13" class="plan-check-wrapper">
+                                                        <span class="title">@(MotorClaims.Models.Enums.MissingPartsList.SpareTire.DisplayName())</span>
+                                                  
+                                                    </label>
+                                                </span>
+                                             <span class="text plan-select-check">
+                                                    <input class="styled-checkbox" type="checkbox" value="true" name="CareKey" id="CareKey-14" @(warehouse.Id>0 && warehouse.CareKey.HasValue && warehouse.CareKey.Value?"checked":"")>
+                                                    <label for="CareKey-14" class="plan-check-wrapper">
+                                                        <span class="title">@(MotorClaims.Models.Enums.MissingPartsList.CarKey.DisplayName())</span>
+                                                  
+                                                    </label>
+                                                </span>
+
+                                                     <span class="text plan-select-check">
+                                                    <input class="styled-checkbox" type="checkbox" value="true" name="Tires" id="Tires-15" @(warehouse.Id>0 && warehouse.Tires.HasValue && warehouse.Tires.Value?"checked":"")>
+                                                    <label for="Tires-15" class="plan-check-wrapper">
+                                                        <span class="title">@(MotorClaims.Models.Enums.MissingPartsList.Tires.DisplayName())</span>
+                                                  
+                                                    </label>
+                                                </span>
+                                                          <span class="text plan-select-check">
+                                                    <input class="styled-checkbox" type="checkbox" value="true" name="Rims" id="Rims-16" @(warehouse.Id>0 && warehouse.Rims.HasValue && warehouse.Rims.Value?"checked":"")>
+                                                    <label for="Rims-16" class="plan-check-wrapper">
+                                                        <span class="title">@(MotorClaims.Models.Enums.MissingPartsList.Rims.DisplayName())</span>
+                                                  
+                                                    </label>
+                                                </span>
+
+                                                             <span class="text plan-select-check">
+                                                    <input class="styled-checkbox" type="checkbox" value="true" name="Recorder" id="Recorder-16" @(warehouse.Id>0 && warehouse.Recorder.HasValue && warehouse.Recorder.Value?"checked":"")>
+                                                    <label for="Recorder-16" class="plan-check-wrapper">
+                                                        <span class="title">@(MotorClaims.Models.Enums.MissingPartsList.Recorder.DisplayName())</span>
+                                                  
+                                                    </label>
+                                                </span>                
+                                                
+                                                <span class="text plan-select-check">
+                                                    <input class="styled-checkbox" type="checkbox" value="true" name="Others" id="Others-16" @(warehouse.Id>0 && warehouse.Other.HasValue && warehouse.Other.Value?"checked":"")>
+                                                    <label for="Others-16" class="plan-check-wrapper">
+                                                        <span class="title">@(MotorClaims.Models.Enums.MissingPartsList.Others.DisplayName())</span>
+                                                  
+                                                    </label>
+                                                </span>
+                                </div>
+                            </div>
+                        </div>
+
+                           
+                             <div class="cancel-declaration">
+                            <h3 class="title-label">Note</h3>
+                            <div class="form-field-wrapper">
+                                <div class="form-input-wrapper">
+                                    <textarea name="Note" id="txtNote" autocomplete="off" class="form-inputbox" maxlength="1024">@warehouse.Note</textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                           <div class="cancel-declaration">
+                            <h3 class="title-label">Number Of Tires</h3>
+                            <div class="form-field-wrapper">
+                                <div class="form-input-wrapper">
+<input type="text" class="form-inputbox" id="txtNoOfTires" name="NoOfTires" value="@warehouse.NoOfTires"/>
+
+
+
+                                </div>
+                            </div>
+                        </div>
+                            <div class="cancel-declaration">
+                            <h3 class="title-label">Number Of Rims</h3>
+                            <div class="form-field-wrapper">
+                                <div class="form-input-wrapper">
+<input type="text" class="form-inputbox" id="txtNoOfRims" name="NoOfRims" value="@warehouse.NoOfRims"/>
+
+
+
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+                <div class="slide-footer">
+                    <div class="slide-inner-footer">
+                        <button type="button" class="button button-secondary-border"
+                                onclick="CloseDialogV('WarehouseLetter')">
+                            Cancel
+                        </button>
+                        <button type="submit" class="button button-primary">Update</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+</form>
+
+<script>
+
+      function GetCityName(sel)
+      {
+        var submitButton = document.getElementById("txtCity");
+        var userSelectValue = userSelect.options[userSelect.selectedIndex].value;
+      }
+    $(function () {
+
+            $("#frmUpdateWarehouse").submit(function (event) {
+            $.post("/Warehouse/UpdateWarehouse/", $("#frmUpdateWarehouse").serializeArray(),function(){
+                CloseDialogV('WarehouseLetter');
+            });
+
+        });
+    });
+</script>

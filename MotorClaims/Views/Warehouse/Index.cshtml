@@ -1,31 +1,23 @@
 ﻿@using CORE.DTOs.Authentications;
-@using Microsoft.AspNetCore.Mvc.Localization
-@using Microsoft.AspNetCore.Builder
-@using Microsoft.AspNetCore.Localization
-@using Microsoft.Extensions.Options
-@using Microsoft.AspNetCore.Http.Features
-@using System.Globalization
-
-@inject IViewLocalizer _localizer
 @using CORE.DTOs.MotorClaim.Claims;
 @using Newtonsoft.Json;
-@using X.PagedList.Mvc.Core;
-@using X.PagedList;
-@model IPagedList<ClaimMaster>
-   @{
+@{
     SearchObj searchObj = (SearchObj)ViewData["searchObj"];
     List<Users> users = (List<Users>)ViewData["AllUsers"];
 }
+@using X.PagedList.Mvc.Core;
+@using X.PagedList;
+@model IPagedList<ClaimMaster>
 
-<div class="add-member-detail">
-      <div class="policy-wrapper">
+<div class="add-member-detail" style="max-height:900px;overflow-y:auto">
+    <div class="policy-wrapper">
         <div class="basic-detail" style="background:none !important">
-            <h2 class="heading">@_localizer["Surveyor"].Value </h2>
+            <h2 class="heading">Warehouse</h2>
             <div class="search-member">
-                    <form method="post" asp-action="SearchSurveyors" asp-controller="Surveyor" style="display:flow-root">
+                <form method="post" asp-action="SearchWarehouse" asp-controller="Warehouse" style="display:flow-root">
                     <div class="search-filter-wrapper">
                         <div class="search-wrapper">
-                            <span class="label">@_localizer["ClaimNo"].Value </span>
+                            <span class="label">Claim No</span>
                             <div class="search-input-box-wrapper">
 
                                 <div class="search-icon-wrapper">
@@ -37,7 +29,7 @@
                         </div>
 
                         <div class="search-wrapper">
-                            <span class="label">@_localizer["NationalId"].Value </span>
+                            <span class="label">National Id</span>
                             <div class="search-input-box-wrapper">
 
                                 <div class="search-icon-wrapper">
@@ -49,7 +41,7 @@
                         </div>
 
                         <div class="search-wrapper">
-                            <span class="label">@_localizer["MobileNo"].Value </span>
+                            <span class="label">Mobile No</span>
                             <div class="search-input-box-wrapper">
 
                                 <div class="search-icon-wrapper">
@@ -60,7 +52,7 @@
                             </div>
                         </div>
                         <div class="search-wrapper">
-                            <span class="label">@_localizer["ChasisNo"].Value </span>
+                            <span class="label">Chasis No</span>
                             <div class="search-input-box-wrapper">
 
                                 <div class="search-icon-wrapper">
@@ -76,7 +68,7 @@
 
 
                         <div class="search-wrapper">
-                            <span class="label">@_localizer["PolicyNo"].Value </span>
+                            <span class="label">Policy No</span>
                             <div class="search-input-box-wrapper">
 
                                 <div class="search-icon-wrapper">
@@ -86,10 +78,10 @@
                                        value="@searchObj.policy">
                             </div>
                         </div>
-                   
+
 
                         <div class="search-wrapper">
-                            <span class="label">@_localizer["RegisteredFrom"].Value </span>
+                            <span class="label">Registered From</span>
                             <div class="search-input-box-wrapper">
 
                                 <div class="search-icon-wrapper">
@@ -101,7 +93,7 @@
 
 
                         <div class="search-wrapper">
-                            <span class="label">@_localizer["RegisteredTo"].Value </span>
+                            <span class="label">Registered To</span>
                             <div class="search-input-box-wrapper">
 
                                 <div class="search-icon-wrapper">
@@ -114,34 +106,31 @@
                     </div>
                     <div class="search-heading-wrap" style="float: right;margin-top: 10px;">
 
-                        <button class="button button-secondary" type="submit">@_localizer["Search"].Value </button>
+                        <button class="button button-secondary" type="submit">Search</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
 
-
-
-    @if (Model!=null && Model.Count > 0)
+   
+    @if (Model != null && Model.Count > 0)
     {
         <div class="policy-members">
             <div class="heading-card">
-                <h2 class="heading">All Claims</h2>
+                <h2 class="heading">Warehouse Claims</h2>
             </div>
             <div class="transaction-details">
                 <table class="universal-table">
                     <tr>
                         <th>Claim Segment</th>
                         <th>Claimant Name</th>
+                        <th>Assign To</th>
                         <th>Policy Number</th>
                         <th>Make</th>
                         <th>Model</th>
-                        <th>Chassis</th>
-                        <th>Current Action</th>
                         <th>Registered Date</th>
-                        <th>Assign To</th>
-                        <th>Actions</th>
+                        <th>Warehouse Letter</th>
 
                     </tr>
 
@@ -153,28 +142,29 @@
                             @{
                                 ClaimSearchobj claimSearchobj = new ClaimSearchobj()
                                                                 {
-                                                                    PolicyId = clm.claims.PolicyId.HasValue ? clm.claims.PolicyId.Value : 0,
-                                                                    ClaimId = clm.claims.Id
+                                                                    ClaimId = clm.claims.Id,
+                                                                    ClaimantId=clm.claimants.Id
                                                                 };
-                            }
-                            <td class="tran"><a href="@Url.Action("SurveyorEntry","Surveyor",new{obj=MotorClaims.Models.Helpers.Encrypt(JsonConvert.SerializeObject(claimSearchobj))})">@clm.claims.ClaimNo/@clm.claimants.Serial.ToString()</a></td>
-                            <td>@clm.claimants.ClaimantName</td>
-                            <td>@clm.productionInfo.PolicyNumber</td>
-                            <td>@clm.vehiclesInfo.MakeDesc</td>
-                            <td>@clm.vehiclesInfo.ModelDesc</td>
-                            <td>@clm.vehiclesInfo.ChassisNo</td>
-                            <td>@clm.claimants.LastClaimantAction</td>
-                            <td>@HelpersDate.FormatDate(clm.claims.RegistrationDate)</td>
-                            <td class="tran"><a href="#" onclick="SurveyorAssign(@clm.claims.Id,@clm.claimants.Id)">Assign</a></td>
-                            <td class="tran"><a href="#" onclick="SurveyorActions(@clm.claims.Id,@clm.claimants.Id)">Action</a></td>
 
+                                string UserName = users.Where(p => p.Id == clm.claimants.AssignTo).FirstOrDefault().UserName;
+                            }
+                            <td>@clm.claims.ClaimNo/@clm.claimants.Serial</td>
+
+                            <td>@clm.claimants.ClaimantName</td>
+                            <td>@UserName</td>
+                            <td>@clm.productionInfo.PolicyNumber</td>
+                               <td>@clm.vehiclesInfo.ModelDesc</td>
+                            <td>@clm.vehiclesInfo.MakeDesc</td>
+                         
+                            <td>@HelpersDate.FormatDate(clm.claims.RegistrationDate)</td>
+                            <td class="tran"><a href="#" onclick="WarehouseLetter(@clm.claims.Id,@clm.claimants.Id)">Warehouse Letter</a></td>
+                         
                         </tr>
 
 
                     }
                 </table>
-
-            @Html.PagedListPager((IPagedList)Model,Page=>Url.Action("Index","Surveyor",new {Page}))
+                 @Html.PagedListPager((IPagedList)Model,Page=>Url.Action("Index","Warehouse",new {Page}))
             Showing @Model.FirstItemOnPage to @Model.LastItemOnPage of @Model.TotalItemCount Claims
             </div>
         </div>
@@ -241,10 +231,14 @@
     </div>
 </div>
 
-<div class="common-slide-popup" id="SurveyorActions"></div>
-<div class="edit-member-id-popup" id="SurveyorAssign"></div>
+<div class="common-slide-popup" id="WarehouseLetter"></div>
 
 <script>
+    $(function(){
+       if ('@ViewData["Error"]' != '' || '@ViewData["Error"]' != "") {
+            ErrorAlert('@ViewData["Error"]');
+        }
+});
     $('#txtFrom').ForceDateEntry();
     $('#txtTo').ForceDateEntry();
 </script>

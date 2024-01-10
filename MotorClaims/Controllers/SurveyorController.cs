@@ -41,7 +41,8 @@ namespace MotorClaims.Controllers
             List<ClaimMaster> claim = new List<ClaimMaster>();
             claim = HttpContext.Session.getSessionData<List<ClaimMaster>>("SearchResult");
             IPagedList<ClaimMaster> claims = claim.ToPagedList(page, _appSettings.PageSize);
-
+            ViewData["searchObj"] = new SearchObj();
+            ViewData["AllUsers"] = HttpContext.Session.getSessionData<List<Users>>("AllUsers");
             return View(claims);
         }
 
@@ -67,11 +68,23 @@ namespace MotorClaims.Controllers
         }
 
         [HttpPost]
-        public IActionResult SearchSurveyors(int page=1)
+        public IActionResult SearchSurveyors(SearchObj searchObj)
         {
+            if (string.IsNullOrEmpty(searchObj.nationalid) && !searchObj.RegisteredFrom.HasValue && !searchObj.RegisteredTo.HasValue && string.IsNullOrEmpty(searchObj.chassis) && string.IsNullOrEmpty(searchObj.claimno) && string.IsNullOrEmpty(searchObj.mobile) && string.IsNullOrEmpty(searchObj.policy))
+            {
+                return RedirectToAction("Index", new { err = "Please fill at least one parameter" });
+            }
             MainSearchMC mainSearchMC = new MainSearchMC()
             {
-                ClaimStatus = (int)Enums.ClaimantStatus.Surveyor
+                NationalID = searchObj.nationalid,
+                chassis = searchObj.chassis,
+                claimno = searchObj.claimno,
+                mobile = searchObj.mobile,
+                policy = searchObj.policy,
+                RegisteredFrom = searchObj.RegisteredFrom,
+                RegisteredTo = searchObj.RegisteredTo,
+                ClaimStatus = (int)Enums.ClaimantStatus.Operation
+
             };
             SetupClaimsRequestcs setupClaimsRequestcs = new SetupClaimsRequestcs()
             {
@@ -79,8 +92,11 @@ namespace MotorClaims.Controllers
                 Request = mainSearchMC
             };
             var claim = Helpers.ExcutePostAPI<List<ClaimMaster>>(setupClaimsRequestcs, _appSettings.APIHubPrefix + "api/MotorClaim/ClaimsTransactions");
-            IPagedList<ClaimMaster> Surveyors = claim.ToPagedList(page, _appSettings.PageSize);
+
+            IPagedList<ClaimMaster> Surveyors = claim.ToPagedList(1, _appSettings.PageSize);
             HttpContext.Session.SetSessionData("SearchResult", claim);
+            ViewData["searchObj"] = searchObj;
+            ViewData["AllUsers"] = HttpContext.Session.getSessionData<List<Users>>("AllUsers");
             return View("Index", Surveyors);
         }
 

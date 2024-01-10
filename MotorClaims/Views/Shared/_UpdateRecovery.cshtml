@@ -1,27 +1,14 @@
-﻿@using Microsoft.AspNetCore.Mvc.Localization
-@using Microsoft.AspNetCore.Builder
-@using Microsoft.AspNetCore.Localization
-@using Microsoft.Extensions.Options
-@using Microsoft.AspNetCore.Http.Features
-@using System.Globalization
-
-@inject IViewLocalizer _localizer
-@using CORE.DTOs.MotorClaim.Claims;
-@model Claims
+﻿@using CORE.DTOs.MotorClaim.Claims;
+@model ClaimMaster
 @{
     Layout = null;
-    int? ClaimantId = (int?)ViewData["claimantId"];
-        List<ClaimMaster> claimMasters=(List<ClaimMaster>)ViewData["ClaimMaster"];
 }
 <form id="frmUpdateReserve" method="post" >
-    <input type="hidden" name="ClaimId" value="@Model.Id" />
+    <input type="hidden" name="ClaimId" value="@Model.claims.Id" />
     <div class="slide-popup-inner">
         <div class="slide-header">
             <div class="heading-card">
-                <h2 class="heading">
-                    @_localizer["UpdateRecovery"].Value
-                    
-                </h2>
+                <h2 class="heading">Update Recovery</h2>
             </div>
         </div>
         <div class="slide-body">
@@ -29,180 +16,81 @@
                 <div class="body-content-wrapper">
                     <div class="delete-content-card">
                         <div class="body-delete-header">
-                            <h2 class="heading-title">@Model.ClaimNo</h2>
-                            <span class="active-employee">
-                                @_localizer["Employee"].Value
-                                
-                            </span>
+                            <h2 class="heading-title">@Model.claims.ClaimNo/@Model.claimants.Serial</h2>
+                            <span class="active-employee">Employee</span>
                         </div>
                         <ul class="list-detail">
                             <li class="list-item-delete">
-                                <span class="label">
-                                    @_localizer["OwnerName:"].Value
-                                    
-                                </span>
-                                <span class="value">@Model.Owner</span>
+                                <span class="label">Owner Name:</span>
+                                <span class="value">@Model.claims.Owner</span>
                             </li>
                             <li class="list-item-delete">
-                                <span class="label">
-                                    @_localizer["PolicyNo:"].Value
-                                   
-                                </span>
-                                <span class="value">@Model.PolicyNo</span>
+                                <span class="label">Policy No:</span>
+                                <span class="value">@Model.claims.PolicyNo</span>
                             </li>
                             <li class="list-item-delete">
-                                <span class="label">
-                                    @_localizer["PlateNo:"].Value
-                                    
-                                </span>
-                                <span class="value">@Model.PlateNo</span>
+                                <span class="label">Plate No:</span>
+                                <span class="value">@Model.claims.PlateNo</span>
                             </li>
                             <li class="list-item-delete">
-                                <span class="label">
-                                    @_localizer["FraudScore:"].Value
-                                    
-                                </span>
-                                <span class="value">@Model.FraudScore</span>
+                                <span class="label">Fraud Score:</span>
+                                <span class="value">@Model.claims.FraudScore</span>
                             </li>
                         </ul>
 
 
                         <div class="cancel-declaration">
-                            <h3 class="title-label">
-                                @_localizer["Claimant"].Value
-                                
-                            </h3>
+                            <h3 class="title-label">Claimant</h3>
                             <div class="form-field-wrapper">
                                 <div class="form-input-wrapper">
                                     <select required class="form-inputbox" name="ClaimantID" id="ddlClaimantID">
-                                            <option value="@claimMasters.FirstOrDefault().claimants.Id">@claimMasters.FirstOrDefault().claimants.ClaimantName</option>
+                                            <option value="@Model.claimants.Id">@Model.claimants.ClaimantName</option>
                                     </select>
                                 </div>
                             </div>
                         </div>          
                         
                         <div class="cancel-declaration">
-                            <h3 class="title-label">
-                                @_localizer["RecoveryType"].Value
-                                
-                            </h3>
+                            <h3 class="title-label">Recovery Type</h3>
                             <div class="form-field-wrapper">
                                 <div class="form-input-wrapper">
   <select required class="form-inputbox" name="RecoveryType" id="ddlRecoveryType">
-                                        <option value="">
-                                            @_localizer["SelectRecoveryType"].Value
-                                            
-                                        </option>
-                                        <option value="1">
-                                            @_localizer["InsuranceCompany"].Value
-                                            
-                                        </option>
-                                        <option value="2">
-                                            @_localizer["Individual"].Value
-                                            
-                                        </option>
-                                        <option value="3">
-                                            @_localizer["SellingScrap"].Value
-                                            
-                                        </option>
-                                        <option value="4">
-                                            @_localizer["Deductible"].Value
-                                            
-                                        </option>
-                                        <option value="5">
-                                            @_localizer["Depreciation"].Value
-                                            
-                                        </option>
-                                        <option value="10">
-                                            @_localizer["RecoveryFromInsured"].Value
-                                            
-                                        </option>
-                                        <option value="11">
-                                            @_localizer["deductible+depreciation"].Value
-                                            
-                                        </option>
-                                        <option value="12">
-                                            @_localizer["Debitor"].Value
-                                            
-                                        </option>
-                                        <option value="14">
-                                            @_localizer["SAMAnewTPpolicy"].Value
-                                            
-                                        </option>
+      <option value="">Select Recovery Type</option>
+	<option value="1">Insurance Company</option>
+	<option value="2">Individual</option>
+	<option value="3">Selling Scrap</option>
+	<option value="4">Deductible</option>
+	<option value="5">Depreciation</option>
+	<option value="10">Recovery From Insured</option>
+	<option value="11">deductible+depreciation</option>
+	<option value="12">Debitor </option>
+	<option value="14">SAMA new TP policy</option>
 
 </select>
                                 </div>
                             </div>
                         </div>
                         <div class="cancel-declaration">
-                            <h3 class="title-label">
-                                @_localizer["RecoveryReason"].Value
-                                
-                            </h3>
+                            <h3 class="title-label">Recovery Reason</h3>
                             <div class="form-field-wrapper">
                                 <div class="form-input-wrapper">
                                       <select class="form-inputbox" name="RecoveryReason" id="ddlRecoveryReason">
-                                        <option value="">
-                                            @_localizer["SelectRecoveryReason"].Value
-                                            
-                                        </option>
+                                        <option value="">Select Recovery Reason</option>
 
-                                        <option value="1">
-                                            @_localizer["UseofVehicleusageisdifferentfrompolicyschedule"].Value
-                                            
-                                        </option>
-                                        <option value="2">
-                                            @_localizer["Exceedingthenumberofpassengercapacity"].Value
-                                            
-                                        </option>
-                                        <option value="3">
-                                            @_localizer["Drivenagainstthedirectionoftraffic"].Value
-                                            
-                                        </option>
-                                        <option value="4">
-                                            @_localizer["Drivenundertheinfluenceofdrugs."].Value
-                                            
-                                        </option>
-                                        <option value="5">
-                                            @_localizer["Drivenbyapersonundertheage18year."].Value
-                                            
-                                        </option>
-                                        <option value="6">
-                                            @_localizer["DrivendoesnotholdaproperclassofLicense."].Value
-                                            
-                                        </option>
-                                        <option value="7">
-                                            @_localizer["Licensewasexpired."].Value
-                                            
-                                        </option>
-                                        <option value="8">
-                                            @_localizer["Driverescapedthesceneoftheaccident."].Value
-                                            
-                                        </option>
-                                        <option value="9">
-                                            @_localizer["Runningaredlight"].Value
-                                            
-                                        </option>
-                                        <option value="10">
-                                            @_localizer["Submittinginaccurateinformationinproposalform."].Value
-                                            
-                                        </option>
-                                        <option value="11">
-                                            @_localizer["Provedthattheaccidentwasdeliberate."].Value
-                                            
-                                        </option>
-                                        <option value="12">
-                                            @_localizer["Failuretonotifywithin20workingdaysofanymaterial."].Value
-                                            
-                                        </option>
-                                        <option value="13">
-                                            @_localizer["Vehiclewasstolenortakenforcibly"].Value
-                                            
-                                        </option>
-                                        <option value="14">
-                                            @_localizer["NotApplicable"].Value
-                                            
-                                        </option>
+      	<option  value="1">Use of Vehicle usage is different from policy schedule.</option>
+			<option value="2">Exceeding the number of passenger capacity </option>
+			<option value="3">Driven against the direction of traffic</option>
+			<option value="4">Driven under the influence of drugs. </option>
+			<option value="5">Driven by a person under the age 18 year. </option>
+			<option value="6">Driven does not hold a proper class of License.</option>
+			<option value="7">License was expired.</option>
+			<option value="8">Driver escaped the scene of the accident. </option>
+			<option value="9">Running a red light</option>
+			<option value="10">Submitting inaccurate information in proposal form.</option>
+			<option value="11">Proved that the accident was deliberate.</option>
+			<option value="12">Failure to notify within 20 working days of any material.</option>
+			<option value="13">Vehicle was stolen or taken forcibly</option>
+			<option value="14">Not Applicable</option>
              </select>
                                 </div>
                             </div>
@@ -210,10 +98,7 @@
 
 
                         <div class="cancel-declaration">
-                            <h3 class="title-label">
-                                @_localizer["RecoveryAmount"].Value
-                                
-                            </h3>
+                            <h3 class="title-label">Recovery Amount</h3>
                             <div class="form-field-wrapper">
                                 <div class="form-input-wrapper">
                                     <input required type="text" name="RecoveryAmount" autocomplete="off" maxlength="10" class="form-inputbox" id="txtRecoveryAmount" />
@@ -224,10 +109,7 @@
 
 
                         <div class="cancel-declaration">
-                            <h3 class="title-label">
-                                @_localizer["Note"].Value
-                                
-                            </h3>
+                            <h3 class="title-label">Note</h3>
                             <div class="form-field-wrapper">
                                 <div class="form-input-wrapper">
                                     <textarea name="Note" id="txtNote" autocomplete="off" class="form-inputbox" maxlength="1024"></textarea>
@@ -240,13 +122,9 @@
                     <div class="slide-inner-footer">
                         <button type="button" class="button button-secondary-border"
                                 onclick="CloseDialogV('UpdateRecovery')">
-                            @_localizer["Cancel"].Value
-                            
+                            Cancel
                         </button>
-                        <button type="submit" class="button button-primary">
-                            @_localizer["Update"].Value
-                            
-                        </button>
+                        <button type="submit" class="button button-primary">Update</button>
                     </div>
                 </div>
             </div>
@@ -259,10 +137,7 @@
 
 <script>
     $(function () {
-        if('@ClaimantId'!=null && '@ClaimantId'>0){
-            $('#ddlClaimantID').val('@ClaimantId');
-             $("#ddlClaimantID").prop('disabled', true);
-        }
+
         $("#frmUpdateReserve").submit(function (event) {
             $.post("/Surveyor/UpdateReserveTransaction/", $("#frmUpdateReserve").serializeArray(),function(){
                 CloseDialogV('UpdateReserve');

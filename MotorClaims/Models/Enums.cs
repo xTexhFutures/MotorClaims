@@ -183,5 +183,25 @@ namespace MotorClaims.Models
             [Display(Name = "Others")]
             Others = 7,
         }
+
+        public enum MissingPartsList
+        {
+            [Display(Name = "Front Plate")]
+            FrontPlate = 1,
+            [Display(Name = "Rear Plate")]
+            RearPlate = 2,
+            [Display(Name = "Spare Tire")]
+            SpareTire = 3,
+            [Display(Name = "Car Key")]
+            CarKey = 4,
+            [Display(Name = "Tires")]
+            Tires = 5,
+            [Display(Name = "Rims")]
+            Rims = 6,
+            [Display(Name = "Recorder")]
+            Recorder = 7,
+            [Display(Name = "Others")]
+            Others = 8
+        }
     }
 }
