@@ -1,4 +1,12 @@
-﻿@using CORE.DTOs.MotorClaim.WorkFlow;
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.AspNetCore.Builder
+@using Microsoft.AspNetCore.Localization
+@using Microsoft.Extensions.Options
+@using Microsoft.AspNetCore.Http.Features
+@using System.Globalization
+
+@inject IViewLocalizer _localizer
+@using CORE.DTOs.MotorClaim.WorkFlow;
 @model WorkFlowApprovers
 @{
     int StageId = (int)ViewData["WFId"];
@@ -6,12 +14,18 @@
 <div class="popup-body-wrapper">
     <div class="popup-header">
         <div class="popup-header-inner">
-            <h3 class="popup-title">Workflow Approver</h3>
+            <h3 class="popup-title">
+                @_localizer["WorkflowApprover"].Value
+                
+            </h3>
             <div class="close-popup-icon" onclick="Close('edit-WorkFlowApprovers-popup')">
                 <img class="close-icon" src="/assets/icons/close.svg">
             </div>
         </div>
-        <p class="popup-description">Define Workflow Approver</p>
+        <p class="popup-description">
+            @_localizer["DefineWorkflowApprover"].Value
+            
+        </p>
     </div>
     <form method="post" asp-action="UpdateWorkflowApprovers" asp-controller="Workflow">
 
@@ -28,13 +42,19 @@
                             <div class="form-input-wrapper">
                                 <input class="form-inputbox" id="txtEmail" autocomplete="off" name="Email" type="text" required value="@Model.Email">
                                 <input id="txtName" name="Name" type="hidden" >
-                                <label class="form-label non-icon" for="txtEmail">Email</label>
+                                <label class="form-label non-icon" for="txtEmail">
+                                    @_localizer["Email"].Value
+                                    
+                                </label>
                             </div>
                         </div>
                         <div class="form-field-wrapper">
                             <div class="form-input-wrapper">
                                 <input class="form-inputbox" id="txtApprovalLevel" autocomplete="off" name="ApprovalLevel" type="text" required value="@Model.ApprovalLevel">
-                                <label class="form-label non-icon" for="txtApprovalLevel">Approval Level</label>
+                                <label class="form-label non-icon" for="txtApprovalLevel">
+                                    @_localizer["ApprovalLevel"].Value
+                                    
+                                </label>
                             </div>
                         </div>
                  
@@ -45,7 +65,10 @@
         </div>
         <div class="popup-footer">
             <button class="button button-secondary" type="button" onclick="Close('edit-WorkFlowApprovers-popup')">Cancel</button>
-            <button class="button button-secondary" type="submit">Submit</button>
+            <button class="button button-secondary" type="submit">
+                @_localizer["Submit"].Value
+                
+            </button>
         </div>
     </form>
 </div>

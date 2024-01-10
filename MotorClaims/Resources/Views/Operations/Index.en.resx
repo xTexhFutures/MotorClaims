@@ -138,9 +138,6 @@
   <data name="ExpiryDate" xml:space="preserve">
     <value>ExpiryDate</value>
   </data>
-  <data name="HelpersDate.FormatDateNoTime(policy.policy.PolicyExpiryDate)" xml:space="preserve">
-    <value>HelpersDate.FormatDateNoTime(policy.policy.PolicyExpiryDate)</value>
-  </data>
   <data name="Make" xml:space="preserve">
     <value>Make</value>
   </data>

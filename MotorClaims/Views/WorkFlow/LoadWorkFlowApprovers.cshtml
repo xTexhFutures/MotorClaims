@@ -1,4 +1,12 @@
-﻿@using CORE.DTOs.MotorClaim.WorkFlow;
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.AspNetCore.Builder
+@using Microsoft.AspNetCore.Localization
+@using Microsoft.Extensions.Options
+@using Microsoft.AspNetCore.Http.Features
+@using System.Globalization
+
+@inject IViewLocalizer _localizer
+@using CORE.DTOs.MotorClaim.WorkFlow;
 @model List<WorkFlowApprovers>
 @{
     Layout = null;
@@ -10,7 +18,10 @@
     <div class="slide-popup-inner">
         <div class="slide-header">
             <div class="heading-card">
-                <h2 class="heading">Workflow Approvers</h2>
+            <h2 class="heading">
+                @_localizer["WorkflowApprovers"].Value
+                
+            </h2>
             </div>
         </div>
         <div class="slide-body">
@@ -21,10 +32,22 @@
                 
                         <table class="universal-table" >
                             <tr>
-                                <th>Name</th>
-                                <th>Email</th>
-                                <th>Approval Level</th>
-                                <th>Action</th>
+                        <th>
+                            @_localizer["Name"].Value
+                            
+                        </th>
+                        <th>
+                            @_localizer["Email"].Value
+                            
+                        </th>
+                        <th>
+                            @_localizer["ApprovalLevel"].Value
+                            
+                        </th>
+                        <th>
+                            @_localizer["Action"].Value
+                            
+                        </th>
                             </tr>
 
                             @foreach (var item in Model)
@@ -57,7 +80,9 @@
                     <div class="slide-inner-footer">
                         <button class="button button-secondary-border"
                                 onclick="Close('ManageApproversPopup')">
-                            Cancel
+                        @_localizer["Cancel"].Value
+
+                            
                         </button>
           
                     </div>

@@ -1,4 +1,12 @@
-﻿@using CORE.DTOs.MotorClaim.Claims;
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.AspNetCore.Builder
+@using Microsoft.AspNetCore.Localization
+@using Microsoft.Extensions.Options
+@using Microsoft.AspNetCore.Http.Features
+@using System.Globalization
+
+@inject IViewLocalizer _localizer
+@using CORE.DTOs.MotorClaim.Claims;
 @using CORE.DTOs.MotorClaim.WorkFlow;
 @{
     Layout = null;
@@ -10,7 +18,10 @@
         <div class="name-number-wrapper">
             <div class="policy-name-wrapper">
                 <img src="/assets/icons/empty-file.svg" class="policy-icon" />
-                <p class="policy-name">Documents History</p>
+                <p class="policy-name">
+                    @_localizer["DocumentsHistory"].Value
+                    
+                </p>
             </div>
 
         </div>
@@ -26,7 +37,10 @@
                         <img src="/assets/icons/save.svg" alt="" class="item-icon">
                     </span>
                     <div class="item-content">
-                        <span class="label tran">File Name</span>
+                        <span class="label tran">
+                            @_localizer["FileName"].Value
+                            
+                        </span>
                     </div>
                 </li>
                 <li class="detailed-item false">
@@ -34,7 +48,10 @@
                         <img src="/assets/icons/calendar.svg" alt="" class="item-icon">
                     </span>
                     <div class="item-content">
-                        <span class="label">Creation Date</span>
+                        <span class="label">
+                            @_localizer["CreationDate"].Value
+                            
+                        </span>
                     </div>
                 </li>
                 <li class="detailed-item false">
@@ -42,7 +59,10 @@
                         <img src="/assets/icons/save.svg" alt="" class="item-icon">
                     </span>
                     <div class="item-content">
-                        <span class="label">Uploaded By</span>
+                        <span class="label">
+                            @_localizer["UploadedBy"].Value
+                            
+                        </span>
                     </div>
                 </li>
                 <li class="detailed-item false">
@@ -50,7 +70,10 @@
                         <img src="/assets/icons/save.svg" alt="" class="item-icon">
                     </span>
                     <div class="item-content">
-                        <span class="label">Document Type</span>
+                        <span class="label">
+                            @_localizer["DocumentType"].Value
+                            
+                        </span>
                     </div>
                 </li>
             </ul>

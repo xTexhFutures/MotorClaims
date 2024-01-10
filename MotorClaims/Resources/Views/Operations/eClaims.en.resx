@@ -144,12 +144,6 @@
   <data name="OwnerNationalID" xml:space="preserve">
     <value>Owner National ID</value>
   </data>
-  <data name="PlateNumber:vehicle.Vehicle.PlateNo" xml:space="preserve">
-    <value>PlateNumber:vehicle.Vehicle.PlateNo</value>
-  </data>
-  <data name="policy.policy.PolicyNumber" xml:space="preserve">
-    <value>policy.policy.PolicyNumber</value>
-  </data>
   <data name="PolicyNo" xml:space="preserve">
     <value>PolicyNo</value>
   </data>
@@ -179,9 +173,6 @@
   </data>
   <data name="Transfered" xml:space="preserve">
     <value>Transfered</value>
-  </data>
-  <data name="vehicle.Vehicle.ManufactureYear" xml:space="preserve">
-    <value>vehicle.Vehicle.ManufactureYear</value>
   </data>
   <data name="YearofManufacturing" xml:space="preserve">
     <value>Yearof Manufacturing</value>

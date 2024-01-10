@@ -123,4 +123,7 @@
   <data name="RejectionReason" xml:space="preserve">
     <value>سبب الرفض</value>
   </data>
+  <data name="Save" xml:space="preserve">
+    <value>حفظ</value>
+  </data>
 </root>

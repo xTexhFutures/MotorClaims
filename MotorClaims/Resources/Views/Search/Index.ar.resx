@@ -117,25 +117,124 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="A" xml:space="preserve">
+    <value>أ</value>
+  </data>
+  <data name="AccidentDate:" xml:space="preserve">
+    <value>تاريخ الحادث :</value>
+  </data>
+  <data name="AccidentNo:" xml:space="preserve">
+    <value>رقم الحادث :</value>
+  </data>
+  <data name="AllVehicles" xml:space="preserve">
+    <value>جميع المركبات</value>
+  </data>
+  <data name="BusinessChannel:" xml:space="preserve">
+    <value>مسار العمل :</value>
+  </data>
+  <data name="ChasisNo" xml:space="preserve">
+    <value>رقم الشاسيه</value>
+  </data>
   <data name="ClaimNo" xml:space="preserve">
     <value>رقم المطالبة</value>
+  </data>
+  <data name="ClaimNo:" xml:space="preserve">
+    <value>رقم المطالبة :</value>
   </data>
   <data name="ClaimsSearch" xml:space="preserve">
     <value>البحث عن طريق المطالبة</value>
   </data>
-  <data name="g" xml:space="preserve">
-    <value />
+  <data name="ComplaintNo" xml:space="preserve">
+    <value>رقم الشكوى</value>
+  </data>
+  <data name="CustomNo" xml:space="preserve">
+    <value>رقم مخصص</value>
+  </data>
+  <data name="E" xml:space="preserve">
+    <value>أ</value>
+  </data>
+  <data name="EffectiveDate:" xml:space="preserve">
+    <value>تاريخ النفاذ</value>
+  </data>
+  <data name="LesseeName:" xml:space="preserve">
+    <value>إسم المستأجر :</value>
+  </data>
+  <data name="Make:" xml:space="preserve">
+    <value>صنع</value>
+  </data>
+  <data name="MobileNo" xml:space="preserve">
+    <value>رقم الهاتف</value>
+  </data>
+  <data name="Model:" xml:space="preserve">
+    <value>نموذج</value>
+  </data>
+  <data name="NationalId" xml:space="preserve">
+    <value>الهوية الوطنية</value>
+  </data>
+  <data name="Noresultsfound" xml:space="preserve">
+    <value>لم يتم العثور على نتائج</value>
+  </data>
+  <data name="OwnerName:" xml:space="preserve">
+    <value>إسم المالك :</value>
   </data>
   <data name="PlateNo" xml:space="preserve">
     <value>رقم اللوحة</value>
   </data>
+  <data name="PolicyNo" xml:space="preserve">
+    <value>رقم الوثيقة</value>
+  </data>
+  <data name="Policytype:" xml:space="preserve">
+    <value>نوع الوثيقة :</value>
+  </data>
+  <data name="PullFromCore" xml:space="preserve">
+    <value>سحب من الاساس</value>
+  </data>
+  <data name="PullPolicy" xml:space="preserve">
+    <value>سحب الوثيقة</value>
+  </data>
+  <data name="pullpolicyfromcoresystem byenteringpolicyNo#" xml:space="preserve">
+    <value>#سحب الوثيقة من النظام الأساسي عن طريق إدخال وثيقة رقم </value>
+  </data>
+  <data name="Search" xml:space="preserve">
+    <value>بحث</value>
+  </data>
+  <data name="SearchByChasisNo" xml:space="preserve">
+    <value>البحث حسب رقم الشاسيه</value>
+  </data>
+  <data name="SearchByClaimNo" xml:space="preserve">
+    <value>البحث حسب رقم المطالبة</value>
+  </data>
+  <data name="SearchByComplaintNo" xml:space="preserve">
+    <value>البحث حسب رقم الشكوى</value>
+  </data>
+  <data name="SearchByCustomNo" xml:space="preserve">
+    <value>البحث حسب الرقمم المخصص</value>
+  </data>
+  <data name="SearchByMobileNo5XXXXX" xml:space="preserve">
+    <value>البحث عن طريق الهاتف رقم 5*****</value>
+  </data>
+  <data name="SearchByNationalId" xml:space="preserve">
+    <value>البحث حسب الهوية الوطنية</value>
+  </data>
   <data name="SearchByPlateNo" xml:space="preserve">
     <value>البحث عن طريق اللوحة</value>
+  </data>
+  <data name="SearchByPolicyNo" xml:space="preserve">
+    <value>البحث حسب رقم الوثيقة</value>
   </data>
   <data name="SearchBySequanceNo" xml:space="preserve">
     <value>البحث عن طريق الرقم التسلسلي</value>
   </data>
+  <data name="Select" xml:space="preserve">
+    <value>تحديد</value>
+  </data>
   <data name="SequanceNo" xml:space="preserve">
     <value>الرقم التسلسلي</value>
+  </data>
+  <data name="Status:" xml:space="preserve">
+    <value>الحالة</value>
+  </data>
+  <data name="Vehicles" xml:space="preserve">
+    <value>المركبة</value>
   </data>
 </root>

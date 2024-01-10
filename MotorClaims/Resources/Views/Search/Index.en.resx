@@ -117,22 +117,127 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="A" xml:space="preserve">
+    <value>A</value>
+  </data>
+  <data name="AccidentDate:" xml:space="preserve">
+    <value>Accident Date :</value>
+  </data>
+  <data name="AccidentNo:" xml:space="preserve">
+    <value>Accident No :</value>
+  </data>
+  <data name="AllVehicles" xml:space="preserve">
+    <value>All Vehicles</value>
+  </data>
+  <data name="BusinessChannel:" xml:space="preserve">
+    <value>Business Channel :</value>
+  </data>
+  <data name="ChasisNo" xml:space="preserve">
+    <value>Chasis No</value>
+  </data>
   <data name="ClaimNo" xml:space="preserve">
     <value>Claim No</value>
+  </data>
+  <data name="ClaimNo:" xml:space="preserve">
+    <value>Claim No :</value>
   </data>
   <data name="ClaimsSearch" xml:space="preserve">
     <value>Claims Search</value>
   </data>
+  <data name="ComplaintNo" xml:space="preserve">
+    <value>Complaint No</value>
+  </data>
+  <data name="CustomNo" xml:space="preserve">
+    <value>Custom No</value>
+  </data>
+  <data name="E" xml:space="preserve">
+    <value>E</value>
+  </data>
+  <data name="EffectiveDate:" xml:space="preserve">
+    <value>Effective Date:</value>
+  </data>
+  <data name="LesseeName:" xml:space="preserve">
+    <value>Lessee Name :</value>
+  </data>
+  <data name="Make:" xml:space="preserve">
+    <value>Make :</value>
+  </data>
+  <data name="MobileNo" xml:space="preserve">
+    <value>Mobile No</value>
+  </data>
+  <data name="Model:" xml:space="preserve">
+    <value>Model :</value>
+  </data>
+  <data name="NationalId" xml:space="preserve">
+    <value>National Id</value>
+  </data>
+  <data name="Noresultsfound" xml:space="preserve">
+    <value>No results found</value>
+  </data>
+  <data name="OwnerName:" xml:space="preserve">
+    <value>Owner Name :</value>
+  </data>
   <data name="PlateNo" xml:space="preserve">
     <value>Plate No</value>
+  </data>
+  <data name="PolicyNo" xml:space="preserve">
+    <value>Policy No</value>
+  </data>
+  <data name="Policytype:" xml:space="preserve">
+    <value>Policy type :</value>
+  </data>
+  <data name="PullFromCore" xml:space="preserve">
+    <value>PullFromCore</value>
+  </data>
+  <data name="PullPolicy" xml:space="preserve">
+    <value>Pull Policy</value>
+  </data>
+  <data name="pullpolicyfromcoresystem byenteringpolicyNo#" xml:space="preserve">
+    <value>pull policy from core system by entering policy No#</value>
+  </data>
+  <data name="Search" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="Search By Policy No" xml:space="preserve">
+    <value>Search By Policy No</value>
+  </data>
+  <data name="SearchByChasisNo" xml:space="preserve">
+    <value>Search By Chasis No</value>
+  </data>
+  <data name="SearchByClaimNo" xml:space="preserve">
+    <value>Search By Claim No</value>
+  </data>
+  <data name="SearchByComplaintNo" xml:space="preserve">
+    <value>Search By Complaint No</value>
+  </data>
+  <data name="SearchByCustomNo" xml:space="preserve">
+    <value>Search By Custom No</value>
+  </data>
+  <data name="SearchByMobileNo5XXXXX" xml:space="preserve">
+    <value>Search By Mobile No 5XXXXX</value>
+  </data>
+  <data name="SearchByNationalId" xml:space="preserve">
+    <value>Search By National Id</value>
   </data>
   <data name="SearchByPlateNo" xml:space="preserve">
     <value>Search By Plate No</value>
   </data>
+  <data name="SearchByPolicyNo" xml:space="preserve">
+    <value>Search By Policy No</value>
+  </data>
   <data name="SearchBySequanceNo" xml:space="preserve">
     <value>Search By Sequance No</value>
   </data>
+  <data name="Select" xml:space="preserve">
+    <value>Select</value>
+  </data>
   <data name="SequanceNo" xml:space="preserve">
     <value>Sequance No</value>
+  </data>
+  <data name="Status:" xml:space="preserve">
+    <value>Status :</value>
+  </data>
+  <data name="Vehicles" xml:space="preserve">
+    <value>Vehicles</value>
   </data>
 </root>

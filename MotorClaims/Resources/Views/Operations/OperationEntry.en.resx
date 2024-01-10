@@ -123,4 +123,7 @@
   <data name="RejectionReason" xml:space="preserve">
     <value>Rejection Reason</value>
   </data>
+  <data name="Save" xml:space="preserve">
+    <value>Save</value>
+  </data>
 </root>

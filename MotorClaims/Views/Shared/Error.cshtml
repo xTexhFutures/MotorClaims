@@ -1,25 +1,55 @@
-﻿@model ErrorViewModel
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.AspNetCore.Builder
+@using Microsoft.AspNetCore.Localization
+@using Microsoft.Extensions.Options
+@using Microsoft.AspNetCore.Http.Features
+@using System.Globalization
+
+@inject IViewLocalizer _localizer
+@model ErrorViewModel
 @{
     ViewData["Title"] = "Error";
 }
 
-<h1 class="text-danger">Error.</h1>
-<h2 class="text-danger">An error occurred while processing your request.</h2>
+<h1 class="text-danger">
+    @_localizer["Error."].Value
+    
+</h1>
+<h2 class="text-danger">
+    @_localizer["An error occurred while processing your request."].Value
+    
+</h2>
 
 @if (Model.ShowRequestId)
 {
     <p>
-        <strong>Request ID:</strong> <code>@Model.RequestId</code>
+        <strong>
+            @_localizer["Request ID:"].Value
+            
+        </strong> <code>@Model.RequestId</code>
     </p>
 }
 
-<h3>Development Mode</h3>
+<h3>
+    @_localizer["DevelopmentMode"].Value
+    
+</h3>
 <p>
-    Swapping to <strong>Development</strong> environment will display more detailed information about the error that occurred.
+    @_localizer["Swappingto"].Value
+
+     <strong>
+        @_localizer["Development"].Value
+        
+    </strong> @_localizer["environment will display more detailed information about the error that occurred."].Value
+    
 </p>
 <p>
-    <strong>The Development environment shouldn't be enabled for deployed applications.</strong>
-    It can result in displaying sensitive information from exceptions to end users.
-    For local debugging, enable the <strong>Development</strong> environment by setting the <strong>ASPNETCORE_ENVIRONMENT</strong> environment variable to <strong>Development</strong>
-    and restarting the app.
+    <strong>
+        @_localizer["The Development environment shouldn't be enabled for deployed applications."].Value
+        
+    </strong>@_localizer["It can result in displaying sensitive information from exceptions to end users."].Value
+
+
+    @_localizer["For local debugging, enable the and restarting the app."].Value  <strong>@_localizer["Development"].Value </strong>@_localizer["environmentbysettingthe"].Value  <strong>@_localizer["ASPNETCORE_ENVIRONMENT"].Value </strong>@_localizer["environmentvariableto"].Value  <strong>@_localizer["Development"].Value </strong>
+    
 </p>

@@ -1,0 +1,342 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="A/C Radiator" xml:space="preserve">
+    <value>A/C Radiator</value>
+  </data>
+  <data name="AirBag" xml:space="preserve">
+    <value>AirBag</value>
+  </data>
+  <data name="B.Guard" xml:space="preserve">
+    <value>B.Guard</value>
+  </data>
+  <data name="B.Reinforcement" xml:space="preserve">
+    <value>B.Reinforcement</value>
+  </data>
+  <data name="B.Rubber" xml:space="preserve">
+    <value>B.Rubber</value>
+  </data>
+  <data name="Battery" xml:space="preserve">
+    <value>Battery</value>
+  </data>
+  <data name="CentralPillar" xml:space="preserve">
+    <value>Central Pillar</value>
+  </data>
+  <data name="Chassis" xml:space="preserve">
+    <value>Chassis</value>
+  </data>
+  <data name="CreatedBy" xml:space="preserve">
+    <value>Created By</value>
+  </data>
+  <data name="CreationDate" xml:space="preserve">
+    <value>Creation Date</value>
+  </data>
+  <data name="DashBoard" xml:space="preserve">
+    <value>Dash Board</value>
+  </data>
+  <data name="DoorTrim" xml:space="preserve">
+    <value>Door Trim</value>
+  </data>
+  <data name="E.HoobLock" xml:space="preserve">
+    <value>E.HoobLock</value>
+  </data>
+  <data name="E.Mounting" xml:space="preserve">
+    <value>E.Mounting</value>
+  </data>
+  <data name="Engine" xml:space="preserve">
+    <value>Engine</value>
+  </data>
+  <data name="EstimatedLabourAmount" xml:space="preserve">
+    <value>Estimated Labour Amount</value>
+  </data>
+  <data name="EstimatedRepairDays" xml:space="preserve">
+    <value>Estimated Repair Days</value>
+  </data>
+  <data name="EstimatedSPAmount" xml:space="preserve">
+    <value>Estimated SP Amount</value>
+  </data>
+  <data name="F.Door" xml:space="preserve">
+    <value>F.Door</value>
+  </data>
+  <data name="F.Fender" xml:space="preserve">
+    <value>F.Fender</value>
+  </data>
+  <data name="F.Seats" xml:space="preserve">
+    <value>F.Seats</value>
+  </data>
+  <data name="F.W. Glass" xml:space="preserve">
+    <value>F.W. Glass</value>
+  </data>
+  <data name="Fan" xml:space="preserve">
+    <value>Fan</value>
+  </data>
+  <data name="FloorMats" xml:space="preserve">
+    <value>Floor Mats</value>
+  </data>
+  <data name="Front" xml:space="preserve">
+    <value>Front</value>
+  </data>
+  <data name="Glass" xml:space="preserve">
+    <value>Glass</value>
+  </data>
+  <data name="Grill" xml:space="preserve">
+    <value>Grill</value>
+  </data>
+  <data name="H.Light" xml:space="preserve">
+    <value>H.Light</value>
+  </data>
+  <data name="H.Panel" xml:space="preserve">
+    <value>H.Panel</value>
+  </data>
+  <data name="IndicatorLight" xml:space="preserve">
+    <value>Indicator Light</value>
+  </data>
+  <data name="Interior" xml:space="preserve">
+    <value>Interior</value>
+  </data>
+  <data name="LabourAmount" xml:space="preserve">
+    <value>Labour Amount</value>
+  </data>
+  <data name="Lamps" xml:space="preserve">
+    <value>Lamps</value>
+  </data>
+  <data name="LeftMirror" xml:space="preserve">
+    <value>Left Mirror</value>
+  </data>
+  <data name="LeftRim" xml:space="preserve">
+    <value>Left Rim</value>
+  </data>
+  <data name="LeftShockObserver" xml:space="preserve">
+    <value>Left Shock Observer</value>
+  </data>
+  <data name="LeftSteeringJoint" xml:space="preserve">
+    <value>Left Steering Joint</value>
+  </data>
+  <data name="LeftSuspension" xml:space="preserve">
+    <value>Left Suspension</value>
+  </data>
+  <data name="LeftTire" xml:space="preserve">
+    <value>Left Tire</value>
+  </data>
+  <data name="LeftWheelCaps" xml:space="preserve">
+    <value>Left Wheel Caps</value>
+  </data>
+  <data name="Lid" xml:space="preserve">
+    <value>Lid</value>
+  </data>
+  <data name="Missing" xml:space="preserve">
+    <value>Missing</value>
+  </data>
+  <data name="Muffler" xml:space="preserve">
+    <value>Muffler</value>
+  </data>
+  <data name="Note" xml:space="preserve">
+    <value>Note</value>
+  </data>
+  <data name="Others" xml:space="preserve">
+    <value>Others</value>
+  </data>
+  <data name="Pro-Shaft" xml:space="preserve">
+    <value>Pro-Shaft</value>
+  </data>
+  <data name="R.Door" xml:space="preserve">
+    <value>R.Door</value>
+  </data>
+  <data name="R.Fender" xml:space="preserve">
+    <value>R.Fender</value>
+  </data>
+  <data name="R.Panel" xml:space="preserve">
+    <value>R.Panel</value>
+  </data>
+  <data name="R.Rubber" xml:space="preserve">
+    <value>R.Rubber</value>
+  </data>
+  <data name="R.Seats" xml:space="preserve">
+    <value>R.Seats</value>
+  </data>
+  <data name="R.W. Glass" xml:space="preserve">
+    <value>R.W. Glass</value>
+  </data>
+  <data name="R.Window" xml:space="preserve">
+    <value>R.Window</value>
+  </data>
+  <data name="Rear" xml:space="preserve">
+    <value>Rear</value>
+  </data>
+  <data name="RightMirror" xml:space="preserve">
+    <value>Right Mirror</value>
+  </data>
+  <data name="RightRim" xml:space="preserve">
+    <value>Right Rim</value>
+  </data>
+  <data name="RightShockObserver" xml:space="preserve">
+    <value>Right Shock Observer</value>
+  </data>
+  <data name="RightSteeringJoint" xml:space="preserve">
+    <value>Right Steering Joint</value>
+  </data>
+  <data name="RightSuspension" xml:space="preserve">
+    <value>Right Suspension</value>
+  </data>
+  <data name="RightTire" xml:space="preserve">
+    <value>Right Tire</value>
+  </data>
+  <data name="RightWheelCaps" xml:space="preserve">
+    <value>Right Wheel Caps</value>
+  </data>
+  <data name="Roof" xml:space="preserve">
+    <value>Roof</value>
+  </data>
+  <data name="RunningBoard" xml:space="preserve">
+    <value>Running Board</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="Sides" xml:space="preserve">
+    <value>Sides</value>
+  </data>
+  <data name="SparePartAmount" xml:space="preserve">
+    <value>Spare Part Amount </value>
+  </data>
+  <data name="SteeringBox" xml:space="preserve">
+    <value>Steering Box</value>
+  </data>
+  <data name="Truck" xml:space="preserve">
+    <value>Truck</value>
+  </data>
+  <data name="Underneath" xml:space="preserve">
+    <value>Underneath</value>
+  </data>
+  <data name="W.Radiator" xml:space="preserve">
+    <value>W.Radiator</value>
+  </data>
+  <data name="W.S. Rubber" xml:space="preserve">
+    <value>W.S. Rubber</value>
+  </data>
+  <data name="W.S.Rubber" xml:space="preserve">
+    <value>W.S.Rubber</value>
+  </data>
+  <data name="WindShield" xml:space="preserve">
+    <value>Wind Shield</value>
+  </data>
+  <data name="Wipers" xml:space="preserve">
+    <value>Wipers</value>
+  </data>
+</root>

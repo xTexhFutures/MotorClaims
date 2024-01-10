@@ -1,4 +1,12 @@
-﻿@using CORE.DTOs.MotorClaim;
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.AspNetCore.Builder
+@using Microsoft.AspNetCore.Localization
+@using Microsoft.Extensions.Options
+@using Microsoft.AspNetCore.Http.Features
+@using System.Globalization
+
+@inject IViewLocalizer _localizer
+@using CORE.DTOs.MotorClaim;
 @using Newtonsoft.Json;
 
 @model MissingParts
@@ -15,15 +23,42 @@
     <table class="universal-table">
         <tr>
             <!-- <th>#</th> -->
-            <th>Created By</th>
-            <th>Creation Date</th>
-            <th>Estimated SP Amount</th>
-            <th>Estimated Labour Amount</th>
-            <th>Estimated Repair Days</th>
-            <th>Spare Part Amount</th>
-            <th>Labour Amount</th>
-            <th>Note</th>
-            <th>Missing</th>
+                <th>
+                    @_localizer["CreatedBy"].Value
+                    
+                </th>
+                <th>
+                    @_localizer["CreationDate"].Value
+                    
+                </th>
+                <th>
+                    @_localizer["EstimatedSPAmount"].Value
+                    
+                </th>
+                <th>
+                    @_localizer["EstimatedLabourAmount"].Value
+                    
+                </th>
+                <th>
+                    @_localizer["EstimatedRepairDays"].Value
+                    
+                </th>
+                <th>
+                    @_localizer["SparePartAmount"].Value
+                    
+                </th>
+                <th>
+                    @_localizer["LabourAmount"].Value
+                    
+                </th>
+                <th>
+                    @_localizer["Note"].Value
+                    
+                </th>
+                <th>
+                    @_localizer["Missing"].Value
+                    
+                </th>
 
         </tr>
 
@@ -78,7 +113,10 @@
                         <div class="accordion-heaing-content">
                             <div class="heading-wrap">
                                 <input type="checkbox" class="support-icon" />
-                                <h2 class="heading">Front</h2>
+                                <h2 class="heading">
+                                    @_localizer["Front"].Value
+                                    
+                                </h2>
                             </div>
 
                         </div>
@@ -88,69 +126,99 @@
                             <li class="column-item">
                                 <label class="Full">
                                     <input type="checkbox" name="Front_B_Rubber" class="support-icon" value="true" @(Model.Id > 0 && Model.Front_B_Rubber.HasValue && Model.Front_B_Rubber.Value ? "checked" : "") />
-                                    <span class="value">B.Rubber</span>
+                                    <span class="value">
+                                        @_localizer["B.Rubber"].Value
+                                        
+                                    </span>
 
                                 </label>
                             </li>
                             <li class="column-item">
                                 <label class="Full">
                                     <input type="checkbox" name="Front_B_Reinforcement" value="true" class="support-icon" @(Model.Id > 0 && Model.Front_B_Reinforcement.HasValue && Model.Front_B_Reinforcement.Value ? "checked" : "") />
-                                    <span class="value">B.Reinforcement</span>
+                                    <span class="value">
+                                        @_localizer["B.Reinforcement"].Value
+                                        
+                                    </span>
 
                                 </label>
                             </li>
                             <li class="column-item">
                                 <label class="Full">
                                     <input type="checkbox" name="Front_B_Guard" value="true" class="support-icon" @(Model.Id > 0 && Model.Front_B_Guard.HasValue && Model.Front_B_Guard.Value ? "checked" : "") />
-                                    <span class="value">B.Guard</span>
+                                    <span class="value">
+                                        @_localizer["B.Guard"].Value
+                                        
+                                    </span>
 
                                 </label>
                             </li>
                             <li class="column-item">
                                 <label class="Full">
                                     <input type="checkbox" name="Front_H_Panel" value="true" class="support-icon" @(Model.Id > 0 && Model.Front_H_Panel.HasValue && Model.Front_H_Panel.Value ? "checked" : "") />
-                                    <span class="value">H.Panel</span>
+                                    <span class="value">
+                                        @_localizer["H.Panel"].Value
+                                        
+                                    </span>
                                 </label>
                             </li>
                             <li class="column-item">
                                 <label class="Full">
                                     <input type="checkbox" name="Front_R_Panel" value="true" class="support-icon" @(Model.Id > 0 && Model.Front_R_Panel.HasValue && Model.Front_R_Panel.Value ? "checked" : "") />
-                                    <span class="value">R.Panel</span>
+                                    <span class="value">
+                                        @_localizer["R.Panel"].Value
+                                        
+                                    </span>
 
                                 </label>
                             </li>
                             <li class="column-item">
                                 <label class="Full">
                                     <input type="checkbox" name="Front_Grill" value="true" class="support-icon" @(Model.Id > 0 && Model.Front_Grill.HasValue && Model.Front_Grill.Value ? "checked" : "") />
-                                    <span class="value">Grill</span>
+                                    <span class="value">
+                                        @_localizer["Grill"].Value
+                                        
+                                    </span>
 
                                 </label>
                             </li>
                             <li class="column-item">
                                 <label class="Full">
                                     <input type="checkbox" name="Front_H_Light" value="true" class="support-icon" @(Model.Id > 0 && Model.Front_H_Light.HasValue && Model.Front_H_Light.Value ? "checked" : "") />
-                                    <span class="value">H.Light</span>
+                                    <span class="value">
+                                        @_localizer["H.Light"].Value
+                                        
+                                    </span>
 
                                 </label>
                             </li>
                             <li class="column-item">
                                 <label class="Full">
                                     <input type="checkbox" name="Front_IndicatorLight" value="true" class="support-icon" @(Model.Id > 0 && Model.Front_IndicatorLight.HasValue && Model.Front_IndicatorLight.Value ? "checked" : "") />
-                                    <span class="value">Indicator Light</span>
+                                    <span class="value">
+                                        @_localizer["IndicatorLight"].Value
+                                        
+                                    </span>
 
                                 </label>
                             </li>
                             <li class="column-item">
                                 <label class="Full">
                                     <input type="checkbox" name="Front_E_HoobLock" value="true" class="support-icon" @(Model.Id > 0 && Model.Front_E_HoobLock.HasValue && Model.Front_E_HoobLock.Value ? "checked" : "") />
-                                    <span class="value">E.Hoob Lock</span>
+                                    <span class="value">
+                                        @_localizer["E.HoobLock"].Value
+                                        
+                                    </span>
 
                                 </label>
                             </li>
                             <li class="column-item">
                                 <label class="Full">
                                     <input type="checkbox" name="Front_WindShield" value="true" class="support-icon" @(Model.Id > 0 && Model.Front_WindShield.HasValue && Model.Front_WindShield.Value ? "checked" : "") />
-                                    <span class="value">Wind Shield</span>
+                                    <span class="value">
+                                        @_localizer["WindShield"].Value
+                                        
+                                    </span>
 
                                 </label>
                             </li>
@@ -159,61 +227,67 @@
                             <li class="column-item">
                                 <label class="Full">
                                     <input type="checkbox" name="Front_Wipers" value="true" class="support-icon" @(Model.Id > 0 && Model.Front_Wipers.HasValue && Model.Front_Wipers.Value ? "checked" : "") />
-                                    <span class="value">Wipers</span>
+                                    <span class="value">
+                                        @_localizer["Wipers"].Value
+                                        
+                                    </span>
                                 </label>
                             </li>
                             <li class="column-item">
                                 <label class="Full">
                                     <input type="checkbox" name="Front_W_S_Rubber" value="true" class="support-icon" @(Model.Id > 0 && Model.Front_W_S_Rubber.HasValue && Model.Front_W_S_Rubber.Value ? "checked" : "") />
-                                    <span class="value">W.S. Rubber </span>
+                                    <span class="value">
+                                        @_localizer["W.S.Rubber"].Value
+                                        
+                                    </span>
 
                                 </label>
                             </li>
                             <li class="column-item">
                                 <label class="Full">
                                     <input type="checkbox" name="Front_RightTire" value="true" class="support-icon" @(Model.Id > 0 && Model.Front_RightTire.HasValue && Model.Front_RightTire.Value ? "checked" : "") />
-                                    <span class="value">Right Tire</span>
+                                    <span class="value">@_localizer["RightTire"].Value </span>
 
                                 </label>
                             </li>
                             <li class="column-item">
                                 <label class="Full">
                                     <input type="checkbox" name="Front_LeftTire" value="true" class="support-icon" @(Model.Id > 0 && Model.Front_LeftTire.HasValue && Model.Front_LeftTire.Value ? "checked" : "") />
-                                    <span class="value">Left Tire</span>
+                                    <span class="value">@_localizer["LeftTire"].Value </span>
                                 </label>
                             </li>
                             <li class="column-item">
                                 <label class="Full">
                                     <input type="checkbox" name="Front_RightRim" value="true" class="support-icon" @(Model.Id > 0 && Model.Front_RightRim.HasValue && Model.Front_RightRim.Value ? "checked" : "") />
-                                    <span class="value">Right Rim</span>
+                                    <span class="value">@_localizer["RightRim"].Value </span>
 
                                 </label>
                             </li>
                             <li class="column-item">
                                 <label class="Full">
                                     <input type="checkbox" name="Front_LeftRim" value="true" class="support-icon" @(Model.Id > 0 && Model.Front_LeftRim.HasValue && Model.Front_LeftRim.Value ? "checked" : "") />
-                                    <span class="value">Left Rim</span>
+                                    <span class="value">@_localizer["LeftRim"].Value </span>
 
                                 </label>
                             </li>
                             <li class="column-item">
                                 <label class="Full">
                                     <input type="checkbox" name="Front_RightWheelCaps" value="true" class="support-icon" @(Model.Id > 0 && Model.Front_RightWheelCaps.HasValue && Model.Front_RightWheelCaps.Value ? "checked" : "") />
-                                    <span class="value">Right Wheel Caps</span>
+                                    <span class="value">@_localizer["RightWheelCaps"].Value </span>
 
                                 </label>
                             </li>
                             <li class="column-item">
                                 <label class="Full">
                                     <input type="checkbox" name="Front_LeftWheelCaps" value="true" class="support-icon" @(Model.Id > 0 && Model.Front_LeftWheelCaps.HasValue && Model.Front_LeftWheelCaps.Value ? "checked" : "") />
-                                    <span class="value">Left Wheel Caps</span>
+                                    <span class="value">@_localizer["LeftWheelCaps"].Value </span>
 
                                 </label>
                             </li>
                             <li class="column-item">
                                 <label class="Full">
                                     <input type="checkbox" name="Front_Others" value="true" class="support-icon" @(Model.Id > 0 && Model.Front_Others.HasValue && Model.Front_Others.Value ? "checked" : "") />
-                                    <span class="value">Others</span>
+                                    <span class="value">@_localizer["Others"].Value </span>
 
                                 </label>
                             </li>
@@ -231,7 +305,7 @@
                         <div class="accordion-heaing-content">
                             <div class="heading-wrap">
                                 <input type="checkbox" class="support-icon" />
-                                <h2 class="heading">Rear</h2>
+                                <h2 class="heading">@_localizer["Rear"].Value </h2>
                             </div>
 
                         </div>
@@ -241,68 +315,68 @@
                             <li class="column-item">
                                 <label class="Full">
                                     <input type="checkbox" name="Rear_B_Rubber" value="true" class="support-icon" @(Model.Id > 0 && Model.Rear_B_Rubber.HasValue && Model.Rear_B_Rubber.Value ? "checked" : "") />
-                                    <span class="value">B.Rubber</span>
+                                    <span class="value">@_localizer["B.Rubber"].Value </span>
                                 </label>
                             </li>
                             <li class="column-item">
                                 <label class="Full">
                                     <input type="checkbox" name="Rear_B_Reinforcement" value="true" class="support-icon" @(Model.Id > 0 && Model.Rear_B_Reinforcement.HasValue && Model.Rear_B_Reinforcement.Value ? "checked" : "") />
-                                    <span class="value">B.Reinforcement</span>
+                                    <span class="value">@_localizer["B.Reinforcement"].Value </span>
 
                                 </label>
                             </li>
                             <li class="column-item">
                                 <label class="Full">
                                     <input type="checkbox" name="Rear_Lamps" value="true" class="support-icon" @(Model.Id > 0 && Model.Rear_Lamps.HasValue && Model.Rear_Lamps.Value ? "checked" : "") />
-                                    <span class="value">Lamps</span>
+                                    <span class="value">@_localizer["Lamps"].Value </span>
 
                                 </label>
                             </li>
                             <li class="column-item">
                                 <label class="Full">
                                     <input type="checkbox" name="Rear_Truck" value="true" class="support-icon" @(Model.Id > 0 && Model.Rear_Truck.HasValue && Model.Rear_Truck.Value ? "checked" : "") />
-                                    <span class="value">Truck</span>
+                                    <span class="value">@_localizer["Truck"].Value </span>
                                 </label>
                             </li>
                             <li class="column-item">
                                 <label class="Full">
                                     <input type="checkbox" name="Rear_Lid" value="true" class="support-icon" @(Model.Id > 0 && Model.Rear_Lid.HasValue && Model.Rear_Lid.Value ? "checked" : "") />
-                                    <span class="value">Lid</span>
+                                    <span class="value">@_localizer["Lid"].Value </span>
 
                                 </label>
                             </li>
                             <li class="column-item">
                                 <label class="Full">
                                     <input type="checkbox" name="Rear_Glass" value="true" class="support-icon" @(Model.Id > 0 && Model.Rear_Glass.HasValue && Model.Rear_Glass.Value ? "checked" : "") />
-                                    <span class="value">Glass</span>
+                                    <span class="value">@_localizer["Glass"].Value </span>
 
                                 </label>
                             </li>
                             <li class="column-item">
                                 <label class="Full">
                                     <input type="checkbox" name="Rear_Roof" value="true" class="support-icon" @(Model.Id > 0 && Model.Rear_Roof.HasValue && Model.Rear_Roof.Value ? "checked" : "") />
-                                    <span class="value">Roof</span>
+                                    <span class="value">@_localizer["Roof"].Value </span>
 
                                 </label>
                             </li>
                             <li class="column-item">
                                 <label class="Full">
                                     <input type="checkbox" name="Rear_R_Window" value="true" class="support-icon" @(Model.Id > 0 && Model.Rear_R_Window.HasValue && Model.Rear_R_Window.Value ? "checked" : "") />
-                                    <span class="value">R.Window</span>
+                                    <span class="value">@_localizer["R.Window"].Value </span>
 
                                 </label>
                             </li>
                             <li class="column-item">
                                 <label class="Full">
                                     <input type="checkbox" name="Rear_R_Rubber" value="true" class="support-icon" @(Model.Id > 0 && Model.Rear_R_Rubber.HasValue && Model.Rear_R_Rubber.Value ? "checked" : "") />
-                                    <span class="value">R.Rubber</span>
+                                    <span class="value">@_localizer["R.Rubber"].Value </span>
 
                                 </label>
                             </li>
                             <li class="column-item">
                                 <label class="Full">
                                     <input type="checkbox" name="Rear_B_Guard" value="true" class="support-icon" @(Model.Id > 0 && Model.Rear_B_Guard.HasValue && Model.Rear_B_Guard.Value ? "checked" : "") />
-                                    <span class="value">B.Guard</span>
+                                    <span class="value"> @_localizer["B.Guard"].Value </span>
 
                                 </label>
                             </li>
@@ -311,54 +385,54 @@
                             <li class="column-item">
                                 <label class="Full">
                                     <input type="checkbox" name="Rear_Others" value="true" class="support-icon" @(Model.Id > 0 && Model.Rear_Others.HasValue && Model.Rear_Others.Value ? "checked" : "") />
-                                    <span class="value">Others</span>
+                                    <span class="value">@_localizer["Others"].Value </span>
                                 </label>
                             </li>
                             <li class="column-item">
                                 <label class="Full">
                                     <input type="checkbox" name="Rear_W_S_Rubber" value="true" class="support-icon" @(Model.Id > 0 && Model.Rear_W_S_Rubber.HasValue && Model.Rear_W_S_Rubber.Value ? "checked" : "") />
-                                    <span class="value">W.S. Rubber </span>
+                                    <span class="value">@_localizer["W.S.Rubber"].Value  </span>
 
                                 </label>
                             </li>
                             <li class="column-item">
                                 <label class="Full">
                                     <input type="checkbox" name="Rear_RightTire" value="true" class="support-icon" @(Model.Id > 0 && Model.Rear_RightTire.HasValue && Model.Rear_RightTire.Value ? "checked" : "") />
-                                    <span class="value">Right Tire</span>
+                                    <span class="value">@_localizer["RightTire"].Value </span>
 
                                 </label>
                             </li>
                             <li class="column-item">
                                 <label class="Full">
                                     <input type="checkbox" name="Rear_LeftTire" value="true" class="support-icon" @(Model.Id > 0 && Model.Rear_LeftTire.HasValue && Model.Rear_LeftTire.Value ? "checked" : "") />
-                                    <span class="value">Left Tire</span>
+                                    <span class="value">@_localizer["LeftTire"].Value </span>
                                 </label>
                             </li>
                             <li class="column-item">
                                 <label class="Full">
                                     <input type="checkbox" name="Rear_RightRim" value="true" class="support-icon" @(Model.Id > 0 && Model.Rear_RightRim.HasValue && Model.Rear_RightRim.Value ? "checked" : "") />
-                                    <span class="value">Right Rim</span>
+                                    <span class="value">@_localizer["RightRim"].Value </span>
 
                                 </label>
                             </li>
                             <li class="column-item">
                                 <label class="Full">
                                     <input type="checkbox" name="Rear_LeftRim" value="true" class="support-icon" @(Model.Id > 0 && Model.Rear_LeftRim.HasValue && Model.Rear_LeftRim.Value ? "checked" : "") />
-                                    <span class="value">Left Rim</span>
+                                    <span class="value">@_localizer["LeftRim"].Value </span>
 
                                 </label>
                             </li>
                             <li class="column-item">
                                 <label class="Full">
                                     <input type="checkbox" name="Rear_RightWheelCaps" value="true" class="support-icon" @(Model.Id > 0 && Model.Rear_RightWheelCaps.HasValue && Model.Rear_RightWheelCaps.Value ? "checked" : "") />
-                                    <span class="value">Right Wheel Caps</span>
+                                    <span class="value">@_localizer["RightWheelCaps"].Value </span>
 
                                 </label>
                             </li>
                             <li class="column-item">
                                 <label class="Full">
                                     <input type="checkbox" name="Rear_LeftWheelCaps" value="true" class="support-icon" @(Model.Id > 0 && Model.Rear_LeftWheelCaps.HasValue && Model.Rear_LeftWheelCaps.Value ? "checked" : "") />
-                                    <span class="value">Left Wheel Caps</span>
+                                    <span class="value">@_localizer["LeftWheelCaps"].Value </span>
 
                                 </label>
                             </li>
@@ -379,7 +453,7 @@
                         <div class="accordion-heaing-content">
                             <div class="heading-wrap">
                                 <input type="checkbox" class="support-icon" />
-                                <h2 class="heading">Interior</h2>
+                                <h2 class="heading">@_localizer["Interior"].Value  </h2>
                             </div>
 
                         </div>
@@ -389,54 +463,54 @@
                             <li class="column-item">
                                 <label class="Full">
                                     <input type="checkbox" name="Interior_DashBoard" value="true" class="support-icon" @(Model.Id > 0 && Model.Interior_DashBoard.HasValue && Model.Interior_DashBoard.Value ? "checked" : "") />
-                                    <span class="value">Dash Board</span>
+                                    <span class="value">@_localizer["DashBoard"].Value </span>
                                 </label>
                             </li>
                             <li class="column-item">
                                 <label class="Full">
                                     <input type="checkbox" name="Interior_AirBag" value="true" class="support-icon" @(Model.Id > 0 && Model.Interior_AirBag.HasValue && Model.Interior_AirBag.Value ? "checked" : "") />
-                                    <span class="value">Air Bag</span>
+                                    <span class="value">@_localizer["AirBag"].Value </span>
 
                                 </label>
                             </li>
                             <li class="column-item">
                                 <label class="Full">
                                     <input type="checkbox" name="Interior_R_C_Antil" value="true" class="support-icon" @(Model.Id > 0 && Model.Interior_R_C_Antil.HasValue && Model.Interior_R_C_Antil.Value ? "checked" : "") />
-                                    <span class="value">R/C-Antil</span>
+                                    <span class="value">@_localizer["R/C-Antil"].Value </span>
                                 </label>
                             </li>
                             <li class="column-item">
                                 <label class="Full">
                                     <input type="checkbox" name="Interior_F_Seats" value="true" class="support-icon" @(Model.Id > 0 && Model.Interior_F_Seats.HasValue && Model.Interior_F_Seats.Value ? "checked" : "") />
-                                    <span class="value">F.Seats</span>
+                                    <span class="value">@_localizer["F.Seats"].Value  </span>
 
                                 </label>
                             </li>
                             <li class="column-item">
                                 <label class="Full">
                                     <input type="checkbox" name="Interior_R_Seats" value="true" class="support-icon" @(Model.Id > 0 && Model.Interior_R_Seats.HasValue && Model.Interior_R_Seats.Value ? "checked" : "") />
-                                    <span class="value">R.Seats</span>
+                                    <span class="value">@_localizer["R.Seats"].Value </span>
 
                                 </label>
                             </li>
                             <li class="column-item">
                                 <label class="Full">
                                     <input type="checkbox" name="Interior_FloorMats" value="true" class="support-icon" @(Model.Id > 0 && Model.Interior_FloorMats.HasValue && Model.Interior_FloorMats.Value ? "checked" : "") />
-                                    <span class="value">Floor Mats</span>
+                                    <span class="value">@_localizer["FloorMats"].Value </span>
 
                                 </label>
                             </li>
                             <li class="column-item">
                                 <label class="Full">
                                     <input type="checkbox" name="Interior_DoorTrim" value="true" class="support-icon" @(Model.Id > 0 && Model.Interior_DoorTrim.HasValue && Model.Interior_DoorTrim.Value ? "checked" : "") />
-                                    <span class="value">Door Trim</span>
+                                    <span class="value">@_localizer["DoorTrim"].Value </span>
 
                                 </label>
                             </li>
                             <li class="column-item">
                                 <label class="Full">
                                     <input type="checkbox" name="Interior_Others" value="true" class="support-icon" @(Model.Id > 0 && Model.Interior_Others.HasValue && Model.Interior_Others.Value ? "checked" : "") />
-                                    <span class="value">Others</span>
+                                    <span class="value">@_localizer["Others"].Value </span>
 
                                 </label>
                             </li>
@@ -455,7 +529,7 @@
                         <div class="accordion-heaing-content">
                             <div class="heading-wrap">
                                 <input type="checkbox" class="support-icon" />
-                                <h2 class="heading">Engine</h2>
+                                <h2 class="heading">@_localizer["Engine"].Value </h2>
                             </div>
 
                         </div>
@@ -465,40 +539,40 @@
                             <li class="column-item">
                                 <label class="Full">
                                     <input type="checkbox" name="Engine_Engine" value="true" class="support-icon" @(Model.Id > 0 && Model.Engine_Engine.HasValue && Model.Engine_Engine.Value ? "checked" : "") />
-                                    <span class="value">Engine</span>
+                                    <span class="value">@_localizer["Engine"].Value </span>
                                 </label>
                             </li>
                             <li class="column-item">
                                 <label class="Full">
                                     <input type="checkbox" name="Engine_W_Radiator" value="true" class="support-icon" @(Model.Id > 0 && Model.Engine_W_Radiator.HasValue && Model.Engine_W_Radiator.Value ? "checked" : "") />
-                                    <span class="value">W.Radiator</span>
+                                    <span class="value">@_localizer["W.Radiator"].Value </span>
 
                                 </label>
                             </li>
                             <li class="column-item">
                                 <label class="Full">
                                     <input type="checkbox" name="Engine_A_CRadiator" value="true" class="support-icon" @(Model.Id > 0 && Model.Engine_A_CRadiator.HasValue && Model.Engine_A_CRadiator.Value ? "checked" : "") />
-                                    <span class="value">A/C Radiator</span>
+                                    <span class="value">@_localizer["A/C Radiator"].Value </span>
 
                                 </label>
                             </li>
                             <li class="column-item">
                                 <label class="Full">
                                     <input type="checkbox" name="Engine_Fan" value="true" class="support-icon" @(Model.Id > 0 && Model.Engine_Fan.HasValue && Model.Engine_Fan.Value ? "checked" : "") />
-                                    <span class="value">Fan</span>
+                                    <span class="value">@_localizer["Fan"].Value </span>
                                 </label>
                             </li>
                             <li class="column-item">
                                 <label class="Full">
                                     <input type="checkbox" name="Engine_Battery" value="true" class="support-icon" @(Model.Id > 0 && Model.Engine_Battery.HasValue && Model.Engine_Battery.Value ? "checked" : "") />
-                                    <span class="value">Battery</span>
+                                    <span class="value">@_localizer["Battery"].Value </span>
 
                                 </label>
                             </li>
                             <li class="column-item">
                                 <label class="Full">
                                     <input type="checkbox" name="Engine_Others" value="true" class="support-icon" @(Model.Id > 0 && Model.Engine_Others.HasValue && Model.Engine_Others.Value ? "checked" : "") />
-                                    <span class="value">Others</span>
+                                    <span class="value">@_localizer["Others"].Value </span>
 
                                 </label>
                             </li>
@@ -517,7 +591,7 @@
                         <div class="accordion-heaing-content">
                             <div class="heading-wrap">
                                 <input type="checkbox" class="support-icon" />
-                                <h2 class="heading">Underneath</h2>
+                                <h2 class="heading">@_localizer["Underneath"].Value </h2>
                             </div>
 
                         </div>
@@ -527,40 +601,40 @@
                             <li class="column-item">
                                 <label class="Full">
                                     <input type="checkbox" name="Underneath_LeftSteeringJoint" value="true" class="support-icon" @(Model.Id > 0 && Model.Underneath_LeftSteeringJoint.HasValue && Model.Underneath_LeftSteeringJoint.Value ? "checked" : "") />
-                                    <span class="value">Left Steering Joint</span>
+                                    <span class="value">@_localizer["LeftSteeringJoint"].Value </span>
                                 </label>
                             </li>
                             <li class="column-item">
                                 <label class="Full">
                                     <input type="checkbox" name="Underneath_RightSteeringJoint" value="true" class="support-icon" @(Model.Id > 0 && Model.Underneath_RightSteeringJoint.HasValue && Model.Underneath_RightSteeringJoint.Value ? "checked" : "") />
-                                    <span class="value">Right Steering Joint</span>
+                                    <span class="value">@_localizer["RightSteeringJoint"].Value </span>
 
                                 </label>
                             </li>
                             <li class="column-item">
                                 <label class="Full">
                                     <input type="checkbox" name="Underneath_SteeringBox" value="true" v class="support-icon" @(Model.Id > 0 && Model.Underneath_SteeringBox.HasValue && Model.Underneath_SteeringBox.Value ? "checked" : "") />
-                                    <span class="value">Steering Box</span>
+                                    <span class="value">@_localizer["SteeringBox"].Value </span>
 
                                 </label>
                             </li>
                             <li class="column-item">
                                 <label class="Full">
                                     <input type="checkbox" name="Underneath_LeftSuspension" value="true" class="support-icon" @(Model.Id > 0 && Model.Underneath_LeftSuspension.HasValue && Model.Underneath_LeftSuspension.Value ? "checked" : "") />
-                                    <span class="value">Left Suspension</span>
+                                    <span class="value">@_localizer["LeftSuspension"].Value </span>
                                 </label>
                             </li>
                             <li class="column-item">
                                 <label class="Full">
                                     <input type="checkbox" name="Underneath_RightSuspension" value="true" class="support-icon" @(Model.Id > 0 && Model.Underneath_RightSuspension.HasValue && Model.Underneath_RightSuspension.Value ? "checked" : "") />
-                                    <span class="value">Right Suspension</span>
+                                    <span class="value">@_localizer["RightSuspension"].Value </span>
 
                                 </label>
                             </li>
                             <li class="column-item">
                                 <label class="Full">
                                     <input type="checkbox" name="Underneath_LeftShockObserver" value="true" class="support-icon" @(Model.Id > 0 && Model.Underneath_LeftShockObserver.HasValue && Model.Underneath_LeftShockObserver.Value ? "checked" : "") />
-                                    <span class="value">Left Shock Observer</span>
+                                    <span class="value">@_localizer["LeftShockObserver"].Value </span>
 
                                 </label>
                             </li>
@@ -570,40 +644,40 @@
                             <li class="column-item">
                                 <label class="Full">
                                     <input type="checkbox" name="Underneath_RightShockObserver" value="true" class="support-icon" />
-                                    <span class="value">Right Shock Observer</span>
+                                    <span class="value">@_localizer["RightShockObserver"].Value </span>
                                 </label>
                             </li>
                             <li class="column-item">
                                 <label class="Full">
                                     <input type="checkbox" name="Underneath_Muffler" value="true" class="support-icon" @(Model.Id > 0 && Model.Underneath_Muffler.HasValue && Model.Underneath_Muffler.Value ? "checked" : "") />
-                                    <span class="value">Muffler</span>
+                                    <span class="value">@_localizer["Muffler"].Value </span>
 
                                 </label>
                             </li>
                             <li class="column-item">
                                 <label class="Full">
                                     <input type="checkbox" name="Underneath_Pro_Shaft" value="true" class="support-icon" @(Model.Id > 0 && Model.Underneath_Pro_Shaft.HasValue && Model.Underneath_Pro_Shaft.Value ? "checked" : "") />
-                                    <span class="value">Pro-Shaft</span>
+                                    <span class="value">@_localizer["Pro-Shaft"].Value </span>
 
                                 </label>
                             </li>
                             <li class="column-item">
                                 <label class="Full">
                                     <input type="checkbox" name="Underneath_E_Mounting" value="true" class="support-icon" @(Model.Id > 0 && Model.Underneath_E_Mounting.HasValue && Model.Underneath_E_Mounting.Value ? "checked" : "") />
-                                    <span class="value">E.Mounting</span>
+                                    <span class="value">@_localizer["E.Mounting"].Value </span>
                                 </label>
                             </li>
                             <li class="column-item">
                                 <label class="Full">
                                     <input type="checkbox" name="Underneath_Chassis" value="true" class="support-icon" @(Model.Id > 0 && Model.Underneath_Chassis.HasValue && Model.Underneath_Chassis.Value ? "checked" : "") />
-                                    <span class="value">Chassis</span>
+                                    <span class="value">@_localizer["Chassis"].Value </span>
 
                                 </label>
                             </li>
                             <li class="column-item">
                                 <label class="Full">
                                     <input type="checkbox" name="Underneath_Others" value="true" class="support-icon" @(Model.Id > 0 && Model.Underneath_Others.HasValue && Model.Underneath_Others.Value ? "checked" : "") />
-                                    <span class="value">Others</span>
+                                    <span class="value">@_localizer["Others"].Value </span>
 
                                 </label>
                             </li>
@@ -621,7 +695,7 @@
                         <div class="accordion-heaing-content">
                             <div class="heading-wrap">
                                 <input type="checkbox" class="support-icon" />
-                                <h2 class="heading">Sides</h2>
+                                <h2 class="heading">@_localizer["Sides"].Value  </h2>
                             </div>
 
                         </div>
@@ -631,40 +705,40 @@
                             <li class="column-item">
                                 <label class="Full">
                                     <input type="checkbox" name="Sides_F_Fender" value="true" class="support-icon" @(Model.Id > 0 && Model.Sides_F_Fender.HasValue && Model.Sides_F_Fender.Value ? "checked" : "") />
-                                    <span class="value">F.Fender</span>
+                                    <span class="value">@_localizer["F.Fender"].Value </span>
                                 </label>
                             </li>
                             <li class="column-item">
                                 <label class="Full">
                                     <input type="checkbox" name="Sides_R_Fender" value="true" class="support-icon" @(Model.Id > 0 && Model.Sides_R_Fender.HasValue && Model.Sides_R_Fender.Value ? "checked" : "") />
-                                    <span class="value">R.Fender</span>
+                                    <span class="value">@_localizer["R.Fender"].Value </span>
 
                                 </label>
                             </li>
                             <li class="column-item">
                                 <label class="Full">
                                     <input type="checkbox" name="Sides_F_Door" value="true" class="support-icon" @(Model.Id > 0 && Model.Sides_F_Door.HasValue && Model.Sides_F_Door.Value ? "checked" : "") />
-                                    <span class="value">F.Door</span>
+                                    <span class="value">@_localizer["F.Door"].Value </span>
 
                                 </label>
                             </li>
                             <li class="column-item">
                                 <label class="Full">
                                     <input type="checkbox" name="Sides_R_Door" value="true" class="support-icon" @(Model.Id > 0 && Model.Sides_R_Door.HasValue && Model.Sides_R_Door.Value ? "checked" : "") />
-                                    <span class="value">R.Door</span>
+                                    <span class="value">@_localizer["R.Door"].Value </span>
                                 </label>
                             </li>
                             <li class="column-item">
                                 <label class="Full">
                                     <input type="checkbox" name="Sides_CentralPillar" value="true" class="support-icon" @(Model.Id > 0 && Model.Sides_CentralPillar.HasValue && Model.Sides_CentralPillar.Value ? "checked" : "") />
-                                    <span class="value">Central Pillar</span>
+                                    <span class="value">@_localizer["CentralPillar"].Value </span>
 
                                 </label>
                             </li>
                             <li class="column-item">
                                 <label class="Full">
                                     <input type="checkbox" name="Sides_RunningBoard" value="true" class="support-icon" @(Model.Id > 0 && Model.Sides_RunningBoard.HasValue && Model.Sides_RunningBoard.Value ? "checked" : "") />
-                                    <span class="value">Running Board</span>
+                                    <span class="value">@_localizer["RunningBoard"].Value  </span>
 
                                 </label>
                             </li>
@@ -674,34 +748,34 @@
                             <li class="column-item">
                                 <label class="Full">
                                     <input type="checkbox" name="Sides_F_W_Glass" value="true" class="support-icon" @(Model.Id > 0 && Model.Sides_F_W_Glass.HasValue && Model.Sides_F_W_Glass.Value ? "checked" : "") />
-                                    <span class="value">F.W. Glass</span>
+                                    <span class="value">@_localizer["F.W. Glass"].Value </span>
                                 </label>
                             </li>
                             <li class="column-item">
                                 <label class="Full">
                                     <input type="checkbox" name="Sides_R_W_Glass" value="true" class="support-icon" @(Model.Id > 0 && Model.Sides_R_W_Glass.HasValue && Model.Sides_R_W_Glass.Value ? "checked" : "") />
-                                    <span class="value">R.W. Glass</span>
+                                    <span class="value">@_localizer["R.W. Glass"].Value </span>
 
                                 </label>
                             </li>
                             <li class="column-item">
                                 <label class="Full">
                                     <input type="checkbox" name="Sides_LeftMirror" value="true" class="support-icon" @(Model.Id > 0 && Model.Sides_LeftMirror.HasValue && Model.Sides_LeftMirror.Value ? "checked" : "") />
-                                    <span class="value">Left Mirror</span>
+                                    <span class="value">@_localizer["LeftMirror"].Value </span>
 
                                 </label>
                             </li>
                             <li class="column-item">
                                 <label class="Full">
                                     <input type="checkbox" name="Sides_RightMirror" value="true" class="support-icon" @(Model.Id > 0 && Model.Sides_RightMirror.HasValue && Model.Sides_RightMirror.Value ? "checked" : "") />
-                                    <span class="value">Right Mirror</span>
+                                    <span class="value">@_localizer["RightMirror"].Value  </span>
                                 </label>
                             </li>
 
                             <li class="column-item">
                                 <label class="Full">
                                     <input type="checkbox" name="Sides_Others" value="true" class="support-icon" @(Model.Id > 0 && Model.Sides_Others.HasValue && Model.Sides_Others.Value ? "checked" : "") />
-                                    <span class="value">Others</span>
+                                    <span class="value">@_localizer["Others"].Value </span>
 
                                 </label>
                             </li>
@@ -724,7 +798,8 @@
 @if (Model.Id==0)
                 {
                       <button asp-action="InsertSurveyorMissing" type="submit" class="button button-primary">
-                    Save
+                        @_localizer["Save"].Value
+                    
                 </button> 
                 }
              

@@ -26,7 +26,10 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AICC Motor Claims Login</title>
+    <title>
+        @_localizer["AICCMotorClaimsLogin"].Value
+        
+    </title>
 
 
     <link href="~/assets/Content/Login/Login.css" rel="stylesheet" />
@@ -59,7 +62,7 @@
                 </div>
                 <div class="language-popup-mobile" style="margin-right:333px">
                     <div class="lang cursor-pointer" onclick="handleLanguagePopup()">
-                        <p>EN</p>
+                        <p>@_localizer["EN"].Value </p>
                         <img src="~/assets/icons/world.svg" alt="world" class="nav-lang-icon" />
                         <img src="~/assets/icons/chevron-down.svg" class="nav-lang-icon" alt="">
                         @{
@@ -123,9 +126,18 @@
                         <p>Copyright © @Context.Session.GetString("CopyRight") @DateTime.Now.Year , all rights reserved</p>
                     </div>
                     <div class="footer-link" style="display:flex">
-                        <p class="footer-link-text">Terms Conditions</p>
-                        <p class="footer-link-text">Privacy Policy</p>
-                        <p class="footer-link-text">Cookie Policy</p>
+                        <p class="footer-link-text">
+                            @_localizer["TermsConditions"].Value
+                            
+                        </p>
+                        <p class="footer-link-text">
+                            @_localizer["PrivacyPolicy"].Value
+                            
+                        </p>
+                        <p class="footer-link-text">
+                            @_localizer["CookiePolicy"].Value
+                            
+                        </p>
                     </div>
                 </div>
 

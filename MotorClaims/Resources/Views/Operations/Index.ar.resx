@@ -138,9 +138,6 @@
   <data name="ExpiryDate" xml:space="preserve">
     <value>تاريخ الانتهاء</value>
   </data>
-  <data name="HelpersDate.FormatDateNoTime(policy.policy.PolicyExpiryDate)" xml:space="preserve">
-    <value>تاريخ التنسيق لا يوجد وقت تاريخ انتهاء الصلاحية</value>
-  </data>
   <data name="Make" xml:space="preserve">
     <value>صنع</value>
   </data>

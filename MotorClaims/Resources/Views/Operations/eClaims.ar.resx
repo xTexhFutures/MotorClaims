@@ -144,14 +144,8 @@
   <data name="OwnerNationalID" xml:space="preserve">
     <value>الرقم الوطني للمالك</value>
   </data>
-  <data name="PlateNumber:vehicle.Vehicle.PlateNo" xml:space="preserve">
-    <value>رقم لوحة المركبة</value>
-  </data>
-  <data name="policy.policy.PolicyNumber" xml:space="preserve">
-    <value>رقم السياسة</value>
-  </data>
   <data name="PolicyNo" xml:space="preserve">
-    <value>لا توجد سياسة</value>
+    <value>رقم الوثيقة</value>
   </data>
   <data name="Reference" xml:space="preserve">
     <value>مرجع</value>
@@ -179,9 +173,6 @@
   </data>
   <data name="Transfered" xml:space="preserve">
     <value>منقول </value>
-  </data>
-  <data name="vehicle.Vehicle.ManufactureYear" xml:space="preserve">
-    <value>سنة تصنيع المركبات</value>
   </data>
   <data name="YearofManufacturing" xml:space="preserve">
     <value>سنة التصنيع</value>

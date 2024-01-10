@@ -1,4 +1,12 @@
-﻿@using CORE.DTOs.MotorClaim;
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.AspNetCore.Builder
+@using Microsoft.AspNetCore.Localization
+@using Microsoft.Extensions.Options
+@using Microsoft.AspNetCore.Http.Features
+@using System.Globalization
+
+@inject IViewLocalizer _localizer
+@using CORE.DTOs.MotorClaim;
 @using Newtonsoft.Json;
 
 @{
@@ -22,15 +30,42 @@
     <table class="universal-table">
         <tr>
             <!-- <th>#</th> -->
-            <th>Created By</th>
-            <th>Creation Date</th>
-            <th>Estimated SP Amount</th>
-            <th>Estimated Labour Amount</th>
-            <th>Estimated Repair Days</th>
-            <th>Spare Part Amount</th>
-            <th>Labour Amount</th>
-            <th>Note</th>
-            <th>Missing</th>
+                <th>
+                    @_localizer["CreatedBy"].Value
+                    
+                </th>
+                <th>
+                    @_localizer["CreationDate"].Value
+                    
+                </th>
+                <th>
+                    @_localizer["EstimatedSPAmount"].Value
+                    
+                </th>
+                <th>
+                    @_localizer["EstimatedLabourAmount"].Value
+                    
+                </th>
+                <th>
+                    @_localizer["EstimatedRepairDays"].Value
+                    
+                </th>
+                <th>
+                    @_localizer["SparePartAmount"].Value
+                    
+                </th>
+                <th>
+                    @_localizer["LabourAmount"].Value
+                    
+                </th>
+                <th>
+                    @_localizer["Note"].Value
+                    
+                </th>
+                <th>
+                    @_localizer["Missing"].Value
+                    
+                </th>
 
         </tr>
 

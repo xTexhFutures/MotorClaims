@@ -1,4 +1,12 @@
-﻿@using CORE.DTOs.Authentications;
+﻿
+  @using Microsoft.AspNetCore.Mvc.Localization
+   @using Microsoft.AspNetCore.Builder
+   @using Microsoft.AspNetCore.Localization
+   @using Microsoft.Extensions.Options
+   @using Microsoft.AspNetCore.Http.Features
+   @using System.Globalization
+@inject IViewLocalizer _localizer
+@using CORE.DTOs.Authentications;
 @using CORE.DTOs.MotorClaim.Claims;
 @model ClaimMaster
 @{
@@ -9,7 +17,10 @@
 <div class="popup-body-wrapper">
     <div class="popup-header">
         <div class="popup-header-inner">
-            <h3 class="popup-title">Assign Claim</h3>
+            <h3 class="popup-title">
+                @_localizer["AssignClaim"].Value
+                
+            </h3>
             <div class="close-popup-icon" onclick="CloseDialogV('@DivName')">
                 <img class="close-icon" src="/assets/icons/close.svg">
             </div>
@@ -23,13 +34,19 @@
             <div class="detailed">
                 <div class="detailed-ele">
                     <div class="detailed-desc">
-                        <h4 class="title">Claim No</h4>
+                        <h4 class="title">
+                            @_localizer["ClaimNo"].Value
+                            
+                        </h4>
                         <p class="title-detail">@Model.claims.ClaimNo</p>
                     </div>
                 </div>
                 <div class="detailed-ele">
                     <div class="detailed-desc">
-                        <h4 class="title">Owner Name</h4>
+                        <h4 class="title">
+                            @_localizer["OwnerName"].Value
+                            
+                        </h4>
                         <p class="title-detail">@Model.claims.Owner</p>
                     </div>
                 </div>
@@ -38,13 +55,19 @@
                         <img src="" alt="" class="ele-icon" />
                     </div> -->
                     <div class="detailed-desc">
-                        <h4 class="title">Policy No.</h4>
+                        <h4 class="title">
+                            @_localizer["PolicyNo"].Value
+                            
+                        </h4>
                         <p class="title-detail">@Model.claims.PolicyNo</p>
                     </div>
                 </div>
                 <div class="detailed-ele">
                     <div class="detailed-desc">
-                        <h4 class="title">Assign To</h4>
+                        <h4 class="title">
+                            @_localizer["AssignTo"].Value
+                            
+                        </h4>
                         @{
                              string UserName = users.Where(p => p.Id == Model.claimants.AssignTo).FirstOrDefault().UserName;
                         }
@@ -58,13 +81,18 @@
                     <div class="tabs-wrapper">
                         <ul class="tabs-navigation-wrap">
                             <li class="tab-navigation tab-custom active" id="tabOne" onclick="selectTabs('tabOne','one') ; Validation(1)">
+
                                 <div class="tab-item-text">
-                                    Assign To Team
+                                    @_localizer["AssignToTeam"].Value
+
+                                    
                                 </div>
                             </li>
                             <li class="tab-navigation tab-custom" id="tabTwo" onclick="selectTabs('tabTwo','two'); Validation(2)">
                                 <div class="tab-item-text">
-                                    Assign To User
+                                    @_localizer["AssignToUser"].Value
+
+                                    
                                 </div>
                             </li>
 
@@ -85,7 +113,10 @@
                                                 <option value="@((int)Enums.TeamAssign.Salvage)">@Enums.TeamAssign.Salvage.ToString()</option>
 
                                             </select>
-                                            <label class="form-label non-icon" for="ddlTeamAssign">Assign To</label>
+                                            <label class="form-label non-icon" for="ddlTeamAssign">
+                                                @_localizer["AssignTo"].Value
+                                                
+                                            </label>
                                         </div>
                                     </div>
 
@@ -101,7 +132,10 @@
                                         <div class="form-input-wrapper" style="border:solid 1px">
                                             <input class="form-inputbox ui-autocomplete-input" id="txtAssignTo" autocomplete="off" name="AssignTo" type="text" >
                                             <input id="txtAssignToId" name="AssignToId" type="hidden">
-                                            <label class="form-label non-icon" for="txtAssignTo">Assign To</label>
+                                            <label class="form-label non-icon" for="txtAssignTo">
+                                                @_localizer["AssignTo"].Value
+                                                
+                                            </label>
                                         </div>
                                     </div>
 
@@ -124,7 +158,10 @@
                     onclick="CloseDialogV('@DivName')">
                 Cancel
             </button>
-            <button type="submit" class="button button-primary">Update</button>
+            <button type="submit" class="button button-primary">
+                @_localizer["Update"].Value
+                
+            </button>
         </div>
     </form>
 </div>

@@ -1,4 +1,12 @@
-﻿@using CORE.DTOs.MotorClaim.Claims;
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.AspNetCore.Builder
+@using Microsoft.AspNetCore.Localization
+@using Microsoft.Extensions.Options
+@using Microsoft.AspNetCore.Http.Features
+@using System.Globalization
+
+@inject IViewLocalizer _localizer
+@using CORE.DTOs.MotorClaim.Claims;
 @using Newtonsoft.Json;
 
 @model ClaimMaster
@@ -17,14 +25,38 @@
     <table class="universal-table">
         <tr>
             <!-- <th>#</th> -->
-            <th>Claimant Type</th>
-            <th>Claimant Name</th>
-            <th>Nature of Loss</th>
-            <th>Make</th>
-            <th>Model</th>
-            <th>Chassis</th>
-            <th>Plate No</th>
-            <th>Claimant Status</th>
+            <th>
+                @_localizer["ClaimantType"].Value
+                
+            </th>
+            <th>
+                @_localizer["ClaimantName"].Value
+                
+            </th>
+            <th>
+                @_localizer["NatureofLoss"].Value
+                
+            </th>
+            <th>
+                @_localizer["Make"].Value
+                
+            </th>
+            <th>
+                @_localizer["Model"].Value
+                
+            </th>
+            <th>
+                @_localizer["Chassis"].Value
+                
+            </th>
+            <th>
+                @_localizer["PlateNo"].Value
+                
+            </th>
+            <th>
+                @_localizer["ClaimantStatus"].Value
+                
+            </th>
 
         </tr>
 
