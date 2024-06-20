@@ -44,22 +44,29 @@
                                     <option value="@((int)MotorClaims.Models.Enums.DocumnetType.Fraud)">@MotorClaims.Models.Enums.DocumnetType.Fraud</option>
                                     <option value="@((int)MotorClaims.Models.Enums.DocumnetType.Reserve)">@MotorClaims.Models.Enums.DocumnetType.Reserve</option>
                                     <option value="@((int)MotorClaims.Models.Enums.DocumnetType.Payment)">@MotorClaims.Models.Enums.DocumnetType.Payment</option>
+                                    <option value="@((int)MotorClaims.Models.Enums.DocumnetType.Operations)">@MotorClaims.Models.Enums.DocumnetType.Operations</option>
+                                    <option value="@((int)MotorClaims.Models.Enums.DocumnetType.Surveyor)">@MotorClaims.Models.Enums.DocumnetType.Surveyor</option>
                                 </select>
           
                             </div>
                         </div>
+                      <div class="form-field-wrapper">
+                            <div class="form-input-wrapper">
+                                <input class="form-inputbox" id="txtSMSTemplateId" autocomplete="off" name="SMSTemplateId" type="text" required value="@Model.SMSTemplateId">
+                                <label class="form-label non-icon" for="txtDcumentName">@_localizer["SMSTemplate"].Value </label>
+                            </div>
+                        </div>
 
-
-                            <div class="form-field-wrapper" id="divClaimResult">
+                            <div class="form-field-wrapper" id="divClaimResult" style="display: inline-grid;">
                             <div class="form-input-wrapper" style="display: inline-block;">
 
-@{
-    bool Exist1 = ints.Contains(1);
-    bool Exist2 = ints.Contains(2);
-    bool Exist3 = ints.Contains(3);
-    bool Exist4 = ints.Contains(4);
-    bool Exist5 = ints.Contains(5);
-}
+                                    @{
+                                        bool Exist1 =ints!=null? ints.Contains(1):false;
+                                        bool Exist2 = ints!=null? ints.Contains(2):false;
+                                        bool Exist3 = ints!=null? ints.Contains(3):false;
+                                        bool Exist4 = ints!=null? ints.Contains(4):false;
+                                        bool Exist5 = ints!=null? ints.Contains(5):false;
+                                    }
                                 <span>@_localizer["Bodaly"].Value </span><input type="checkbox" value="1" name="chClaimResult" id="chClaimResult1" @(Exist1 ? "checked" : "") />
                                 <span>@_localizer["Death"].Value </span><input type="checkbox" value="2" name="chClaimResult" id="chClaimResult2" @(Exist2 ? "checked" : "") />
                                 <span>@_localizer["Vehicle"].Value </span><input type="checkbox" value="3" name="chClaimResult" id="chClaimResult3" @(Exist3 ? "checked" : "") /></br>
@@ -111,6 +118,7 @@
 <script>
     $(function () {
         $("#divClaimResult").hide();
+        $("#txtSMSTemplateId").ForceIntegerEntry();
 
         if('@Model.Id'>0 && '@Model.ModuleId'=='@((int)MotorClaims.Models.Enums.DocumnetType.Claimant)'){
    $("#divClaimResult").show();

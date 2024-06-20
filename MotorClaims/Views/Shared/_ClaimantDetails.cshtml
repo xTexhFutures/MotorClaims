@@ -1,4 +1,5 @@
-﻿@using Microsoft.AspNetCore.Mvc.Localization
+﻿@using CORE.DTOs.MotorClaim.Productions;
+@using Microsoft.AspNetCore.Mvc.Localization
 @using Microsoft.AspNetCore.Builder
 @using Microsoft.AspNetCore.Localization
 @using Microsoft.Extensions.Options
@@ -18,11 +19,12 @@
     List<LookupTable> dClaimantType = (List<LookupTable>)ViewData["ClaimantType"];
     List<LookupTable> dClaimantResult = (List<LookupTable>)ViewData["ClaimantResult"];
     List<LookupTable> dDamageType = (List<LookupTable>)ViewData["DamageType"];
+      List<VehileCovers> PremiaCovers=(List<VehileCovers>)ViewData["PremiaCovers"];
 }
 @model Claimants
 <form method="post" asp-action="InsertClaimant" asp-controller="Claims">
-    <input type="hidden" name="PolicyId" value="@policy.policy.Id" />
-    <input type="hidden" name="VehicleId" value="@vehicle.Vehicle.Id" />
+    <input type="hidden" name="PolicyId" value="@policy.policy.PolicyId" />
+    <input type="hidden" name="VehicleId" value="@vehicle.Vehicle.RiskId" />
     <input type="hidden" name="Id" value="@(Model!=null? Model.Id:0)" />
     <input type="hidden" name="ClaimId" value="@Model.ClaimId" />
     <input type="hidden" name="Serial" value="@(Model!=null? Model.Serial:0)" />
@@ -88,11 +90,18 @@
                                             <div class="vehicle-owner-grid" style="width:100%">
                                                 <div class="checkbox-wrapper-34">
                                     <span class="label">
-                                        @_localizer["IsCustomer"].Value
+                                        @_localizer["PremiaCover"].Value
                                         
                                     </span>
-                                                    <input class='tgl tgl-ios' name="IsCustomer" id="IsCustomer" type='checkbox' value="true" @(Model.IsCustomer.HasValue && Model.IsCustomer.Value ? "checked" : "")>
-                                                    <label class='tgl-btn' for='IsCustomer'></label>
+                                                 <select class="form-controlar" required name="PremiaCoverCode" id="ddlPremiaCover">
+                                                    <option value=""></option>
+                                                    @foreach (var item in PremiaCovers)
+                                                    {
+                                                        <option value="@item.CoverCode">@item.CoverCode - @item.CoverName</option>
+                                                    }
+                                                </select>
+
+                                                <input type="hidden" name="PremiaCoverName" id="txtPremiaCoverName"/>
                                                 </div>
                                             </div>
                                             <div class="form-container Full" id="najm">
@@ -165,7 +174,7 @@
                                     @_localizer["BankName"].Value
                                     
                                 </span>
-                                                <input class="form-controlar" style="text-transform:uppercase" autocomplete="off" type="text" id="txtBankName" maxlength="50" placeholder="Bank Name" name="BankName" value="@Model.BankName" />
+                                                <input class="form-controlar" style="text-transform:uppercase" autocomplete="off" type="text" id="txtBankName" maxlength="50" placeholder="Bank Name" name="BankName" value="@(Helpers.BankCode(Model.Iban))" />
                                             </div>
 
                                         </div>
@@ -419,6 +428,7 @@
         $('#txtResponsipility').val('@Model.Responsipility');
 
     }
+    $('#ddlNatureofLoss').attr('readonly',true);
     $('#txtNationalId').ForceIntegerEntry();
     $('#txtDriverNationalId').ForceIntegerEntry();
     $('#txtOwnerNationalId').ForceIntegerEntry();
@@ -426,11 +436,18 @@
     $('#txtMobileNo').ForceIntegerEntry();
     $('#txtDriverAge').ForceIntegerEntry();
     $('#txtManifacturing').ForceIntegerEntry();
-
     $('#txtDriverBirthDate').ForceDateEntry();
     $('#txtDriverLicenseExpiryDate').ForceDateEntry();
-
-
+    $('#ddlPremiaCover').val('@Model.PremiaCoverCode');
+    $("#ddlDamageType").change(function () {                              
+   if(this.value==1 || this.value==4||this.value==5||this.value==10){
+       $('#ddlNatureofLoss').attr('readonly',false);
+       $('#ddlNatureofLoss').attr('required',true);
+   }else{
+        $('#ddlNatureofLoss').attr('readonly',true);
+       $('#ddlNatureofLoss').attr('required',false);
+   }
+});
     $("#ddlOurPercent").change(function () {
         var end = this.value;
         if (end == 25 || end == 50 || end == 75) {
@@ -558,5 +575,9 @@
 //{
 //    $('#ClaimantEntry').load('/Claims/ClaimantsEntry/',{obj:Id});
 //}
+    $("#ddlPremiaCover").change(function () {
+        var end = $(this).find("option:selected").text();
+        $('#txtPremiaCoverName').val(end);
 
+    });
 </script>

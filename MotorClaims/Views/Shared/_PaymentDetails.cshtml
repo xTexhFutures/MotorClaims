@@ -1,0 +1,252 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.AspNetCore.Builder
+@using Microsoft.AspNetCore.Localization
+@using Microsoft.Extensions.Options
+@using Microsoft.AspNetCore.Http.Features
+@using System.Globalization
+
+@inject IViewLocalizer _localizer
+@using CORE.DTOs.MotorClaim.Claims;
+@using CORE.DTOs.MotorClaim.WorkFlow;
+@{
+    Layout = null;
+}
+
+<div class="basic-detail">
+    <div class="policy-header">
+        <div class="name-number-wrapper">
+            <div class="policy-name-wrapper">
+                <img src="/assets/icons/empty-file.svg" class="policy-icon" />
+                <p class="policy-name">
+                    @_localizer["PaymentDetails"].Value
+
+                </p>
+            </div>
+
+        </div>
+
+    </div>
+    <div class="policy-detail-body undefined">
+        <div class="inner-clild-wrap">
+
+    <form  method="post" enctype="multipart/form-data">
+
+
+  <input type="hidden"  name="Id" value="@Model.Id" />
+  <input type="hidden"  name="ClaimantId" value="@Model.ClaimantId" />
+  <input type="hidden"  name="ClaimId" value="@Model.ClaimId" />
+
+@*        <div class="tabs-wrapper">
+            <ul class="tabs-navigation-wrap">
+                <li class="tab-navigation tab-custom-two active" id="tabTwoOne" onclick="selectTabsTwo('tabTwoOne','one_1'); ">
+                    <div class="tab-item-text">
+                        <a href="#">@_localizer["SettlementEntry"].Value </a>
+                    </div>
+                </li>
+            </ul>
+*@
+            <div class="accordion-wrapper">
+          
+
+                <div class="accordion-item-wrapper active">
+
+                    <div class="accordion-body active" >
+                        <ul class="dates-and-conpany-wrapper">
+                            <li class="column-item">
+                                <span class="value">
+                                    @_localizer["SettlementType"].Value
+                                    
+                                </span>
+                                <div class="form-field-wrapper">
+                                    <div class="form-input-wrapper">
+                                        <select class="form-inputbox" disabled id="SettlementType">
+                                            <option value=""></option>
+                                            <option  value="@((int)Enums.SettlementType.RepaireInvoice)">@Enums.SettlementType.RepaireInvoice.ToString()</option>
+                                            <option  value="@((int)Enums.SettlementType.TP)">@Enums.SettlementType.TP.ToString()</option>
+                                            <option  value="@((int)Enums.SettlementType.TotalLoss)">@Enums.SettlementType.TotalLoss.ToString()</option>
+                                            <option  value="@((int)Enums.SettlementType.TowingCharge)">@Enums.SettlementType.TowingCharge.ToString()</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                            </li>
+
+
+                            <li class="column-item">
+                                <span class="value">
+                                    @_localizer["Deductible"].Value
+                                    
+                                </span>
+                                <div class="form-field-wrapper">
+                                    <div class="form-input-wrapper">
+                                        <input name="Deductible" id="txtDeductible" disabled  class="form-inputbox" value="@Model.Deductible"/>
+                                  
+                                    </div>
+                                </div>
+
+                            </li>
+                       
+                       <li class="column-item">
+                                <span class="value">
+                                    @_localizer["Depreciation"].Value
+                                    
+                                </span>
+                                <div class="form-field-wrapper">
+                                    <div class="form-input-wrapper">
+                                        <input name="Depreciation" id="txtDepreciation" disabled class="form-inputbox" value="@Model.Depreciation"/>
+                                  
+                                    </div>
+                                </div>
+
+                            </li>
+
+                              <li class="column-item">
+                                <span class="value">
+                                    @_localizer["Amount"].Value
+                                    
+                                </span>
+                                <div class="form-field-wrapper">
+                                    <div class="form-input-wrapper">
+                                        <input name="Amount" id="txtAmount"  disabled class="form-inputbox" value="@Model.Amount"/>
+                                  
+                                    </div>
+                                </div>
+
+                            </li>
+                        </ul>
+
+
+
+                              <ul class="dates-and-conpany-wrapper">
+                            <li class="column-item">
+                                <span class="value">
+                                    @_localizer["ClaimantName"].Value
+                                    
+                                </span>
+                                <div class="form-field-wrapper">
+                                    <div class="form-input-wrapper">
+                                      <input  id="txtClaimantName"  disabled class="form-inputbox" value="@Model.ClaimantName"/>
+                                  
+                                    </div>
+                                </div>
+
+                            </li>
+
+
+                            <li class="column-item">
+                                <span class="value">
+                                    @_localizer["NationalId"].Value
+                                    
+                                </span>
+                                <div class="form-field-wrapper">
+                                    <div class="form-input-wrapper">
+                                        <input name="NationalId" id="txtNationalId" disabled  class="form-inputbox" value="@Model.NationalId"/>
+                                  
+                                    </div>
+                                </div>
+
+                            </li>
+                       
+                       <li class="column-item">
+                                <span class="value">
+                                    @_localizer["IBAN"].Value
+                                    
+                                </span>
+                                <div class="form-field-wrapper">
+                                    <div class="form-input-wrapper">
+                                        <input name="Iban" id="txtIban" disabled  class="form-inputbox" value="@Model.Iban"/>
+                                  
+                                    </div>
+                                </div>
+
+                            </li>
+
+                              <li class="column-item">
+                                <span class="value">
+                                    @_localizer["NetAmount"].Value
+                                    
+                                </span>
+                                <div class="form-field-wrapper">
+                                    <div class="form-input-wrapper">
+                                        <input name="NetSettlement" id="txtNetAmount" disabled   class="form-inputbox" value="@Model.NetSettlement"/>
+                                  
+                                    </div>
+                                </div>
+
+                            </li>
+                        </ul>
+
+
+                        
+                              <ul class="dates-and-conpany-wrapper">
+                            <li class="column-item">
+                            <span class="value">
+                                    @_localizer["View"].Value
+                                    
+                                </span>
+                                <div class="ducument-detaild-Attachment">
+                                        <a href="@Model.InvoicePath" target="_blank">
+                                    <label for="fromFiles2" class="document-card">
+                                        <img src="/assets/icons/download.svg" class="docuemet-icon" alt="">
+                                        <p id="Attachment2" class="document-tile-text">
+                                            @_localizer["Download"].Value
+                                            
+                                        </p>
+
+
+                                    </label>
+                                        </a>
+                                </div>
+
+                            </li>
+
+                                     <li class="column-item">
+                                <span class="value">
+                                    @_localizer["TransferReference"].Value
+                                    
+                                </span>
+                                <div class="form-field-wrapper">
+                                    <div class="form-input-wrapper">
+                                        <input name="TransferReference" id="txtTransferReference" required  class="form-inputbox" value="@Model.TransferReference"/>
+                                  
+                                    </div>
+                                </div>
+
+                            </li>
+                    
+                       
+                    
+                        </ul>
+
+                      
+                           
+                    </div>
+                </div>
+
+            </div>
+                  <div class="footer-actions-handle" style="position: inherit !important; width: 100%;">
+                                    <div class="next-button" style="margin-right: 5px;">
+                                        <button type="submit" asp-action="UpdatePaymentFinance" asp-controller="Payments" class="button button-primary">
+                                            @_localizer["Update"].Value
+                                        </button>
+                                    </div>
+                                </div>
+  @*      </div>*@
+     
+
+
+
+
+    </form>
+
+        </div>
+
+    </div>
+</div>
+
+<script>
+
+    $(function () {
+        $('#SettlementType').val('@Model.SettlementType');
+    });
+</script>

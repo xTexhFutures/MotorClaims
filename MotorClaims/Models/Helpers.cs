@@ -1,17 +1,28 @@
 ﻿using CORE.DTOs.APIs.Authenticator;
 using CORE.DTOs.APIs.MotorClaim;
+using CORE.DTOs.APIs.Process;
 using CORE.DTOs.APIs.TP_Services;
 using CORE.DTOs.APIs.TPServices;
+using CORE.DTOs.Authentications;
 using CORE.DTOs.MotorClaim;
 using CORE.DTOs.MotorClaim.Claims;
+using CORE.DTOs.MotorClaim.WorkFlow;
+using CORE.DTOs.Setups;
 using CORE.Interfaces;
+using CORE.Services;
 using Newtonsoft.Json;
 using OfficeOpenXml;
 using OfficeOpenXml.Table;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.Globalization;
+using System.Net;
+using System.Net.Mail;
+using System.Reflection;
+using System.Reflection.Metadata;
+using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -50,7 +61,7 @@ namespace MotorClaims.Models
         }
         public static T Deserilize<T>(string json)
         {
-   
+
             T? resultValue = JsonConvert.DeserializeObject<T>(json);
             return (T)Convert.ChangeType(resultValue, typeof(T));
         }
@@ -126,8 +137,8 @@ namespace MotorClaims.Models
             Body = Body.Replace("{PolicyNumber}", SeqmentCode).Replace("{MainCategory}", Category).Replace("{LINK}", URL).Replace("{Comments}", Comment).Replace("{RequestStatus}", "Rejected");
             return Body;
         }
-        
-        
+
+
         public static DateTime HijriToGreg(string hijri)
         {
             arCul = new CultureInfo("ar-SA");
@@ -177,7 +188,7 @@ namespace MotorClaims.Models
             {
                 Content = new StringContent(obj, Encoding.UTF8, "application/json")
             };
-            
+
             var resultAll = client.Send(webRequest);
             var result = new StreamReader(resultAll.Content.ReadAsStream());
             var Info = result.ReadToEnd();
@@ -504,10 +515,14 @@ namespace MotorClaims.Models
 
             return new DateTime(year, Month, Day);
         }
-        public static string GetLookups(string Key,int Type,List<LookupTable> lookupsTables) 
-        { 
-            string Result=string.Empty;
-            Result = lookupsTables.Where(p => p.Code == Key && p.MajorCode == Type).FirstOrDefault().NameEnglish;
+        public static string GetLookups(string Key, int Type, List<LookupTable> lookupsTables)
+        {
+            string Result = string.Empty;
+            if (!string.IsNullOrEmpty(Key))
+            {
+                Result = lookupsTables.Where(p => p.Code == Key && p.MajorCode == Type).FirstOrDefault().NameEnglish;
+            }
+
             return Result;
         }
         public static string FormatLongDateNoTime(DateTime? oDate)
@@ -520,9 +535,9 @@ namespace MotorClaims.Models
             {
                 return string.Empty;
             }
-         
+
         }
-        public static void RegisterHistory(AppSettings appSettings,long ClaimId ,string Reason,string LoggedUser,int ClaimantId)
+        public static void RegisterHistory(AppSettings appSettings, long ClaimId, string Reason, string LoggedUser, int ClaimantId)
         {
             ClaimHistory claimHistory = new ClaimHistory()
             {
@@ -530,7 +545,7 @@ namespace MotorClaims.Models
                 ClaimId = ClaimId,
                 Reason = Reason,
                 Status = 1,
-                ClaimantId= ClaimantId,
+                ClaimantId = ClaimantId,
                 UserName = LoggedUser
             };
             SetupClaimsRequestcs setupClaimsRequestcs = new SetupClaimsRequestcs()
@@ -538,10 +553,10 @@ namespace MotorClaims.Models
                 TransactionType = CORE.Extensions.ClaimTransactionType.InsertClaimHistory,
                 Request = claimHistory
             };
-            var  claims = Helpers.ExcutePostAPI<ClaimHistory>(setupClaimsRequestcs, appSettings.APIHubPrefix + "api/MotorClaim/SetupMotorClaim");
+            var claims = Helpers.ExcutePostAPI<ClaimHistory>(setupClaimsRequestcs, appSettings.APIHubPrefix + "api/MotorClaim/SetupMotorClaim");
 
         }
-        public static void AssignClaim(int UserId,int ClaimId, AppSettings appSettings)
+        public static void AssignClaim(int UserId, int ClaimId, AppSettings appSettings)
         {
             MainSearchMC mainSearchMC = new MainSearchMC()
             {
@@ -555,7 +570,7 @@ namespace MotorClaims.Models
             var claim = Helpers.ExcutePostAPI<Claims>(setupClaimsRequestcs, appSettings.APIHubPrefix + "api/MotorClaim/ClaimsTransactions");
 
             //claim.AssignTo = UserId;
-             setupClaimsRequestcs = new SetupClaimsRequestcs()
+            setupClaimsRequestcs = new SetupClaimsRequestcs()
             {
                 TransactionType = CORE.Extensions.ClaimTransactionType.InsertUpdateClaim,
                 Request = claim
@@ -563,30 +578,41 @@ namespace MotorClaims.Models
             var claims = Helpers.ExcutePostAPI<Claims>(setupClaimsRequestcs, appSettings.APIHubPrefix + "api/MotorClaim/ClaimsTransactions");
 
         }
-        public static void SendSMSTemplate(int TemplateId,Dictionary<string,string> Parameters,string MobileNo, AppSettings _appSettings)
-        {        
+        public static void SendSMSTemplate(int TemplateId, Dictionary<string, string> Parameters, string MobileNo, AppSettings _appSettings)
+        {
             SMSTemplates sMSTemplates = new SMSTemplates();
 
             SMSInput sMSInput = new SMSInput()
-           {
-               MessageBody = "" ,
-               Mobile = MobileNo,
-               message = "11",
-               TemplateId = TemplateId
-               
-           };
+            {
+                MessageBody = "",
+                Mobile = MobileNo,
+                message = "11",
+                TemplateId = TemplateId
+
+            };
             sMSTemplates = Helpers.ExcutePostAPI<SMSTemplates>(sMSInput, _appSettings.APIHubPrefix + "api/MotorClaim/GetSMSTemplate");
             string MessageBody = sMSTemplates.ArSMS;
 
             foreach (var param in Parameters)
             {
-                MessageBody=MessageBody.Replace("{"+param.Key+"}", param.Value);
+                MessageBody = MessageBody.Replace("{" + param.Key + "}", param.Value);
             }
             sMSInput.MessageBody = MessageBody;
             var results = Helpers.ExcutePostAPI<CORE.DTOs.APIs.Unified_Response.Results>(sMSInput, _appSettings.APIHubPrefix + "api/ExternalAPIs/SendSms");
         }
+        public static void SendSms(string MobileNo, string text, AppSettings _appSettings)
+        {
 
-        public static void SendNotificationMail(string Language,AppSettings _appSettings,string Email,string ClaimNo)
+            SMSInput sMSInput = new SMSInput()
+            {
+                MessageBody = text,
+                Mobile = MobileNo,
+                message = "11"
+
+            };
+            var results = Helpers.ExcutePostAPI<CORE.DTOs.APIs.Unified_Response.Results>(sMSInput, _appSettings.APIHubPrefix + "api/ExternalAPIs/SendSms");
+        }
+        public static void SendNotificationMail(string Language, AppSettings _appSettings, string Email, string ClaimNo)
         {
             string EmailBody = Language == "AR-JO" ? System.IO.File.ReadAllText(Path.Combine(_appSettings.EmailsFolder, "Notification-AR.html")) : System.IO.File.ReadAllText(Path.Combine(_appSettings.EmailsFolder, "Notification-EN.html"));
 
@@ -597,6 +623,598 @@ namespace MotorClaims.Models
                 ToEmail = Email
             };
             var PostingResult = Helpers.ExcutePostAPI<CORE.DTOs.APIs.Unified_Response.Results>(emailInput, _appSettings.APIHubPrefix + "api/ExternalAPIs/SendEmail");
+        }
+
+        public static string GetRecoveryType(int RecoveryTypeId)
+        {
+            switch (RecoveryTypeId)
+            {
+                case 1: return "Insurance Company";
+                case 2: return "Individual";
+                case 3: return "Selling Scrap";
+                case 4: return "Deductible";
+                case 5: return "Depreciation";
+                case 10: return "Recovery From Insured";
+                case 11: return "deductible + depreciation";
+                case 12: return "Debitor";
+                case 14: return "SAMA new TP policy";
+                default: return null;
+
+
+            }
+        }
+
+        public static string GetRecoveryReason(int RecoveryReasonId)
+        {
+            switch (RecoveryReasonId)
+            {
+                case 1: return "Use of Vehicle usage is different from policy schedule.";
+                case 2: return "Exceeding the number of passenger capacity";
+                case 3: return "Driven against the direction of traffic";
+                case 4: return "Driven under the influence of drugs.";
+                case 5: return "Driven by a person under the age 18 year.";
+                case 6: return "Driven does not hold a proper class of License.";
+                case 7: return "License was expired.";
+                case 8: return "Driver escaped the scene of the accident.";
+                case 9: return "Running a red light";
+                case 10: return "Submitting inaccurate information in proposal form.";
+                case 11: return "Proved that the accident was deliberate.";
+                case 12: return "Failure to notify within 20 working days of any material.";
+                case 13: return "Vehicle was stolen or taken forcibly";
+                case 14: return "Not Applicable";
+                default: return null;
+
+
+
+            }
+        }
+
+        public static int GetWorkflowLimit(decimal Limit)
+        {
+            if (Limit >= -600000 && Limit <= 30000)
+            {
+                return 30000;
+            }
+            if (Limit > 30000 && Limit <= 100000)
+            {
+                return 100000;
+            }
+            if (Limit > 100000 && Limit <= 150000)
+            {
+                return 150000;
+            }
+            if (Limit > 150000 && Limit <= 2000000)
+            {
+                return 2000000;
+            }
+            return 6000000;
+        }
+
+        public static bool CheckPendingApprovals(int ClaimantId,int WorkflowHeaderId, AppSettings _appSettings)
+        {
+            bool Status = false;
+
+            List<WorkflowTransaction> workflowTransactions = new List<WorkflowTransaction>();
+            MainSearchMC mainSearchMC = new MainSearchMC()
+            {
+                ClaimantId = ClaimantId
+
+            };
+            SetupClaimsRequestcs setupClaimsRequestcs = new SetupClaimsRequestcs()
+            {
+                TransactionType = CORE.Extensions.ClaimTransactionType.LoadWorkflowTransactions,
+                Request = mainSearchMC
+            };
+            workflowTransactions = Helpers.ExcutePostAPI<List<WorkflowTransaction>>(setupClaimsRequestcs, _appSettings.APIHubPrefix + "api/MotorClaim/ClaimsTransactions");
+            workflowTransactions = workflowTransactions.Where(p => p.Status == (int)Enums.WorkflowStatus.Pending && (WorkflowHeaderId==0?1==1:p.WorkflowHeaderId==WorkflowHeaderId)).ToList();
+            if (workflowTransactions.Count > 0)
+                Status = true;
+
+            return Status;
+        }
+        public static void PublishWorkflow(decimal Limit, Enums.WorkflowType WorkflowType, int? ClaimTransactionId, long ClaimId, int ClaimantId, string CreatedBy, List<Users> users, AppSettings _appSettings)
+        {
+            int ApprovalsLimit = GetWorkflowLimit(Limit);
+            List<Users> users1 = new List<Users>();
+            WorkflowTransaction workflowTransaction;
+            WorkflowTransactionApprovers workflowTransactionApprovers;
+
+
+            if (WorkflowType==Enums.WorkflowType.Reserve)
+            {
+                users1 = users.Where(p => Convert.ToInt32(p.EstimateAuthority) == ApprovalsLimit && p.EstimateAuthority > 0).ToList();
+            }
+            else if (WorkflowType == Enums.WorkflowType.SettelmentAutherity)
+            {
+                users1 = users.Where(p => Convert.ToInt32(p.ClaimApprovalAuthority) == ApprovalsLimit && p.ClaimApprovalAuthority > 0).ToList();
+            }
+
+
+            if (users1.Count > 0)
+            {
+                MainSearchMC mainSearchMC = new MainSearchMC()
+                {
+                    Id = (int)ClaimId,
+                    ClaimantId = ClaimantId
+                };
+                SetupClaimsRequestcs setupClaimsRequestcs = new SetupClaimsRequestcs()
+                {
+                    TransactionType = CORE.Extensions.ClaimTransactionType.LoadClaimsMaster,
+                    Request = mainSearchMC
+                };
+                var claims = Helpers.ExcutePostAPI<List<ClaimMaster>>(setupClaimsRequestcs, _appSettings.APIHubPrefix + "api/MotorClaim/ClaimsTransactions");
+
+
+                workflowTransaction = new WorkflowTransaction()
+                {
+                    ClaimantId = ClaimantId,
+                    ClaimId = ClaimId,
+                    ClaimTransactionId = ClaimTransactionId,
+                    Status = (int)Enums.WorkflowStatus.Pending,
+                    CreationDate = DateTime.Now,
+                    CreatedBy = CreatedBy,
+                    ClaimNo = claims.FirstOrDefault().claims.ClaimNo + "/" + claims.FirstOrDefault().claimants.Serial,
+                    WorkflowHeaderId = (int)WorkflowType
+                };
+                 setupClaimsRequestcs = new SetupClaimsRequestcs()
+                {
+                    TransactionType = CORE.Extensions.ClaimTransactionType.InsertWorkflowTransaction,
+                    Request = workflowTransaction
+                 };
+                workflowTransaction = Helpers.ExcutePostAPI<WorkflowTransaction>(setupClaimsRequestcs, _appSettings.APIHubPrefix + "api/MotorClaim/ClaimsTransactions");
+                int ApproverLevel = 1;decimal? LevelAmt=0;
+                if (WorkflowType==Enums.WorkflowType.Reserve)
+                {
+                    users1 = users1.OrderBy(p => p.EstimateAuthority).ToList();
+                }
+                else if (WorkflowType == Enums.WorkflowType.SettelmentAutherity)
+                {
+                    users1 = users1.OrderBy(p => p.ClaimApprovalAuthority).ToList();
+                }
+                else if (WorkflowType == Enums.WorkflowType.TotalLoss)
+                {
+                    users1 = users1.OrderBy(p => p.RTLAuthority).ToList();
+                }
+                foreach (Users user in users1)
+                {
+                    if (WorkflowType == Enums.WorkflowType.Reserve)
+                    {
+                        ApproverLevel = LevelAmt== user.EstimateAuthority? ApproverLevel : ++ApproverLevel;
+                        LevelAmt = LevelAmt== user.EstimateAuthority? LevelAmt: user.EstimateAuthority;
+                    }
+                    else if (WorkflowType == Enums.WorkflowType.SettelmentAutherity)
+                    {
+                        ApproverLevel = LevelAmt == user.ClaimApprovalAuthority ? ApproverLevel : ++ApproverLevel;
+                        LevelAmt = LevelAmt == user.ClaimApprovalAuthority ? LevelAmt : user.ClaimApprovalAuthority;
+                    }
+                    else if (WorkflowType == Enums.WorkflowType.TotalLoss)
+                    {
+                        ApproverLevel = LevelAmt == user.RTLAuthority ? ApproverLevel : ++ApproverLevel;
+                        LevelAmt = LevelAmt == user.RTLAuthority ? LevelAmt : user.RTLAuthority;
+                    }
+                    workflowTransactionApprovers = new WorkflowTransactionApprovers()
+                    {
+                        UpdateDate = DateTime.Now,
+                        UserId = user.Id,
+                        UserName= user.UserName,
+                        WorkflowTransactionId= workflowTransaction.Id,
+                        ApproverLevel= ApproverLevel
+
+                    };
+                     setupClaimsRequestcs = new SetupClaimsRequestcs()
+                    {
+                        TransactionType = CORE.Extensions.ClaimTransactionType.InsertWorkflowTransactionApprovers,
+                        Request = workflowTransactionApprovers
+                     };
+                    workflowTransactionApprovers = Helpers.ExcutePostAPI<WorkflowTransactionApprovers>(setupClaimsRequestcs, _appSettings.APIHubPrefix + "api/MotorClaim/ClaimsTransactions");
+
+                }
+            }
+        }
+        public static void UpdateClaimantStatus(Claimants claimant, AppSettings _appSettings)
+        {
+
+
+            MainSearchMC mainSearchMC = new MainSearchMC()
+            {
+                ClaimantId = claimant.Id
+            };
+            SetupClaimsRequestcs setupClaimsRequestcs = new SetupClaimsRequestcs()
+            {
+                TransactionType = CORE.Extensions.ClaimTransactionType.LoadAttachment,
+                Request = mainSearchMC
+            };
+            var attachments = Helpers.ExcutePostAPI<List<Attachments>>(setupClaimsRequestcs, _appSettings.APIHubPrefix + "api/MotorClaim/SetupMotorClaim");
+            bool result = true;
+            List<DocumentInfo> documentInfos1 = new List<DocumentInfo>();
+            documentInfos1 = GetClaimantDocuments(claimant, _appSettings);
+            foreach (var item in documentInfos1)
+            {
+                if (attachments.Where(p => p.DocumentSetupId == item.Id).ToList().Count == 0)
+                {
+                    result = false;
+                    break;
+                }
+            }
+
+            if (!result)
+            {
+                claimant.ClaimantStatus = (int)Enums.ClaimantStatus.MissingDocuments;
+                setupClaimsRequestcs = new SetupClaimsRequestcs()
+                {
+                    TransactionType = CORE.Extensions.ClaimTransactionType.InsertUpdateClaimants,
+                    Request = claimant
+                };
+                claimant = Helpers.ExcutePostAPI<Claimants>(setupClaimsRequestcs, _appSettings.APIHubPrefix + "api/MotorClaim/ClaimsTransactions");
+
+            }
+            else if (claimant.ClaimantStatus == (int)Enums.ClaimantStatus.MissingDocuments)
+            {
+                claimant.ClaimantStatus = (int)Enums.ClaimantStatus.Operation;
+                setupClaimsRequestcs = new SetupClaimsRequestcs()
+                {
+                    TransactionType = CORE.Extensions.ClaimTransactionType.InsertUpdateClaimants,
+                    Request = claimant
+                };
+                claimant = Helpers.ExcutePostAPI<Claimants>(setupClaimsRequestcs, _appSettings.APIHubPrefix + "api/MotorClaim/ClaimsTransactions");
+            }
+        }
+
+        public static List<DocumentInfo> GetClaimantDocuments(Claimants claimant, AppSettings _appSettings)
+        {
+            List<DocumentInfo> documentInfos1 = new List<DocumentInfo>();
+            MainSearchMC mainSearchMC = new MainSearchMC()
+            {
+                ModuleId = 2
+            };
+            SetupClaimsRequestcs setupClaimsRequestcs = new SetupClaimsRequestcs()
+            {
+                TransactionType = CORE.Extensions.ClaimTransactionType.LoadDocuments,
+                Request = mainSearchMC
+            };
+            var documentInfos2 = Helpers.ExcutePostAPI<List<DocumentInfo>>(setupClaimsRequestcs, _appSettings.APIHubPrefix + "api/MotorClaim/SetupMotorClaim");
+            string[] ids = new string[1];
+            List<docs> keyValuePairs = new List<docs>();
+            foreach (var documentInfo in documentInfos2)
+            {
+                ids = new string[1];
+                if (!string.IsNullOrEmpty(documentInfo.ClaimResult))
+                {
+                    ids = documentInfo.ClaimResult.Split(',');
+                }
+                foreach (var item in ids)
+                {
+                    if (!string.IsNullOrEmpty(item))
+                        keyValuePairs.Add(new docs()
+                        {
+                            DocId = documentInfo.Id,
+                            TransId = Convert.ToInt32(item)
+                        });
+                }
+            }
+            //Material
+            if (claimant != null && claimant.DamageType.HasValue && (claimant.DamageType.Value == 1 || claimant.DamageType.Value == 4 || claimant.DamageType.Value == 5))
+            {
+                //Vehicle
+                if (claimant.NatureofLoss.HasValue && claimant.NatureofLoss.Value == 1)
+                {
+                    foreach (var item in keyValuePairs.Where(p => p.TransId == 3))
+                    {
+                        documentInfos1.Add(documentInfos2.Where(p => p.Id == item.DocId).FirstOrDefault());
+                    }
+                }//Private
+                else if (claimant.NatureofLoss.HasValue && claimant.NatureofLoss.Value == 2)
+                {
+                    foreach (var item in keyValuePairs.Where(p => p.TransId == 4))
+                    {
+                        documentInfos1.Add(documentInfos2.Where(p => p.Id == item.DocId).FirstOrDefault());
+                    }
+                }//Public
+                else if (claimant.NatureofLoss.HasValue && claimant.NatureofLoss.Value == 3)
+                {
+                    foreach (var item in keyValuePairs.Where(p => p.TransId == 5))
+                    {
+                        documentInfos1.Add(documentInfos2.Where(p => p.Id == item.DocId).FirstOrDefault());
+                    }
+                }
+            }
+            //Death
+            if (claimant != null && claimant.DamageType.HasValue && (claimant.DamageType.Value == 3 || claimant.DamageType.Value == 5 || claimant.DamageType.Value == 6 || claimant.DamageType.Value == 7))
+            {
+                foreach (var item in keyValuePairs.Where(p => p.TransId == 2))
+                {
+                    documentInfos1.Add(documentInfos2.Where(p => p.Id == item.DocId).FirstOrDefault());
+                }
+            }
+            // Bodily
+            if (claimant != null && claimant.DamageType.HasValue && (claimant.DamageType.Value == 2 || claimant.DamageType.Value == 6 || claimant.DamageType.Value == 7 || claimant.DamageType.Value == 10 || claimant.DamageType.Value == 4))
+            {
+                foreach (var item in keyValuePairs.Where(p => p.TransId == 1))
+                {
+                    documentInfos1.Add(documentInfos2.Where(p => p.Id == item.DocId).FirstOrDefault());
+                }
+            }
+            return documentInfos1;
+        }
+        public static List<DocumentInfo> GetMissingDocuments(Claimants claimant, AppSettings _appSettings)
+        {
+            List<DocumentInfo> documentInfos = new List<DocumentInfo>();
+            List<DocumentInfo> documentInfos1 = new List<DocumentInfo>();
+            documentInfos = GetClaimantDocuments(claimant, _appSettings);
+            MainSearchMC mainSearchMC = new MainSearchMC()
+            {
+                ClaimantId = claimant.Id
+            };
+            SetupClaimsRequestcs setupClaimsRequestcs = new SetupClaimsRequestcs()
+            {
+                TransactionType = CORE.Extensions.ClaimTransactionType.LoadAttachment,
+                Request = mainSearchMC
+            };
+            var attachments = Helpers.ExcutePostAPI<List<Attachments>>(setupClaimsRequestcs, _appSettings.APIHubPrefix + "api/MotorClaim/SetupMotorClaim");
+
+            foreach (var item in documentInfos)
+            {
+                if (attachments.Where(p => p.DocumentSetupId == item.Id).ToList().Count == 0)
+                {
+                    documentInfos1.Add(item);
+                }
+            }
+
+            return documentInfos1;
+        }
+
+        public static void HandleSurveyorPhoto(Dictionary<IFormFile, string> photos, Survoyer survoyer,string UserName,AppSettings _appSettings) 
+        {
+            SetupClaimsRequestcs mainSearch = new SetupClaimsRequestcs()
+            {
+                TransactionType = CORE.Extensions.ClaimTransactionType.LoadClaimsMaster,
+                Request = new MainSearchMC()
+                {
+                    Id = (int)survoyer.ClaimId
+                }
+            };
+           var claims = Helpers.ExcutePostAPI<List<ClaimMaster>>(mainSearch, _appSettings.APIHubPrefix + "api/MotorClaim/ClaimsTransactions");
+
+            foreach (var item in photos)
+            {
+                Attachments attachment = new Attachments()
+                {
+                    ClaimantId = survoyer.ClaimantId,
+                    ClaimId = survoyer.ClaimId,
+                    CreationDate = DateTime.Now,
+                    DocumentSetupId = 1017,
+                    ModuleId = (int)Enums.DocumnetType.Surveyor,
+                    FileName = Path.GetFileName(item.Key.FileName),
+                    ContentType = item.Key.ContentType,
+                    CreatedBy = UserName,
+                    IsDeleted = false
+                };
+                SetupClaimsRequestcs setupClaimsRequestcs = new SetupClaimsRequestcs()
+                {
+                    TransactionType = CORE.Extensions.ClaimTransactionType.InsertUpdateAttachment,
+                    Request = attachment
+                };
+                attachment = Helpers.ExcutePostAPI<Attachments>(setupClaimsRequestcs, _appSettings.APIHubPrefix + "api/MotorClaim/SetupMotorClaim");
+                string pathMDF = _appSettings.ClaimSubmissionPath;
+                string fieNameWithExt = item.Value + "_" + Path.GetFileName(item.Key.FileName);
+                string directory = Path.Combine(pathMDF, claims.FirstOrDefault().claims.ClaimNo,claims.Where(p=>p.claimants.Id==survoyer.ClaimantId).FirstOrDefault().claimants.Serial.ToString());
+                bool folderExists = Directory.Exists(directory);
+                if (!folderExists)
+                    Directory.CreateDirectory(directory);
+
+                string filePath = Path.Combine(directory, fieNameWithExt);
+                using (Stream fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                     item.Key.CopyTo(fileStream);
+                }
+            }
+
+
+        }
+        public static List<Attachments> GeteClaimAttachment(ClaimSubmissionDocuments obj)
+        {
+            List<Attachments> attachments = new List<Attachments>();
+            if (!string.IsNullOrEmpty(obj.AcciedentReport))
+            {
+                attachments.Add( new Attachments()
+                {
+                    ClaimantId = 0,
+                    CreatedBy = "Online",
+                    CreationDate = DateTime.Now,
+                    ModuleId = 2,
+                    ClaimId = 0,
+                    FileName = obj.AcciedentReport,
+                    ContentType = "",
+                    DocumentSetupId = 1,
+                    IsDeleted = false,
+                });
+
+            }
+            if (!string.IsNullOrEmpty(obj.DA))
+            {
+                attachments.Add(new Attachments()
+                {
+                    ClaimantId = 0,
+                    CreatedBy = "Online",
+                    CreationDate = DateTime.Now,
+                    ModuleId = 2,
+                    ClaimId = 0,
+                    FileName = obj.DA,
+                    ContentType = "",
+                    DocumentSetupId = 5,
+                    IsDeleted = false,
+                });
+            }
+            if (!string.IsNullOrEmpty(obj.IstimaraCopy))
+            {
+                attachments.Add(new Attachments()
+                {
+                    ClaimantId = 0,
+                    CreatedBy = "Online",
+                    CreationDate = DateTime.Now,
+                    ModuleId = 2,
+                    ClaimId = 0,
+                    FileName = obj.IstimaraCopy,
+                    ContentType = "",
+                    DocumentSetupId = 2,
+                    IsDeleted = false,
+                });
+            }
+            if (!string.IsNullOrEmpty(obj.LicenseCopy))
+            {
+                attachments.Add(new Attachments()
+                {
+                    ClaimantId = 0,
+                    CreatedBy = "Online",
+                    CreationDate = DateTime.Now,
+                    ModuleId = 2,
+                    ClaimId = 0,
+                    FileName = obj.LicenseCopy,
+                    ContentType = "",
+                    DocumentSetupId = 4,
+                    IsDeleted = false,
+                });
+            }
+            if (!string.IsNullOrEmpty(obj.Others))
+            {
+                attachments.Add(new Attachments()
+                {
+                    ClaimantId = 0,
+                    CreatedBy = "Online",
+                    CreationDate = DateTime.Now,
+                    ModuleId = 2,
+                    ClaimId = 0,
+                    FileName = obj.Others,
+                    ContentType = "",
+                    DocumentSetupId = 1012,
+                    IsDeleted = false,
+                });
+            }
+            if (!string.IsNullOrEmpty(obj.IBAN))
+            {
+                attachments.Add(new Attachments()
+                {
+                    ClaimantId = 0,
+                    CreatedBy = "Online",
+                    CreationDate = DateTime.Now,
+                    ModuleId = 2,
+                    ClaimId =0,
+                    FileName = obj.IBAN,
+                    ContentType = "",
+                    DocumentSetupId = 1011,
+                    IsDeleted = false,
+                });
+            }
+
+            return attachments;
+        }
+
+        public static void SaveFile(string obj,string Level)
+        {
+            try
+            {
+                //string path = @"E:\MC Logs\" + Level + ".txt";
+                string path = @"D:\MotorClaims\Logs\" + Level + ".txt";
+                System.IO.File.WriteAllText(path, obj);
+            }
+            catch (Exception)
+            {
+            }
+        }
+
+        public static string BankCode(string? IBAN)
+        {
+            string Digit = !string.IsNullOrEmpty(IBAN) ? IBAN.Substring(4, 2) : "20";
+            switch (Digit)
+            {
+                case "10":return "B001";
+                case "45":return "B002";
+                case "65":return "B003";
+                case "05":return "B004";
+                case "55":return "B005";
+                case "20":return "B006";
+                case "40":return "B007";
+                case "50":return "B008";
+                case "80":return "B009";
+                case "30":return "B010";
+                case "15":return "B011";
+                case "60":return "B012";
+                case "83":return "B013";
+                case "90":return "B014";
+                case "95":return "B015";
+                case "71":return "B016";
+                case "75":return "B016";
+                case "76":return "B018";
+                case "81":return "B019";
+                case "82":return "B020";
+                case "87":return "B021";
+                case "98":return "B022";
+                case "84":return "B024";
+                case "01":return "B025";
+                case "86":return "B026";
+                case "03":return "B027";
+                 
+            }
+             return "B006";
+        }
+
+        public static string PlateMapping(string Code)
+        {
+            switch (Code)
+            {
+                case "1": return "A";
+                case "2": return "B";
+                case "3": return "D";
+                case "4": return "J";
+                case "5": return "H";
+                case "6": return "E";
+                case "7": return "G";
+                case "8": return "X";
+                case "9": return "T";
+                case "10": return "K";
+                case "11": return "Z";
+                case "12": return "N";
+                case "13": return "L";
+                case "14": return "V";
+                case "15": return "S";
+                case "16": return "U";
+                case "17": return "R";
+            }
+            return Code;
+        }
+        public static string TranslateText(string input, string languagePair)
+        {
+            string url = String.Format("http://www.google.com/translate_t?hl=en&ie=UTF8&text={0}&langpair={1}", input, languagePair);
+
+            WebClient webClient = new WebClient();
+
+
+            try
+            {
+                webClient.Encoding = System.Text.Encoding.UTF8;
+                string result = webClient.DownloadString(url);
+                int len = result.Length;
+                result = result.Remove(0, result.IndexOf("id=result_box"));
+                int len2 = result.Length;
+                result = result.Remove(result.IndexOf("</span>"));
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+            return "<span</span>";
+
+
+        }
+
+ 
+        public static void PublishWorkFlow(decimal TransactionAmount, Enums.WorkflowType workflowType,int claimTransactionsId,long ClaimId,int ClaimantID,string CreatedBy, List<Users> users,AppSettings _appSettings)
+        {
+            PublishWorkflow(TransactionAmount, workflowType, claimTransactionsId, ClaimId, ClaimantID, CreatedBy, users, _appSettings);
+            RegisterHistory(_appSettings, ClaimId, "Update Reserve to " + TransactionAmount + " SAR by " + CreatedBy + " Pending with Approval", CreatedBy, ClaimantID);
+
         }
     }
 }

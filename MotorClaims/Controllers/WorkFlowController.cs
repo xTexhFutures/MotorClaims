@@ -1,4 +1,5 @@
 ﻿using CORE.DTOs.APIs.MotorClaim;
+using CORE.DTOs.Authentications;
 using CORE.DTOs.MotorClaim.WorkFlow;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
@@ -61,7 +62,7 @@ namespace MotorClaims.Controllers
         [HttpPost]
         public IActionResult UpdateWorkFlow(WorkFlowStages workFlowStages)
         {
-
+            workFlowStages.CreatedBy = HttpContext.Session.getSessionData<Users>("LoggedUser").UserName;
             SetupClaimsRequestcs setupClaimsRequestcs = new SetupClaimsRequestcs()
             {
                 TransactionType = CORE.Extensions.ClaimTransactionType.InsertUpdateWorkFlowStage,

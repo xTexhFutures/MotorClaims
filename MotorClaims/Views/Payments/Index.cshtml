@@ -1,0 +1,157 @@
+﻿@using CORE.DTOs.Authentications;
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.AspNetCore.Builder
+@using Microsoft.AspNetCore.Localization
+@using Microsoft.Extensions.Options
+@using Microsoft.AspNetCore.Http.Features
+@using System.Globalization
+
+@inject IViewLocalizer _localizer
+@using CORE.DTOs.MotorClaim.Claims;
+@using Newtonsoft.Json;
+@using X.PagedList.Mvc.Core;
+@using X.PagedList;
+@model IPagedList<ClaimMaster>
+   @{
+    SearchObj searchObj = (SearchObj)ViewData["searchObj"];
+    List<Users> users = (List<Users>)ViewData["AllUsers"];
+    List<LookupTable> lookupTables = (List<LookupTable>)ViewData["query"];
+}
+
+<div class="add-member-detail">
+      <div class="policy-wrapper">
+        <div class="basic-detail" style="background:none !important">
+            <h2 class="heading">@_localizer["Payments"].Value </h2>
+            <div class="search-member">
+                    <form method="post" asp-action="SearchPayments" asp-controller="Payments" style="display:flow-root">
+                    <div class="search-filter-wrapper">
+                        <div class="search-wrapper">
+                            <span class="label">@_localizer["ClaimNo"].Value </span>
+                            <div class="search-input-box-wrapper">
+
+                                <div class="search-icon-wrapper">
+                                    <img src="/assets/icons/empty-file.svg" class="search-icon" alt="">
+                                </div>
+                                <input type="text" class="input-box" autocomplete="off" maxlength="60" name="claimno" placeholder="Search By Claim No"
+                                       value="@searchObj.claimno">
+                            </div>
+                        </div>
+
+     <div class="search-wrapper">
+                            <span class="label">@_localizer["RegisteredFrom"].Value </span>
+                            <div class="search-input-box-wrapper">
+
+                                <div class="search-icon-wrapper">
+                                    <img src="/assets/icons/calendar.svg" class="search-icon" alt="">
+                                </div>
+                                <input class="input-box" autocomplete="off" id="txtFrom" name="RegisteredFrom" type="text" value="@(searchObj.RegisteredFrom.HasValue?searchObj.RegisteredFrom.Value.ToString("dd-MM.yyyy"):"")">
+                            </div>
+                        </div>
+
+                          <div class="search-wrapper">
+                            <span class="label">@_localizer["RegisteredTo"].Value </span>
+                            <div class="search-input-box-wrapper">
+
+                                <div class="search-icon-wrapper">
+                                    <img src="/assets/icons/calendar.svg" class="search-icon" alt="">
+                                </div>
+                                <input class="input-box" autocomplete="off" id="txtTo" name="RegisteredTo" type="text" value="@(searchObj.RegisteredTo.HasValue?searchObj.RegisteredTo.Value.ToString("dd-MM.yyyy"):"")">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="search-heading-wrap" style="float: right;margin-top: 10px;">
+
+                        <button class="button button-secondary" type="submit">@_localizer["Search"].Value </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+
+    @if (Model!=null && Model.Count > 0)
+    {
+        <div class="policy-members">
+            <div class="heading-card">
+                <h2 class="heading">All Claims Payment</h2>
+            </div>
+            <div class="transaction-details">
+                <table class="universal-table">
+                    <tr>
+                        <th>Claim Segment</th>
+                        <th>Claimant Name</th>
+                        <th>Policy Number</th>
+                        <th>Make</th>
+                        <th>Model</th>
+                        <th>Chassis</th>
+                        <th>Claimant Type</th>
+                        <th>Registered Date</th>
+                        <th>Assign To</th>
+
+                    </tr>
+
+
+                    @foreach (var clm in Model)
+                    {
+
+                        <tr>
+                            @{
+                                ClaimSearchobj claimSearchobj = new ClaimSearchobj()
+                                                                {
+                                                                    PolicyId = clm.claims.PolicyId.HasValue ? clm.claims.PolicyId.Value : 0,
+                                                                    ClaimId = clm.claims.Id,
+                                                                    ClaimantId=clm.claimants.Id
+                                                                };
+                      
+
+                            var ClaimantType = Helpers.GetLookups(clm.claimants.ClaimantType.ToString(), (int)Enums.Lookups.ClaimantType, lookupTables);
+
+                  
+
+                            }
+                            <td class="tran"><a href="@Url.Action("PaymentEntry","Payments",new{obj=MotorClaims.Models.Helpers.Encrypt(JsonConvert.SerializeObject(claimSearchobj))})">@clm.claims.ClaimNo/@clm.claimants.Serial.ToString()</a></td>
+                            <td>@clm.claimants.ClaimantName</td>
+                            <td>@clm.productionInfo.PolicyNumber</td>
+                            <td>@clm.vehiclesInfo.MakeDesc</td>
+                            <td>@clm.vehiclesInfo.ModelDesc</td>
+                            <td>@clm.vehiclesInfo.ChassisNo</td>
+                            <td>@ClaimantType</td>
+                            <td>@HelpersDate.FormatDate(clm.claims.RegistrationDate)</td>
+                            <td class="tran"><a href="#" onclick="SurveyorAssign(@clm.claims.Id,@clm.claimants.Id)">Assign</a></td>
+                     
+                        </tr>
+
+
+                    }
+                </table>
+
+            @Html.PagedListPager((IPagedList)Model,Page=>Url.Action("Index","Surveyor",new {Page}))
+            Showing @Model.FirstItemOnPage to @Model.LastItemOnPage of @Model.TotalItemCount Claims
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="ui-state-highlight ui-corner-all" style="background:none !important;margin-top: 1%;">
+            <span class="ui-icon ui-icon-info" style="float: left"></span>
+            <span>No results found.</span>
+        </div>
+    }
+</div>
+
+
+
+<div class="common-slide-popup" id="SurveyorActions"></div>
+<div class="edit-member-id-popup" id="SurveyorAssign"></div>
+
+<script>
+    $(function(){
+           if ('@ViewData["Error"]' != '' || '@ViewData["Error"]' != "") {
+            ErrorAlert('@ViewData["Error"]');
+        }
+    });
+    $('#txtFrom').ForceDateEntry();
+    $('#txtTo').ForceDateEntry();
+</script>

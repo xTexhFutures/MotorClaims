@@ -1,0 +1,206 @@
+﻿@using CORE.DTOs.MotorClaim.Claims;
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.AspNetCore.Builder
+@using Microsoft.AspNetCore.Localization
+@using Microsoft.Extensions.Options
+@using Microsoft.AspNetCore.Http.Features
+@using System.Globalization
+
+@inject IViewLocalizer _localizer
+@model ClaimRecoveries
+@{
+    Layout = null;
+    List<ClaimTransactions> collections=(List<ClaimTransactions>)ViewData["collections"];
+ 
+}
+<form id="frmUpdateCollection" method="post" enctype="multipart/form-data">
+    <input type="hidden" name="ClaimId" value="@Model.ClaimId" />
+    <input type="hidden" name="ClaimantId" value="@Model.ClaimantId" />
+    <input type="hidden" name="ClaimTransactionId" value="@Model.ClaimTransactionId" />
+    <div class="slide-popup-inner">
+        <div class="slide-header">
+            <div class="heading-card">
+                <h2 class="heading">Update Collection</h2>
+            </div>
+        </div>
+        <div class="slide-body">
+            <div class="popup-body-wrapper">
+                <div class="body-content-wrapper">
+                    <div class="delete-content-card">
+                     
+                        @if (collections.Count>0)
+                        {
+                            
+                        
+                        <div class="cancel-declaration">
+                          <div class="transaction-details">
+    <table class="universal-table">
+        <tr>
+            <th>
+                @_localizer["RecoveryAmount"].Value
+
+            </th>
+            <th>
+                @_localizer["CreatedBy"].Value
+
+            </th>
+            <th>
+                @_localizer["CreationDate"].Value
+
+            </th>
+
+        </tr>
+
+
+        @foreach (var item in collections)
+        {
+            <tr>
+
+                <td>@item.TransactionAmount</td>
+                <td>@item.CreatedBy</td>
+                <td>@Helpers.FormatLongDate(item.TransactionDate)</td>
+
+
+            </tr>
+        }
+
+
+
+
+    </table>
+
+</div>
+                        </div>
+      
+        }               
+                        <div class="cancel-declaration">
+                            <h3 class="title-label">Collection Type</h3>
+                            <div class="form-field-wrapper">
+                                <div class="form-input-wrapper" style="background:no-repeat">
+      <label for="CollectionType-11" class="radio-card-v2" style="min-width:50% !important">
+                                                <input type="radio" value="@((int)MotorClaims.Models.Enums.CollectionType.Fully)" name="CollectionType" id="CollectionType-11" checked />
+                                                <div class="card-content-wrapper">
+                                                    <span class="check-icon"></span>
+                                                    <div class="card-content">
+                                                        <h4 class="title">@(MotorClaims.Models.Enums.CollectionType.Fully)</h4>
+                                                    </div>
+                                                </div>
+                                            </label>
+                                            <!-- /.radio-card -->
+
+                                            <label for="CollectionType-12" class="radio-card-v2" style="min-width:50% !important">
+                                                <input type="radio" value="@((int)MotorClaims.Models.Enums.CollectionType.Partial)" name="CollectionType" id="CollectionType-12"  />
+                                                <div class="card-content-wrapper">
+                                                    <span class="check-icon"></span>
+                                                    <div class="card-content">
+                                                        <h4 class="title">@(MotorClaims.Models.Enums.CollectionType.Partial)</h4>
+                                                    </div>
+                                                </div>
+                                            </label>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="cancel-declaration">
+                            <h3 class="title-label">Recovery Amount</h3>
+                            <div class="form-field-wrapper">
+                                <div class="form-input-wrapper" style="background-color:rgb(225,225,225) !important">
+                                    <input readonly type="text" value="@string.Format("{0:N2}", @Model.UncollectedAmount)" name="UncollectedAmount" class="form-inputbox"/>
+              
+                                </div>
+                            </div>
+                        </div>
+
+
+               <div class="cancel-declaration">
+                            <h3 class="title-label">Collection Amount</h3>
+                            <div class="form-field-wrapper">
+                                <div class="form-input-wrapper" >
+                                    <input id="txtCollectionAmount" name="RecoveryAmount"  type="text" class="form-inputbox" required maxlength="5"  max="@Model.UncollectedAmount"/>
+              
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="cancel-declaration">
+                            <h3 class="title-label">Note</h3>
+                            <div class="form-field-wrapper">
+                                <div class="form-input-wrapper">
+                                    <textarea name="Note" id="txtNote" autocomplete="off" class="form-inputbox" maxlength="1024"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                             <div class="cancel-declaration">
+                            <h3 class="title-label">Invoice Copy</h3>
+                            <div class="form-field-wrapper">
+                                <div class="form-input-wrapper">
+                                  
+                            <div class="ducument-detaild-Attachment">
+                                    <label for="fromFiles1" class="document-card">
+                                        <img src="/assets/icons/upload.svg" class="docuemet-icon" alt="">
+                                        <p id="Attachment1" class="document-tile-text">
+                                            Upload Invoice
+                                            
+                                        </p>
+                                        <input accept="image/*,application/pdf"  class="ducument-control" id="fromFiles1" name="fromFiles" type="file"  />
+                                 <h2 id="yakeenexcelname" class="section-title"></h2>
+                                    </label>
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="slide-footer">
+                    <div class="slide-inner-footer">
+                        <button type="button" class="button button-secondary-border"
+                                onclick="CloseDialogV('CollectRecoveries')">
+                            Cancel
+                        </button>
+                        <button type="submit" class="button button-primary" asp-controller="Surveyor"  asp-action="UpdateCollectionTransaction">Update</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+</form>
+
+<script>
+    $(function () {
+        $('#fromFiles1').on('change', function () {
+  var file = this.files[0];
+
+  if (file.name !=null) {
+    $('#yakeenexcelname').text(file.name);
+  }
+
+  // Also see .name, .type
+});
+
+    // const input = document.getElementById('fromFiles')
+
+    //input.addEventListener('change', (event) => {
+    //    const target = event.target
+    //    if (target.files && target.files[0]) {
+    //        $('#yakeenexcelname').text(target.files[0].name);
+    //    }
+    //})
+        //$("#frmUpdateCollection").submit(function (event) {
+        //    $.post("/Surveyor/UpdateCollectionTransaction/", $("#frmUpdateCollection").serializeArray(),function(){
+        //        CloseDialogV('CollectRecoveries');
+        //    });
+
+        //});
+    });
+    $('#txtCollectionAmount').ForceIntegerEntry();
+
+
+
+
+
+</script>

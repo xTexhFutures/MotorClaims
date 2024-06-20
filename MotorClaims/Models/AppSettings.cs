@@ -10,6 +10,7 @@
         public string access_code { set; get; }
         public string language { set; get; }
         public string merchant_identifier { set; get; }
+        public string eClaimsURL { set; get; }
         public string sha_request { set; get; }
         public string sha_response { set; get; }
         public string sandbox { set; get; }
@@ -29,6 +30,7 @@
         public string CopyRight { set; get; }
         public int FileSize { set; get; }
         public int Validity { set; get; }
+        public int insuranceCompanyID { set; get; }
         public int SelfNumber { set; get; }
         public string PaymentURL { set; get; }
         public string UWEmail { set; get; }
@@ -36,5 +38,6 @@
         public string ClaimSubmissionPath { set; get; }
         public string NajmImages { set; get; }
         public string NajmImagesPath { set; get; }
+        public string ClaimSubmissionURL { set; get; }
     }
 }

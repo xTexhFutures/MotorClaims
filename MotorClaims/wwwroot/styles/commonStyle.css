@@ -324,6 +324,7 @@ p.errormsg {
 .accordion-wrapper .accordion-item-wrapper .accordion-body .dates-and-conpany-wrapper .column-item .value {
     -webkit-margin-start: 0.5rem;
     margin-inline-start: 0.5rem;
+    padding-right:20px;
 }
 
 @media (max-width: 767px) {

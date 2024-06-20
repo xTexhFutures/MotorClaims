@@ -652,12 +652,19 @@ function SurveyorAssign(ClaimId, ClaimantId) {
     $('#SurveyorAssign').load('/Surveyor/SurveyorAssign/', { ClaimId: ClaimId, ClaimantId: ClaimantId });
 }
 function SurveyorActions(ClaimId, ClaimantId) {
-    debugger;
     let element = document.getElementById('SurveyorActions');
     element.classList.remove('display-none');
     element.classList.add('display-block');
     element.classList.toggle('active');
     $('#SurveyorActions').load('/Surveyor/SurveyorActions/', { ClaimId: ClaimId, ClaimantId: ClaimantId });
+}
+
+function WorkshopActions(ClaimId, ClaimantId) {
+    let element = document.getElementById('WorkshopActions');
+    element.classList.remove('display-none');
+    element.classList.add('display-block');
+    element.classList.toggle('active');
+    $('#WorkshopActions').load('/Surveyor/WorkshopActions/', { ClaimId: ClaimId, ClaimantId: ClaimantId });
 }
 function OperationAssign(ClaimId,ClaimantId) {
     const element = document.getElementById('OperationAssign');
@@ -669,6 +676,11 @@ function TowingLetter(ClaimId, ClaimantId) {
     const element = document.getElementById('TowingLetter');
     element.classList.toggle('active');
     $('#TowingLetter').load('/Towing/TowingLetter/', { ClaimId: ClaimId, ClaimantId: ClaimantId });
+}
+function UpdateRaseedNumber(Id) {
+    const element = document.getElementById('UpdateRaseedNumber');
+    element.classList.toggle('active');
+    $('#UpdateRaseedNumber').load('/Claims/UpdateRaseedNumber/'+ Id);
 }
 
 function WarehouseLetter(ClaimId, ClaimantId) {
@@ -720,3 +732,18 @@ function LoadPhotos(Id)
     $('#Photos').load('/Claims/Photos/'+ Id );
 }
 
+
+function GenerateReport(Id) {
+    spinner.show();
+    $.post("/Setup/PrintReports/" + 1, function (data) {
+        if (data != null) {
+            //download(data, makeid(15));
+            var ReportWindow = window.open(data, "window 1", "location=no,menubar=no,status=no,titlebar=no,toolbar=no,resizable=yes");
+            ReportWindow.focus();
+            ReportWindow.blur();
+            /*            window.location.href = "/Issuance/PrintEskaQuote/?id=" + data;*/
+            spinner.hide();
+            //window.open(data, "_blank");
+        }
+    });
+}

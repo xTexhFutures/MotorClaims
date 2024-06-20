@@ -67,73 +67,106 @@
         <div class="sidebar-wrapper">
             <aside class="sidebar">
                 <div class="sidebar-logo-wrapper">
-                    <img class="logo" src="~/assets/icons/AJT1.png" />
+                   <img class="logo" src="~/assets/icons/aicc1.jpg" />
                 </div>
-                <nav class="navigation-wrapper">
+          <nav class="navigation-wrapper">
                     <ul class="naigation-list">
                         @*   @if ((int)MotorClaims.Models.Enums.Roles.Admin == users?.Roles?.Id || (int)MotorClaims.Models.Enums.Roles.Sales == users?.Roles?.Id || (int)MotorClaims.Models.Enums.Roles.Broker == users?.Roles?.Id || (int)MotorClaims.Models.Enums.Roles.Agent == users?.Roles?.Id)
                         {*@
-                             @if ((int)MotorClaims.Models.Enums.Roles.Sales == users.Roles.Id || (int)MotorClaims.Models.Enums.Roles.Agent == users.Roles.Id || (int)MotorClaims.Models.Enums.Roles.Broker == users.Roles.Id || (int)MotorClaims.Models.Enums.Roles.Admin == users.Roles.Id)
-                        {
-                            <li class="navigation-item">
 
-                                <a class="menu-item-wrapper active" title="Home" href="@Url.Action("Index","Home")">
-                                    <img src="~/assets/icons/sidebar/home.svg" class="menu-icon" />
-                                </a>
-                            </li>
-                        }
+                        <li class="navigation-item">
+
+                            <a class="menu-item-wrapper active" title="Home" href="@Url.Action("Index","Home")">
+                                <img src="~/assets/icons/home.png" class="menu-icon" />
+                            </a>
+                        </li>
+
                         @*  }*@
-
-                        <li class="navigation-item">
-                            <a class="menu-item-wrapper" href="@Url.Action("Index","Search")" title="@_localizer["UWApprovals"]" aria-current="page">
-                                <img src="~/assets/icons/search.svg" class="menu-icon" />
+                        @if (users.Roles.Id == 16|| users.Roles.Id == 2||users.Roles.Id == 4)
+                        {
+                            <li class="navigation-item">
+                                <a class="menu-item-wrapper" href="@Url.Action("Index","Search")" title="Search" aria-current="page">
+                                    <img src="~/assets/icons/search.svg" class="menu-icon" />
+                                </a>
+                            </li>
+                        }
+                        @if (users.Roles.Id == 16|| users.Roles.Id == 4)
+                        {
+                         <li class="navigation-item">
+                            <a class="menu-item-wrapper" href="@Url.Action("Index","Operations")" title="Operation" aria-current="page">
+                                <img src="~/assets/icons/Operation.png" class="menu-icon" />
                             </a>
                         </li>
+                        }
+                    
+                         @if ((users.Roles.Id==15 || users.Roles.Id==16||users.Roles.Id==4) && 1==2)
+                        {
+                           <li class="navigation-item">
+                                <a class="menu-item-wrapper" href="@Url.Action("Workshops","Surveyor")" title="Workshops" aria-current="page">
+                                    <img src="~/assets/icons/Workshops.jpg" class="menu-icon" />
+                                </a>
+                            </li>
+                        }
+                        @if ((3 == 1 || users.Roles.Id==16) && 1==2)
+                        {
+                            <li class="navigation-item">
+                                <a class="menu-item-wrapper" href="@Url.Action("Index","Surveyor")" title="Surveyor" aria-current="page">
+                                    <img src="~/assets/icons/Survoyer.png" class="menu-icon" />
+                                </a>
+                            </li>
 
-                        <li class="navigation-item">
-                            <a class="menu-item-wrapper" href="@Url.Action("ApprovalsHistory","Approvals")" title="@_localizer["ApprovalsHistory"]" aria-current="page">
-                                <img src="~/assets/icons/sidebar/help.svg" class="menu-icon" />
-                            </a>
-                        </li>
-                        @if ((int)MotorClaims.Models.Enums.Roles.Approval == users.Roles.Id || (int)MotorClaims.Models.Enums.Roles.Admin == users.Roles.Id)
-                        {
                             <li class="navigation-item">
-                                <a class="menu-item-wrapper" href="@Url.Action("Approvals","Approvals")" title="@_localizer["MyApprovals"]" aria-current="page">
-                                    <img src="~/assets/icons/sidebar/Complaints.svg" class="menu-icon" />
+                                <a class="menu-item-wrapper" href="@Url.Action("Index","Towing")" title="Towing" aria-current="page">
+                                    <img src="~/assets/icons/Towing.png" class="menu-icon"  />
+                                </a>
+                            </li>              <li class="navigation-item">
+                                <a class="menu-item-wrapper" href="@Url.Action("Index","Approvals")" title="Approvals" aria-current="page">
+                                    <img src="~/assets/icons/Approvals.png" class="menu-icon"  />
                                 </a>
                             </li>
 
+                         
 
+                            <li class="navigation-item">
+                                <a class="menu-item-wrapper" href="@Url.Action("Index","Delegation")" title="@_localizer["Setup"]" aria-current="page">
+                                    <img src="~/assets/icons/Setup.png" class="menu-icon" />
+                                </a>
+                            </li>
                         }
-                        @if ((int)MotorClaims.Models.Enums.Roles.Finance == users.Roles.Id || (int)MotorClaims.Models.Enums.Roles.Admin == users.Roles.Id)
+                        @if (users.Roles.Id != 15)
                         {
                             <li class="navigation-item">
-                                <a class="menu-item-wrapper" href="@Url.Action("FinanceApprovals","Approvals")" title="@_localizer["FinanceApprovals"]" aria-current="page">
-                                    <img src="~/assets/icons/sidebar/Complaints.svg" class="menu-icon" />
-                                </a>
-                            </li>
-                            <li class="navigation-item">
-                                <a class="menu-item-wrapper" href="@Url.Action("CreditLimit","Managing")" title="@_localizer["CreditMoney"]" aria-current="page">
-                                    <img src="~/assets/icons/Money.png" class="menu-icon" />
+                                <a class="menu-item-wrapper" href="@Url.Action("eClaims","Operations")" title="@_localizer["eClaims"]" aria-current="page">
+                                    <img src="~/assets/icons/eclaim.png" class="menu-icon" />
                                 </a>
                             </li>
                         }
-                        @if ((int)MotorClaims.Models.Enums.Roles.Sales == users.Roles.Id || (int)MotorClaims.Models.Enums.Roles.Agent == users.Roles.Id || (int)MotorClaims.Models.Enums.Roles.Broker == users.Roles.Id || (int)MotorClaims.Models.Enums.Roles.Admin == users.Roles.Id)
+                        @if ((3 == 1 || users.Roles.Id==16) && 1==2)
                         {
                             <li class="navigation-item">
-                                <a class="menu-item-wrapper" href="@Url.Action("TeamLead","Approvals")" title="@_localizer["TeamLeadPage"]" aria-current="page">
-                                    <img src="~/assets/icons/sidebar/Complaints.svg" class="menu-icon" />
+                                <a class="menu-item-wrapper" href="@Url.Action("Index","WareHouse")" title="@_localizer["WareHouse"]" aria-current="page">
+                                    <img src="~/assets/icons/warehouse.jpg" class="menu-icon" />
                                 </a>
                             </li>
-                        }
-                        @if ((int)MotorClaims.Models.Enums.Roles.IT == users.Roles.Id  || (int)MotorClaims.Models.Enums.Roles.Admin == users.Roles.Id)
-                        {
+
                             <li class="navigation-item">
-                                <a class="menu-item-wrapper" href="@Url.Action("Index","Managing")" title="@_localizer["ManageUsers"]" aria-current="page">
-                                    <img src="~/assets/icons/sidebar/Complaints.svg" class="menu-icon" />
+                                <a class="menu-item-wrapper" href="@Url.Action("Index","Collections")" title="@_localizer["Collections"]" aria-current="page">
+                                    <img src="~/assets/icons/Collections.png" class="menu-icon" />
+                                </a>
+                            </li>
+
+                            <li class="navigation-item">
+                                <a class="menu-item-wrapper" href="@Url.Action("Reports","Setup")" title="@_localizer["Reports"]" aria-current="page">
+                                    <img src="~/assets/icons/empty-file.svg" class="menu-icon" />
                                 </a>
                             </li>
                         }
+
+                             <li class="navigation-item">
+                                <a class="menu-item-wrapper" href="@Url.Action("Index","Payments")" title="Payments" aria-current="page">
+                                    <img src="~/assets/icons/payment-method.png" class="menu-icon"  />
+                                </a>
+                            </li>
                     </ul>
                 </nav>
             </aside>

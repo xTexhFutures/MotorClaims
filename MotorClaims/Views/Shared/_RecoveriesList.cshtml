@@ -1,0 +1,95 @@
+﻿@using CORE.DTOs.MotorClaim.Claims;
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.AspNetCore.Builder
+@using Microsoft.AspNetCore.Localization
+@using Microsoft.Extensions.Options
+@using Microsoft.AspNetCore.Http.Features
+@using System.Globalization
+@using Newtonsoft.Json;
+
+@inject IViewLocalizer _localizer
+@{
+    Layout = null;
+}
+
+@model List<ClaimRecoveries>
+
+<div class="transaction-details">
+    <table class="universal-table">
+        <tr>
+            <th>
+                @_localizer["RecoveryAmount"].Value
+
+            </th>
+            <th>
+                @_localizer["CreatedBy"].Value
+
+            </th>
+            <th>
+                @_localizer["RecoveryType"].Value
+
+            </th>
+            <th>
+                @_localizer["RecoveryReason"].Value
+
+            </th>
+            <th>
+                @_localizer["RaseedNumber"].Value
+
+            </th>
+            <th>
+                @_localizer["Status"].Value
+
+            </th>
+            <th>
+                @_localizer["CreationDate"].Value
+
+            </th>
+
+        </tr>
+
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                @{
+                    ClaimSearchobj claimSearchobj = new ClaimSearchobj()
+                {
+                    ClaimId = item.ClaimId,
+                    ClaimantId = item.ClaimantId,
+                    Id=item.Id
+
+                };
+                    var Status = Enum.TryParse(item.Status.ToString(), out Enums.RecoveryStatus parsedEnumValue);
+                    string RecoveryType = Helpers.GetRecoveryType(item.RecoveryType);
+                    string RecoveryReason = Helpers.GetRecoveryReason(item.RecoveryReason);
+                }
+                <td class="tran"><a  style="pointer-events:'@(item.UncollectedAmount>0?"all":"none")"  onclick="LoadCollectRecoveries('@MotorClaims.Models.Helpers.Encrypt(JsonConvert.SerializeObject(claimSearchobj))')" >@string.Format("{0:N2}", @item.RecoveryAmount)</a></td>
+                <td>@item.CreatedBy</td>
+                <td>@RecoveryType</td>
+                <td>@RecoveryReason</td>
+                <td>@item.RaseedNumber</td>
+                <td>@parsedEnumValue</td>
+                <td>@Helpers.FormatLongDate(item.CreationDate)</td>
+
+
+            </tr>
+        }
+
+
+
+
+    </table>
+
+</div>
+<div class="common-slide-popup" id="CollectRecoveries"></div>
+<script>
+   
+    function LoadCollectRecoveries(id){
+    let element = document.getElementById('CollectRecoveries');
+    element.classList.remove('display-none');
+    element.classList.add('display-block');
+    element.classList.toggle('active');
+    $('#CollectRecoveries').load('/Collections/CollectRecoveries/',{Id:id});
+        }
+</script>

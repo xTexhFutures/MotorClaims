@@ -58,10 +58,12 @@
 }
 
 .resent-action-row .resent-column {
-  width: calc(100% / 3 - 0.75rem);
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
+    width: calc(100% / 3 - 0.75rem);
+    -webkit-box-pack: justify;
+    padding-right:10px;
+    border-right:dotted 1px;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
 }
 
 @media (max-width: 767px) {

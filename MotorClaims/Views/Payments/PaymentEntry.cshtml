@@ -1,0 +1,237 @@
+﻿@using CORE.DTOs.APIs.Authenticator;
+@using CORE.DTOs.Authentications;
+@using CORE.DTOs.MotorClaim.WorkFlow;
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.AspNetCore.Builder
+@using Microsoft.AspNetCore.Localization
+@using Microsoft.Extensions.Options
+@using Microsoft.AspNetCore.Http.Features
+@using System.Globalization
+
+@inject IViewLocalizer _localizer
+@using CORE.DTOs.MotorClaim.Claims;
+@model ClaimMaster
+@{
+    LoginObj users = new LoginObj();
+    users = Context.Session.getSessionData<LoginObj>("loginObj");
+    List<LookupTable> lookupTables = (List<LookupTable>)ViewData["query"];
+    Settlements settlements = (Settlements)ViewData["settlements"];
+    List<DocumentInfo>  MissingDocuments= (List<DocumentInfo>)ViewData["MissingDocuments"];
+    List<ReserveDetails> reserveDetails = (List<ReserveDetails>)ViewData["reserveDetails"];
+    string obj=(string)ViewData["claimSearchobj"];
+    string DocumentsLink=(string)ViewData["DocumentsLink"];
+    await Html.RenderPartialAsync("_PolicyInfo",Model.productionInfo);
+      await Html.RenderPartialAsync("_VehicleInfo",new {Vehicle= Model.vehiclesInfo ,UserType=true});
+    await Html.RenderPartialAsync("_ClaimInfo", Model.claims);
+    await Html.RenderPartialAsync("_ClaimantInfo",new { Model = Model.claimants,Lookups = lookupTables,UserType=true,vehiclesInfo=Model.vehiclesInfo});
+  await Html.RenderPartialAsync("_ClaimsHistory", Model.claimHistories);
+  await Html.RenderPartialAsync("_PaymentsList", Model.settlements);
+
+}
+
+
+@if (users.Roles.Id!=20)
+{
+    
+
+   <form  method="post" enctype="multipart/form-data">
+
+
+    <input type="hidden"  name="ClaimId" value="@Model.claims.Id" />
+    <input type="hidden"  name="ClaimantId" value="@Model.claimants.Id" />
+    <input type="hidden"  name="obj" value="@obj" />
+    <input type="hidden"  name="ClaimNo" value="@Model.claims.ClaimNo" />
+
+        <div class="tabs-wrapper">
+            <ul class="tabs-navigation-wrap">
+                <li class="tab-navigation tab-custom-two active" id="tabTwoOne" onclick="selectTabsTwo('tabTwoOne','one_1'); ">
+                    <div class="tab-item-text">
+                        <a href="#">@_localizer["SettlementEntry"].Value </a>
+                    </div>
+                </li>
+            </ul>
+
+            <div class="accordion-wrapper">
+          
+
+                <div class="accordion-item-wrapper active">
+
+                    <div class="accordion-body active" >
+                        
+
+
+                              <ul class="dates-and-conpany-wrapper">
+                            <li class="column-item">
+                                <span class="value">
+                                    @_localizer["ClaimantName"].Value
+                                    
+                                </span>
+                                <div class="form-field-wrapper">
+                                    <div class="form-input-wrapper">
+                                      <input name="ClaimantName" id="txtClaimantName" required maxlength="150" class="form-inputbox" value="@Model.claimants.BenefecieryName"/>
+                                  
+                                    </div>
+                                </div>
+
+                            </li>
+
+
+                            <li class="column-item">
+                                <span class="value">
+                                    @_localizer["NationalId"].Value
+                                    
+                                </span>
+                                <div class="form-field-wrapper">
+                                    <div class="form-input-wrapper">
+                                        <input name="NationalId" id="txtNationalId" required maxlength="10" class="form-inputbox" value="@Model.claimants.OwnerNationalId"/>
+                                  
+                                    </div>
+                                </div>
+
+                            </li>
+                       
+                       <li class="column-item">
+                                <span class="value">
+                                    @_localizer["IBAN"].Value
+                                    
+                                </span>
+                                <div class="form-field-wrapper">
+                                    <div class="form-input-wrapper">
+                                        <input name="Iban" id="txtIban" required maxlength="30"  class="form-inputbox" value="@Model.claimants.Iban"/>
+                                  
+                                    </div>
+                                </div>
+
+                            </li>
+
+                                 <li class="column-item">
+                                <span class="value">
+                                    @_localizer["SettlementType"].Value
+                                    
+                                </span>
+                                <div class="form-field-wrapper">
+                                    <div class="form-input-wrapper">
+                                        <select class="form-inputbox" required name="SettlementType" id="ddlSettlementType">
+                                            <option value=""></option>
+                                            <option  value="@((int)Enums.SettlementType.RepaireInvoice)">@Enums.SettlementType.RepaireInvoice.ToString()</option>
+                                            <option  value="@((int)Enums.SettlementType.TP)">@Enums.SettlementType.TP.ToString()</option>
+                                            <option  value="@((int)Enums.SettlementType.TotalLoss)">@Enums.SettlementType.TotalLoss.ToString()</option>
+                                            <option  value="@((int)Enums.SettlementType.TowingCharge)">@Enums.SettlementType.TowingCharge.ToString()</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                            </li>
+                        </ul>
+
+
+            <div class="transaction-details">
+                <table class="universal-table">
+                    @foreach (var clm in reserveDetails)
+                    {
+
+                        <tr>
+                            <td><input type="checkbox" value="@clm.Id" name="ReserveId"/></td>
+                            <td>@clm.Amount</td>
+                            @{
+                                   var y = Enum.TryParse(clm.ReserveType.ToString(), out Enums.ReserveType parsedEnumValue);
+                            }
+                            <td>@parsedEnumValue</td>
+                        </tr>
+
+
+                    }
+                </table>
+
+            </div>
+
+                        
+                              <ul class="dates-and-conpany-wrapper">
+                            <li class="column-item">
+                            <span class="value">
+                                    @_localizer["Upload"].Value
+                                    
+                                </span>
+                                <div class="ducument-detaild-Attachment">
+                                    <label for="fromFiles2" class="document-card">
+                                        <img src="/assets/icons/upload.svg" class="docuemet-icon" alt="">
+                                        <p id="Attachment2" class="document-tile-text">
+                                            @_localizer["Upload"].Value
+                                            
+                                        </p>
+                                        <input accept="image/*,application/pdf"  class="ducument-control" id="fromFiles2" name="Invoice" type="file" onchange="UpdateLabelH(2)" />
+                                    <img id="2" width="100" />
+                                    </label>
+                                </div>
+
+                            </li>
+
+
+                    
+                       
+                    
+                        </ul>
+
+                          
+                    </div>
+                </div>
+
+            </div>
+                  <div class="footer-actions-handle" style="position: inherit !important; width: 100%;">
+                                    <div class="next-button" style="margin-right: 5px;" >
+                                        <button type="submit" asp-action="UpdatePayment" id="btnSave" title="@(reserveDetails.Count>0?"Save":"There are no Reserve")" asp-controller="Payments" class="button button-primary">
+                                            @_localizer["Save"].Value
+                                        </button>
+                                    </div>
+                                </div>
+        </div>
+     
+
+
+    </form>
+}
+else
+{
+      await Html.RenderPartialAsync("_PaymentDetails", Model.settlements.FirstOrDefault());
+
+}
+
+                  <script>
+                          function UpdateLabelH(Id) {
+          var output = document.getElementById(Id);
+        output.src = URL.createObjectURL(event.target.files[0]);
+        output.onload = function () {
+            URL.revokeObjectURL(output.src) // free memory
+        }
+        const input = document.getElementById('fromFiles' + Id)
+        var files = input.files;
+        var $formdata = new FormData();
+
+        for (var i = 0; i != files.length; i++) {
+            $formdata.append("files", files[i]);
+        }
+         $('#Attachment2').text($formdata.get("files").name);
+
+    }
+
+             $(function(){
+                 if('@reserveDetails.Count'>0){
+
+
+//Disable
+$('#btnSave').prop('disabled', false)
+                 }else{
+                                          //Enable
+$('#btnSave').prop('disabled', true)
+                 }
+                 $('#ddlSettlementType').val('@settlements.SettlementType');
+                   
+                  if ('@ViewData["Error"]' != '' || '@ViewData["Error"]' != "") {
+            ErrorAlert('@ViewData["Error"]');
+        }
+                
+        
+
+             });
+
+                  </script>

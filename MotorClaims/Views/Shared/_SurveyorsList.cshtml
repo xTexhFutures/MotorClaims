@@ -20,6 +20,8 @@
                     ClaimantId = ClaimantId,
                     ClaimId = ClaimId
                 };
+
+               
 }
 
 
@@ -82,6 +84,8 @@
                     SurvoyerId=clm.Id
                     
                 };
+
+                 
                   }
                 <td class="tran"><a onclick="LoadSurveyorEntry('@MotorClaims.Models.Helpers.Encrypt(JsonConvert.SerializeObject(claimSearchobj))')">#@clm.CreatedBy</a></td>
                 <td>@(Helpers.FormatLongDate( clm.CreationDate.Value))</td>
@@ -106,7 +110,8 @@
    
     await Html.RenderPartialAsync("_SurveyorEntry", survoyer);
 }
- @{
+<div id="SurveyorEntry"></div>
+ @*  @{
                  ClaimSearchobj   claimSearchobj1 = new ClaimSearchobj()
                 {
                     ClaimId = ClaimId,
@@ -115,8 +120,20 @@
                 };
                   }
 
-       @*           <div class="transaction-details">
+                <div class="transaction-details">
                   <button type="button" class="button button-primary" onclick="LoadSurveyorEntry('@MotorClaims.Models.Helpers.Encrypt(JsonConvert.SerializeObject(claimSearchobj1))')">
                                     Add New Survey
                                 </button>
                                 </div>*@
+
+<script>
+
+
+      function LoadSurveyorEntry(Id){
+        $('#SurveyorEntry').load('/Surveyor/LoadSurveyorEntry/',{Id:Id});
+    }  
+    
+    function LoadSurveyorMissing(Id){
+        $('#SurveyorEntry').load('/Surveyor/LoadSurveyorMissing/',{Id:Id});
+    }
+</script>

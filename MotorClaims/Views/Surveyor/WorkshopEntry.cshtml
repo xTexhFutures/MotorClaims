@@ -1,0 +1,95 @@
+﻿@using CORE.DTOs.Authentications;
+@using CORE.DTOs.MotorClaim;
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.AspNetCore.Builder
+@using Microsoft.AspNetCore.Localization
+@using Microsoft.Extensions.Options
+@using Microsoft.AspNetCore.Http.Features
+@using System.Globalization
+
+@inject IViewLocalizer _localizer
+@using CORE.DTOs.MotorClaim.Claims;
+@using Newtonsoft.Json;
+
+@model ClaimMaster
+@{
+
+    string obj = (string)ViewData["claimSearchobj"];
+    long ClaimId=(long)ViewData["ClaimId"];
+    int ClaimantId=(int)ViewData["ClaimantId"];
+    string Link=(string)ViewData["Link"] ;
+        List<LookupTable> lookupTables = (List<LookupTable>)ViewData["query"];
+    Survoyer survoyer = new Survoyer()
+                {
+                    ClaimantId = ClaimantId,
+                    ClaimId = ClaimId
+                };
+    ClaimSearchobj   claimSearchobj1 = new ClaimSearchobj()
+                {
+                    ClaimId =ClaimId,
+                    ClaimantId =ClaimantId
+
+                };
+
+    await Html.RenderPartialAsync("_VehicleInfo",new {Vehicle= Model.vehiclesInfo ,UserType=false});
+    await Html.RenderPartialAsync("_ClaimantInfo",new { Model = Model.claimants,Lookups = lookupTables,UserType=false,vehiclesInfo=Model.vehiclesInfo});
+}
+
+<div class="basic-detail">
+   
+    <div class="policy-detail-body undefined">
+        <div class="inner-clild-wrap">
+
+
+                <ul class="detail-list">
+
+                    <li class="detailed-item false" >
+                        <a target="_blank" href="@Link">
+                    <div class="item-content">
+                        <div class="ducument-detaild-Attachment" >
+                            <label class="document-card">
+
+                                <img src="/assets/icons/download.svg" class="docuemet-icon" alt="">
+                                <p class="document-tile-text"> Repair Estimation</p>
+                            </label>
+
+                        </div>
+                    </div>
+                    </a>
+                    </li>
+             
+                 
+                </ul>
+
+
+        </div>
+
+    </div>
+</div>
+
+@{    await Html.RenderPartialAsync("_WorkshopEntry", survoyer);
+}
+             
+
+
+
+<div id="SurveyorEntry"></div>
+
+
+<script>
+      if ('@ViewData["Error"]' != '' || '@ViewData["Error"]' != "") {
+            ErrorAlert('@ViewData["Error"]');
+        }
+    function LoadSurveyorList(Id){
+        $('#SurveyorEntry').load('/Surveyor/LoadSurveyorsList/',{Id:Id});
+    }
+
+      function LoadSurveyorEntry(Id){
+        $('#SurveyorEntry').load('/Surveyor/LoadSurveyorEntry/',{Id:Id});
+    }  
+    
+    function LoadSurveyorMissing(Id){
+        $('#SurveyorEntry').load('/Surveyor/LoadSurveyorMissing/',{Id:Id});
+    }
+</script>
+

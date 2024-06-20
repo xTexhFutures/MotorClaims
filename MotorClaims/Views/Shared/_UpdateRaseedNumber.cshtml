@@ -1,0 +1,62 @@
+﻿@using CORE.DTOs.MotorClaim.Claims;
+@using CORE.DTOs.MotorClaim;
+@model ClaimRecoveries
+
+<form id="frmUpdateRaseedNumber" method="post" >
+    <input type="hidden" name="Id" value="@Model.Id" />
+    <div class="slide-popup-inner">
+        <div class="slide-header">
+            <div class="heading-card">
+                <h2 class="heading">Update Raseed Number</h2>
+            </div>
+        </div>
+        <div class="slide-body">
+            <div class="popup-body-wrapper">
+ 
+                <div class="body-content-wrapper">
+                    <div class="delete-content-card">
+
+
+
+                        <div class="cancel-declaration">
+                            <h3 class="title-label">Raseed Number</h3>
+                            <div class="form-field-wrapper">
+                                <div class="form-input-wrapper">
+                                    <input required type="text" name="RaseedNumber" autocomplete="off" maxlength="150" class="form-inputbox" value="@Model.RaseedNumber" />
+
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+                <div class="slide-footer">
+                    <div class="slide-inner-footer">
+                        <button type="button" class="button button-secondary-border"
+                                onclick="CloseDialogV('UpdateRaseedNumber')">
+                            Cancel
+                        </button>
+                        <button type="submit" class="button button-primary">Update</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+</form>
+
+<script>
+    $(function () {
+        $("#frmUpdateRaseedNumber").submit(function (event) {
+            $.post("/Claims/UpdateRaseedNumber/", $("#frmUpdateRaseedNumber").serializeArray(),function(){
+                CloseDialogV('UpdateRaseedNumber');
+            });
+
+        });
+    });
+
+
+</script>

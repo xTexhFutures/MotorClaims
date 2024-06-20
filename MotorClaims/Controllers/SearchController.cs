@@ -23,6 +23,8 @@ namespace MotorClaims.Controllers
             _memoryCache = memoryCache;
             _memoryCache.TryGetValue(VehicleListCacheKey, out query);
         }
+
+        [CustomAuthorize(Roles = "Admin,Front desk,Opertion")]
         public IActionResult Index()
         {
             ViewData["search"] = new Search();

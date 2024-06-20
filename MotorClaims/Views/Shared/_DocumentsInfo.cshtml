@@ -76,11 +76,70 @@
                         </span>
                     </div>
                 </li>
+                   <li class="detailed-item false">
+                    <span class="detailed-icon-wrap">
+                        <img src="/assets/icons/save.svg" alt="" class="item-icon">
+                    </span>
+                    <div class="item-content">
+                        <span class="label">
+                            @_localizer["Action"].Value
+                            
+                        </span>
+                    </div>
+                </li>
             </ul>
             @foreach (var clm in Model.Model)
             {
+                     if (clm.DocumentSetupId == 1012)
+                {
+                    string[] Others = clm.FileName.Split(',');
+                    foreach (var Other in Others)
+                    {
+                        if (!string.IsNullOrEmpty(Other))
+                        {
+                             <ul class="detail-list">
+                
+                    <li class="detailed-item false">
+                        <div class="item-content">
+                            <h3 class="value ellipsis " style="cursor:pointer;color:blue;text-decoration:underline"><a target="_blank" href="@Model.Link/@Model.ClaimNo/@Other">@Other</a></h3>
+                        </div>
+                    </li>
+                    <li class="detailed-item false">
 
-                <ul class="detail-list">
+                        <div class="item-content">
+                            <h3 class="value ellipsis">@Helpers.FormatLongDate(clm.CreationDate)</h3>
+                        </div>
+                    </li>
+                    <li class="detailed-item false">
+
+                        <div class="item-content">
+                            <h3 class="value ellipsis">@clm.CreatedBy</h3>
+                        </div>
+                    </li>
+                    <li class="detailed-item false">
+                        @{
+
+                            string Doc = doc.Where(p => p.Id == clm.DocumentSetupId).FirstOrDefault().Name;
+                        }
+                        <div class="item-content">
+                            <h3 class="value ellipsis">@Doc</h3>
+                        </div>
+                    </li>
+                    <li class="detailed-item false">
+
+                        <div class="item-content">
+                            <img src="/assets/icons/trash-can.svg" title="@_localizer["Delete"]" onclick="DeleteAttachment('@clm.Id')"
+                                 class="dependent-trace open-delete-dependent-modal" alt="">
+                        </div>
+                    </li>
+                        </ul>
+                        }
+                                       
+                    }
+                }
+                else
+                {
+                                    <ul class="detail-list">
                 
                     <li class="detailed-item false">
                         <div class="item-content">
@@ -108,10 +167,64 @@
                             <h3 class="value ellipsis">@Doc</h3>
                         </div>
                     </li>
+                    <li class="detailed-item false">
+
+                        <div class="item-content">
+                            <img src="/assets/icons/trash-can.svg" title="@_localizer["Delete"]" onclick="DeleteAttachment('@clm.Id')"
+                                 class="dependent-trace open-delete-dependent-modal" alt="">
+                        </div>
+                    </li>
                 </ul>
+                }
             }
 
         </div>
 
     </div>
 </div>
+
+<div id="delete-summary-modal" class="delete-dependent-modal">
+    <form  id="frmDeleteAttachment"  method="post">
+        <div class="modal-content">
+            <input type="hidden" name="Id" id="txtAttachmentId" />
+            <div class="modal-header">
+                <span class="close-delete-dependent" onclick="Close('delete-summary-modal')">&times;</span>
+                <h2>@_localizer["ConfirmQuotation"].Value</h2>
+            </div>
+            <div class="modal-body">
+                <p class="delete-text">
+
+                    @_localizer["Are"].Value   ?
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button onclick="Close('delete-summary-modal')" type="button" class="button button-secondary-border">@_localizer["Cancel"].Value</button>
+                <button class="button button-primary" type="submit">@_localizer["OK"].Value</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script>
+    function DeleteAttachment(Id){
+        ConfirmQuotation();
+        $('#txtAttachmentId').val(Id);
+     
+    }
+
+    $( "#frmDeleteAttachment" ).on( "submit", function( event ) {
+           $.post('/Operations/DeleteAttachment/'+$('#txtAttachmentId').val(),function(){
+        location.reload();
+        
+        });
+  event.preventDefault();
+} );
+</script>
+<style>
+    .dependent-trace {
+        width: 1rem;
+        -webkit-margin-start: 1rem;
+        margin-inline-start: 1rem;
+        cursor: pointer;
+    }
+</style>

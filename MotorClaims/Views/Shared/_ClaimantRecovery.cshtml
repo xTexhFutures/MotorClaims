@@ -13,7 +13,7 @@
     int ClaimId = (int)ViewData["ClaimId"];
     int ClaimantId = (int)ViewData["ClaimantId"];
 }
-@model List<ClaimTransactions>
+@model List<ClaimRecoveries>
 
      <div class="footer-actions-handle" style="position:inherit !important; width:100%">
           <div class="next-button" style="margin-right:5px">
@@ -48,35 +48,51 @@
                 @_localizer["Note"].Value
                 
             </th>
-            <th>
-                @_localizer["Fees"].Value
-                
-            </th>
+   
             <th>
                 @_localizer["CreatedBy"].Value
+                
+            </th>    
+            <th>
+                @_localizer["RecoveryType"].Value
+                
+            </th> 
+            <th>
+                @_localizer["RecoveryReason"].Value
+                
+            </th>     
+            <th>
+                @_localizer["RaseedNumber"].Value
+                
+            </th>  
+            <th>
+                @_localizer["Action"].Value
                 
             </th>
             </tr>
 
 
             @foreach (var clm in Model)
-            {
-                 
-                <tr>
+            {            
+                <tr>    
+                    @{
+                          string RecoveryType = Helpers.GetRecoveryType(clm.RecoveryType);
+                    string RecoveryReason = Helpers.GetRecoveryReason(clm.RecoveryReason);
+                    }
                 <td class="tran">@(++Serial)</td>
-                <td>@Helpers.FormatLongDate( clm.TransactionDate)</td>
-                <td>@clm.TransactionAmount</td>
+                <td>@Helpers.FormatLongDate(clm.CreationDate)</td>
+                <td>@clm.RecoveryAmount</td>
                 <td>@clm.Note</td>                
-                <td>@clm.Fees</td>
                 <td>@clm.CreatedBy</td>
-
+                <td>@RecoveryType</td>
+                <td>@RecoveryReason</td>
+                <td>@clm.RaseedNumber</td>
+                 <td class="tran"><a href="#" onclick="UpdateRaseedNumber(@clm.Id)">@_localizer["Update"].Value</a></td>
                 </tr>
-
-
             }
         </table>
     </div>
-
+    <div id="UpdateRaseedNumber" class="common-slide-popup"/>
 
      <div class="common-slide-popup" id="UpdateRecovery">
         <div class="slide-popup-inner">

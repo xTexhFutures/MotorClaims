@@ -3,10 +3,12 @@ using CORE.DTOs.APIs.Business;
 using CORE.DTOs.APIs.MotorClaim;
 using CORE.DTOs.APIs.Process.Payments;
 using CORE.DTOs.APIs.Setups.MMP;
+using CORE.DTOs.APIs.Unified_Response;
 using CORE.DTOs.Authentications;
 using CORE.DTOs.MotorClaim;
 using CORE.DTOs.MotorClaim.Claims;
 using CORE.DTOs.MotorClaim.Integrations.APIs;
+using CORE.DTOs.MotorClaim.Productions;
 using CORE.DTOs.MotorClaim.WorkFlow;
 using CORE.DTOs.Setups;
 using Microsoft.AspNetCore.Hosting.Server;
@@ -57,8 +59,43 @@ namespace MotorClaims.Controllers
         {
             ClaimSearchobj claimSearchobj = Helpers.Deserilize<ClaimSearchobj>(Helpers.Decryption(obj));
             ClaimSearchResult claimSearchResult = HttpContext.Session.getSessionData<ClaimSearchResult>("SearchResult");
-            var policy = claimSearchResult.Productions.Where(p => p.policy.Id == claimSearchobj.PolicyId).FirstOrDefault();
-            var Vehicle = policy.Vehicles.Where(p => p.Vehicle.Id == claimSearchobj.VehicleId).FirstOrDefault();
+            if (claimSearchResult == null)
+            {
+                MainSearchMC mainSearchMC = new MainSearchMC()
+                {
+                    PolicyId = claimSearchobj.PolicyId
+                };
+                SetupClaimsRequestcs setupClaimsRequestcs = new SetupClaimsRequestcs()
+                {
+                    TransactionType = CORE.Extensions.ClaimTransactionType.LoadProductionInfo,
+                    Request = mainSearchMC
+                };
+                var production = Helpers.ExcutePostAPI<List<ProductionInfo>>(setupClaimsRequestcs, _appSettings.APIHubPrefix + "api/MotorClaim/ClaimsTransactions");
+                ViewData["Policy"] = production.FirstOrDefault();
+
+                mainSearchMC = new MainSearchMC()
+                {
+                    Id = claimSearchobj.VehicleId,
+                    PolicyId = claimSearchobj.PolicyId,
+                };
+                setupClaimsRequestcs = new SetupClaimsRequestcs()
+                {
+                    TransactionType = CORE.Extensions.ClaimTransactionType.LoadVehicleInfo,
+                    Request = mainSearchMC
+                };
+                var vehic = Helpers.ExcutePostAPI<List<VehiclesInfo>>(setupClaimsRequestcs, _appSettings.APIHubPrefix + "api/MotorClaim/ClaimsTransactions");
+                VehicleInfos vehicleInfos = new VehicleInfos();
+                vehicleInfos.Vehicle = vehic.FirstOrDefault();
+                ViewData["Vehicle"] = vehicleInfos;
+            }
+            else
+            {
+                var policy = claimSearchResult.Productions.Where(p => p.policy.Id == claimSearchobj.PolicyId).FirstOrDefault();
+                var Vehicle = policy.Vehicles.Where(p => p.Vehicle.Id == claimSearchobj.VehicleId).FirstOrDefault();
+                ViewData["Policy"] = policy.policy;
+                ViewData["Vehicle"] = Vehicle;
+            }
+
             Claims claims = new Claims();
             if (claimSearchobj.ClaimId.HasValue && claimSearchobj.ClaimId.Value > 0)
             {
@@ -79,11 +116,46 @@ namespace MotorClaims.Controllers
             //keyValuePairs.Add("PlateNo", claims.PlateNo);
             //Helpers.SendSMSTemplate(2, keyValuePairs, "+966592032990", _appSettings);
 
-          
-            ViewData["Policy"] = policy;
-            ViewData["Vehicle"] = Vehicle;
+
+
             ViewData["Cities"] = HttpContext.Session.getSessionData<List<LookupTable>>("Cities");
             return View(claims);
+        }
+
+        public IActionResult ClaimEntryFast(string obj)
+        {
+            ClaimSearchobj claimSearchobj = Helpers.Deserilize<ClaimSearchobj>(Helpers.Decryption(obj));
+            MainSearchMC mainSearchMC = new MainSearchMC()
+            {
+                Id = (int)claimSearchobj.ClaimId.Value
+            };
+            SetupClaimsRequestcs setupClaimsRequestcs = new SetupClaimsRequestcs()
+            {
+                TransactionType = CORE.Extensions.ClaimTransactionType.LoadClaimsMaster,
+                Request = mainSearchMC
+            };
+            var claims = Helpers.ExcutePostAPI<List<ClaimMaster>>(setupClaimsRequestcs, _appSettings.APIHubPrefix + "api/MotorClaim/ClaimsTransactions");
+
+            SearchingObj searchingObj = new SearchingObj()
+            {
+                ClaimNo = claims.FirstOrDefault().claims.ClaimNo,
+                PolicyNo = claims.FirstOrDefault().claims.PolicyNo,
+                SequenceNo = claims.FirstOrDefault().claims.SequanceNo
+            };
+            ClaimSearchResult claimSearchResult = new ClaimSearchResult();
+            claimSearchResult = Helpers.ExcutePostAPI<ClaimSearchResult>(searchingObj, _appSettings.APIHubPrefix + "api/MotorClaim/SearchClaimInfo");
+
+
+            var policy = claimSearchResult.Productions.FirstOrDefault();
+            var Vehicle = policy.Vehicles.FirstOrDefault();
+            HttpContext.Session.SetSessionData("SearchResult", claimSearchResult);
+            claimSearchobj = new ClaimSearchobj()
+            {
+                ClaimId = claimSearchobj.ClaimId,
+                PolicyId = policy.policy.Id,
+                VehicleId = Vehicle.Vehicle.Id
+            };
+            return RedirectToAction("ClaimEntry", new { obj = Helpers.Encrypt(JsonConvert.SerializeObject(claimSearchobj)) });
         }
 
         public IActionResult ClaimantDetails(string obj)
@@ -93,11 +165,14 @@ namespace MotorClaims.Controllers
             Production policy = HttpContext.Session.getSessionData<Production>("policy");
             VehicleInfos Vehicle = HttpContext.Session.getSessionData<VehicleInfos>("Vehicle");
             Claimants claimants = new Claimants();
+            ClaimMaster claim = new ClaimMaster();
+            claim = HttpContext.Session.getSessionData<ClaimMaster>("Master");
             claimants = HttpContext.Session.getSessionData<Claimants>("claimants");
             ViewData["ClaimantType"] = query.Where(p => p.MajorCode == (int)SystemEnums.ClaimantType).ToList();
             ViewData["DamageType"] = query.Where(p => p.MajorCode == (int)MotorClaims.Models.Enums.Lookups.DamageType).ToList();
             ViewData["Policy"] = policy;
             ViewData["Vehicle"] = Vehicle;
+            ViewData["PremiaCovers"] = claim.vehileCovers;
             ViewData["ClaimantResult"] = query.Where(p => p.MajorCode == (int)SystemEnums.ClaimantResult).ToList();
 
             return View("_ClaimantDetails", claimants);
@@ -105,35 +180,74 @@ namespace MotorClaims.Controllers
         public IActionResult ClaimantsEntry(string obj)
         {
             ViewData["Error"] = string.Empty;
+            Production policy = new Production();
+            VehicleInfos Vehicle = new VehicleInfos();
             ClaimSearchobj claimSearchobj = Helpers.Deserilize<ClaimSearchobj>(Helpers.Decryption(obj));
             ClaimSearchResult claimSearchResult = HttpContext.Session.getSessionData<ClaimSearchResult>("SearchResult");
-            var policy = claimSearchResult.Productions.Where(p => p.policy.Id == claimSearchobj.PolicyId).FirstOrDefault();
-            var Vehicle = policy.Vehicles.Where(p => p.Vehicle.Id == claimSearchobj.VehicleId).FirstOrDefault();
+            if (claimSearchResult == null)
+            {
+                MainSearchMC mainSearchMC = new MainSearchMC()
+                {
+                    PolicyId = claimSearchobj.PolicyId
+                };
+                SetupClaimsRequestcs setupClaimsRequestcs = new SetupClaimsRequestcs()
+                {
+                    TransactionType = CORE.Extensions.ClaimTransactionType.LoadProductionInfo,
+                    Request = mainSearchMC
+                };
+                var production = Helpers.ExcutePostAPI<List<ProductionInfo>>(setupClaimsRequestcs, _appSettings.APIHubPrefix + "api/MotorClaim/ClaimsTransactions");
+                policy.policy = production.FirstOrDefault();
+
+                mainSearchMC = new MainSearchMC()
+                {
+                    Id = claimSearchobj.VehicleId,
+                    PolicyId = claimSearchobj.PolicyId,
+                };
+                setupClaimsRequestcs = new SetupClaimsRequestcs()
+                {
+                    TransactionType = CORE.Extensions.ClaimTransactionType.LoadVehicleInfo,
+                    Request = mainSearchMC
+                };
+                var vehic = Helpers.ExcutePostAPI<List<VehiclesInfo>>(setupClaimsRequestcs, _appSettings.APIHubPrefix + "api/MotorClaim/ClaimsTransactions");
+                VehicleInfos vehicleInfos = new VehicleInfos();
+                vehicleInfos.Vehicle = vehic.FirstOrDefault();
+                Vehicle = vehicleInfos;
+            }
+            else
+            {
+                policy = claimSearchResult.Productions.Where(p => p.policy.Id == claimSearchobj.PolicyId).FirstOrDefault();
+                Vehicle = policy.Vehicles.Where(p => p.Vehicle.Id == claimSearchobj.VehicleId).FirstOrDefault();
+            }
+
             Claimants claimants = new Claimants();
+            List<ClaimMaster> claim = new List<ClaimMaster>();
             claimants.ClaimId = claimSearchobj.ClaimId.Value;
             if (claimSearchobj.ClaimId.HasValue && claimSearchobj.ClaimId.Value > 0)
             {
                 MainSearchMC mainSearchMC = new MainSearchMC()
                 {
-                    ClaimId = Convert.ToInt32(claimSearchobj.ClaimId.Value)
+                    ClaimId = Convert.ToInt32(claimSearchobj.ClaimId.Value),
+                    ClaimantId = claimSearchobj.ClaimantId
                 };
                 SetupClaimsRequestcs setupClaimsRequestcs = new SetupClaimsRequestcs()
                 {
-                    TransactionType = CORE.Extensions.ClaimTransactionType.LoadClaimants,
+                    TransactionType = CORE.Extensions.ClaimTransactionType.LoadClaimsMaster,
                     Request = mainSearchMC
                 };
-                var claimant = Helpers.ExcutePostAPI<List<Claimants>>(setupClaimsRequestcs, _appSettings.APIHubPrefix + "api/MotorClaim/ClaimsTransactions");
-                claimants = claimant != null && claimant.Count > 0 && claimSearchobj.ClaimantId.HasValue && claimSearchobj.ClaimantId.Value > 0 ? claimant.Where(p => p.Id == claimSearchobj.ClaimantId.Value).FirstOrDefault() : claimants;
+                claim = Helpers.ExcutePostAPI<List<ClaimMaster>>(setupClaimsRequestcs, _appSettings.APIHubPrefix + "api/MotorClaim/ClaimsTransactions");
+                claimants = claim != null && claim.Count > 0 && claimSearchobj.ClaimantId.HasValue && claimSearchobj.ClaimantId.Value > 0 ? claim.FirstOrDefault()?.claimants : claimants;
             }
             ViewData["ClaimantType"] = query.Where(p => p.MajorCode == (int)SystemEnums.ClaimantType).ToList();
             ViewData["DamageType"] = query.Where(p => p.MajorCode == (int)MotorClaims.Models.Enums.Lookups.DamageType).ToList();
-            ViewData["Policy"] = policy;
+            ViewData["Policy"] = policy.policy;
             ViewData["Vehicle"] = Vehicle;
             ViewData["obj"] = obj;
+            ViewData["PremiaCovers"] = claim.FirstOrDefault().vehileCovers;
             claimants.ClaimantStatus = claimants.ClaimantStatus.HasValue ? claimants.ClaimantStatus.Value : (int)Enums.ClaimantStatus.Operation;
             HttpContext.Session.SetSessionData("claimants", claimants);
             HttpContext.Session.SetSessionData("policy", policy);
             HttpContext.Session.SetSessionData("Vehicle", Vehicle);
+            HttpContext.Session.SetSessionData("Master", claim.FirstOrDefault());
             ViewData["ClaimantResult"] = query.Where(p => p.MajorCode == (int)SystemEnums.ClaimantResult).ToList();
 
             return View("_ClaimantsEntry", claimants);
@@ -142,7 +256,13 @@ namespace MotorClaims.Controllers
         [HttpPost]
         public IActionResult InsertClaim(Claims claim)
         {
-
+            DateTime LossDate = Helpers.ConvertDate(HttpContext.Request.Form["DateOfLoss"]);
+            DateTime NotificationDate = Helpers.ConvertDate(HttpContext.Request.Form["NotificationDate"]);
+            DateTime RegistrationDate = Helpers.ConvertDate(HttpContext.Request.Form["RegistrationDate"]);
+            //int u =Convert.ToInt32(HttpContext.Request.Form["CityId"]);
+            claim.DateOfLoss = LossDate;
+            claim.RegistrationDate = RegistrationDate;
+            claim.NotificationDate = NotificationDate;
             int _min = 1000;
             int _max = 9999;
             Random _rdm = new Random();
@@ -150,8 +270,46 @@ namespace MotorClaims.Controllers
             int PolicyId = Convert.ToInt32(HttpContext.Request.Form["PolicyId"].ToString().Split(",")[0]);
             int VehicleId = Convert.ToInt32(HttpContext.Request.Form["VehicleId"].ToString().Split(",")[0]);
             ClaimSearchResult claimSearchResult = HttpContext.Session.getSessionData<ClaimSearchResult>("SearchResult");
+            SetupClaimsRequestcs setupClaimsRequestcs = new SetupClaimsRequestcs();
+            MainSearchMC mainSearchMC = new MainSearchMC();
+            Production policy = new Production();
+            VehicleInfos Vehicle = new VehicleInfos();
+            if (claimSearchResult == null)
+            {
+                 mainSearchMC = new MainSearchMC()
+                {
+                    PolicyId = PolicyId
+                };
+                 setupClaimsRequestcs = new SetupClaimsRequestcs()
+                {
+                    TransactionType = CORE.Extensions.ClaimTransactionType.LoadProductionInfo,
+                    Request = mainSearchMC
+                };
+                var production = Helpers.ExcutePostAPI<List<ProductionInfo>>(setupClaimsRequestcs, _appSettings.APIHubPrefix + "api/MotorClaim/ClaimsTransactions");
+                policy.policy = production.FirstOrDefault();
+
+                mainSearchMC = new MainSearchMC()
+                {
+                    Id = VehicleId,
+                    PolicyId = PolicyId,
+                };
+                setupClaimsRequestcs = new SetupClaimsRequestcs()
+                {
+                    TransactionType = CORE.Extensions.ClaimTransactionType.LoadVehicleInfo,
+                    Request = mainSearchMC
+                };
+                var vehic = Helpers.ExcutePostAPI<List<VehiclesInfo>>(setupClaimsRequestcs, _appSettings.APIHubPrefix + "api/MotorClaim/ClaimsTransactions");
+                VehicleInfos vehicleInfos = new VehicleInfos();
+                vehicleInfos.Vehicle = vehic.FirstOrDefault();
+                Vehicle = vehicleInfos;
+            }
+            else
+            {
+                 policy = claimSearchResult.Productions.Where(p => p.policy.Id == PolicyId).FirstOrDefault();
+                 Vehicle = policy.Vehicles.Where(p => p.Vehicle.Id == VehicleId).FirstOrDefault();
+            }
             List<Claims> claims = new List<Claims>();
-            if (claim.ClaimReportType == (int)Models.Enums.ClaimReportType.Manual)
+            if (claim.ClaimReportType == (int)Models.Enums.ClaimReportType.Other)
             {
                 int ManualReportType = Convert.ToInt32(HttpContext.Request.Form["ManualReportType"]);
                 string ReportNo = HttpContext.Request.Form["ReportNo"];
@@ -164,29 +322,50 @@ namespace MotorClaims.Controllers
                     claim.BasherNo = ReportNo;
                 }
             }
-            MainSearchMC main = new MainSearchMC()
+            mainSearchMC = new MainSearchMC()
             {
                 AccidentNo = claim.AccidentNo
             };
-            SetupClaimsRequestcs setupClaimsRequestcs = new SetupClaimsRequestcs()
+            setupClaimsRequestcs = new SetupClaimsRequestcs()
             {
                 TransactionType = CORE.Extensions.ClaimTransactionType.LoadClaim,
-                Request = main
+                Request = mainSearchMC
             };
-            var policy = claimSearchResult.Productions.Where(p => p.policy.Id == PolicyId).FirstOrDefault();
-            var Vehicle = policy.Vehicles.Where(p => p.Vehicle.Id == VehicleId).FirstOrDefault();
+
+
             claims = Helpers.ExcutePostAPI<List<Claims>>(setupClaimsRequestcs, _appSettings.APIHubPrefix + "api/MotorClaim/ClaimsTransactions");
-            ViewData["Policy"] = policy;
+            ViewData["Policy"] = policy.policy;
             ViewData["Vehicle"] = Vehicle;
             ViewData["Cities"] = HttpContext.Session.getSessionData<List<LookupTable>>("Cities");
 
-            if (claims.Count > 0)
+            if (claims.Count > 0 && claims.Where(p => p.Id != claim.Id).ToList().Count > 0)
             {
                 ViewData["Error"] = "This Accident No " + claim.AccidentNo + " already exist";
                 claim = claims.FirstOrDefault();
                 return View("ClaimEntry", claim);
             }
+            if (claim.Id > 0)
+            {
+                claim.DateOfLoss = claims.FirstOrDefault().DateOfLoss;
+                claim.NotificationDate = claims.FirstOrDefault().NotificationDate;
+                claim.RegistrationDate = claims.FirstOrDefault().RegistrationDate;
+                claim.City = claims.FirstOrDefault().City;
+            }
 
+
+            #region Validation
+
+            // Loss Date
+
+            if (claim.DateOfLoss < Vehicle.Vehicle.VehicleEffectiveDate || claim.DateOfLoss > Vehicle.Vehicle.VehicleExpiryDate)
+            {
+                ViewData["Error"] = "This Accident outside policy range";
+                return View("ClaimEntry", claim);
+            }
+
+
+
+            #endregion
 
             claim.ChassisNo = Vehicle.Vehicle.ChassisNo;
             claim.PolicyNo = policy.policy.PolicyNumber;
@@ -261,7 +440,6 @@ namespace MotorClaims.Controllers
             return View("ClaimEntry", claim);
         }
 
-
         [HttpPost]
         public IActionResult InsertClaimant(Claimants claimants)
         {
@@ -289,11 +467,37 @@ namespace MotorClaims.Controllers
             {
                 ClaimantId = claimants.Id,
                 RoleId = (int)Models.Enums.ClaimantStatus.Operation,
-                Status =  2
+                Status = 2
             };
             claimants = Helpers.ExcutePostAPI<Claimants>(autoAssignObj, _appSettings.APIHubPrefix + "api/MotorClaim/AutoAssign");
 
+            MainSearchMC mainSearchMC = new MainSearchMC()
+            {
+                Id = (int)claimants.ClaimId,
+                ClaimantId = claimants.Id
+            };
+            setupClaimsRequestcs = new SetupClaimsRequestcs()
+            {
+                TransactionType = CORE.Extensions.ClaimTransactionType.LoadClaimsMaster,
+                Request = mainSearchMC
+            };
+            var claims = Helpers.ExcutePostAPI<List<ClaimMaster>>(setupClaimsRequestcs, _appSettings.APIHubPrefix + "api/MotorClaim/ClaimsTransactions");
+            //bool Result = false; string error = string.Empty;
+            //if (!(claims.FirstOrDefault().claims.PremiaClaimId.HasValue && claims.FirstOrDefault().claims.PremiaClaimId.Value > 0) && claims.FirstOrDefault().claimants.ClaimantStatus != (int)Enums.ClaimantStatus.NeedMoreInfo)
+            //{
+            //    PremiaIntegration.CreateClaim(claims.FirstOrDefault(), _appSettings, out Result, out error);
+            //}
+            //else
+            //{
+            //    Result = true;
+            //}
 
+            //if (!(claimants.PremiaClaimId.HasValue && claimants.PremiaClaimId.Value > 0) && Result && claims.FirstOrDefault().claimants.ClaimantStatus != (int)Enums.ClaimantStatus.NeedMoreInfo)
+            //{
+            //    PremiaIntegration.CreateTPClaim(claims.FirstOrDefault(), _appSettings, out Result, out error);
+            //}
+            Helpers.UpdateClaimantStatus(claimants, _appSettings);
+            Helpers.RegisterHistory(_appSettings, claimants.ClaimId, "Update Claimant " + claimants.ClaimantName, HttpContext.Session.getSessionData<Users>("LoggedUser").UserName, claimants.Id);
             return RedirectToAction("ClaimEntry", new { obj = Helpers.Encrypt(JsonConvert.SerializeObject(claimSearchobj)) });
         }
 
@@ -337,37 +541,26 @@ namespace MotorClaims.Controllers
             ViewData["ClaimId"] = ClaimId;
             ViewData["ClaimantId"] = ClaimantId;
             ViewData["ModuleId"] = ModuleId;
-            List<DocumentInfo> documentInfos = new List<DocumentInfo>();
             MainSearchMC mainSearchMC = new MainSearchMC()
             {
-                ModuleId = ModuleId
+                Id = (int)ClaimId,
+                ClaimantId = ClaimantId
             };
             SetupClaimsRequestcs setupClaimsRequestcs = new SetupClaimsRequestcs()
-            {
-                TransactionType = CORE.Extensions.ClaimTransactionType.LoadDocuments,
-                Request = mainSearchMC
-            };
-            documentInfos = Helpers.ExcutePostAPI<List<DocumentInfo>>(setupClaimsRequestcs, _appSettings.APIHubPrefix + "api/MotorClaim/SetupMotorClaim");
-
-            ViewData["documentInfos"] = documentInfos;
-            List<Attachments> attachments = new List<Attachments>();
-            mainSearchMC = new MainSearchMC()
-            {
-               Id=(int)ClaimId,
-               ClaimantId=ClaimantId
-            };
-            setupClaimsRequestcs = new SetupClaimsRequestcs()
             {
                 TransactionType = CORE.Extensions.ClaimTransactionType.LoadClaimsMaster,
                 Request = mainSearchMC
             };
             var claims = Helpers.ExcutePostAPI<List<ClaimMaster>>(setupClaimsRequestcs, _appSettings.APIHubPrefix + "api/MotorClaim/ClaimsTransactions");
-            ViewData["Link"] = _appSettings.DocumentsLink +"/"+ claims.FirstOrDefault().claims.ClaimNo+"/"+ claims.FirstOrDefault().claimants.Serial+"/";
+
+            ViewData["documentInfos"] = Helpers.GetClaimantDocuments(claims.FirstOrDefault().claimants, _appSettings);
+
+            ViewData["Link"] = _appSettings.DocumentsLink + "/" + claims.FirstOrDefault().claims.ClaimNo + "/" + claims.FirstOrDefault().claimants.Serial + "/";
             return View(claims.FirstOrDefault());
         }
 
         [HttpPost]
-        public async Task<IActionResult> UploadAttachments(int Id, int ClaimId, int ModuleId, int? ClaimantId,int attachId,int serial, IList<IFormFile> files)
+        public async Task<IActionResult> UploadAttachments(int Id, int ClaimId, int ModuleId, int? ClaimantId, int attachId, int serial, IList<IFormFile> files)
         {
             int VehicleId = Convert.ToInt32(HttpContext.Request.Form["VehicleId"]);
             int PolicyId = Convert.ToInt32(HttpContext.Request.Form["PolicyId"]);
@@ -380,8 +573,84 @@ namespace MotorClaims.Controllers
             ViewData["ClaimantId"] = ClaimantId;
             ViewData["ModuleId"] = ModuleId;
 
-            List<Claims> claims = new List<Claims>();
-            List<Attachments> attachments = new List<Attachments>();
+            List<ClaimMaster> claims = new List<ClaimMaster>();
+            if (files != null && files.Count > 0)
+            {
+
+                foreach (IFormFile file in files)
+                {
+
+                    string pathMDF = _appSettings.ClaimSubmissionPath;
+                    string fieNameWithExt = Id.ToString() + "_" + ClaimantId.Value.ToString() + "_" + Path.GetFileName(file.FileName);
+                    System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
+                    if (file.Length > 0)
+                    {
+                        SetupClaimsRequestcs mainSearch = new SetupClaimsRequestcs()
+                        {
+                            TransactionType = CORE.Extensions.ClaimTransactionType.LoadClaimsMaster,
+                            Request = new MainSearchMC()
+                            {
+                                Id = (int)ClaimId
+                            }
+                        };
+                        claims = Helpers.ExcutePostAPI<List<ClaimMaster>>(mainSearch, _appSettings.APIHubPrefix + "api/MotorClaim/ClaimsTransactions");
+
+                        string directory = Path.Combine(pathMDF, claims.FirstOrDefault().claims.ClaimNo, serial.ToString());
+                        bool folderExists = Directory.Exists(directory);
+                        if (!folderExists)
+                            Directory.CreateDirectory(directory);
+
+                        string filePath = Path.Combine(directory, fieNameWithExt);
+                        using (Stream fileStream = new FileStream(filePath, FileMode.Create))
+                        {
+                            await file.CopyToAsync(fileStream);
+                            Attachments attachment = new Attachments()
+                            {
+                                ClaimantId = ClaimantId,
+                                ClaimId = ClaimId,
+                                CreationDate = DateTime.Now,
+                                DocumentSetupId = Id,
+                                ModuleId = ModuleId,
+                                FileName = fieNameWithExt,
+                                ContentType = files[0].ContentType,
+                                CreatedBy = HttpContext.Session.getSessionData<Users>("LoggedUser").UserName,
+                                IsDeleted = false,
+                                Id = attachId
+                            };
+                            SetupClaimsRequestcs setupClaimsRequestcs = new SetupClaimsRequestcs()
+                            {
+                                TransactionType = CORE.Extensions.ClaimTransactionType.InsertUpdateAttachment,
+                                Request = attachment
+                            };
+                            attachment = Helpers.ExcutePostAPI<Attachments>(setupClaimsRequestcs, _appSettings.APIHubPrefix + "api/MotorClaim/SetupMotorClaim");
+
+                        }
+                    }
+                }
+                ViewData["Link"] = _appSettings.DocumentsLink + claims.FirstOrDefault().claims.ClaimNo;
+
+                ViewData["documentInfos"] = Helpers.GetClaimantDocuments(claims.FirstOrDefault().claimants, _appSettings);
+                Helpers.UpdateClaimantStatus(claims.FirstOrDefault().claimants, _appSettings);
+            }
+
+            return View("DocumentsUpload", claims.FirstOrDefault().attachments);
+        }
+
+        [HttpPost]
+        public async void UploadAttachments2(int Id, int ClaimId, int ModuleId, int? ClaimantId, int attachId, int serial, IList<IFormFile> files)
+        {
+            int VehicleId = Convert.ToInt32(HttpContext.Request.Form["VehicleId"]);
+            int PolicyId = Convert.ToInt32(HttpContext.Request.Form["PolicyId"]);
+            //int? ClaimId = Convert.ToInt32(HttpContext.Request.Form["ClaimId"]);
+            //int? ClaimantId = Convert.ToInt32(HttpContext.Request.Form["ClaimantId"]);
+            //int ModuleId = Convert.ToInt32(HttpContext.Request.Form["ModuleId"]);
+            ViewData["VehicleId"] = VehicleId;
+            ViewData["PolicyId"] = PolicyId;
+            ViewData["ClaimId"] = ClaimId;
+            ViewData["ClaimantId"] = ClaimantId;
+            ViewData["ModuleId"] = ModuleId;
+
+            List<ClaimMaster> claims = new List<ClaimMaster>();
             if (files != null && files.Count > 0)
             {
                 Attachments attachment = new Attachments()
@@ -395,7 +664,7 @@ namespace MotorClaims.Controllers
                     ContentType = files[0].ContentType,
                     CreatedBy = HttpContext.Session.getSessionData<Users>("LoggedUser").UserName,
                     IsDeleted = false,
-                    Id= attachId
+                    Id = attachId
                 };
                 SetupClaimsRequestcs setupClaimsRequestcs = new SetupClaimsRequestcs()
                 {
@@ -414,15 +683,15 @@ namespace MotorClaims.Controllers
                     {
                         SetupClaimsRequestcs mainSearch = new SetupClaimsRequestcs()
                         {
-                            TransactionType = CORE.Extensions.ClaimTransactionType.LoadClaim,
+                            TransactionType = CORE.Extensions.ClaimTransactionType.LoadClaimsMaster,
                             Request = new MainSearchMC()
                             {
-                                Id =(int)attachment.ClaimId
+                                Id = (int)attachment.ClaimId
                             }
                         };
-                        claims = Helpers.ExcutePostAPI<List<Claims>>(mainSearch, _appSettings.APIHubPrefix + "api/MotorClaim/ClaimsTransactions");
+                        claims = Helpers.ExcutePostAPI<List<ClaimMaster>>(mainSearch, _appSettings.APIHubPrefix + "api/MotorClaim/ClaimsTransactions");
 
-                        string directory = Path.Combine(pathMDF, claims.FirstOrDefault().ClaimNo,serial.ToString());
+                        string directory = Path.Combine(pathMDF, claims.FirstOrDefault().claims.ClaimNo, serial.ToString());
                         bool folderExists = Directory.Exists(directory);
                         if (!folderExists)
                             Directory.CreateDirectory(directory);
@@ -434,36 +703,12 @@ namespace MotorClaims.Controllers
                         }
                     }
                 }
-                ViewData["Link"] = _appSettings.DocumentsLink + claims.FirstOrDefault().ClaimNo;
-                List<DocumentInfo> documentInfos = new List<DocumentInfo>();
-                MainSearchMC mainSearchMC = new MainSearchMC()
-                {
-                    ModuleId = ModuleId
-                };
-                setupClaimsRequestcs = new SetupClaimsRequestcs()
-                {
-                    TransactionType = CORE.Extensions.ClaimTransactionType.LoadDocuments,
-                    Request = mainSearchMC
-                };
-                documentInfos = Helpers.ExcutePostAPI<List<DocumentInfo>>(setupClaimsRequestcs, _appSettings.APIHubPrefix + "api/MotorClaim/SetupMotorClaim");
+                ViewData["Link"] = _appSettings.DocumentsLink + claims.FirstOrDefault().claims.ClaimNo;
 
-                ViewData["documentInfos"] = documentInfos;
-
-                mainSearchMC = new MainSearchMC()
-                {
-                    ModuleId = ModuleId
-                };
-                setupClaimsRequestcs = new SetupClaimsRequestcs()
-                {
-                    TransactionType = CORE.Extensions.ClaimTransactionType.LoadAttachment,
-                    Request = mainSearchMC
-                };
-                attachments = Helpers.ExcutePostAPI<List<Attachments>>(setupClaimsRequestcs, _appSettings.APIHubPrefix + "api/MotorClaim/SetupMotorClaim");
+                ViewData["documentInfos"] = Helpers.GetClaimantDocuments(claims.FirstOrDefault().claimants, _appSettings);
+                Helpers.UpdateClaimantStatus(claims.FirstOrDefault().claimants, _appSettings);
             }
-
-            return View("DocumentsUpload", attachments);
         }
-
         [HttpPost]
         public Claims NajmDetails(string Id, string Taqdeer)
         {
@@ -506,7 +751,6 @@ namespace MotorClaims.Controllers
             claims.AccidentNo = Id;
             return claims;
         }
-
 
         [HttpPost]
         public Claims BasherDetails(string Id, string SequanceNo, string Taqdeer)
@@ -559,7 +803,6 @@ namespace MotorClaims.Controllers
             claims.AccidentNo = Id;
             return claims;
         }
-
         public IActionResult ClaimManagment(string obj)
         {
             ClaimSearchobj claimSearchobj = Helpers.Deserilize<ClaimSearchobj>(Helpers.Decryption(obj));
@@ -601,47 +844,84 @@ namespace MotorClaims.Controllers
             ViewData["claims"] = claims;
             return View(claimants);
         }
-
         public IActionResult ClaimantReserve(int? ClaimantId, int? ClaimId)
         {
             ViewData["ClaimantId"] = ClaimantId;
             ViewData["ClaimId"] = ClaimId;
-            List<ClaimTransactions> claimTransactions = new List<ClaimTransactions>();
+
             MainSearchMC mainSearchMC = new MainSearchMC()
             {
-                TransactionType = (int)Enums.ClaimTransactionTypes.Reserve,
-                ClaimantId = ClaimantId
+                Id = Convert.ToInt32(ClaimId)
+
             };
             SetupClaimsRequestcs setupClaimsRequestcs = new SetupClaimsRequestcs()
             {
-                TransactionType = CORE.Extensions.ClaimTransactionType.LoadClaimTransactions,
+                TransactionType = CORE.Extensions.ClaimTransactionType.LoadClaimsMaster,
                 Request = mainSearchMC
             };
-            claimTransactions = Helpers.ExcutePostAPI<List<ClaimTransactions>>(setupClaimsRequestcs, _appSettings.APIHubPrefix + "api/MotorClaim/ClaimsTransactions");
+            var claim = Helpers.ExcutePostAPI<List<ClaimMaster>>(setupClaimsRequestcs, _appSettings.APIHubPrefix + "api/MotorClaim/ClaimsTransactions");
 
-            return View("_ClaimantReserve", claimTransactions);
+            ViewData["ClaimMaster"] = claim.FirstOrDefault();
+            List<ReserveDetails> reserveDetails = new List<ReserveDetails>();
+            foreach (var item in claim.FirstOrDefault().reserve)
+            {
+                foreach (var item1 in item.reserveDetails)
+                {
+                    reserveDetails.Add(item1);
+                }
+            }
+            return View("_ClaimantReserve", reserveDetails);
         }
         public IActionResult ClaimantRecovery(int? ClaimantId, int? ClaimId)
         {
             ViewData["ClaimantId"] = ClaimantId;
             ViewData["ClaimId"] = ClaimId;
-            List<ClaimTransactions> claimTransactions = new List<ClaimTransactions>();
+            List<ClaimRecoveries> claimRecoveries = new List<ClaimRecoveries>();
             MainSearchMC mainSearchMC = new MainSearchMC()
             {
-                TransactionType = (int)Enums.ClaimTransactionTypes.Recovery,
+                ClaimId = ClaimId,
                 ClaimantId = ClaimantId
             };
             SetupClaimsRequestcs setupClaimsRequestcs = new SetupClaimsRequestcs()
             {
-                TransactionType = CORE.Extensions.ClaimTransactionType.LoadClaimTransactions,
+                TransactionType = CORE.Extensions.ClaimTransactionType.LoadClaimRecoveries,
                 Request = mainSearchMC
             };
-            claimTransactions = Helpers.ExcutePostAPI<List<ClaimTransactions>>(setupClaimsRequestcs, _appSettings.APIHubPrefix + "api/MotorClaim/ClaimsTransactions");
+            claimRecoveries = Helpers.ExcutePostAPI<List<ClaimRecoveries>>(setupClaimsRequestcs, _appSettings.APIHubPrefix + "api/MotorClaim/ClaimsTransactions");
 
-            return PartialView("_ClaimantRecovery", claimTransactions);
+            return PartialView("_ClaimantRecovery", claimRecoveries);
         }
+        public IActionResult UpdateRaseedNumber(int Id)
+        {
+            MainSearchMC mainSearchMC = new MainSearchMC()
+            {
+                Id = Id
+            };
+            SetupClaimsRequestcs setupClaimsRequestcs = new SetupClaimsRequestcs()
+            {
+                TransactionType = CORE.Extensions.ClaimTransactionType.LoadRaseedNumber,
+                Request = mainSearchMC
+            };
+            var raseed = Helpers.ExcutePostAPI<ClaimRecoveries>(setupClaimsRequestcs, _appSettings.APIHubPrefix + "api/MotorClaim/ClaimsTransactions");
+            return PartialView("_UpdateRaseedNumber", raseed);
 
+        }
+        [HttpPost]
+        public void UpdateRaseedNumber(ClaimRecoveries claimRecoveries)
+        {
+            MainSearchMC mainSearchMC = new MainSearchMC()
+            {
+                Id = claimRecoveries.Id,
+                chassis = claimRecoveries.RaseedNumber
+            };
+            SetupClaimsRequestcs setupClaimsRequestcs = new SetupClaimsRequestcs()
+            {
+                TransactionType = CORE.Extensions.ClaimTransactionType.UpdateRaseedNumber,
+                Request = mainSearchMC
+            };
+            var raseed = Helpers.ExcutePostAPI<string>(setupClaimsRequestcs, _appSettings.APIHubPrefix + "api/MotorClaim/ClaimsTransactions");
 
+        }
         public IActionResult UpdateClaimantReserve(ClaimTransactions claimTransaction)
         {
             claimTransaction.TransactionDate = DateTime.Now;
@@ -674,7 +954,6 @@ namespace MotorClaims.Controllers
 
             return PartialView("_ClaimantReserve", claimTransactions);
         }
-
         public IActionResult Photos(int Id)
         {
 
@@ -718,16 +997,192 @@ namespace MotorClaims.Controllers
             catch (Exception)
             {
             }
-         
+
 
             return PartialView("_Photos");
         }
-
         public IActionResult ClaimsHistory(string SequanceNo)
         {
 
             var claim = Helpers.ExcutePostAPI<List<Claims>>(SequanceNo, _appSettings.APIHubPrefix + "api/MotorClaim/ClaimHistoryCount");
             return PartialView("_ClaimsCount", claim);
+        }
+
+        [HttpPost]
+        public void SendSMS(int DocId, int SMSTemplateId, int ClaimId, int ClaimantId, string? MobileNo)
+        {
+            SMSTemplates sMSTemplates = new SMSTemplates();
+            MainSearchMC mainSearchMC = new MainSearchMC()
+            {
+                Id = SMSTemplateId
+            };
+            SetupClaimsRequestcs setupClaimsRequestcs = new SetupClaimsRequestcs()
+            {
+                TransactionType = CORE.Extensions.ClaimTransactionType.LoadSMSTemplate,
+                Request = mainSearchMC
+            };
+            sMSTemplates = Helpers.ExcutePostAPI<SMSTemplates>(setupClaimsRequestcs, _appSettings.APIHubPrefix + "api/MotorClaim/ClaimsTransactions");
+            SMSLog sMSLog = new SMSLog()
+            {
+                ClaimantId = ClaimantId,
+                ClaimId = ClaimId,
+                DocumentSetupId = DocId,
+                SendDate = DateTime.Now,
+                SentBy = HttpContext.Session.getSessionData<Users>("LoggedUser").UserName,
+                SMSTemplateId = SMSTemplateId,
+                SMSText = sMSTemplates.ArSMS
+            };
+            setupClaimsRequestcs = new SetupClaimsRequestcs()
+            {
+                TransactionType = CORE.Extensions.ClaimTransactionType.InsertSMSLog,
+                Request = sMSLog
+            };
+            sMSLog = Helpers.ExcutePostAPI<SMSLog>(setupClaimsRequestcs, _appSettings.APIHubPrefix + "api/MotorClaim/ClaimsTransactions");
+            Helpers.SendSms(MobileNo, sMSTemplates.ArSMS, _appSettings);
+
+        }
+
+
+        public IActionResult PushReserveToPremia(int Id, int ReserveId)
+        {
+
+            Reserve reserve = new Reserve();
+
+            MainSearchMC mainSearchMC = new MainSearchMC()
+            {
+                Id = ReserveId
+
+            };
+            SetupClaimsRequestcs setupClaimsRequestcs = new SetupClaimsRequestcs()
+            {
+                TransactionType = CORE.Extensions.ClaimTransactionType.LoadReserve,
+                Request = mainSearchMC
+            };
+            reserve = Helpers.ExcutePostAPI<List<Reserve>>(setupClaimsRequestcs, _appSettings.APIHubPrefix + "api/MotorClaim/ClaimsTransactions").FirstOrDefault();
+
+
+            mainSearchMC = new MainSearchMC()
+            {
+                Id = Id
+
+            };
+            setupClaimsRequestcs = new SetupClaimsRequestcs()
+            {
+                TransactionType = CORE.Extensions.ClaimTransactionType.LoadsReserveDetails,
+                Request = mainSearchMC
+            };
+            var reserveDetails = Helpers.ExcutePostAPI<List<ReserveDetails>>(setupClaimsRequestcs, _appSettings.APIHubPrefix + "api/MotorClaim/ClaimsTransactions");
+
+
+            ReserveObj reserveObj = new ReserveObj()
+            {
+                reserve = reserve,
+                reserveDetails = reserveDetails
+            };
+
+
+            mainSearchMC = new MainSearchMC()
+            {
+                Id = Convert.ToInt32(reserve.ClaimId)
+
+            };
+            setupClaimsRequestcs = new SetupClaimsRequestcs()
+            {
+                TransactionType = CORE.Extensions.ClaimTransactionType.LoadClaimsMaster,
+                Request = mainSearchMC
+            };
+            var claim = Helpers.ExcutePostAPI<List<ClaimMaster>>(setupClaimsRequestcs, _appSettings.APIHubPrefix + "api/MotorClaim/ClaimsTransactions");
+
+
+            ViewData["ClaimMaster"] = claim.FirstOrDefault();
+            string error = string.Empty;
+            bool Result = false;
+            PremiaIntegration.CreateClaimEstimation(claim.FirstOrDefault(), reserveObj, reserveDetails.FirstOrDefault().Amount, reserveDetails.FirstOrDefault().ReserveType, false, _appSettings, out Result, out error);
+            if (Result)
+            {
+                ReserveDetails details = new ReserveDetails();
+                details = reserveDetails.FirstOrDefault();
+                details.IsClosed = true;
+                setupClaimsRequestcs = new SetupClaimsRequestcs()
+                {
+                    TransactionType = CORE.Extensions.ClaimTransactionType.InsertReserveDetail,
+                    Request = details
+                };
+                details = Helpers.ExcutePostAPI<ReserveDetails>(setupClaimsRequestcs, _appSettings.APIHubPrefix + "api/MotorClaim/ClaimsTransactions");
+            }
+            return RedirectToAction("ClaimantReserve", new { ClaimantId = reserve.ClaimantId, ClaimId = reserve.ClaimId });
+
+        }
+
+        public IActionResult CloseReserve(int Id, int ReserveId)
+        {
+
+            Reserve reserve = new Reserve();
+
+            MainSearchMC mainSearchMC = new MainSearchMC()
+            {
+                Id = ReserveId
+
+            };
+            SetupClaimsRequestcs setupClaimsRequestcs = new SetupClaimsRequestcs()
+            {
+                TransactionType = CORE.Extensions.ClaimTransactionType.LoadReserve,
+                Request = mainSearchMC
+            };
+            reserve = Helpers.ExcutePostAPI<List<Reserve>>(setupClaimsRequestcs, _appSettings.APIHubPrefix + "api/MotorClaim/ClaimsTransactions").FirstOrDefault();
+
+
+            mainSearchMC = new MainSearchMC()
+            {
+                Id = Id
+
+            };
+            setupClaimsRequestcs = new SetupClaimsRequestcs()
+            {
+                TransactionType = CORE.Extensions.ClaimTransactionType.LoadsReserveDetails,
+                Request = mainSearchMC
+            };
+            var reserveDetails = Helpers.ExcutePostAPI<List<ReserveDetails>>(setupClaimsRequestcs, _appSettings.APIHubPrefix + "api/MotorClaim/ClaimsTransactions");
+
+
+            ReserveObj reserveObj = new ReserveObj()
+            {
+                reserve = reserve,
+                reserveDetails = reserveDetails
+            };
+
+
+            mainSearchMC = new MainSearchMC()
+            {
+                Id = Convert.ToInt32(reserve.ClaimId)
+
+            };
+            setupClaimsRequestcs = new SetupClaimsRequestcs()
+            {
+                TransactionType = CORE.Extensions.ClaimTransactionType.LoadClaimsMaster,
+                Request = mainSearchMC
+            };
+            var claim = Helpers.ExcutePostAPI<List<ClaimMaster>>(setupClaimsRequestcs, _appSettings.APIHubPrefix + "api/MotorClaim/ClaimsTransactions");
+
+
+            ViewData["ClaimMaster"] = claim.FirstOrDefault();
+            string error = string.Empty;
+            bool Result = false;
+            PremiaIntegration.CreateClaimEstimation(claim.FirstOrDefault(), reserveObj, reserveDetails.FirstOrDefault().Amount, reserveDetails.FirstOrDefault().ReserveType, true, _appSettings, out Result, out error);
+            if (Result)
+            {
+                ReserveDetails details = new ReserveDetails();
+                details=reserveDetails.FirstOrDefault();
+                details.IsClosed=true;
+                setupClaimsRequestcs = new SetupClaimsRequestcs()
+                {
+                    TransactionType = CORE.Extensions.ClaimTransactionType.InsertReserveDetail,
+                    Request = details
+                };
+                details = Helpers.ExcutePostAPI<ReserveDetails>(setupClaimsRequestcs, _appSettings.APIHubPrefix + "api/MotorClaim/ClaimsTransactions");
+            }
+            return RedirectToAction("ClaimantReserve", new { ClaimantId = reserve.ClaimantId, ClaimId = reserve.ClaimId });
+
         }
     }
 }

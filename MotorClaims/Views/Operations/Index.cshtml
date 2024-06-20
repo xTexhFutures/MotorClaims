@@ -137,6 +137,7 @@
                         <th>@_localizer["PolicyNumber"].Value </th>
                         <th>@_localizer["Make"].Value </th>
                         <th>@_localizer["Model"].Value </th>
+                        <th>@_localizer["Status"].Value </th>
                         <th>@_localizer["RegisteredDate"].Value </th>
                         <th>@_localizer["Reserve"].Value </th>
                         <th>@_localizer["AssignTo"].Value </th>
@@ -166,11 +167,25 @@
                             <td>@clm.productionInfo.PolicyNumber</td>
                                <td>@clm.vehiclesInfo.ModelDesc</td>
                             <td>@clm.vehiclesInfo.MakeDesc</td>
+                             @{
+                        var y = Enum.TryParse(clm.claimants.ClaimantStatus.ToString(), out MotorClaims.Models.Enums.ClaimantStatus parsedEnumValue);
+                    }
+                            <td>@parsedEnumValue.DisplayName()</td>
                          
                             <td>@HelpersDate.FormatDate(clm.claims.RegistrationDate)</td>
-                            <td class="tran"><a href="#" onclick="OperationReserve(@clm.claims.Id,@clm.claimants.Id)">Reserve</a></td>
+                            <td class="tran">
+                                @if (clm.claimants.ClaimantStatus==(int)Enums.ClaimantStatus.Operation)
+                                {
+                                        <a href="#" onclick="OperationReserve(@clm.claims.Id,@clm.claimants.Id)">Reserve</a> 
+                                }
+                           </td>
                             <td class="tran"><a href="#" onclick="OperationAssign(@clm.claims.Id,@clm.claimants.Id)">Assign</a></td>
-                            <td class="tran"><a href="#" onclick="OperationRecovery(@clm.claims.Id,@clm.claimants.Id)">Recovery</a></td>
+                            <td class="tran">
+                                  @if (clm.claimants.ClaimantStatus==(int)Enums.ClaimantStatus.Operation)
+                                {
+                                         <a href="#" onclick="OperationRecovery(@clm.claims.Id,@clm.claimants.Id)">Recovery</a>
+                                }
+                             </td>
                             <td class="tran"><a href="#" @(clm.claims.ClaimStatus==(int)Enums.ClaimStatus.Closed?"":"disabled") onclick="OperationReOpen(@clm.claims.Id)">
                                 @(clm.claimants.ClaimantStatus==(int)Enums.ClaimantStatus.Closed?"Re-Open":"")</a></td>
                             

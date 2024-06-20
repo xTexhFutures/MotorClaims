@@ -11,15 +11,15 @@
 @using CORE.DTOs.MotorClaim.Claims;
 @using Newtonsoft.Json;
 @{
-    Production policy = (Production)ViewData["Policy"];
+    ProductionInfo policy = (ProductionInfo)ViewData["Policy"];
     VehicleInfos vehicle = (VehicleInfos)ViewData["Vehicle"];
     List<LookupTable> Cities = (List<LookupTable>)ViewData["Cities"];
     ClaimSearchobj claimSearchobj = new ClaimSearchobj();
 }
 @model Claims
 <form id="frmClaimEntry" method="post" asp-controller="Claims">
-    <input type="hidden" form="frmClaimEntry" name="PolicyId" value="@policy.policy.Id" />
-    <input type="hidden" form="frmClaimEntry" name="VehicleId" value="@vehicle.Vehicle.Id" />
+    <input type="hidden" form="frmClaimEntry" name="PolicyId" value="@policy.PolicyId" />
+    <input type="hidden" form="frmClaimEntry" name="VehicleId" value="@vehicle.Vehicle.RiskId" />
     <input type="hidden" form="frmClaimEntry" name="Id" value="@Model.Id" />
     <input type="hidden" form="frmClaimEntry" name="ClaimNo" value="@Model.ClaimNo" />
 
@@ -31,8 +31,8 @@
          @{
              claimSearchobj = new ClaimSearchobj()
                               {
-                                  PolicyId = policy.policy.Id,
-                                  VehicleId = vehicle.Vehicle.Id,
+                                  PolicyId = policy.PolicyId,
+                                  VehicleId = vehicle.Vehicle.RiskId,
                                   ClaimId = Model.Id
                               };
          }
@@ -47,7 +47,7 @@
                 {
                     
                
-                 <li class="tab-navigation tab-custom-two" id="tabTwoTwo" onclick="selectTabsTwo('tabTwoTwo','ClaimantsList'); LoadClaimantsList('@Model.Id','@policy.policy.Id','@vehicle.Vehicle.Id')">
+                 <li class="tab-navigation tab-custom-two" id="tabTwoTwo" onclick="selectTabsTwo('tabTwoTwo','ClaimantsList'); LoadClaimantsList('@Model.Id','@policy.PolicyId','@vehicle.Vehicle.RiskId')">
                     <div class="tab-item-text">
                         Claimants
                     </div>
@@ -93,11 +93,11 @@
                                             </label>
 
                                             <label for="radio-card-v2-13" class="radio-card-v2" style="min-width:30% !important">
-                                                <input type="radio" value="@((int)MotorClaims.Models.Enums.ClaimReportType.Manual)" name="ClaimReportType" id="radio-card-v2-13" @(Model.ClaimReportType == (int)MotorClaims.Models.Enums.ClaimReportType.Manual ? "checked" : "") />
+                                                <input type="radio" value="@((int)MotorClaims.Models.Enums.ClaimReportType.Other)" name="ClaimReportType" id="radio-card-v2-13" @(Model.ClaimReportType == (int)MotorClaims.Models.Enums.ClaimReportType.Other ? "checked" : "") />
                                                 <div class="card-content-wrapper">
                                                     <span class="check-icon"></span>
                                                     <div class="card-content">
-                                                        <h4 class="title">@(MotorClaims.Models.Enums.ClaimReportType.Manual)</h4>
+                                                        <h4 class="title">@(MotorClaims.Models.Enums.ClaimReportType.Other)</h4>
                                                     </div>
                                                 </div>
                                             </label>
@@ -116,37 +116,37 @@
                                                 </div>
 
                                             </div>
-                                            <div class="form-container Full">
+@*                                            <div class="form-container Full">
                                                 <span class="label"> @_localizer["TaqdeerNo"].Value </span>
                                                 <input class="form-controlar" autocomplete="off"  maxlength="20" style="text-transform:uppercase" id="txtTaqdeerNo" type="text" placeholder="Taqdeer No" name="TaqdeerNo" value="@Model.TaqdeerNo" />
 
-                                            </div>
+                                            </div>*@
                                              <div class="form-container Full" id="SequanceNo">
                                                 <span class="label"> @_localizer["SequanceNo"].Value </span>
-                                                <input class="form-controlar" autocomplete="off"  maxlength="20" style="text-transform:uppercase" id="txtSequanceNo" type="text" placeholder="Sequance No" name="SequanceNo" value="" />
+                                                <input class="form-controlar" autocomplete="off"  maxlength="20" style="text-transform:uppercase" id="txtSequanceNo" type="text" placeholder="Sequance No" name="SequanceNo" value="@Model.SequanceNo" />
 
                                             </div>
-                                            @if (Model.Id==0)
+                                          @*  @if (Model.Id==0)
                                             {
                                                   <div class="form-container Full" style="display:contents">
                                                 <button type="button" onclick="GetNajmDetails()" class="button button-primary">
                                                     Retrieve
                                                 </button>
                                             </div>
-                                            }
+                                            }*@
                                           
                                         </div>
 
 
                                         <div class="vehicle-owner-grid" id="Manual">
-                                            <div class="form-container Full">
+                                         @*   <div class="form-container Full">
                                                 <span class="label"> @_localizer["AccidentNumber"].Value </span>
                                                 <select class="form-controlar" name="ManualReportType" id="txtManualReportType">
                                                     <option value=""></option>
                                                     <option value="@((int)MotorClaims.Models.Enums.ClaimReportType.Najm)">@(MotorClaims.Models.Enums.ClaimReportType.Najm)</option>
                                                     <option value="@((int)MotorClaims.Models.Enums.ClaimReportType.Basher)">@(MotorClaims.Models.Enums.ClaimReportType.Basher)</option>
                                                 </select>
-                                            </div>
+                                            </div>*@
                                             <div class="form-container Full">
                                                 <span class="label"> @_localizer["AccidentNumber"].Value </span>
                                                 <input class="form-controlar" autocomplete="off" style="text-transform:uppercase" type="text" maxlength="20" id="txtReportNo" placeholder="Accident Number" name="ReportNo" value="@Model.AccidentNo" />
@@ -156,15 +156,15 @@
                                             <div class="vehicle-owner-grid">
                                                 <div class="form-container Full">
                                                     <span class="label">@_localizer["LossDate"].Value </span>
-                                                    <input class="form-controlar calendar-input" autocomplete="off" required type="text" placeholder="Loss Date" id="txtDateOfLoss" name="DateOfLoss" value="@(Model.Id>0? HelpersDate.FormatDateNoTime(Model.DateOfLoss):string.Empty)" />
+                                                    <input class="form-controlar calendar-input" autocomplete="off" @(Model.Id>0?"readonly":"")   required type="text" placeholder="Loss Date" id="txtDateOfLoss" name="DateOfLoss" value="@(Model.Id>0? Model.DateOfLoss:string.Empty)" />
                                                 </div>
                                                 <div class="form-container Full">
                                                     <span class="label">@_localizer["NotificationDate"].Value </span>
-                                                    <input class="form-controlar calendar-input" autocomplete="off" required type="text" placeholder="Notification Date" id="txtnotificationdate" name="notificationdate" value="@(Model.Id>0?HelpersDate.FormatDateNoTime(Model.NotificationDate):string.Empty)" />
+                                                    <input class="form-controlar calendar-input" autocomplete="off" @(Model.Id>0?"readonly":"") required type="text" placeholder="Notification Date" id="txtNotificationDate" name="NotificationDate" value="@(Model.Id>0?Model.NotificationDate:string.Empty)" />
                                                 </div>
                                                 <div class="form-container Full">
                                                     <span class="label"> @_localizer["RegistrationDate"].Value </span>
-                                                    <input class="form-controlar calendar-input" autocomplete="off" required type="text" placeholder="Registration Date" id="txtregistrationdate" name="registrationdate" value="@(Model.Id>0?HelpersDate.FormatDateNoTime(Model.RegistrationDate):string.Empty)" />
+                                                    <input class="form-controlar calendar-input" autocomplete="off" @(Model.Id>0?"readonly":"") required type="text" placeholder="Registration Date" id="txtRegistrationDate" name="RegistrationDate" value="@(Model.Id>0?Model.RegistrationDate:string.Empty)" />
                                                 </div>
 
                                             </div>
@@ -179,7 +179,7 @@
                                                 </div>
                                                 <div class="form-container Full">
                                                     <span class="label">@_localizer["City"].Value </span>
-                                                    <select class="form-controlar" required name="City" id="txtCity" onchange="GetCityName(this);">
+                                                    <select class="form-controlar" required name="CityId" id="txtCity" onchange="GetCityName(this);">
                                                         <option value=""></option>
                                                         @foreach (var item in Cities)
                                                         {
@@ -187,6 +187,7 @@
                                                         }
 
                                                     </select>
+                                                    <input type="hidden" name="City" id="hfCity"/>
                                                 </div>
                                                 <div class="form-container Full">
                                                     <span class="label"> @_localizer["SurveyCity"].Value </span>
@@ -219,6 +220,17 @@
                                                     <span class="label"> @_localizer["AccidentPlace"].Value </span>
                                                     <textarea class="form-controlar" id="txtAccidentPlace" autocomplete="off" name="AccidentPlace" maxlength="1024">@Model.AccidentPlace</textarea>
                                                 </div>
+
+
+                                            </div>
+                                               <div class="vehicle-owner-grid">
+                                               
+                                                <div class="form-container Full">
+                                                    <span class="label"> @_localizer["Depreciation"].Value </span>
+                                                    <input class="form-controlar" autocomplete="off" maxlength="20"  id="txtDepreciation" type="text" placeholder="Depreciation Amount" name="Depreciation" value="@Model.Depreciation" />
+
+                                                </div>
+                                               
 
 
                                             </div>
@@ -325,7 +337,7 @@
                         </span>
                         <div class="item-content">
                             <span class="label"> @_localizer["PolicyNo"].Value </span>
-                            <h3 class="value">@policy.policy.PolicyNumber</h3>
+                            <h3 class="value">@policy.PolicyNumber</h3>
                         </div>
                     </li>
                     <li class="detailed-item">
@@ -334,7 +346,7 @@
                         </span>
                         <div class="item-content">
                             <span class="label"> @_localizer["EffectiveDate"].Value </span>
-                            <h3 class="value">@HelpersDate.FormatDateNoTime(policy.policy.PolicyEffectiveDate)</h3>
+                            <h3 class="value">@HelpersDate.FormatDateNoTime(policy.PolicyEffectiveDate)</h3>
                         </div>
                     </li>
                     <li class="detailed-item">
@@ -352,7 +364,7 @@
                         </span>
                         <div class="item-content">
                             <span class="label"> @_localizer["ExpiryDate"].Value </span>
-                            <h3 class="value">@HelpersDate.FormatDateNoTime(policy.policy.PolicyExpiryDate)</h3>
+                            <h3 class="value">@HelpersDate.FormatDateNoTime(policy.PolicyExpiryDate)</h3>
                         </div>
                     </li>
                 </ul>
@@ -384,81 +396,83 @@
 
 <script>
 
-    function GetNajmDetails() {
-        if($("#txtAccidentNo").val().length>0)
-        {
-               $.ajax({
-            url: '/Claims/NajmDetails/',
-            data: { Id: $("#txtAccidentNo").val(), Taqdeer: $("#txtTaqdeerNo").val() },
-            type: "POST",
-            dataType: 'json',
-            success: function (data) {
-                if (data.taqdeerNo != null && data.taqdeerNo != '') {
-                    if (data.claimStatus == 1) {
-                        Manual();
-                        $('#txtReportNo').val(data.accidentNo);
-                        $('#txtManualReportType').val(1);
-                        $('#ddlGeagraphicalArea').val(1);
-                        $('#txtTaqdeerNoManual').val(data.taqdeerNo);
-                        $('#txtDateOfLoss').val(data.dateOfLoss);
-                        $('#txtregistrationdate').val(data.registrationDate);
-                        $('#txtAccidentPlace').val(data.accidentPlace);
-                        $('#txtCity').val(data.cityId);
-                        $('#ddlSurveyCity').val(data.cityId);
-                    } else {
-                        ErrorAlert(data.notes);
-                    }
-                } else {
-                    ErrorAlert(data.notes);
-                }
+    //function GetNajmDetails() {
+    //    if($("#txtAccidentNo").val().length>0)
+    //    {
+    //           $.ajax({
+    //        url: '/Claims/NajmDetails/',
+    //        data: { Id: $("#txtAccidentNo").val(), Taqdeer: $("#txtTaqdeerNo").val() },
+    //        type: "POST",
+    //        dataType: 'json',
+    //        success: function (data) {
+    //            if (data.taqdeerNo != null && data.taqdeerNo != '') {
+    //                if (data.claimStatus == 1) {
+    //                    Manual();
+    //                    $('#txtReportNo').val(data.accidentNo);
+    //                    $('#txtManualReportType').val(1);
+    //                    $('#ddlGeagraphicalArea').val(1);
+    //                    $('#txtTaqdeerNoManual').val(data.taqdeerNo);
+    //                    $('#txtDateOfLoss').val(data.dateOfLoss);
+    //                    $('#txtregistrationdate').val(data.registrationDate);
+    //                    $('#txtAccidentPlace').val(data.accidentPlace);
+    //                    $('#txtCity').val(data.cityId);
+    //                    $('#ddlSurveyCity').val(data.cityId);
+    //                } else {
+    //                    ErrorAlert(data.notes);
+    //                }
+    //            } else {
+    //                ErrorAlert(data.notes);
+    //            }
 
-            }
-        });
-        }else  if(($("#txtBasherNo").val().length>0 && $("#txtSequanceNo").val().length>0))
-        {
-               $.ajax({
-            url: '/Claims/BasherDetails/',
-            data: { Id: $("#txtBasherNo").val(),SequanceNo:$("#txtSequanceNo").val(), Taqdeer: $("#txtTaqdeerNo").val() },
-            type: "POST",
-            dataType: 'json',
-            success: function (data) {
-                if (data.taqdeerNo != null && data.taqdeerNo != '') {
-                    if (data.claimStatus == 1) {
-                        Manual();
-                        $('#txtReportNo').val(data.accidentNo);
-                        $('#txtManualReportType').val(2);
-                        $('#ddlGeagraphicalArea').val(2);
-                        $('#txtTaqdeerNoManual').val(data.taqdeerNo);
-                        $('#txtDateOfLoss').val(data.dateOfLoss);
-                        $('#txtregistrationdate').val(data.registrationDate);
-                        $('#txtAccidentPlace').val(data.accidentPlace);
-                        $('#txtCity').val(data.cityId);
-                        $('#ddlSurveyCity').val(data.cityId);
-                    } else {
-                        ErrorAlert(data.notes);
-                    }
-                } else {
-                    ErrorAlert(data.notes);
-                }
+    //        }
+    //    });
+    //    }else  if(($("#txtBasherNo").val().length>0 && $("#txtSequanceNo").val().length>0))
+    //    {
+    //           $.ajax({
+    //        url: '/Claims/BasherDetails/',
+    //        data: { Id: $("#txtBasherNo").val(),SequanceNo:$("#txtSequanceNo").val(), Taqdeer: $("#txtTaqdeerNo").val() },
+    //        type: "POST",
+    //        dataType: 'json',
+    //        success: function (data) {
+    //            if (data.taqdeerNo != null && data.taqdeerNo != '') {
+    //                if (data.claimStatus == 1) {
+    //                    Manual();
+    //                    $('#txtReportNo').val(data.accidentNo);
+    //                    $('#txtManualReportType').val(2);
+    //                    $('#ddlGeagraphicalArea').val(2);
+    //                    $('#txtTaqdeerNoManual').val(data.taqdeerNo);
+    //                    $('#txtDateOfLoss').val(data.dateOfLoss);
+    //                    $('#txtregistrationdate').val(data.registrationDate);
+    //                    $('#txtAccidentPlace').val(data.accidentPlace);
+    //                    $('#txtCity').val(data.cityId);
+    //                    $('#ddlSurveyCity').val(data.cityId);
+    //                } else {
+    //                    ErrorAlert(data.notes);
+    //                }
+    //            } else {
+    //                ErrorAlert(data.notes);
+    //            }
 
-            }
-        });
-        }else{
-             ErrorAlert('Accident No is required');
-        }
+    //        }
+    //    });
+    //    }else{
+    //         ErrorAlert('Accident No is required');
+    //    }
      
-    }
+    //}
 
     $('#txtSequanceNo').ForceIntegerEntry();
+    $('#txtDepreciation').ForceIntegerEntry();
     $('#txtBasherNo').ForceIntegerEntry();
-    $('#txtAccidentNo').ForceIntegerEntry();
     $('#txtDateOfLoss').ForceDateEntry();
-    $('#txtnotificationdate').ForceDateEntry();
-    $('#txtregistrationdate').ForceDateEntry();
+    $('#txtNotificationDate').ForceDateEntry();
+    $('#txtRegistrationDate').ForceDateEntry();
 
-    function GetCityName(sel) {
+    function GetCityName(userSelect) {
         var submitButton = document.getElementById("txtCity");
         var userSelectValue = userSelect.options[userSelect.selectedIndex].value;
+        $('#hfCity').val($("#txtCity option:selected").text());
+      
     }
 
     function Najm() {
@@ -466,14 +480,14 @@
         $('#Basher').hide();
         $('#Manual').hide();
         $('#SequanceNo').hide();
-        if('@Model.Id'=='0'){
-  $('#Manual1').hide();
-        }
+  //      if('@Model.Id'=='0'){
+  //$('#Manual1').hide();
+  //      }
       
         $('#Service').show();
         $("#txtAccidentNo").prop('required', true);
         $("#txtBasherNo").prop('required', false);
-        $("#txtManualReportType").prop('required', false);
+        //$("#txtManualReportType").prop('required', false);
         $("#txtReportNo").prop('required', false);
         $("#txtSequanceNo").prop('required', false);
     }
@@ -483,12 +497,12 @@
         $('#Basher').show();
         $('#SequanceNo').show();
         $('#Manual').hide();
-        $('#Manual1').hide();
+        //$('#Manual1').hide();
         $('#Service').show();
         $("#txtAccidentNo").prop('required', false);
         $("#txtBasherNo").prop('required', true);
         $("#txtSequanceNo").prop('required', true);
-        $("#txtManualReportType").prop('required', false);
+        //$("#txtManualReportType").prop('required', false);
         $("#txtReportNo").prop('required', false);
     }
 
@@ -502,20 +516,29 @@
         $("#txtAccidentNo").prop('required', false);
         $("#txtBasherNo").prop('required', false);
         $("#txtSequanceNo").prop('required', false);
-        $("#txtManualReportType").prop('required', true);
+        //$("#txtManualReportType").prop('required', true);
         $("#txtReportNo").prop('required', true);
     }
 
-
     $(document).ready(function () {
+
+        $('#txtDateOfLoss').val('@Model.DateOfLoss');
+        $('#txtNotificationDate').val('@Model.NotificationDate');
+        $('#txtRegistrationDate').val('@Model.RegistrationDate');
+        $('#ddlGeagraphicalArea').val('@Model.GeagraphicalArea');
+        $('#ddlSurveyCity').val('@Model.SurveyCity');
+        $('#txtCity').val('@Model.CityId');
+
         if ('@Model.Id' != '0') {
             $('#ddlGeagraphicalArea').val('@Model.GeagraphicalArea');
+          
             $('#txtCity').val('@Model.CityId');
-            if ('@Model.AccidentNo' != null && '@Model.AccidentNo' != '') {
-                $('#txtManualReportType').val('@((int)MotorClaims.Models.Enums.ClaimReportType.Najm)');
-            } else {
-                $('#txtManualReportType').val('@((int)MotorClaims.Models.Enums.ClaimReportType.Basher)');
-            }
+            $('#hfCity').val('@Model.City');
+            //if ('@Model.AccidentNo' != null && '@Model.AccidentNo' != '') {
+            //    $('#txtManualReportType').val('@((int)MotorClaims.Models.Enums.ClaimReportType.Najm)');
+            //} else {
+            //    $('#txtManualReportType').val('@((int)MotorClaims.Models.Enums.ClaimReportType.Basher)');
+            //}
             $('#ddlSurveyCity').val('@Model.SurveyCity');
             $('#ddlGeagraphicalArea').val(1);
             $('#ddlClaimEvent').val('@Model.EventId');
@@ -546,8 +569,6 @@
         if ('@ViewData["Error"]' != '' || '@ViewData["Error"]' != "") {
             ErrorAlert('@ViewData["Error"]');
         }
-
-       
 
         $("input[name='ClaimReportType']").click(function () {
             var radioValue = $("input[name='ClaimReportType']:checked").val();

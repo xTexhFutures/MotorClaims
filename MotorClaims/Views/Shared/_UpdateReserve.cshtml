@@ -3,6 +3,8 @@
 @model ClaimMaster
 @{
     Layout = null;
+    List<LookupTable> ReserveCodes = (List<LookupTable>)ViewData["ReserveCodes"];
+    ReserveCodes = ReserveCodes.OrderBy(p => p.Code).ToList();
     ReserveBalance reserveBalance = new ReserveBalance()
     {
     ClaimLevel=Model.claims.ReserveBalance.HasValue?Model.claims.ReserveBalance.Value:0,
@@ -82,7 +84,21 @@ ClaimantLevel=Model.claimants.ReserveBalance.HasValue?Model.claimants.ReserveBal
                                 </div>
                             </div>
                         </div>
+                                   <div class="cancel-declaration">
+                            <h3 class="title-label">Reserve Code (SparePart)</h3>
+                            <div class="form-field-wrapper">
+                                <div class="form-input-wrapper">
+                                    <select required class="form-inputbox" name="PremiaCode1" id="ddlReserveCode1">
+                                        <option value=""></option>
+                                        @foreach (var item in ReserveCodes)
+                                        {
+                                              <option value="@item.Code">@item.Code - @item.NameEnglish</option>
+                                        }
+                                    </select>
 
+                                </div>
+                            </div>
+                        </div>
 
                         <div class="cancel-declaration">
                             <h3 class="title-label">Labor Cost</h3>
@@ -94,17 +110,96 @@ ClaimantLevel=Model.claimants.ReserveBalance.HasValue?Model.claimants.ReserveBal
                             </div>
                         </div>
 
-
-                        <div class="cancel-declaration">
-                            <h3 class="title-label">Other Cost</h3>
+                                 <div class="cancel-declaration">
+                            <h3 class="title-label">Reserve Code (LaborCost)</h3>
                             <div class="form-field-wrapper">
                                 <div class="form-input-wrapper">
-                                    <input required type="text" name="OtherCost" autocomplete="off" maxlength="10" class="form-inputbox" id="txtOtherCost" />
+                                    <select required class="form-inputbox" name="PremiaCode2" id="ddlReserveCode2">
+                                        <option value=""></option>
+                                        @foreach (var item in ReserveCodes)
+                                        {
+                                              <option value="@item.Code">@item.Code - @item.NameEnglish</option>
+                                        }
+                                    </select>
 
                                 </div>
                             </div>
                         </div>
 
+
+                        <div class="cancel-declaration">
+                            <h3 class="title-label">Sheikh Cost</h3>
+                            <div class="form-field-wrapper">
+                                <div class="form-input-wrapper">
+                                    <input  type="text" name="SheikhCost" autocomplete="off" maxlength="10" class="form-inputbox" id="txtSheikhCost" />
+
+                                </div>
+                            </div>
+                        </div>
+                       <div class="cancel-declaration">
+                            <h3 class="title-label">Reserve Code (Sheikh Almaared Cost)</h3>
+                            <div class="form-field-wrapper">
+                                <div class="form-input-wrapper">
+                                    <select  class="form-inputbox" name="PremiaCode4" id="ddlReserveCode4">
+                                        <option value=""></option>
+                                        @foreach (var item in ReserveCodes)
+                                        {
+                                              <option value="@item.Code">@item.Code - @item.NameEnglish</option>
+                                        }
+                                    </select>
+
+                                </div>
+                            </div>
+                        </div>
+                                <div class="cancel-declaration">
+                            <h3 class="title-label">Towing Cost</h3>
+                            <div class="form-field-wrapper">
+                                <div class="form-input-wrapper">
+                                    <input type="text" name="TowingCost" autocomplete="off" maxlength="10" class="form-inputbox" id="txtTowingCost" />
+
+                                </div>
+                            </div>
+                        </div>
+
+                                                        <div class="cancel-declaration">
+                            <h3 class="title-label">Reserve Code (TowingCost)</h3>
+                            <div class="form-field-wrapper">
+                                <div class="form-input-wrapper">
+                                    <select class="form-inputbox" name="PremiaCode5" id="ddlReserveCode5">
+                                        <option value=""></option>
+                                        @foreach (var item in ReserveCodes)
+                                        {
+                                              <option value="@item.Code">@item.Code - @item.NameEnglish</option>
+                                        }
+                                    </select>
+
+                                </div>
+                            </div>
+                        </div>
+                                <div class="cancel-declaration">
+                            <h3 class="title-label">Other Cost</h3>
+                            <div class="form-field-wrapper">
+                                <div class="form-input-wrapper">
+                                    <input  type="text" name="OtherCost" autocomplete="off" maxlength="10" class="form-inputbox" id="txtOtherCost" />
+
+                                </div>
+                            </div>
+                        </div>
+                                <div class="cancel-declaration">
+                            <h3 class="title-label">Reserve Code (OtherCost)</h3>
+                            <div class="form-field-wrapper">
+                                <div class="form-input-wrapper">
+                                    <select  class="form-inputbox" name="PremiaCode3" id="ddlReserveCode3">
+                                        <option value=""></option>
+                                        @foreach (var item in ReserveCodes)
+                                        {
+                                              <option value="@item.Code">@item.Code - @item.NameEnglish</option>
+                                        }
+                                    </select>
+
+                                </div>
+                            </div>
+                        </div>
                         <div class="cancel-declaration">
                             <h3 class="title-label">Note</h3>
                             <div class="form-field-wrapper">
@@ -121,7 +216,7 @@ ClaimantLevel=Model.claimants.ReserveBalance.HasValue?Model.claimants.ReserveBal
                                 onclick="CloseDialogV('UpdateReserve')">
                             Cancel
                         </button>
-                        <button type="submit" class="button button-primary">Update</button>
+                        <button type="submit" @*onclick="SubmitForm()"*@ class="button button-primary">Update</button>
                     </div>
                 </div>
             </div>
@@ -134,12 +229,15 @@ ClaimantLevel=Model.claimants.ReserveBalance.HasValue?Model.claimants.ReserveBal
 
 <script>
     $(function () {
-        $("#frmUpdateReserve").submit(function (event) {
-            $.post("/Surveyor/UpdateReserveTransaction/", $("#frmUpdateReserve").serializeArray(),function(){
-                CloseDialogV('UpdateReserve');
-            });
+      if ('@ViewData["Error"]' != '' || '@ViewData["Error"]' != "") {
+            alert('@ViewData["Error"]');
+        }
 
-        });
+
+        //$("#frmUpdateReserve").submit(function (event) {
+           
+
+        //});
     });
 
     $("#ddlClaimantID").change(function () {               
@@ -151,8 +249,30 @@ ClaimantLevel=Model.claimants.ReserveBalance.HasValue?Model.claimants.ReserveBal
 
     });
 
+    //function SubmitForm(){
+    //     $('#UpdateReserve').load("/Surveyor/UpdateReserveTransaction/", $("#frmUpdateReserve").serializeArray(),function(){
+    //if ('@ViewData["Error"]' == '' )
+    //{
+    //     CloseDialogV('UpdateReserve');
+    //    alert("Completed");
+    //}
+             
+    //        });
+    //}
 
-    $('#txtSparePartCost').ForceDecimalNegativeEntry();
-    $('#txtLaborCost').ForceDecimalNegativeEntry();
-    $('#txtOtherCost').ForceDecimalNegativeEntry();
+    $("form").submit(function(){
+        $('#UpdateReserve').load("/Surveyor/UpdateReserveTransaction/", $("#frmUpdateReserve").serializeArray(),function(){
+    if ('@ViewData["Error"]' == '' )
+    {
+         CloseDialogV('UpdateReserve');
+    }
+             
+            });
+});
+
+    $('#txtSparePartCost').ForceDecimalEntry();
+    $('#txtLaborCost').ForceDecimalEntry();
+    $('#txtOtherCost').ForceDecimalEntry();
+    $('#txtSheikhCost').ForceDecimalEntry();
+    $('#txtTowingCost').ForceDecimalEntry();
 </script>

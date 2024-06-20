@@ -31,7 +31,13 @@ namespace MotorClaims.Models
             Operations = 2,
             Surveyors = 3,
             Fraud = 4,
-            Salvage=11,
+            Salvage = 11,
+        }
+
+        public enum SettlementResult
+        {
+            FullySettled = 1,
+            Partially = 2
         }
         public enum DocumnetType
         {
@@ -40,7 +46,8 @@ namespace MotorClaims.Models
             Fraud = 3,
             Reserve = 4,
             Payment = 5,
-            Surveyor = 6
+            Surveyor = 6,
+            Operations = 7
         }
 
         public enum ClaimTransactionTypes
@@ -61,7 +68,7 @@ namespace MotorClaims.Models
         {
             Najm = 1,
             Basher = 2,
-            Manual = 3
+            Other = 3
         }
         public enum YakeenPlace
         {
@@ -103,18 +110,34 @@ namespace MotorClaims.Models
 
         public enum ClaimantStatus
         {
+            [Display(Name = "Need More Info")]
             NeedMoreInfo = 0,
+            [Display(Name = "Missing Documents")]
             MissingDocuments = 1,
+            [Display(Name = "Operation")]
             Operation = 2,
+            [Display(Name = "Surveyor")]
             Surveyor = 3,
+            [Display(Name = "Payment")]
             Payment = 4,
+            [Display(Name = "Workshop / Agency")]
             Workshop = 5,
+            [Display(Name = "Closed")]
             Closed = 6,
+            [Display(Name = "In Progress")]
             InProgress = 7,
+            [Display(Name = "Rejected")]
             Rejected = 8,
+            [Display(Name = "Reception")]
             Reception = 9,
+            [Display(Name = "Re-Open")]
             ReOpen = 10,
-            Salvage=11
+            [Display(Name = "Salvage")]
+            Salvage = 11,
+            [Display(Name = "Waiting Salvage Approvals")]
+            WaitingSalvageApprovals = 12,
+            [Display(Name = "Waiting Settelment Approvals")]
+            WaitingSettelmentApprovals = 13
         }
 
 
@@ -123,12 +146,14 @@ namespace MotorClaims.Models
             City = 80,
             CauseOfLoss = 1,
             ClaimantType = 81,
-            DamageType = 3
+            DamageType = 3,
+            ReserveCodes = 75,
+            NajmMapping = 91
         }
         public enum ClaimStatus
         {
             Pendding = 0,
-            Closed=2,
+            Closed = 2,
             InProgress = 1,
             Rejected = 3
         }
@@ -158,12 +183,12 @@ namespace MotorClaims.Models
 
         public enum VehicleLocation
         {
-            AgencyOrWorkshop=1,
-            Client=2,
-            Branch=3,
-            Provider=4,
-            Workshop=5,
-            Other=6
+            AgencyOrWorkshop = 1,
+            Client = 2,
+            Branch = 3,
+            Provider = 4,
+            Workshop = 5,
+            Other = 6
         }
 
         public enum TowingStatus
@@ -202,6 +227,69 @@ namespace MotorClaims.Models
             Recorder = 7,
             [Display(Name = "Others")]
             Others = 8
+        }
+
+
+        public enum RecoveryStatus
+        {
+            [Display(Name = "Open")]
+            Open = 1,
+            [Display(Name = "Partially Collected")]
+            PartiallyCollected = 2,
+            [Display(Name = "Collected")]
+            Collected = 3
+        }
+        public enum SurvorStatus
+        {
+            [Display(Name = "In Progress")]
+            InProgress = 1,
+            [Display(Name = "Completed")]
+            Completed = 2,
+            [Display(Name = "Fraud")]
+            Fraud = 3,
+            [Display(Name = "Total Loss")]
+            TotalLoss = 4
+        }
+        public enum CollectionType
+        {
+            Fully = 1,
+            Partial = 2
+        }
+
+        public enum WorkflowStatus
+        {
+            Pending = 0,
+            Approved = 1,
+            Rejected = 2
+        }
+
+        public enum WorkflowType
+        {
+            Reserve = 1,
+            RepairOrder = 2,
+            TotalLoss = 3,
+            SettelmentAutherity = 4
+        }
+        public enum ReserveType
+        {
+            SpareParts = 1,
+            LaborCost = 2, 
+            OtherCost = 3,
+            SheikhAlmaared = 4,
+            TowingCost = 5
+        }
+        public enum RepairConditions
+        {
+            Agency = 1,
+            Workshop = 2
+        }
+
+        public enum SettlementType
+        {
+            RepaireInvoice = 1,
+            TP = 2,
+            TowingCharge = 3,
+            TotalLoss = 4
         }
     }
 }

@@ -1,0 +1,147 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.AspNetCore.Builder
+@using Microsoft.AspNetCore.Localization
+@using Microsoft.Extensions.Options
+@using Microsoft.AspNetCore.Http.Features
+@using System.Globalization
+
+@inject IViewLocalizer _localizer
+@using CORE.DTOs.MotorClaim.Claims;
+
+
+@{
+    Layout = null;
+}
+@model ClaimMaster
+
+<form method="post" asp-action="UpdateClaimantActions" asp-controller="Surveyor">
+
+    <input type="hidden" name="Id" value="@Model.claims.Id"/>
+    <input type="hidden" id="hfSurveyorActions" name="hfSurveyorActions"/>
+
+    <div class="slide-popup-inner">
+        <div class="slide-header">
+            <div class="heading-card">
+                <h2 class="heading">
+                    @_localizer["WorkshopActions"].Value
+                    
+                </h2>
+            </div>
+        </div>
+        <div class="slide-body">
+            <div class="popup-body-wrapper">
+                <div class="body-content-wrapper">
+                    <div class="delete-content-card">
+                        <div class="body-delete-header">
+                            <h2 class="heading-title">@Model.claims.ClaimNo</h2>
+                            <span class="active-employee">
+                                @_localizer["Workshop"].Value
+                                
+                            </span>
+                        </div>
+                        <ul class="list-detail">
+                            <li class="list-item-delete">
+                                <span class="label">
+                                    @_localizer["OwnerName:"].Value
+                                    
+                                </span>
+                                <span class="value">@Model.claims.Owner</span>
+                            </li>
+                            <li class="list-item-delete">
+                                <span class="label">
+                                    @_localizer["PolicyNo:"].Value
+                                    
+                                </span>
+                                <span class="value">@Model.claims.PolicyNo</span>
+                            </li>
+                            <li class="list-item-delete">
+                                <span class="label">
+                                    @_localizer["PlateNo:"].Value
+                                    
+                                </span>
+                                <span class="value">@Model.claims.PlateNo</span>
+                            </li>
+                            <li class="list-item-delete">
+                                <span class="label">
+                                    @_localizer["SequanceNo:"].Value
+                                    
+                                </span>
+                                <span class="value">@Model.claims.SequanceNo</span>
+                            </li>
+                        </ul>
+                              <div class="cancel-declaration">
+                            <h3 class="title-label">
+                                @_localizer["Claimant"].Value
+                                
+                            </h3>
+                            <div class="form-field-wrapper">
+                                <div class="form-input-wrapper">
+                                    <select class="form-inputbox" required name="ClaimantId">
+                                      <option value="@Model.claimants.Id">@Model.claimants.ClaimantName</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="cancel-declaration">
+                            <h3 class="title-label">
+                                @_localizer["Action"].Value
+                                
+                            </h3>
+                            <div class="form-field-wrapper">
+                                <div class="form-input-wrapper">
+                                    <select class="form-inputbox" required id="ddlWorkshopActions" name="WorkshopActions">
+                                        <option value=""></option>
+                                        <option value="1">
+                                            @_localizer["DownloadRepairEstimationForm"].Value
+                                            
+                                        </option>
+                                        <option value="2">
+                                            @_localizer["DownloadRepairApprovalForm"].Value
+                                            
+                                        </option>
+                                        <option value="3">
+                                            @_localizer["DownloadRepairApprovalForm"].Value
+                                            
+                                        </option>
+                                        <option value="4">
+                                            @_localizer["DownloadClosureForm"].Value
+                                            
+                                        </option>
+                                           <option value="5">
+                                            @_localizer["UploadInvoicesAndClosureForm"].Value
+                                            
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="slide-footer">
+                    <div class="slide-inner-footer">
+                        <button type="button" class="button button-secondary-border"
+                                onclick="CloseDialogV('WorkshopActions')">
+                            @_localizer["Cancel"].Value
+                            
+                        </button>
+                        <button type="submit" class="button button-primary">
+                            @_localizer["Update"].Value
+                            
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+</form>
+
+<script>
+    $(function(){
+        $('#WorkshopActions').on('change', function() {
+alert(this);
+});
+    });
+</script>

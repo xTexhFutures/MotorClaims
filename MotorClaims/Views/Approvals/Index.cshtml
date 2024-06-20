@@ -6,11 +6,16 @@
 @using System.Globalization
 
 @inject IViewLocalizer _localizer
-
+@using CORE.DTOs.Authentications;
 @using CORE.DTOs.MotorClaim.Claims;
 @using Newtonsoft.Json;
-
-@model List<Claims>
+@{
+    SearchObj searchObj = (SearchObj)ViewData["searchObj"];
+    List<Users> users = (List<Users>)ViewData["AllUsers"];
+}
+@using X.PagedList.Mvc.Core;
+@using X.PagedList;
+@model IPagedList<ClaimMaster>
 
 <div class="add-member-detail" style="max-height:900px;overflow-y:auto">
     <div class="policy-wrapper">
@@ -159,11 +164,11 @@
                             @{
                                 ClaimSearchobj claimSearchobj = new ClaimSearchobj()
                     {
-                        PolicyId = clm.PolicyId.HasValue ? clm.PolicyId.Value : 0,
-                        ClaimId = clm.Id
+                        PolicyId = clm.claims.PolicyId.HasValue ? clm.claims.PolicyId.Value : 0,
+                        ClaimId = clm.claims.Id
                     };
                             }
-                            <td class="tran"><a href="@Url.Action("SurveyorEntry","Surveyor",new{obj=MotorClaims.Models.Helpers.Encrypt(JsonConvert.SerializeObject(claimSearchobj))})">@clm.ClaimNo</a></td>
+                            <td class="tran"><a href="@Url.Action("SurveyorEntry","Surveyor",new{obj=MotorClaims.Models.Helpers.Encrypt(JsonConvert.SerializeObject(claimSearchobj))})">@clm.claims.ClaimNo</a></td>
                             <td>@_localizer["clm.PolicyTypeName"].Value </td>
                             <td>@_localizer["clm.PolicyNumber"].Value  </td>
                             <td>@_localizer["clm.MakeDesc"].Value </td>

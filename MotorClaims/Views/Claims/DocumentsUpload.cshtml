@@ -129,7 +129,14 @@
                                 {
                                     <p id="Attachment@(doc.Id)" class="document-tile-text"> Upload Attachment</p>
                                 }
-                                <input onchange="Upload(@doc.Id,@(ClaimId.HasValue?ClaimId.Value:0),@ModuleId,@ClaimantId,@Model.attachments.Where(p=>p.DocumentSetupId==doc.Id).FirstOrDefault().Id,@Model.claimants.Serial)" accept="image/png, image/gif, image/jpeg,application/pdf" class="ducument-control" id="fromFiles@(doc.Id)" name="fromFiles" type="file" />
+                                @{
+                                    int attachmentId = 0;
+                                    if(Model.attachments.Count>0 && Model.attachments.Where(p => p.DocumentSetupId == doc.Id).FirstOrDefault() != null)
+                                    {
+                                        attachmentId = Model.attachments.Where(p => p.DocumentSetupId == doc.Id).FirstOrDefault().Id;
+                                    }
+                                }
+                                <input onchange="Upload(@doc.Id,@(ClaimId.HasValue?ClaimId.Value:0),@ModuleId,@ClaimantId,@attachmentId,@Model.claimants.Serial)" accept="image/png, image/gif, image/jpeg,application/pdf" class="ducument-control" id="fromFiles@(doc.Id)" name="fromFiles" type="file" />
                             </label>
 
                         </div>

@@ -1,4 +1,7 @@
-﻿using CORE.DTOs.APIs.MotorClaim;
+﻿using CORE.DTOs.APIs.Business;
+using CORE.DTOs.APIs;
+using CORE.DTOs.APIs.MotorClaim;
+using CORE.DTOs.APIs.Process.Reports;
 using CORE.DTOs.MotorClaim.Claims;
 using CORE.DTOs.MotorClaim.WorkFlow;
 using Microsoft.AspNetCore.Mvc;
@@ -23,6 +26,7 @@ namespace MotorClaims.Controllers
             _memoryCache = memoryCache;
             _memoryCache.TryGetValue(VehicleListCacheKey, out query);
         }
+        [CustomAuthorize(Roles = "Admin")]     
         public IActionResult Index()
         {
             return View();
@@ -112,6 +116,37 @@ namespace MotorClaims.Controllers
         public IActionResult Reports()
         {
             return View();
+        }
+
+        [HttpPost]
+        public string PrintReports(int Id)
+        {
+            //int Id = Convert.ToInt32(HttpContext.Request.Form["Id"]);
+            //int PolicyId = Convert.ToInt32(HttpContext.Request.Form["PolicyId"]);
+          
+            PrintReportInput printReportInput = new PrintReportInput();
+            ReportOut reportOut = new ReportOut();
+            printReportInput = new PrintReportInput()
+            {
+                ReportCode = "MCC001",
+                Parameters = "",
+                ReportOutputType = 1
+            };
+            string[] p = null;
+            try
+            {
+                reportOut = Helpers.ExcuteGetAPI<ReportOut>(printReportInput, _appSettings.APIHubPrefix + "api/Process/PrintReport");
+                p = reportOut.Path.Split('\\');
+            }
+            catch (Exception)
+            {
+            }
+            //var result = Helpers.ExcutePostAPI<CORE.DTOs.APIs.Unified_Response.Results>(reportInput, _appSettings.APIHubPrefix + query.services.Where(p => p.Name == "GenerateCoreReport").FirstOrDefault().Link);
+            string i = reportOut.Path.Replace("E:\\MCReportsPortal\\Files\\ReportsStoragePath", "http://172.16.1.24:8077").Replace("\\", "/");
+            //byte[] content =await GetUrlContent(i);
+            return i;
+
+            
         }
     }
 }

@@ -43,7 +43,7 @@
                             <h3 class="title-label">Claimant</h3>
                             <div class="form-field-wrapper">
                                 <div class="form-input-wrapper">
-                                    <select required class="form-inputbox" name="ClaimantID" id="ddlClaimantID">
+                                    <select required class="form-inputbox" name="ClaimantId" id="ddlClaimantID">
                                             <option value="@Model.claimants.Id">@Model.claimants.ClaimantName</option>
                                     </select>
                                 </div>
@@ -139,7 +139,7 @@
     $(function () {
 
         $("#frmUpdateReserve").submit(function (event) {
-            $.post("/Surveyor/UpdateReserveTransaction/", $("#frmUpdateReserve").serializeArray(),function(){
+            $.post("/Surveyor/UpdateRecoveryTransaction/", $("#frmUpdateReserve").serializeArray(),function(){
                 CloseDialogV('UpdateReserve');
             });
 

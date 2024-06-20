@@ -12,22 +12,25 @@
     int Serial = 0;
     int ClaimId = (int)ViewData["ClaimId"];
     int ClaimantId = (int)ViewData["ClaimantId"];
+    ClaimMaster claim = (ClaimMaster)ViewData["ClaimMaster"];
 }
-@model List<ClaimTransactions>
+@model List<ReserveDetails>
+@if (claim.claims.PremiaClaimId.HasValue && claim.claims.PremiaClaimId.Value > 0)
+{
+    <div class="footer-actions-handle" style="position:inherit !important; width:100%">
+        <div class="next-button" style="margin-right:5px">
 
-       <div class="footer-actions-handle" style="position:inherit !important; width:100%">
-          <div class="next-button" style="margin-right:5px">
+            <button type="button" class="button button-primary" onclick="OperationReserve(@ClaimId,@ClaimantId)">
+                @_localizer["AddNewReserve"].Value
 
-                                <button type="button" class="button button-primary" onclick="deleteMember('delet-member', 'Add_Reserve-popup')">
-            @_localizer["AddNewReserve"].Value
 
-                                    
-                                </button>
-                        
+            </button>
 
-                        </div>
-                                </div>
-    <div class="transaction-details">
+
+        </div>
+    </div>
+}
+<div class="transaction-details">
 
         <table class="universal-table">
             <tr>
@@ -35,9 +38,9 @@
             <th>
                 @_localizer["ReserveSerial"].Value
                 
-            </th>
+            </th>         
             <th>
-                @_localizer["TransactionDate"].Value
+                @_localizer["PremiaCode"].Value
                 
             </th>
             <th>
@@ -45,107 +48,80 @@
                 
             </th>
             <th>
-                @_localizer["Note"].Value
+                @_localizer["ReserveType"].Value
                 
             </th>
             <th>
-                @_localizer["Fees"].Value
+                @_localizer["IsSettled"].Value
                 
             </th>
             <th>
-                @_localizer["CreatedBy"].Value
+                @_localizer["IsClosed"].Value
                 
             </th>
-
+              <th>
+                @_localizer["Action"].Value
+                
+            </th>
             </tr>
 
 
             @foreach (var clm in Model)
             {
+
                  
                 <tr>
                 <td class="tran">@(++Serial)</td>
-                <td>@Helpers.FormatLongDate( clm.TransactionDate)</td>
-                <td>@clm.TransactionAmount</td>
-                <td>@clm.Note</td>                
-                <td>@clm.Fees</td>
-                <td>@clm.CreatedBy</td>
-
+                <td>@clm.PremiaCode</td>
+                <td>@clm.Amount</td>
+                  @{
+                        var y = Enum.TryParse(clm.ReserveType.ToString(), out MotorClaims.Models.Enums.ReserveType parsedEnumValue);
+                    }
+                <td>@parsedEnumValue</td>                
+                <td>@clm.IsSettled</td>
+                <td>@clm.IsClosed</td>
+                  <td>
+                      @if (claim.claims.PremiaClaimId.HasValue && claim.claims.PremiaClaimId.Value>0)
+                    {
+                             @if (!clm.IsClosed && clm.PremiaClaimId>0)
+                    {
+                          <a href="#" class="button button-primary" onclick="CloseReserve('@clm.Id','@clm.ReserveId')" style="line-height:1rem !important;margin:5px">
+                @_localizer["Close"].Value
+                
+            </a>
+                    }
+              @if (clm.PremiaClaimId==0)
+                    {
+                          <a href="#" onclick="PushToPremia('@clm.Id','@clm.ReserveId')" class="button button-primary" style="line-height:1rem !important;margin:5px">
+                @_localizer["Push To Premia"].Value
+                
+            </a>
+                    }
+                    }
+      
+ 
+                  </td>
                 </tr>
 
 
             }
         </table>
     </div>
+    <div class="common-slide-popup" id="UpdateReserve"></div>
 
 
-     <div class="common-slide-popup" id="Add_Reserve-popup">
-        <div class="slide-popup-inner">
-            <div class="slide-header">
-                <div class="heading-card">
-                <h2 class="heading">
-                    @_localizer["AddReserve"].Value
-                    
-                </h2>
-                </div>
-            </div>
-             <form method="post" id="frmUpdateReserve">
-            <input name="ClaimId" value="@ClaimId" type="hidden"/>
-            <input name="ClaimantId" value="@ClaimantId" type="hidden"/>
-            <div class="slide-body">
-                <div class="popup-body-wrapper">
-                    <div class="body-content-wrapper">
-                        <div class="delete-content-card">
-                             <div class="cancel-declaration">
-                                <h3 class="title-label">
-                                    @_localizer["ReserveAmount"].Value
-                                    
-                                </h3>
-                                <div class="form-field-wrapper">
-                                    <div class="form-input-wrapper">
-                                       <input class="form-inputbox" name="TransactionAmount" id="txtTransactionAmount" type="text" required/>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="cancel-declaration">
-                                <h3 class="title-label">
-                                    @_localizer["WhatistheReservereason?"].Value
-                                    
-                                </h3>
-                                <div class="form-field-wrapper">
-                                    <div class="form-input-wrapper">
-                                       <textarea class="form-inputbox" required name="Note"></textarea>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="slide-footer">
-                        <div class="slide-inner-footer">
-                            <button class="button button-secondary-border" type="button"
-                                    onclick="Close('Add_Reserve-popup')">
-                                @_localizer["Cancel"].Value
-                                
-                            </button>
-                            <button class="button button-primary" type="submit">
-                                @_localizer["Save"].Value
-                                
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                    <script>
+                        function PushToPremia(Id,ReserveId){
+                                spinner.show();
+                             $('#ClaimantsReserve').load('/Claims/PushReserveToPremia/',{Id:Id,ReserveId:ReserveId},function(){
+                                     spinner.hide();
+                             });
+                        }
 
-           </form>
-        </div>
-    </div>
-    <script>
-        $(function(){
-        
-         $('#frmUpdateReserve').on('submit', function(e){
-        $('#ClaimantsReserve').load('/Claims/UpdateClaimantReserve/', $("#frmUpdateReserve").serializeArray(),function(){
-        
-        });
-    });
-        });
-    </script>
+                           function CloseReserve(Id,ReserveId){
+                                spinner.show();
+                             $('#ClaimantsReserve').load('/Claims/CloseReserve/',{Id:Id,ReserveId:ReserveId},function(){
+                                     spinner.hide();
+                             });
+                        }
+                    </script>

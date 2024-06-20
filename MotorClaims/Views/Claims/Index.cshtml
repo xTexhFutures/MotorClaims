@@ -23,7 +23,8 @@
     }
 
     @{
-        await Html.RenderPartialAsync("_VehicleInfo", vehicle.Vehicle);
+        await Html.RenderPartialAsync("_VehicleInfo", new { Vehicle = vehicle.Vehicle, UserType = true });
+
     }
 
     @*   @{

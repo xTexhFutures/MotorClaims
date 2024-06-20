@@ -62,9 +62,9 @@
                     <td>@clm.ChassisNo</td>
                     <td>@(clm.DriverBirthDate.HasValue ? HelpersDate.FormatDateNoTime(clm.DriverBirthDate.Value) : string.Empty)</td>
                     @{
-                        var y = Enum.TryParse(clm.ClaimantStatus.ToString(), out MotorClaims.Models.Enums.ClaimStatus parsedEnumValue);
+                        var y = Enum.TryParse(clm.ClaimantStatus.ToString(), out MotorClaims.Models.Enums.ClaimantStatus parsedEnumValue);
                     }
-                    <td>@parsedEnumValue</td>
+                    <td>@parsedEnumValue.DisplayName()</td>
 
                 </tr>
 

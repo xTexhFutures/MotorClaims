@@ -120,7 +120,6 @@
                 ClaimId=claims.Id
             };
             }
-            <a class="button button-secondary" href="@Url.Action("ClaimantsEntry","Claims",new{obj=MotorClaims.Models.Helpers.Encrypt(JsonConvert.SerializeObject(claimSearchobj))})">Add Claimant</a>
 
         </div>
 
@@ -184,7 +183,7 @@
                     string ClaimantType = dClaimantType.Where(p => p.Code == clm.ClaimantType.Value.ToString()).FirstOrDefault().NameEnglish;
                     string ClaimantResult = dClaimantResult.Where(p => p.Code == clm.DamageType.Value.ToString()).FirstOrDefault().NameEnglish;
                 }
-                <td class="tran"><a href="@Url.Action("ClaimantsEntry","Claims",new{obj=MotorClaims.Models.Helpers.Encrypt(JsonConvert.SerializeObject(claimSearchobj))})">#@ClaimantType</a></td>
+                <td class="tran"><a href="@Url.Action("ClaimEntry","Claims",new{obj=MotorClaims.Models.Helpers.Encrypt(JsonConvert.SerializeObject(claimSearchobj))})">#@ClaimantType</a></td>
                 <td>@ClaimantResult</td>
                 <td></td>
                 <td>@clm.MakeDesc</td>

@@ -1,4 +1,5 @@
-﻿@using Microsoft.AspNetCore.Mvc.Localization
+﻿@using CORE.DTOs.Authentications;
+@using Microsoft.AspNetCore.Mvc.Localization
 @using Microsoft.AspNetCore.Builder
 @using Microsoft.AspNetCore.Localization
 @using Microsoft.Extensions.Options
@@ -14,115 +15,19 @@
     Layout = null;
     string obj = (string)ViewData["claimSearchobj"];
     List<Survoyer> survoyers=(List<Survoyer>)ViewData["survoyers"];
+    List<Users> workshops = (List<Users>)ViewData["workshops"];
+  bool IsWorkshop=(bool)ViewData["IsWorkshop"];
 }
 
-@if (survoyers.Count>0)
-{
-
-<div class="transaction-details">
-    <table class="universal-table">
-        <tr>
-            <!-- <th>#</th> -->
-                <th>
-                    @_localizer["CreatedBy"].Value
-                     
-                </th>
-                <th>
-                    @_localizer["CreationDate"].Value
-                    
-                </th>
-                <th>
-                    @_localizer["EstimatedSPAmount"].Value
-                    
-                </th>
-                <th>
-                    @_localizer["EstimatedLabourAmount"].Value
-                    
-                </th>
-                <th>
-                    @_localizer["EstimatedRepairDays"].Value
-                    
-                </th>
-                <th>
-                    @_localizer["SparePartAmount"].Value
-                    
-                </th>
-                <th>
-                    @_localizer["LabourAmount"].Value
-                    
-                </th>
-                <th>
-                    @_localizer["Note"].Value
-                    
-                </th>
-                <th>
-                    @_localizer["Missing"].Value
-                    
-                </th>
-
-        </tr>
 
 
-        @foreach (var clm in survoyers)
-        {
-
-            <tr>
-                @{
-                 ClaimSearchobj   claimSearchobj = new ClaimSearchobj()
-                {
-                    ClaimId = clm.ClaimId,
-                    ClaimantId = clm.ClaimantId,
-                    SurvoyerId=clm.Id
-                    
-                };
-                  }
-                <td class="tran"><a onclick="LoadSurveyorEntry('@MotorClaims.Models.Helpers.Encrypt(JsonConvert.SerializeObject(claimSearchobj))')">#@clm.CreatedBy</a></td>
-                <td>@(Helpers.FormatLongDate( clm.CreationDate.Value))</td>
-          
-                <td>@clm.EstimatedSPAmount</td>
-                <td>@clm.EstimatedLabourAmount</td>
-                <td>@clm.EstimatedRepairDays</td>
-                <td>@clm.SparePartAmount</td>
-                <td>@clm.LabourAmount</td>
-                <td>@clm.Note</td>
-                    <td class="tran">
-                        <a onclick="LoadSurveyorMissing('@MotorClaims.Models.Helpers.Encrypt(JsonConvert.SerializeObject(claimSearchobj))')">
-                            @_localizer["#CheckList"].Value
-                            
-                        </a>
-                    </td>
-
-            </tr>
-
-
-        }
-    </table>
-</div>
-    
-}
-
- @{
-                 ClaimSearchobj   claimSearchobj1 = new ClaimSearchobj()
-                {
-                    ClaimId =Model.ClaimId,
-                    ClaimantId =Model.ClaimantId
-                    
-                };
-                  }
-
-                  <div class="transaction-details">
-    <button type="button" class="button button-primary" onclick="LoadSurveyorEntry('@MotorClaims.Models.Helpers.Encrypt(JsonConvert.SerializeObject(claimSearchobj1))')">
-        @_localizer["AddNewSurvey"].Value
-
-                                    
-                                </button>
-                                </div>
 <div class="policy-detail-wrapper" >
     <form method="post" asp-controller="Surveyor" >
         <input type="hidden" name="ClaimId" value="@Model.ClaimId" />
         <input type="hidden" name="ClaimantId" value="@Model.ClaimantId" />
         <input type="hidden" name="Id" value="@Model.Id" />
         <input type="hidden" name="claimSearchobj" value="@obj" />
+
         <div class="policy-members">
             <div class="accordion-wrapper">
                 <div class="accordion-item-wrapper">
@@ -584,7 +489,7 @@
                                 <label class="Full">
                                     <input type="checkbox" name="Interior_R_C_Antil" value="true" class="support-icon" @(Model.Id > 0 && Model.Interior_R_C_Antil.HasValue && Model.Interior_R_C_Antil.Value ? "checked" : "") />
                                     <span class="value">
-                                        @_localizer["R\CAntil"].Value
+                                        @_localizer["R\\CAntil"].Value
                                        
                                     </span>
                                 </label>
@@ -1241,17 +1146,17 @@
                                 </span>
                                 <div class="form-field-wrapper">
                                     <div class="form-input-wrapper">
-                                        <select class="form-inputbox" required name="RepairCondition" id="ddlModuleId">
+                                        <select class="form-inputbox" required name="RepairCondition" id="ddlRepairCondition">
                                             <option value=""></option>
-                                            <option value="1">1</option>
-                                            <option value="2">2</option>
+                                            <option  value="@((int)Enums.RepairConditions.Agency)">@Enums.RepairConditions.Agency.ToString()</option>
+                                            <option  value="@((int)Enums.RepairConditions.Workshop)">@Enums.RepairConditions.Workshop.ToString()</option>
                                         </select>
                                     </div>
                                 </div>
 
                             </li>
 
-                            <li class="column-item">
+                        @*    <li class="column-item">
 
                                 <span class="value">
                                     @_localizer["PartProvider"].Value
@@ -1267,7 +1172,7 @@
                                     </div>
                                 </div>
 
-                            </li>
+                            </li>*@
                             <li class="column-item">
                                 <span class="value">
                                     @_localizer["WorkShop"].Value
@@ -1277,55 +1182,24 @@
                                     <div class="form-input-wrapper">
                                         <select class="form-inputbox" required name="WorkShop" id="ddlModuleId">
                                             <option value=""></option>
-                                            <option value="1">1</option>
-                                            <option value="2">2</option>
+                                            @foreach (var item in workshops)
+                                            {
+                                                  <option value="@item.Id">@item.Name</option>
+                                            }
                                         </select>
                                     </div>
                                 </div>
 
                             </li>
-                            <li class="column-item">
-
-                                <span class="value">
-                                    @_localizer["Recommended"].Value
-                                    
-                                </span>
-                                <label for="radio-card-v2-11" class="radio-card-v2">
-                                    <input type="radio" value="1" name="Recommended" id="radio-card-v2-11" @(Model.Recommended.HasValue && Model.Recommended.Value == 1 ? "checked" : "") />
-                                    <div class="card-content-wrapper">
-                                        <span class="check-icon"></span>
-                                        <div class="card-content">
-                                            <h4 class="title">
-                                                @_localizer["TotalLoss"].Value
-                                                
-                                            </h4>
-                                        </div>
-                                    </div>
-                                </label>
-                                <!-- /.radio-card -->
-
-                                <label for="radio-card-v2-12" class="radio-card-v2">
-                                    <input type="radio" value="0" name="Recommended" id="radio-card-v2-12" @(Model.Id == 0 ? "checked" :(Model.Recommended.HasValue && Model.Recommended.Value == 0 ? "checked" : "")) />
-                                    <div class="card-content-wrapper">
-                                        <span class="check-icon"></span>
-                                        <div class="card-content">
-                                            <h4 class="title">
-                                                @_localizer["Repair"].Value
-                                                
-                                            </h4>
-                                        </div>
-                                    </div>
-                                </label>
-
-                            </li>
+                       
                             <li class="column-item">
 
                                 <span class="value">
                                     @_localizer["Status"].Value
                                     
                                 </span>
-                                <label for="Status1" class="radio-card-v2">
-                                    <input type="radio" value="1" name="Status" id="Status1" @(Model.Id == 0 ? "checked" : (Model.Status.HasValue && Model.Status.Value == 1 ? "checked" : "")) />
+                                <label for="Status1" class="radio-card-v2" style="min-width:24% !important">
+                                    <input type="radio" value="@((int)Enums.SurvorStatus.InProgress)" name="Status" id="Status1" @(Model.Id == 0 ? "checked" : (Model.Status.HasValue && Model.Status.Value == ((int)Enums.SurvorStatus.InProgress) ? "checked" : "")) />
                                     <div class="card-content-wrapper">
                                         <span class="check-icon"></span>
                                         <div class="card-content">
@@ -1338,8 +1212,8 @@
                                 </label>
                                 <!-- /.radio-card -->
 
-                                <label for="Status2" class="radio-card-v2">
-                                    <input type="radio" value="2" name="Status" id="Status2" @(Model.Status.HasValue && Model.Status.Value == 2 ? "checked" : "") />
+                                <label for="Status2" class="radio-card-v2" style="min-width:24% !important">
+                                    <input type="radio" value="@((int)Enums.SurvorStatus.Completed)" name="Status" id="Status2" @(Model.Status.HasValue && Model.Status.Value == ((int)Enums.SurvorStatus.Completed) ? "checked" : "") />
                                     <div class="card-content-wrapper">
                                         <span class="check-icon"></span>
                                         <div class="card-content">
@@ -1351,8 +1225,8 @@
                                     </div>
                                 </label>
 
-                                <label for="Status3" class="radio-card-v2">
-                                    <input type="radio" value="3" name="Status" id="Status3" @(Model.Status.HasValue && Model.Status.Value == 3 ? "checked" : "") />
+                                <label for="Status3" class="radio-card-v2" style="min-width:24% !important">
+                                    <input type="radio" value="@((int)Enums.SurvorStatus.Fraud)" name="Status" id="Status3" @(Model.Status.HasValue && Model.Status.Value == ((int)Enums.SurvorStatus.Fraud) ? "checked" : "") />
                                     <div class="card-content-wrapper">
                                         <span class="check-icon"></span>
                                         <div class="card-content">
@@ -1363,7 +1237,18 @@
                                         </div>
                                     </div>
                                 </label>
-
+                                 <label for="Status4" class="radio-card-v2" style="min-width:24% !important">
+                                    <input type="radio" value="@((int)Enums.SurvorStatus.TotalLoss)" name="Status" id="Status4" @(Model.Status.HasValue && Model.Status.Value == ((int)Enums.SurvorStatus.TotalLoss) ? "checked" : "") />
+                                    <div class="card-content-wrapper">
+                                        <span class="check-icon"></span>
+                                        <div class="card-content">
+                                            <h4 class="title">
+                                                @_localizer["TotalLoss"].Value
+                                                
+                                            </h4>
+                                        </div>
+                                    </div>
+                                </label>
                             </li>
 
                         </ul>
@@ -1429,7 +1314,7 @@
                                 </div>
 
                             </li>
-                            <li class="column-item">
+                       @*     <li class="column-item">
 
                                 <span class="value">
                                     @_localizer["SparePartAmount"].Value
@@ -1454,7 +1339,7 @@
                                     </div>
                                 </div>
 
-                            </li>
+                            </li>*@
                             <li class="column-item">
 
                                 <span class="value">
@@ -1551,6 +1436,11 @@
 
     }
     $(document).ready(function () {
+        if('@IsWorkshop'=='True'){
+            $('#ddlRepairCondition').val('@((int)Enums.RepairConditions.Workshop)');
+        }else{
+$('#ddlRepairCondition').val('@((int)Enums.RepairConditions.Agency)');
+        }
            $('#liTechnicalNote').hide();
         $('input[type="file"]').change(function (e) {
             var lbl = e.target.files[0].name;
@@ -1566,11 +1456,10 @@
     $('#txtEstimatedLabourAmount').ForceDecimalEntry();
     $('#txtEstimatedRepairDays').ForceIntegerEntry();
 
-                  $('input:radio[name="Recommended"]').change(function() {
-        if ($(this).val() == '1') {     
+       $('input:radio[name="Status"]').change(function() {
+        if ($(this).val() == '@((int)Enums.SurvorStatus.TotalLoss)') {     
               $('#txtTechnicalNote').prop('required', true);
               $('#liTechnicalNote').show();
-
         } else {
             $('#liTechnicalNote').hide();
               $('#txtTechnicalNote').prop('required', false);

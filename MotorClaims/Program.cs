@@ -74,8 +74,8 @@ app.UseSession();
 
 app.UseFileServer(new FileServerOptions
 {
-    //FileProvider = new PhysicalFileProvider(@"E:\NajmImages"),
     FileProvider = new PhysicalFileProvider(@"D:\AICCFiles"),
+    //FileProvider = new PhysicalFileProvider(@"E:\NajmImages"),
     RequestPath = new PathString("/MyPath"),
     EnableDirectoryBrowsing = false
 });

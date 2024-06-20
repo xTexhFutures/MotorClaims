@@ -14,27 +14,27 @@ namespace MotorClaims.Models
             {
 
                 //if user isn't logged in.
-                //LoginObj User = filterContext.HttpContext.Session.getSessionData<LoginObj>("loginObj");
-                //string[] RolesList = Roles.Split(',');
-                //bool access = false;
-                //foreach (string Role in RolesList)
-                //{
-                //    if (User.Roles.Name.ToString().ToUpper() == Role.ToUpper())
-                //    {
-                //        access = true;
-                //        break;
-                //    }
-                //    //Check user rights here
+                LoginObj User = filterContext.HttpContext.Session.getSessionData<LoginObj>("loginObj");
+                string[] RolesList = Roles.Split(',');
+                bool access = false;
+                foreach (string Role in RolesList)
+                {
+                    if (User.Roles.Name.ToString().ToUpper() == Role.ToUpper())
+                    {
+                        access = true;
+                        break;
+                    }
+                    //Check user rights here
 
-                //}
-                //if (!access)
-                //{
-                //    filterContext.Result = new RedirectToRouteResult(new RouteValueDictionary(new
-                //    {
-                //        controller = "Authenticator",
-                //        action = "UnAuthorized"
-                //    }));
-                //}
+                }
+                if (!access)
+                {
+                    filterContext.Result = new RedirectToRouteResult(new RouteValueDictionary(new
+                    {
+                        controller = "Authenticator",
+                        action = "UnAuthorized"
+                    }));
+                }
 
 
             }

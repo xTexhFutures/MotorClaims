@@ -7,166 +7,184 @@
 
 @inject IViewLocalizer _localizer
 @using CORE.DTOs.MotorClaim.Claims;
+@using Newtonsoft.Json;
 
 @model Claims
 @{
     Layout = null;
+
+    ClaimSearchobj claimSearchobj = new ClaimSearchobj()
+            {
+                PolicyId = Model.PolicyId.Value,
+                VehicleId = 0,
+                ClaimId = Model.Id
+            };
+
 }
 
-        <div class="basic-detail">
-            <div class="policy-header">
-                <div class="name-number-wrapper">
-                    <div class="policy-name-wrapper">
-                        <img src="/assets/icons/empty-file.svg" class="policy-icon" />
+<div class="basic-detail">
+    <div class="policy-header">
+        <div class="name-number-wrapper">
+            <div class="policy-name-wrapper">
+                <img src="/assets/icons/empty-file.svg" class="policy-icon" />
                 <p class="policy-name">
                     @_localizer["ClaimInfo"].Value
-                    
-                </p>
-                    </div>
 
-                </div>
-                <div class="action-dropdown">
-                    <h3 class="policy-no">Claim No. @Model.ClaimNo</h3>
-                </div>
+                </p>
             </div>
-            <div class="policy-detail-body undefined">
-                <div class="inner-clild-wrap">
-                    <ul class="detail-list">
-                        <li class="detailed-item false">
-                            <span class="detailed-icon-wrap">
-                                <img src="/assets/icons/save.svg" alt="" class="item-icon">
-                            </span>
-                            <div class="item-content">
+
+        </div>
+        <div class="action-dropdown">
+            <h3 class="policy-no">Claim No. @Model.ClaimNo</h3>
+        </div>
+@*        <div class="request-btn-wrapper">
+            <a href="@Url.Action("ClaimEntry","Claims",new{obj=MotorClaims.Models.Helpers.Encrypt(JsonConvert.SerializeObject(claimSearchobj))})" class="button button-primary" style="line-height:1rem !important">
+                @_localizer["Khallad"].Value
+                View
+            </a>
+        </div>*@
+
+
+   
+    </div>
+    <div class="policy-detail-body undefined">
+        <div class="inner-clild-wrap">
+            <ul class="detail-list">
+                <li class="detailed-item false">
+                    <span class="detailed-icon-wrap">
+                        <img src="/assets/icons/save.svg" alt="" class="item-icon">
+                    </span>
+                    <div class="item-content">
                         <span class="label">
                             @_localizer["ClaimNumber"].Value
-                            
+
                         </span>
-                                <h3 class="value ellipsis">@Model.ClaimNo</h3>
-                            </div>
-                        </li>
-                        <li class="detailed-item false">
-                            <span class="detailed-icon-wrap">
-                                <img src="/assets/icons/calendar.svg" alt="" class="item-icon">
-                            </span>
-                            <div class="item-content">
+                        <h3 class="value ellipsis">@Model.ClaimNo</h3>
+                    </div>
+                </li>
+                <li class="detailed-item false">
+                    <span class="detailed-icon-wrap">
+                        <img src="/assets/icons/calendar.svg" alt="" class="item-icon">
+                    </span>
+                    <div class="item-content">
                         <span class="label">
                             @_localizer["DateOfLoss"].Value
-                            
+
                         </span>
-                                <h3 class="value ellipsis">@Helpers.FormatDate( Model.DateOfLoss)</h3>
-                            </div>
-                        </li>
-                        <li class="detailed-item false">
-                            <span class="detailed-icon-wrap">
-                                <img src="/assets/icons/calendar.svg" alt="" class="item-icon">
-                            </span>
+                        <h3 class="value ellipsis">@Helpers.FormatDate( Model.DateOfLoss)</h3>
+                    </div>
+                </li>
+                <li class="detailed-item false">
+                    <span class="detailed-icon-wrap">
+                        <img src="/assets/icons/calendar.svg" alt="" class="item-icon">
+                    </span>
                     @{
                         var y = Enum.TryParse(Model.ClaimReportType.ToString(), out Enums.ClaimReportType parsedEnumValue);
                     }
-                            <div class="item-content">
+                    <div class="item-content">
                         <span class="label">
                             @_localizer["ReportType"].Value
-                            
+
                         </span>
                         <h3 class="value ellipsis">@parsedEnumValue</h3>
-                            </div>
-                        </li>
+                    </div>
+                </li>
 
-                        <li class="detailed-item false">
-                            <span class="detailed-icon-wrap">
-                                <img src="/assets/icons/save.svg" alt="" class="item-icon">
-                            </span>
-                            <div class="item-content">
+                <li class="detailed-item false">
+                    <span class="detailed-icon-wrap">
+                        <img src="/assets/icons/save.svg" alt="" class="item-icon">
+                    </span>
+                    <div class="item-content">
                         <span class="label">
                             @_localizer["AccidentCity"].Value
-                            
-                        </span>
-                                <h3 class="value ellipsis">@Model.City</h3>
-                            </div>
-                        </li>
 
-                        <li class="detailed-item false">
-                            <span class="detailed-icon-wrap">
-                                <img src="/assets/icons/calendar.svg" alt="" class="item-icon">
-                            </span>
-                            <div class="item-content">
+                        </span>
+                        <h3 class="value ellipsis">@Model.City</h3>
+                    </div>
+                </li>
+
+                <li class="detailed-item false">
+                    <span class="detailed-icon-wrap">
+                        <img src="/assets/icons/calendar.svg" alt="" class="item-icon">
+                    </span>
+                    <div class="item-content">
                         <span class="label">
                             @_localizer["NotIficationDate"].Value
-                            
-                        </span>
-                                <h3 class="value ellipsis">@Model.NotificationDate.ToString("dd MMM yyyy")</h3>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-                <div style="background-color: white;min-height: 3px;"></div>
-                <div class="inner-clild-wrap">
-                    <ul class="detail-list">
 
-                        <li class="detailed-item false">
-                            <span class="detailed-icon-wrap">
-                                <img src="/assets/icons/save.svg" alt="" class="item-icon">
-                            </span>
-                            <div class="item-content">
+                        </span>
+                        <h3 class="value ellipsis">@Model.NotificationDate.ToString("dd MMM yyyy")</h3>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div style="background-color: white;min-height: 3px;"></div>
+        <div class="inner-clild-wrap">
+            <ul class="detail-list">
+
+                <li class="detailed-item false">
+                    <span class="detailed-icon-wrap">
+                        <img src="/assets/icons/save.svg" alt="" class="item-icon">
+                    </span>
+                    <div class="item-content">
                         <span class="label">
                             @_localizer["GeogrphicalArea"].Value
-                            
+
                         </span>
-                                <h3 class="value ellipsis">@(Model.GeagraphicalArea==1?"KSA":"GCC")</h3>
-                            </div>
-                        </li>
+                        <h3 class="value ellipsis">@(Model.GeagraphicalArea == 1 ? "KSA" : "GCC")</h3>
+                    </div>
+                </li>
 
 
-                        <li class="detailed-item false">
-                            <span class="detailed-icon-wrap">
-                                <img src="/assets/icons/save.svg" alt="" class="item-icon">
-                            </span>
-                            <div class="item-content">
+                <li class="detailed-item false">
+                    <span class="detailed-icon-wrap">
+                        <img src="/assets/icons/save.svg" alt="" class="item-icon">
+                    </span>
+                    <div class="item-content">
                         <span class="label">
                             @_localizer["AccidentalPlace"].Value
-                            
+
                         </span>
-                                <h3 class="value ellipsis">@Model.AccidentPlace</h3>
-                            </div>
-                        </li>
-                        <li class="detailed-item false">
-                            <span class="detailed-icon-wrap">
-                                <img src="/assets/icons/calendar.svg" alt="" class="item-icon">
-                            </span>
-                            <div class="item-content">
+                        <h3 class="value ellipsis">@Model.AccidentPlace</h3>
+                    </div>
+                </li>
+                <li class="detailed-item false">
+                    <span class="detailed-icon-wrap">
+                        <img src="/assets/icons/calendar.svg" alt="" class="item-icon">
+                    </span>
+                    <div class="item-content">
                         <span class="label">
                             @_localizer["RegistrationDate"].Value
-                            
+
                         </span>
-                                <h3 class="value ellipsis">@Model.RegistrationDate.ToString("dd MMM yyyy")</h3>
-                            </div>
-                        </li>
-                        <li class="detailed-item false">
-                            <span class="detailed-icon-wrap">
-                                <img src="/assets/icons/save.svg" alt="" class="item-icon">
-                            </span>
-                            <div class="item-content">
+                        <h3 class="value ellipsis">@Model.RegistrationDate.ToString("dd MMM yyyy")</h3>
+                    </div>
+                </li>
+                <li class="detailed-item false">
+                    <span class="detailed-icon-wrap">
+                        <img src="/assets/icons/save.svg" alt="" class="item-icon">
+                    </span>
+                    <div class="item-content">
                         <span class="label">
                             @_localizer["PreferedcityofSurvey"].Value
-                            
-                        </span>
-                                <h3 class="value ellipsis">@Model.SurveyCity</h3>
-                            </div>
-                        </li>
-                        <li class="detailed-item false">
-                            <span class="detailed-icon-wrap">
-                                <img src="/assets/icons/save.svg" alt="" class="item-icon">
-                            </span>
-                            <div class="item-content">
-                        <span class="label">
-                            @_localizer["ClaimEvent"].Value
-                            
-                        </span>
-                                <h3 class="value ellipsis">@Model.EventId</h3>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
 
-            </div>
+                        </span>
+                        <h3 class="value ellipsis">@Model.SurveyCity</h3>
+                    </div>
+                </li>
+                <li class="detailed-item false">
+                    <span class="detailed-icon-wrap">
+                        <img src="/assets/icons/save.svg" alt="" class="item-icon">
+                    </span>
+                    <div class="item-content">
+                        <span class="label">
+                            @_localizer["PremiaClaim"].Value
+
+                        </span>
+                        <h3 class="value ellipsis">@Model.PremiaClaimSegmentCode</h3>
+                    </div>
+                </li>
+            </ul>
         </div>
+
+    </div>
+</div>

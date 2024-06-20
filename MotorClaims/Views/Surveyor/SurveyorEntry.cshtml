@@ -1,4 +1,6 @@
-﻿@using Microsoft.AspNetCore.Mvc.Localization
+﻿@using CORE.DTOs.Authentications;
+@using CORE.DTOs.MotorClaim;
+@using Microsoft.AspNetCore.Mvc.Localization
 @using Microsoft.AspNetCore.Builder
 @using Microsoft.AspNetCore.Localization
 @using Microsoft.Extensions.Options
@@ -12,16 +14,123 @@
 @model ClaimMaster
 @{
     List<LookupTable> lookupTables = (List<LookupTable>)ViewData["query"];
-        string DocumentsLink=(string)ViewData["DocumentsLink"];
+    string DocumentsLink=(string)ViewData["DocumentsLink"];
+    string obj = (string)ViewData["claimSearchobj"];
+    List<Survoyer> survoyers=(List<Survoyer>)ViewData["survoyers"];
+    long ClaimId=(long)ViewData["ClaimId"];
+    int ClaimantId=(int)ViewData["ClaimantId"];
+     Survoyer survoyer = new Survoyer()
+                {
+                    ClaimantId = ClaimantId,
+                    ClaimId = ClaimId
+                };
+                  ClaimSearchobj   claimSearchobj1 = new ClaimSearchobj()
+                {
+                    ClaimId =ClaimId,
+                    ClaimantId =ClaimantId
+                    
+                };
+    List<Users> Workshops=(List<Users>)ViewData["Workshops"];
     await Html.RenderPartialAsync("_PolicyInfo",Model.productionInfo);
-    await Html.RenderPartialAsync("_VehicleInfo", Model.vehiclesInfo);
+   await Html.RenderPartialAsync("_VehicleInfo",new {Vehicle= Model.vehiclesInfo ,UserType=true});
     await Html.RenderPartialAsync("_ClaimInfo", Model.claims);
-    await Html.RenderPartialAsync("_ClaimantInfo",new { Model = Model.claimants,Lookups = lookupTables});
+    await Html.RenderPartialAsync("_ClaimantInfo",new { Model = Model.claimants,Lookups = lookupTables,UserType=true,vehiclesInfo=Model.vehiclesInfo});
     await Html.RenderPartialAsync("_DocumentsInfo",new { Model = Model.attachments, Link = DocumentsLink,ClaimNo=string.Concat(Model.claims.ClaimNo,"/",Model.claimants.Serial),Documents=Model.documentInfos});
 
 }
 
+@if (survoyers.Count>0)
+{
+ <h2 class="page-title">@_localizer["SurveyorEntries"].Value </h2>
+  <div class="transaction-details">
+    <button type="button" class="button button-primary" onclick="LoadSurveyorEntry('@MotorClaims.Models.Helpers.Encrypt(JsonConvert.SerializeObject(claimSearchobj1))')">
+        @_localizer["AddNewSurvey"].Value
+ </button>
+                                </div>
 <div class="transaction-details">
+    <table class="universal-table">
+        <tr>
+            <!-- <th>#</th> -->
+                <th>
+                    @_localizer["CreatedBy"].Value
+                    
+                </th>
+                <th>
+                    @_localizer["CreationDate"].Value
+                    
+                </th>
+                <th>
+                    @_localizer["EstimatedSPAmount"].Value
+                    
+                </th>
+                <th>
+                    @_localizer["EstimatedLabourAmount"].Value
+                    
+                </th>
+                <th>
+                    @_localizer["EstimatedRepairDays"].Value
+                    
+                </th>
+                <th>
+                    @_localizer["SparePartAmount"].Value
+                    
+                </th>
+                <th>
+                    @_localizer["LabourAmount"].Value
+                    
+                </th>
+                <th>
+                    @_localizer["Note"].Value
+                    
+                </th>
+                <th>
+                    @_localizer["Missing"].Value
+                    
+                </th>
+
+        </tr>
+
+
+        @foreach (var clm in survoyers)
+        {
+
+            <tr>
+                @{
+                 ClaimSearchobj   claimSearchobj = new ClaimSearchobj()
+                {
+                    ClaimId = clm.ClaimId,
+                    ClaimantId = clm.ClaimantId,
+                    SurvoyerId=clm.Id
+                    
+                };
+
+                 
+                  }
+                <td class="tran"><a onclick="LoadSurveyorEntry('@MotorClaims.Models.Helpers.Encrypt(JsonConvert.SerializeObject(claimSearchobj))')">#@clm.CreatedBy</a></td>
+                <td>@(Helpers.FormatLongDate( clm.CreationDate.Value))</td>
+          
+                <td>@clm.EstimatedSPAmount</td>
+                <td>@clm.EstimatedLabourAmount</td>
+                <td>@clm.EstimatedRepairDays</td>
+                <td>@clm.SparePartAmount</td>
+                <td>@clm.LabourAmount</td>
+                <td>@clm.Note</td>
+                <td class="tran"><a onclick="LoadSurveyorMissing('@MotorClaims.Models.Helpers.Encrypt(JsonConvert.SerializeObject(claimSearchobj))')">#Check List</a></td>
+
+            </tr>
+
+
+        }
+    </table>
+    </div>
+
+}else
+{
+   
+    await Html.RenderPartialAsync("_SurveyorEntry", survoyer);
+}
+
+@*<div class="transaction-details">
     <table class="universal-table">
         <tr>
             <!-- <th>#</th> -->
@@ -75,8 +184,8 @@
                     string ClaimantType = lookupTables.Where(p => p.Code == Model.claimants.ClaimantType.Value.ToString() && p.MajorCode==(int)Enums.Lookups.ClaimantType).FirstOrDefault().NameEnglish;
                     string ClaimantResult = lookupTables.Where(p => p.Code == Model.claimants.NatureofLoss.Value.ToString() && p.MajorCode==(int)Enums.Lookups.CauseOfLoss).FirstOrDefault().NameEnglish;
                 }
-                <td class="tran"><a onclick="LoadSurveyorList('@MotorClaims.Models.Helpers.Encrypt(JsonConvert.SerializeObject(claimSearchobj))')">#@ClaimantType</a></td>
-                <td>@Model.claimants.ClaimantName</td>
+                 <td class="tran"><a onclick="LoadSurveyorList('@MotorClaims.Models.Helpers.Encrypt(JsonConvert.SerializeObject(claimSearchobj))')">#@ClaimantType</a></td>
+               <td>@Model.claimants.ClaimantName</td>
                 <td>@ClaimantResult</td>
                 <td>@Model.claimants.MakeDesc</td>
                 <td>@Model.claimants.ModelDesc</td>
@@ -90,13 +199,15 @@
         
     </table>
 </div>
-
+*@
 
 <div id="SurveyorEntry"></div>
 
 
 <script>
-
+      if ('@ViewData["Error"]' != '' || '@ViewData["Error"]' != "") {
+            ErrorAlert('@ViewData["Error"]');
+        }
     function LoadSurveyorList(Id){
         $('#SurveyorEntry').load('/Surveyor/LoadSurveyorsList/',{Id:Id});
     }

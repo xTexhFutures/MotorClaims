@@ -1,4 +1,5 @@
-﻿using CORE.DTOs.APIs.MotorClaim;
+﻿using CORE.DTOs.APIs.Authenticator;
+using CORE.DTOs.APIs.MotorClaim;
 using CORE.DTOs.Authentications;
 using CORE.DTOs.MotorClaim;
 using CORE.DTOs.MotorClaim.Claims;
@@ -34,7 +35,11 @@ namespace MotorClaims.Services
         {
 
             List<Users> users = new List<Users>();
-            users = Helpers.ExcuteGetAPI<List<Users>>(true, _appSettings.APIHubPrefix + "api/Authenticator/AllUsers", "123");       
+            UpdatePassword updatePassword = new UpdatePassword()
+            {
+                Username = name
+            };
+            users = Helpers.ExcutePostAPI<List<Users>>(updatePassword, _appSettings.APIHubPrefix + "api/Authenticator/AllUsersFilter");       
             return users;
         }
 

@@ -1,4 +1,8 @@
-﻿namespace MotorClaims.Models
+﻿using System.ComponentModel;
+using System.Net;
+using System.Runtime.InteropServices;
+
+namespace MotorClaims.Models
 {
     public class Search
     {
@@ -20,6 +24,8 @@
         public int? Id { get; set; }
         public int? ClaimantId { get; set; }
         public int? SurvoyerId { get; set; }
+        public int? RecoveryId { get; set; }
+        public int? ApprovalId { get; set; }
         public long? ClaimId { get; set; }
     }
 
@@ -36,4 +42,19 @@
 
 
     }
+
+    public class docs
+    {
+        public int DocId { get; set; }
+        public int TransId { get; set; }
+    }
+
+    public class ApprovalStatus
+    {
+        public int? Id { get; set; }
+        public bool? Status { get; set; }
+        public string? Reason { get; set; }
+    }
+
+
 }

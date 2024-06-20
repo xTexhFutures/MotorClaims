@@ -13,6 +13,7 @@
 @using X.PagedList.Mvc.Core;
 @{
     eClaimsObj searchObj = (eClaimsObj)ViewData["eClaims"];
+    string eClaimsURL=(string)  ViewData["eClaimsURL"];
 }
 @model IPagedList<eClaims>
 
@@ -24,7 +25,7 @@
                 
             </h2>
             <div class="search-member">
-                <form method="post" asp-action="SearcheClaims" asp-controller="Operations" style="display:flow-root">
+                <form method="post"  asp-controller="Operations" style="display:flow-root">
       
 
                     <div class="search-filter-wrapper">
@@ -42,7 +43,7 @@
                                 <div class="search-icon-wrapper">
                                     <img src="/assets/icons/calendar.svg" class="search-icon" alt="">
                                 </div>
-                                <input class="input-box" autocomplete="off" id="txtFrom" name="RegisteredFrom" type="text" value="@(searchObj.RegisteredFrom.HasValue?searchObj.RegisteredFrom.Value.ToString("dd-MM.yyyy"):"")">
+                                <input class="input-box" autocomplete="off" id="txtFrom" name="RegisteredFromS" type="text" value="@(searchObj.RegisteredFrom.HasValue?searchObj.RegisteredFrom.Value.ToString("dd-MM-yyyy"):"")">
                             </div>
                         </div>
 
@@ -57,19 +58,37 @@
                                 <div class="search-icon-wrapper">
                                     <img src="/assets/icons/calendar.svg" class="search-icon" alt="">
                                 </div>
-                                <input class="input-box" autocomplete="off" id="txtTo" name="RegisteredTo" type="text" value="@(searchObj.RegisteredTo.HasValue?searchObj.RegisteredTo.Value.ToString("dd-MM.yyyy"):"")">
+                                <input class="input-box" autocomplete="off" id="txtTo" name="RegisteredToS" type="text" value="@(searchObj.RegisteredTo.HasValue?searchObj.RegisteredTo.Value.ToString("dd-MM-yyyy"):"")">
+                            </div>
+                        </div>       
+                        
+                        
+                        <div class="search-wrapper">
+                            <span class="label">
+                                @_localizer["ClaimReference"].Value
+                                
+                            </span>
+                            <div class="search-input-box-wrapper">
+
+                                <div class="search-icon-wrapper">
+                                    <img src="/assets/icons/empty-file.svg" class="search-icon" alt="">
+                                </div>
+                                <input class="input-box" autocomplete="off" id="txtReference" name="Reference" maxlength="150" type="text" value="@searchObj.Reference">
                             </div>
                         </div>
 
                     </div>
                     <div class="search-heading-wrap" style="float: right;margin-top: 10px;">
 
-                        <button class="button button-secondary" type="submit">
+                        <button class="button button-secondary" asp-action="SearcheClaims" type="submit">
                             @_localizer["Search"].Value
                             
                         </button>
+
+                           <a target="_blank" class="button button-secondary" style="margin-left: 5px;" href="@eClaimsURL">Go To eClaims</a>
                     </div>
                 </form>
+             
             </div>
         </div>
     </div>
@@ -111,7 +130,14 @@
                     {
 
                         <tr>
-                            <td class="tran"><a href="">@clm.AccidentReport</a></td>
+                                @{
+                                ClaimSearchobj claimSearchobj = new ClaimSearchobj()
+                                                            {
+                                                                Id=clm.Id
+                                                            };
+
+                           }
+                            <td class="tran"><a href="@Url.Action("UpdateEClaim","Operations",new{obj=MotorClaims.Models.Helpers.Encrypt(JsonConvert.SerializeObject(clm))})">@clm.AccidentReport</a></td>
 
                             <td>@clm.SequenceNumber</td>
                             <td>@clm.TaqdeerNumber</td>
@@ -122,7 +148,7 @@
 
                     }
                 </table>
-                    @Html.PagedListPager((IPagedList)Model,Page=>Url.Action("Index","Managing",new {Page}))
+                    @Html.PagedListPager((IPagedList)Model,Page=>Url.Action("eClaims","Operations",new {Page}))
                   Showing @Model.FirstItemOnPage to @Model.LastItemOnPage of @Model.TotalItemCount eClaims
             </div>
         </div>

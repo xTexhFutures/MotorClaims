@@ -1,0 +1,179 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.AspNetCore.Builder
+@using Microsoft.AspNetCore.Localization
+@using Microsoft.Extensions.Options
+@using Microsoft.AspNetCore.Http.Features
+@using System.Globalization
+
+@inject IViewLocalizer _localizer
+@using CORE.DTOs.MotorClaim.Claims;
+@using CORE.DTOs.MotorClaim.WorkFlow;
+@{
+    Layout = null;
+    List<SMSLog> sMSLogs = (List<SMSLog>)Model.SMS;
+}
+
+<div class="basic-detail">
+    <div class="policy-header">
+        <div class="name-number-wrapper">
+            <div class="policy-name-wrapper">
+                <img src="/assets/icons/empty-file.svg" class="policy-icon" />
+                <p class="policy-name">
+                    @_localizer["MissingDocuments"].Value
+
+                </p>
+            </div>
+
+        </div>
+
+    </div>
+    <div class="policy-detail-body undefined">
+        <div class="inner-clild-wrap">
+
+            <ul class="detail-list">
+
+                <li class="detailed-item false">
+                    <span class="detailed-icon-wrap">
+                        <img src="/assets/icons/save.svg" alt="" class="item-icon">
+                    </span>
+                    <div class="item-content">
+                        <span class="label tran">
+                            @_localizer["FileName"].Value
+
+                        </span>
+                    </div>
+                </li>
+                <li class="detailed-item false">
+                    <span class="detailed-icon-wrap">
+                        <img src="/assets/icons/save.svg" alt="" class="item-icon">
+                    </span>
+                    <div class="item-content">
+                        <span class="label" >
+                            @_localizer["SndSMS"].Value
+
+                        </span>
+                    </div>
+                </li>
+                <li class="detailed-item false">
+                    <span class="detailed-icon-wrap">
+                        <img src="/assets/icons/calendar.svg" alt="" class="item-icon">
+                    </span>
+                    <div class="item-content">
+                        <span class="label">
+                            @_localizer["LastSMSSent"].Value
+
+                        </span>
+                    </div>
+                </li>
+                <li class="detailed-item false">
+                    <span class="detailed-icon-wrap">
+                        <img src="/assets/icons/save.svg" alt="" class="item-icon">
+                    </span>
+                    <div class="item-content">
+                        <span class="label">
+                            @_localizer["SentBy"].Value
+
+                        </span>
+                    </div>
+                </li>
+
+                 <li class="detailed-item false">
+                    <span class="detailed-icon-wrap">
+                        <img src="/assets/icons/save.svg" alt="" class="item-icon">
+                    </span>
+                    <div class="item-content">
+                        <span class="label">
+                            @_localizer["Upload"].Value
+
+                        </span>
+                    </div>
+                </li>
+            </ul>
+            @foreach (var clm in Model.Documents)
+            {
+
+                <ul class="detail-list">
+
+                    <li class="detailed-item false">
+                        <div class="item-content">
+                            <h3 class="value ellipsis">@clm.Name</h3>
+                        </div>
+                    </li>
+                    <li class="detailed-item false">
+                       
+                        <div class="item-content">
+                            <h3 class="value ellipsis" style="cursor:pointer;color:blue;text-decoration:underline"><a onclick="SendSMS('@clm.Id','@clm.SMSTemplateId','@Model.ClaimId','@Model.ClaimantId','@Model.MobileNo')">Send SMS</a></h3>
+                        </div>
+                    </li>
+                    <li class="detailed-item false">
+                        @{
+                            SMSLog sMSLog = sMSLogs.Where(p => p.DocumentSetupId == clm.Id).FirstOrDefault();
+                            DateTime? LastSMS = sMSLog!=null?sMSLog.SendDate:null;
+                        }
+                        <div class="item-content">
+                            <h3 class="value ellipsis">@(LastSMS.HasValue?Helpers.FormatLongDate(LastSMS.Value):null)</h3>
+                        </div>
+                    </li>
+                    <li class="detailed-item false">
+                        @{
+
+                            string sentBy = sMSLog != null ? sMSLog.SentBy : null;
+                        }
+                        <div class="item-content">
+                            <h3 class="value ellipsis">@sentBy</h3>
+                        </div>
+                    </li>
+
+                     <li class="detailed-item false">
+                        <div class="item-content">
+                        <div class="ducument-detaild-Attachment">
+                            <label for="fromFiles@(clm.Id)" class="document-card">
+                                  
+                                <img src="/assets/icons/upload.svg" class="docuemet-icon" alt="">
+                                <p id="Attachment@(clm.Id)" class="document-tile-text"> Upload Attachment</p>
+                                    <input onchange="Upload(@clm.Id,@Model.ClaimId,2,@Model.ClaimantId,@Model.Serial)" accept="image/png, image/gif, image/jpeg,application/pdf" class="ducument-control" id="fromFiles@(clm.Id)" title="@_localizer["Upload"]" name="fromFiles" type="file" />
+                            </label>
+
+                        </div>
+                        </div>
+                    </li>
+                 
+                </ul>
+            }
+
+        </div>
+
+    </div>
+</div>
+
+
+                        <script>
+                          function SendSMS(DocId, SMSTemplateId, ClaimId, ClaimantId,MobileNo) 
+                                    {
+                                        $.post('/Claims/SendSMS/', { DocId: DocId, SMSTemplateId: SMSTemplateId, ClaimId: ClaimId, ClaimantId: ClaimantId ,MobileNo:MobileNo}, function () {
+                                            location.reload();
+                                        });
+                                    }
+ function Upload(Id, ClaimId, ModuleId, ClaimantId,Serial) {
+                 const input = document.getElementById('fromFiles' + Id)
+            var files = input.files;
+            var $formdata = new FormData();
+
+            for (var i = 0; i != files.length; i++) {
+                $formdata.append("files", files[i]);
+            }
+ $.ajax({  url: "/Claims/UploadAttachments2/?Id=" + Id + "&ClaimId=" + ClaimId + "&ModuleId=" + ModuleId + "&ClaimantId=" + ClaimantId+"&attachId=0&Serial="+Serial,
+                    data: $formdata,
+                    processData: false,
+                    contentType: false,
+                    type: "POST",
+                    success: function (data) {                     
+                         location.reload();
+                    }
+                }
+            );
+
+        }
+
+                                     
+                        </script>

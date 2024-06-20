@@ -1,0 +1,91 @@
+﻿@using CORE.DTOs.MotorClaim.Claims;
+@{
+    Layout = null;
+}
+
+@model List<ReserveObj>
+
+<div class="basic-detail">
+    <div class="policy-header">
+        <div class="name-number-wrapper">
+            <div class="policy-name-wrapper">
+                <img src="/assets/icons/empty-file.svg" class="policy-icon" />
+                <p class="policy-name">Reserve History</p>
+            </div>
+
+        </div>
+
+    </div>
+    <div class="policy-detail-body undefined">
+        <div class="inner-clild-wrap">
+
+            <ul class="detail-list">
+                <li class="detailed-item false">
+                    <span class="detailed-icon-wrap">
+                        <img src="/assets/icons/calendar.svg" alt="" class="item-icon">
+                    </span>
+                    <div class="item-content">
+                        <span class="label">Creation Date</span>
+                    </div>
+                </li>
+                <li class="detailed-item false">
+                    <span class="detailed-icon-wrap">
+                        <img src="/assets/icons/save.svg" alt="" class="item-icon">
+                    </span>
+                    <div class="item-content">
+                        <span class="label">Created By</span>
+                    </div>
+                </li>
+                <li class="detailed-item false">
+                    <span class="detailed-icon-wrap">
+                        <img src="/assets/icons/save.svg" alt="" class="item-icon">
+                    </span>
+                    <div class="item-content">
+                        <span class="label">Comments</span>
+                    </div>
+                </li>
+                <li class="detailed-item false">
+                    <span class="detailed-icon-wrap">
+                        <img src="/assets/icons/save.svg" alt="" class="item-icon">
+                    </span>
+                    <div class="item-content">
+                        <span class="label">Amount</span>
+                    </div>
+                </li>
+            </ul>
+            @foreach (var clm in Model)
+            {
+
+                <ul class="detail-list">
+                    <li class="detailed-item false">
+
+                        <div class="item-content">
+                            <h3 class="value ellipsis">@Helpers.FormatLongDate(clm.reserve.Creationdate)</h3>
+                        </div>
+                    </li>
+                    <li class="detailed-item false">
+                        <div class="item-content">
+                            <h3 class="value ellipsis">@clm.reserve.CreatedByName</h3>
+                        </div>
+                    </li>
+                    <li class="detailed-item false">
+
+                        <div class="item-content">
+                            <h3 class="value ellipsis">@clm.reserve.Note</h3>
+                        </div>
+                    </li>
+                    <li class="detailed-item false">
+
+                        <div class="item-content">
+                            <h3 class="value ellipsis">@clm.reserveDetails.Where(p=>p.IsSettled==false).Sum(p=>p.Amount)</h3>
+                        </div>
+                    </li>
+                </ul>
+            }
+
+        </div>
+
+    </div>
+</div>
+
+

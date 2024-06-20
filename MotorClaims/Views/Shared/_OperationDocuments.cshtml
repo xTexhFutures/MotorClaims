@@ -1,0 +1,95 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.AspNetCore.Builder
+@using Microsoft.AspNetCore.Localization
+@using Microsoft.Extensions.Options
+@using Microsoft.AspNetCore.Http.Features
+@using System.Globalization
+
+@inject IViewLocalizer _localizer
+@using CORE.DTOs.MotorClaim.Claims;
+@using CORE.DTOs.MotorClaim.WorkFlow;
+@{
+    Layout = null;
+  
+}
+
+<div class="basic-detail">
+   
+    <div class="policy-detail-body undefined">
+        <div class="inner-clild-wrap">
+
+
+                <ul class="detail-list">
+
+                    <li class="detailed-item false" onclick="GenerateReport(1)">
+                    <div class="item-content">
+                        <div class="ducument-detaild-Attachment">
+                            <label for="fromFiles1" class="document-card">
+
+                                <img src="/assets/icons/download.svg" class="docuemet-icon" alt="">
+                                <p id="Attachment1" class="document-tile-text"> Repair Estimation</p>
+                            </label>
+
+                        </div>
+                    </div>
+                    </li>
+                    <li class="detailed-item false">
+                    <div class="item-content">
+                        <div class="ducument-detaild-Attachment">
+                            <label for="fromFiles1" class="document-card">
+
+                                <img src="/assets/icons/download.svg" class="docuemet-icon" alt="">
+                                <p id="Attachment1" class="document-tile-text"> Repair Approval</p>
+                            </label>
+
+                        </div>
+                    </div>
+                    </li>
+                    <li class="detailed-item false">
+                        <div class="item-content">
+                        <div class="ducument-detaild-Attachment">
+                            <label for="fromFiles1" class="document-card">
+                                  
+                                <img src="/assets/icons/download.svg" class="docuemet-icon" alt="">
+                                <p id="Attachment1" class="document-tile-text">Repair Estimation</p>
+                            </label>
+
+                        </div>
+                        </div>
+                    </li>
+                    <li class="detailed-item false">
+                 <div class="item-content">
+                        <div class="ducument-detaild-Attachment">
+                            <label for="fromFiles1" class="document-card">
+                                  
+                                <img src="/assets/icons/download.svg" class="docuemet-icon" alt="">
+                                <p id="Attachment1" class="document-tile-text"> Repair Estimation</p>
+                            </label>
+
+                        </div>
+                        </div>
+                    </li>
+
+                     <li class="detailed-item false">
+                        <div class="item-content">
+                        <div class="ducument-detaild-Attachment">
+                            <label for="fromFiles1" class="document-card">
+                                  
+                                <img src="/assets/icons/download.svg" class="docuemet-icon" alt="">
+                                <p id="Attachment1" class="document-tile-text"> Repair Estimation</p>
+                            </label>
+
+                        </div>
+                        </div>
+                    </li>
+                 
+                </ul>
+
+
+        </div>
+
+    </div>
+</div>
+
+
+                     

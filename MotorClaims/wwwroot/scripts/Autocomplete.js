@@ -22,6 +22,7 @@
 
             });
             $(this).datepicker({
+                beforeShow: function (i) { if ($(i).attr('readonly')) { return false; } },
                 changeMonth: true,
                 changeYear: true,
                 dateFormat: 'dd-mm-yy',
@@ -145,7 +146,7 @@
                 if ($(this).val() == "-") {
                     $(this).val("");
                 }
-                $(this).val(FormatDecimal($(this).val()));
+           /*     $(this).val(FormatDecimal($(this).val()));*/
                 return true;
             });
         });

@@ -154,7 +154,8 @@
                                 ClaimSearchobj claimSearchobj = new ClaimSearchobj()
                                                                 {
                                                                     PolicyId = clm.claims.PolicyId.HasValue ? clm.claims.PolicyId.Value : 0,
-                                                                    ClaimId = clm.claims.Id
+                                                                    ClaimId = clm.claims.Id,
+                                                                    ClaimantId=clm.claimants.Id
                                                                 };
                             }
                             <td class="tran"><a href="@Url.Action("SurveyorEntry","Surveyor",new{obj=MotorClaims.Models.Helpers.Encrypt(JsonConvert.SerializeObject(claimSearchobj))})">@clm.claims.ClaimNo/@clm.claimants.Serial.ToString()</a></td>

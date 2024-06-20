@@ -1,5 +1,6 @@
 ﻿using CORE.DTOs.APIs.MotorClaim;
 using CORE.DTOs.Authentications;
+using CORE.DTOs.MotorClaim.Claims;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Options;
@@ -29,11 +30,51 @@ namespace MotorClaims.Controllers
             HttpContext.Session.SetSessionData("LoggedUser", null);
             return RedirectToAction("Index");
         }
-        [CustomAuthorize(Roles = "Admin,Sales,Brokers,Agency")]
+
         public IActionResult Index()
         {
+            List<WorkflowTransaction> workflowTransactions = new List<WorkflowTransaction>();
+            MainSearchMC mainSearchMC = new MainSearchMC()
+            {
+                Status=(int)Enums.WorkflowStatus.Pending,
+                UserName= HttpContext.Session.getSessionData<Users>("LoggedUser").UserName
+
+            };
+            SetupClaimsRequestcs setupClaimsRequestcs = new SetupClaimsRequestcs()
+            {
+                TransactionType = CORE.Extensions.ClaimTransactionType.LoadWorkflowTransactions,
+                Request = mainSearchMC
+            };
+            workflowTransactions = Helpers.ExcutePostAPI<List<WorkflowTransaction>>(setupClaimsRequestcs, _appSettings.APIHubPrefix + "api/MotorClaim/ClaimsTransactions");
 
 
+            ViewData["Pending"] = workflowTransactions;
+             mainSearchMC = new MainSearchMC()
+            {
+                UserName = HttpContext.Session.getSessionData<Users>("LoggedUser").UserName
+            };
+             setupClaimsRequestcs = new SetupClaimsRequestcs()
+            {
+                TransactionType = CORE.Extensions.ClaimTransactionType.LoadWorkflowTransactions,
+                Request = mainSearchMC
+            };
+            workflowTransactions = Helpers.ExcutePostAPI<List<WorkflowTransaction>>(setupClaimsRequestcs, _appSettings.APIHubPrefix + "api/MotorClaim/ClaimsTransactions");
+
+
+            ViewData["Queue"] = workflowTransactions;
+
+            mainSearchMC = new MainSearchMC()
+            {
+                UserId = HttpContext.Session.getSessionData<Users>("LoggedUser").Id
+            };
+            setupClaimsRequestcs = new SetupClaimsRequestcs()
+            {
+                TransactionType = CORE.Extensions.ClaimTransactionType.LoadApprovalsTransactions,
+                Request = mainSearchMC
+            };
+            workflowTransactions = Helpers.ExcutePostAPI<List<WorkflowTransaction>>(setupClaimsRequestcs, _appSettings.APIHubPrefix + "api/MotorClaim/ClaimsTransactions");
+
+            ViewData["Approvals"] = workflowTransactions;
             ViewData["State"] = "Pass";
             ViewData["Error"] = string.Empty;
 
@@ -50,7 +91,21 @@ namespace MotorClaims.Controllers
                 users = Helpers.ExcuteGetAPI<List<Users>>(true, _appSettings.APIHubPrefix + "api/Authenticator/AllUsers", "123");
                 HttpContext.Session.SetSessionData("AllUsers", users);
             }
-          
+            List<Users> workshops = new List<Users>();
+            List<Users> Agencies = new List<Users>();
+            workshops = HttpContext.Session.getSessionData<List<Users>>("workshops");
+            if (workshops == null)
+            {
+                workshops = Helpers.ExcuteGetAPI<List<Users>>(true, _appSettings.APIHubPrefix + "api/Authenticator/AllWorkshops", "123");
+                Agencies.Add(new Users()
+                {
+                    Id=99,
+                    Name="Agency1",
+                    UserName="Agency1"
+                });
+                HttpContext.Session.SetSessionData("workshops", workshops);
+                HttpContext.Session.SetSessionData("Agencies", Agencies);
+            }
             return View();
         }
 

@@ -41,7 +41,7 @@ namespace MotorClaims.Controllers
 
         public ActionResult Login(string? confirm = null)
         {
-
+            string a = Helpers.Decryption("dPed4MyFQs6s/qVIusFgzQ==");
             ViewData["State"] = "Pass";
             ViewData["confirm"] = confirm;
             if (!string.IsNullOrEmpty(confirm))
@@ -181,30 +181,30 @@ namespace MotorClaims.Controllers
                     CultureInfo cultureInfo = Thread.CurrentThread.CurrentCulture;
                     HttpContext.Session.SetSessionData("Lang", cultureInfo);
 
-                    if ((int)Enums.Roles.Sales == loginObj.Roles?.Id || (int)Enums.Roles.Agent == loginObj.Roles?.Id || (int)Enums.Roles.Broker == loginObj.Roles?.Id || (int)Enums.Roles.Admin == loginObj.Roles?.Id)
-                    {
+                    //if ((int)Enums.Roles.Sales == loginObj.Roles?.Id || (int)Enums.Roles.Agent == loginObj.Roles?.Id || (int)Enums.Roles.Broker == loginObj.Roles?.Id || (int)Enums.Roles.Admin == loginObj.Roles?.Id)
+                    //{
+                    //    return RedirectToAction("Index", "Home");
+                    //}
+                    //if ((int)Enums.Roles.UWApproval == loginObj.Roles?.Id)
+                    //{
+                    //    return RedirectToAction("UWApprovals", "Approvals");
+                    //}
+                    //if ((int)Enums.Roles.Approval == loginObj.Roles?.Id)
+                    //{
+                    //    return RedirectToAction("Approvals", "Approvals");
+                    //}
+                    //if ((int)Enums.Roles.Finance == loginObj.Roles?.Id)
+                    //{
+                    //    return RedirectToAction("FinanceApprovals", "Approvals");
+                    //}
+                    //if ((int)Enums.Roles.IT == loginObj.Roles?.Id)
+                    //{
+                    //    return RedirectToAction("Index", "Managing");
+                    //}
+                    //else
+                    //{
                         return RedirectToAction("Index", "Home");
-                    }
-                    if ((int)Enums.Roles.UWApproval == loginObj.Roles?.Id)
-                    {
-                        return RedirectToAction("UWApprovals", "Approvals");
-                    }
-                    if ((int)Enums.Roles.Approval == loginObj.Roles?.Id)
-                    {
-                        return RedirectToAction("Approvals", "Approvals");
-                    }
-                    if ((int)Enums.Roles.Finance == loginObj.Roles?.Id)
-                    {
-                        return RedirectToAction("FinanceApprovals", "Approvals");
-                    }
-                    if ((int)Enums.Roles.IT == loginObj.Roles?.Id)
-                    {
-                        return RedirectToAction("Index", "Managing");
-                    }
-                    else
-                    {
-                        return RedirectToAction("Index", "Home");
-                    }
+                    //}
 
                 }
                 else if (OTP == HttpContext.Session.getSessionData<string>("ResetPassword"))
@@ -515,13 +515,18 @@ namespace MotorClaims.Controllers
                 results = Helpers.ExcutePostAPI<CORE.DTOs.APIs.Unified_Response.Results>(sMS, _appSettings.APIHubPrefix + "api/Authenticator/SMS");
                 //sMSResponseModel = _svcSMS.SendSMS(_appSettings, "Reset password OTP is : " + otpPick, usr.Mobile);
                 // _svcSMS.InsertSMS(sMSResponseModel, out error);
-
+                //ViewData["Error"] = "OTP was sent";
                 return View("Authentication/_Verify", loginObj.Users.Mobile);
 
             }
+            else
+            {
+                ViewData["Error"] = "Invalid User Name !!";
+                return RedirectToAction("Login",new { confirm = "Invalid User Name !!" });
+            }
 
             ViewData["State"] = "Pass";
-            ViewData["Error"] = "OTP was sent";
+          
             return View("Authentication/_Verify", "");
 
 
