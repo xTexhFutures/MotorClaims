@@ -735,10 +735,11 @@ function LoadPhotos(Id)
 
 function GenerateReport(Id) {
     spinner.show();
-    $.post("/Setup/PrintReports/" + 1, function (data) {
+    $.post("/Setup/PrintReports/" + Id, function (data) {
         if (data != null) {
             //download(data, makeid(15));
             var ReportWindow = window.open(data, "window 1", "location=no,menubar=no,status=no,titlebar=no,toolbar=no,resizable=yes");
+            //myWindow = window.open(data, 'myWindow', "width=200, height=200");
             ReportWindow.focus();
             ReportWindow.blur();
             /*            window.location.href = "/Issuance/PrintEskaQuote/?id=" + data;*/

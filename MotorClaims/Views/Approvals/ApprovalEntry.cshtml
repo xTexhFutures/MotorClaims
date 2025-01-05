@@ -14,15 +14,22 @@
     string DocumentsLink=(string)ViewData["DocumentsLink"];
     string obj=(string)ViewData["obj"];
     int Id=(int)ViewData["Id"];
+    int WorkflowType = (int)ViewData["WorkflowType"];
     ClaimTransactions claimTransactions = (ClaimTransactions)ViewData["Reserve"];
     ApprovalStatus approvalStatus = (ApprovalStatus)ViewData["approvalStatus"];
-    await Html.RenderPartialAsync("_PolicyInfo",Model.productionInfo);
-      await Html.RenderPartialAsync("_VehicleInfo",new {Vehicle= Model.vehiclesInfo ,UserType=true});
-    await Html.RenderPartialAsync("_ClaimInfo", Model.claims);
-    await Html.RenderPartialAsync("_ClaimantInfo",new { Model = Model.claimants,Lookups = lookupTables,UserType=true,vehiclesInfo=Model.vehiclesInfo});
-    await Html.RenderPartialAsync("_DocumentsInfo",new { Model = Model.attachments, Link = DocumentsLink,ClaimNo=string.Concat(Model.claims.ClaimNo,"/",Model.claimants.Serial),Documents=Model.documentInfos});
-    await Html.RenderPartialAsync("_ClaimsHistory", Model.claimHistories);
-    await Html.RenderPartialAsync("_ReserveHistory", Model.reserve);
+    List<CORE.DTOs.MotorClaim.eClaims> eClaims = (List<CORE.DTOs.MotorClaim.eClaims>)ViewData["eClaims"];
+    if (Model!=null)
+    {
+        await Html.RenderPartialAsync("_PolicyInfo", Model.productionInfo);
+        await Html.RenderPartialAsync("_VehicleInfo", new { Vehicle = Model.vehiclesInfo, UserType = true });
+        await Html.RenderPartialAsync("_ClaimInfo", Model.claims);
+        await Html.RenderPartialAsync("_ClaimantInfo", new { Model = Model.claimants, Lookups = lookupTables, UserType = true, vehiclesInfo = Model.vehiclesInfo });
+        await Html.RenderPartialAsync("_DocumentsInfo", new { Model = Model.attachments, Link = DocumentsLink, ClaimNo = string.Concat(Model.claims.ClaimNo, "/", Model.claimants.Serial), Documents = Model.documentInfos });
+        await Html.RenderPartialAsync("_ClaimsHistory", Model.claimHistories);
+        await Html.RenderPartialAsync("_ReserveHistory", Model.reserve);
+    }
+
+
 }
 
 
@@ -45,28 +52,58 @@
                     <div class="member-summary-container">
                         <div class="total-member-list">
                             <div class="member-list-container">
-                                   <div class="member-collapse">
-                                    <div class="member-collapse-header" style="display:block">
-                                        <div class="vehicle-owner-grid">
-                                          
-                                           <span class="label">@_localizer["UpdatedValue"].Value </span>
-                                           <input name="UpdatedValue"  id="txtUpdatedValue" class="form-inputbox" readonly value="@(claimTransactions.TransactionAmount)" />
-                                     
-                                    
-                                        </div>
-                                      
-                                          <div class="vehicle-owner-grid">
-                                            <span class="label">@_localizer["UpdatedNote"].Value </span>
-                                            <textarea name="UpdatedNote" rows="7" id="txtUpdatedNote" class="form-inputbox" maxlength="1024" readonly>@(claimTransactions.Note)</textarea>
+                                @if (Model!=null)
+                                {
+                                    <div class="member-collapse">
+                                        <div class="member-collapse-header" style="display:block">
+                                            <div class="vehicle-owner-grid">
 
-                                    
+                                                <span class="label">@_localizer["UpdatedValue"].Value </span>
+                                                <input name="UpdatedValue" id="txtUpdatedValue" class="form-inputbox" readonly value="@(claimTransactions!=null? claimTransactions.TransactionAmount:"")" />
+
+
+                                            </div>
+
+                                            <div class="vehicle-owner-grid">
+                                                <span class="label">@_localizer["UpdatedNote"].Value </span>
+                                                <textarea name="UpdatedNote" rows="7" id="txtUpdatedNote" class="form-inputbox" maxlength="1024" readonly>@(claimTransactions != null ? claimTransactions.Note : "")</textarea>
+
+
+                                            </div>
+
+
+
                                         </div>
 
-                                      
-                                       
                                     </div>
-                                 
-                                </div>
+                                }else
+
+                                {
+                                    <div class="member-collapse">
+                                        <div class="member-collapse-header" style="display:block">
+                                            <div class="vehicle-owner-grid">
+
+                                                <span class="label">@_localizer["ClaimReference"].Value </span>
+                                                <input name="ClaimReference" id="txtClaimReference" class="form-inputbox" readonly value="@(eClaims!=null && eClaims.Count>0?eClaims.FirstOrDefault().Reference:"")" />
+
+
+                                            </div>
+
+                                            <div class="vehicle-owner-grid">
+                                                <span class="label">@_localizer["SequanceNo"].Value </span>
+                                                <input name="SequanceNo" id="txtSequanceNo" class="form-inputbox" readonly value="@(eClaims!=null && eClaims.Count>0?eClaims.FirstOrDefault().SequenceNumber:"")" />
+                                            </div>
+
+                                            <div class="vehicle-owner-grid">
+                                                <span class="label">@_localizer["AcciedentReport"].Value </span>
+                                                <input name="AcciedentReport" id="txtAcciedentReport" class="form-inputbox" readonly value="@(eClaims!=null && eClaims.Count>0?eClaims.FirstOrDefault().AccidentReport:"")" />
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                }
+
                                 <div class="member-collapse">
                                     <div class="member-collapse-header" style="display:block">
                                         <div class="vehicle-owner-grid">
@@ -96,7 +133,7 @@
                                       
                                           <div class="vehicle-owner-grid">
                                             <span class="label">@_localizer["RejectionReason"].Value </span>
-                                           <textarea name="RejectionReason" rows="7" id="txtRejectionReason" class="form-inputbox" maxlength="1024">@(approvalStatus!=null ?approvalStatus.Reason:"")</textarea>
+                                            <textarea name="RejectionReason" rows="7" id="txtRejectionReason" class="form-inputbox" maxlength="1024">@(eClaims != null && eClaims.Count > 0 ? eClaims.FirstOrDefault().RejectionReason : Model.claimants.StatusReason)</textarea>
 
                                     
                                         </div>
@@ -111,7 +148,7 @@
                         <div class="footer-actions-handle" style="position:inherit !important; width:100%">
                                     <div class="next-button" style="margin-right:5px">
 
-                                        <button type="submit" asp-action="UpdateApprovalStatus" class="button button-primary">
+                                        <button type="submit" asp-action="@(WorkflowType!=5? "UpdateApprovalStatus":"UpdateRejectApprovalStatus")" class="button button-primary">
                                             @_localizer["Save"].Value
                                     
                                 </button>

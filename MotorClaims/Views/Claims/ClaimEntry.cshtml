@@ -164,7 +164,7 @@
                                                 </div>
                                                 <div class="form-container Full">
                                                     <span class="label"> @_localizer["RegistrationDate"].Value </span>
-                                                    <input class="form-controlar calendar-input" autocomplete="off" @(Model.Id>0?"readonly":"") required type="text" placeholder="Registration Date" id="txtRegistrationDate" name="RegistrationDate" value="@(Model.Id>0?Model.RegistrationDate:string.Empty)" />
+                                                    <input class="form-controlar calendar-input" autocomplete="off" readonly required type="text" placeholder="Registration Date" id="txtRegistrationDate" name="RegistrationDate" value="@(Model.Id>0?Model.RegistrationDate:DateTime.Now.ToString())" />
                                                 </div>
 
                                             </div>
@@ -524,7 +524,7 @@
 
         $('#txtDateOfLoss').val('@Model.DateOfLoss');
         $('#txtNotificationDate').val('@Model.NotificationDate');
-        $('#txtRegistrationDate').val('@Model.RegistrationDate');
+        // $('#txtRegistrationDate').val('@Model.RegistrationDate');
         $('#ddlGeagraphicalArea').val('@Model.GeagraphicalArea');
         $('#ddlSurveyCity').val('@Model.SurveyCity');
         $('#txtCity').val('@Model.CityId');
@@ -545,23 +545,23 @@
             if ('@Model.ClaimReportType' == '@((int)MotorClaims.Models.Enums.ClaimReportType.Najm)') 
             {
                 Najm();
-                  $("#radio-card-v2-11").prop('disabled', false);
-                  $("#radio-card-v2-12").prop('disabled', true);
-                  $("#radio-card-v2-13").prop('disabled', true);
+                  // $("#radio-card-v2-11").prop('disabled', false);
+                  // $("#radio-card-v2-12").prop('disabled', true);
+                  // $("#radio-card-v2-13").prop('disabled', true);
 
             } else if ('@Model.ClaimReportType' == '@((int)MotorClaims.Models.Enums.ClaimReportType.Basher)') 
             {
                 Basher();
-                 $("#radio-card-v2-11").prop('disabled', true);
-                  $("#radio-card-v2-12").prop('disabled', false);
-                  $("#radio-card-v2-13").prop('disabled', true);
+                 // $("#radio-card-v2-11").prop('disabled', true);
+                 //  $("#radio-card-v2-12").prop('disabled', false);
+                 //  $("#radio-card-v2-13").prop('disabled', true);
             }
 
             else {
                 Manual();
-                   $("#radio-card-v2-11").prop('disabled', true);
-                  $("#radio-card-v2-12").prop('disabled', true);
-                  $("#radio-card-v2-13").prop('disabled', false);
+                  //  $("#radio-card-v2-11").prop('disabled', true);
+                  // $("#radio-card-v2-12").prop('disabled', true);
+                  // $("#radio-card-v2-13").prop('disabled', false);
             }
         }else{
             Najm();

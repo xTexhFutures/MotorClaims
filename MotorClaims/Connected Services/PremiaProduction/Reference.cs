@@ -12,7 +12,7 @@ namespace PremiaProduction
     
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.2.0-preview1.23462.5")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://claimcreation.services.claim.policy.arabia.com/")]
     public partial class WSExceptionBean
@@ -36,7 +36,7 @@ namespace PremiaProduction
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.2.0-preview1.23462.5")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://claimcreation.services.claim.policy.arabia.com/")]
     public partial class claimCreationFault
@@ -76,7 +76,7 @@ namespace PremiaProduction
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.2.0-preview1.23462.5")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://claimcreation.services.claim.policy.arabia.com/")]
     public partial class claimResponseDtlsOut
@@ -116,7 +116,7 @@ namespace PremiaProduction
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.2.0-preview1.23462.5")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://claimcreation.services.claim.policy.arabia.com/")]
     public partial class claimErrorResponseOut
@@ -156,7 +156,7 @@ namespace PremiaProduction
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.2.0-preview1.23462.5")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://claimcreation.services.claim.policy.arabia.com/")]
     public partial class claimResponseTpOut
@@ -196,7 +196,7 @@ namespace PremiaProduction
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.2.0-preview1.23462.5")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://claimcreation.services.claim.policy.arabia.com/")]
     public partial class claimResponseRiskDtlsOut
@@ -252,7 +252,7 @@ namespace PremiaProduction
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.2.0-preview1.23462.5")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://claimcreation.services.claim.policy.arabia.com/")]
     public partial class claimCreationResponseInfo
@@ -392,7 +392,7 @@ namespace PremiaProduction
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.2.0-preview1.23462.5")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://claimcreation.services.claim.policy.arabia.com/")]
     public partial class claimRequestTpInIn
@@ -1216,7 +1216,7 @@ namespace PremiaProduction
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.2.0-preview1.23462.5")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://claimcreation.services.claim.policy.arabia.com/")]
     public partial class claimRequestRiskDtlsIn
@@ -2120,7 +2120,7 @@ namespace PremiaProduction
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.2.0-preview1.23462.5")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://claimcreation.services.claim.policy.arabia.com/")]
     public partial class claimCreationRequestInfo
@@ -3169,65 +3169,29 @@ namespace PremiaProduction
         }
     }
     
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.2.0-preview1.23462.5")]
     [System.ServiceModel.ServiceContractAttribute(Namespace="http://claimcreation.services.claim.policy.arabia.com/", ConfigurationName="PremiaProduction.ClaimCreationRequestService")]
     public interface ClaimCreationRequestService
     {
         
         [System.ServiceModel.OperationContractAttribute(Action="", ReplyAction="*")]
         [System.ServiceModel.FaultContractAttribute(typeof(PremiaProduction.WSExceptionBean), Action="", Name="WSScheduleFault")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        PremiaProduction.ClaimCreationServiceResponse ClaimCreationService(PremiaProduction.ClaimCreationService request);
+        [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true)]
+        [return: System.ServiceModel.MessageParameterAttribute(Name="ClaimCreationResponse")]
+        PremiaProduction.claimCreationResponseInfo ClaimCreationService(PremiaProduction.claimCreationRequestInfo ClaimCreationRequestInfo);
         
         [System.ServiceModel.OperationContractAttribute(Action="", ReplyAction="*")]
-        System.Threading.Tasks.Task<PremiaProduction.ClaimCreationServiceResponse> ClaimCreationServiceAsync(PremiaProduction.ClaimCreationService request);
+        [return: System.ServiceModel.MessageParameterAttribute(Name="ClaimCreationResponse")]
+        System.Threading.Tasks.Task<PremiaProduction.claimCreationResponseInfo> ClaimCreationServiceAsync(PremiaProduction.claimCreationRequestInfo ClaimCreationRequestInfo);
     }
     
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="ClaimCreationService", WrapperNamespace="http://claimcreation.services.claim.policy.arabia.com/", IsWrapped=true)]
-    public partial class ClaimCreationService
-    {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=0)]
-        public PremiaProduction.claimCreationRequestInfo ClaimCreationRequestInfo;
-        
-        public ClaimCreationService()
-        {
-        }
-        
-        public ClaimCreationService(PremiaProduction.claimCreationRequestInfo ClaimCreationRequestInfo)
-        {
-            this.ClaimCreationRequestInfo = ClaimCreationRequestInfo;
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="ClaimCreationServiceResponse", WrapperNamespace="http://claimcreation.services.claim.policy.arabia.com/", IsWrapped=true)]
-    public partial class ClaimCreationServiceResponse
-    {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=0)]
-        public PremiaProduction.claimCreationResponseInfo ClaimCreationResponse;
-        
-        public ClaimCreationServiceResponse()
-        {
-        }
-        
-        public ClaimCreationServiceResponse(PremiaProduction.claimCreationResponseInfo ClaimCreationResponse)
-        {
-            this.ClaimCreationResponse = ClaimCreationResponse;
-        }
-    }
-    
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.2.0-preview1.23462.5")]
     public interface ClaimCreationRequestServiceChannel : PremiaProduction.ClaimCreationRequestService, System.ServiceModel.IClientChannel
     {
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.2.0-preview1.23462.5")]
     public partial class ClaimCreationRequestServiceClient : System.ServiceModel.ClientBase<PremiaProduction.ClaimCreationRequestService>, PremiaProduction.ClaimCreationRequestService
     {
         
@@ -3271,14 +3235,14 @@ namespace PremiaProduction
         {
         }
         
-        public PremiaProduction.ClaimCreationServiceResponse ClaimCreationService(PremiaProduction.ClaimCreationService request)
+        public PremiaProduction.claimCreationResponseInfo ClaimCreationService(PremiaProduction.claimCreationRequestInfo ClaimCreationRequestInfo)
         {
-            return base.Channel.ClaimCreationService(request);
+            return base.Channel.ClaimCreationService(ClaimCreationRequestInfo);
         }
         
-        public System.Threading.Tasks.Task<PremiaProduction.ClaimCreationServiceResponse> ClaimCreationServiceAsync(PremiaProduction.ClaimCreationService request)
+        public System.Threading.Tasks.Task<PremiaProduction.claimCreationResponseInfo> ClaimCreationServiceAsync(PremiaProduction.claimCreationRequestInfo ClaimCreationRequestInfo)
         {
-            return base.Channel.ClaimCreationServiceAsync(request);
+            return base.Channel.ClaimCreationServiceAsync(ClaimCreationRequestInfo);
         }
         
         public virtual System.Threading.Tasks.Task OpenAsync()

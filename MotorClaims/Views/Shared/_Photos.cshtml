@@ -13,6 +13,8 @@
     Claims claims = (Claims)ViewData["Claims"];
     string loc = @"file://D:/AICCFiles/AB0810232/";
     Layout = null;
+
+    string FolderName = (string)ViewData["FolderName"];
 }
 
 
@@ -52,8 +54,8 @@
                     {
                         <div class="col-lg-4 col-md-6 portfolio-item filter-app">
                             <div class="portfolio-wrap">
-                                <a href="@Url.Content("/MyPath/LD/"+claims.AccidentNo+"/"+@item)" data-gallery="portfolioGallery" class="portfolio-lightbox" title="App 1">
-                                    <img src="@Url.Content("/MyPath/LD/"+claims.AccidentNo+"/"+@item)" class="img-fluid" alt="">
+                                <a href="@Url.Content("/MyPath/"+FolderName+"/"+claims.AccidentNo+"/"+@item)" data-gallery="portfolioGallery" class="portfolio-lightbox" title="App 1">
+                                    <img src="@Url.Content("/MyPath/"+FolderName+"/"+claims.AccidentNo+"/"+@item)" class="img-fluid" alt="">
                                 </a>
                             </div>
                         </div>

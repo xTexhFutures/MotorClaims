@@ -1,4 +1,5 @@
-﻿@using Microsoft.AspNetCore.Mvc.Localization
+﻿@using CORE.DTOs.MotorClaim.Claims
+@using Microsoft.AspNetCore.Mvc.Localization
 @using Microsoft.AspNetCore.Builder
 @using Microsoft.AspNetCore.Localization
 @using Microsoft.Extensions.Options
@@ -14,6 +15,7 @@
 @{
     eClaimsObj searchObj = (eClaimsObj)ViewData["eClaims"];
     string eClaimsURL=(string)  ViewData["eClaimsURL"];
+    List<WorkflowTransaction> workflowTransactions = (List<WorkflowTransaction>)ViewData["Approvals"];
 }
 @model IPagedList<eClaims>
 
@@ -115,14 +117,17 @@
                             
                         </th>
                         <th>
-                            @_localizer["TaqdeerNumber"].Value
+                            @_localizer["RejectionReason"].Value
                             
                         </th>
                         <th>
                             @_localizer["OwnerNationalID"].Value
                             
                         </th>
+                        <th>
+                            @_localizer["Status"].Value
 
+                        </th>
                     </tr>
 
 
@@ -140,15 +145,20 @@
                             <td class="tran"><a href="@Url.Action("UpdateEClaim","Operations",new{obj=MotorClaims.Models.Helpers.Encrypt(JsonConvert.SerializeObject(clm))})">@clm.AccidentReport</a></td>
 
                             <td>@clm.SequenceNumber</td>
-                            <td>@clm.TaqdeerNumber</td>
+                            <td>@clm.RejectionReason</td>
                             <td>@clm.OwnerNationalID</td>
+                            @{
+                                var t = workflowTransactions.Count > 0 ? workflowTransactions.Where(p => p.ClaimantId == clm.Id)?.FirstOrDefault() : null;
+
+                            }
+                            <td>@(t!=null && t.Id>0?"Waiting Approval":"")</td>
 
                         </tr>
 
 
                     }
                 </table>
-                    @Html.PagedListPager((IPagedList)Model,Page=>Url.Action("eClaims","Operations",new {Page}))
+                @Html.PagedListPager((IPagedList)Model, Page => Url.Action("SearcheClaims", "Operations", new { Page }))
                   Showing @Model.FirstItemOnPage to @Model.LastItemOnPage of @Model.TotalItemCount eClaims
             </div>
         </div>

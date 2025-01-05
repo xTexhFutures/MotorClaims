@@ -139,27 +139,15 @@ namespace MotorClaims.Models
         }
 
 
-        public static DateTime HijriToGreg(string hijri)
+        public static DateTime HijriToGreg(string DateConv)
         {
-            arCul = new CultureInfo("ar-SA");
-            if (hijri.Length <= 0)
-            {
+            CultureInfo arCI = new CultureInfo("ar-SA");
+            string dt = DateConv.Substring(6, 2) + "/" + DateConv.Substring(4, 2) + "/" + DateConv.Substring(0, 4);
 
-                return DateTime.Now;
-            }
-            try
-            {
-                string dt = hijri.Substring(6, 2) + "/" + hijri.Substring(4, 2) + "/" + hijri.Substring(0, 4);
-                DateTime tempDate = DateTime.ParseExact(dt,
-                   allFormats, arCul.DateTimeFormat, DateTimeStyles.AllowWhiteSpaces);
-                return tempDate;
+            DateTime convDate = DateTime.ParseExact(dt, "dd/MM/yyyy", arCI.DateTimeFormat, DateTimeStyles.AllowInnerWhite);
 
-            }
-            catch (Exception ex)
-            {
+            return convDate;
 
-                return DateTime.Now;
-            }
         }
         public static Dictionary<string, object> GetPropertiesNameOfClass(object pObject)
         {
@@ -221,7 +209,7 @@ namespace MotorClaims.Models
         }
         public static string Decryption(string hashed)
         {
-            byte[] bytesToBeDecrypted = Convert.FromBase64String(hashed);
+            byte[] bytesToBeDecrypted = Convert.FromBase64String(hashed.Replace("-", "+"));
             byte[] passwordBytesdecrypt = Encoding.UTF8.GetBytes("XBM##@@2023$$");
             byte[] passwordBytes = Encoding.UTF8.GetBytes("XBM##@@2023$$");
 
@@ -238,12 +226,6 @@ namespace MotorClaims.Models
         public static int DecryptionNo(int num)
         {
             int NumResult = DateTime.Now.Year - num;
-
-            return NumResult;
-        }
-        public static int EncryptNo(int num)
-        {
-            int NumResult = DateTime.Now.Year + num;
 
             return NumResult;
         }
@@ -319,7 +301,7 @@ namespace MotorClaims.Models
             // Hash the password with SHA256
             passwordBytes = SHA256.Create().ComputeHash(passwordBytes);
 
-            byte[] bytesEncrypted = AES_Encrypt(bytesToBeEncrypted, passwordBytes);
+            byte[] bytesEncrypted = Helpers.AES_Encrypt(bytesToBeEncrypted, passwordBytes);
 
             string encryptedResult = Convert.ToBase64String(bytesEncrypted);
 
@@ -690,7 +672,7 @@ namespace MotorClaims.Models
             return 6000000;
         }
 
-        public static bool CheckPendingApprovals(int ClaimantId,int WorkflowHeaderId, AppSettings _appSettings)
+        public static bool CheckPendingApprovals(int ClaimantId, int WorkflowHeaderId, AppSettings _appSettings)
         {
             bool Status = false;
 
@@ -706,12 +688,60 @@ namespace MotorClaims.Models
                 Request = mainSearchMC
             };
             workflowTransactions = Helpers.ExcutePostAPI<List<WorkflowTransaction>>(setupClaimsRequestcs, _appSettings.APIHubPrefix + "api/MotorClaim/ClaimsTransactions");
-            workflowTransactions = workflowTransactions.Where(p => p.Status == (int)Enums.WorkflowStatus.Pending && (WorkflowHeaderId==0?1==1:p.WorkflowHeaderId==WorkflowHeaderId)).ToList();
+            workflowTransactions = workflowTransactions.Where(p => p.Status == (int)Enums.WorkflowStatus.Pending && (WorkflowHeaderId == 0 ? 1 == 1 : p.WorkflowHeaderId == WorkflowHeaderId)).ToList();
             if (workflowTransactions.Count > 0)
                 Status = true;
 
             return Status;
         }
+        public static void PublishRejectionWorkflow(long? ClaimId, int? ClaimantId, int? eClaimId, int CreatedBy,string ClaimNo, List<Users> users, AppSettings _appSettings)
+        {
+            Users users1 = new Users();
+            WorkflowTransactionApprovers workflowTransactionApprovers;
+            users1 = users.Where(p => p.Id == CreatedBy).FirstOrDefault();
+
+            if (users1!=null && users1.Id>0)
+            {
+                WorkflowTransaction workflowTransaction = new WorkflowTransaction()
+                {
+                    ClaimantId = ClaimantId.HasValue?ClaimantId.Value:null,
+                    ClaimId = ClaimId.HasValue?ClaimId.Value:null,
+                    ClaimTransactionId = null,
+                    Status = (int)Enums.WorkflowStatus.Pending,
+                    CreationDate = DateTime.Now,
+                    CreatedBy = users1.UserName,
+                    ClaimNo = ClaimNo + "/1" ,
+                    WorkflowHeaderId = (int)Enums.WorkflowType.RejectClaim,
+                    eClaimId=eClaimId
+                };
+                SetupClaimsRequestcs setupClaimsRequestcs = new SetupClaimsRequestcs()
+                {
+                    TransactionType = CORE.Extensions.ClaimTransactionType.InsertWorkflowTransaction,
+                    Request = workflowTransaction
+                };
+                workflowTransaction = Helpers.ExcutePostAPI<WorkflowTransaction>(setupClaimsRequestcs, _appSettings.APIHubPrefix + "api/MotorClaim/ClaimsTransactions");
+                int ApproverLevel = 1; decimal? LevelAmt = 0;
+
+                    workflowTransactionApprovers = new WorkflowTransactionApprovers()
+                    {
+                        UpdateDate = DateTime.Now,
+                        UserId = users1.ManagerId.HasValue?users1.ManagerId.Value:0,
+                        UserName = users.Where(p=>p.Id==users1.ManagerId.Value).FirstOrDefault().UserName,
+                        WorkflowTransactionId = workflowTransaction.Id,
+                        ApproverLevel = ApproverLevel
+
+                    };
+                    setupClaimsRequestcs = new SetupClaimsRequestcs()
+                    {
+                        TransactionType = CORE.Extensions.ClaimTransactionType.InsertWorkflowTransactionApprovers,
+                        Request = workflowTransactionApprovers
+                    };
+                    workflowTransactionApprovers = Helpers.ExcutePostAPI<WorkflowTransactionApprovers>(setupClaimsRequestcs, _appSettings.APIHubPrefix + "api/MotorClaim/ClaimsTransactions");
+
+                
+            }
+        }
+
         public static void PublishWorkflow(decimal Limit, Enums.WorkflowType WorkflowType, int? ClaimTransactionId, long ClaimId, int ClaimantId, string CreatedBy, List<Users> users, AppSettings _appSettings)
         {
             int ApprovalsLimit = GetWorkflowLimit(Limit);
@@ -720,7 +750,7 @@ namespace MotorClaims.Models
             WorkflowTransactionApprovers workflowTransactionApprovers;
 
 
-            if (WorkflowType==Enums.WorkflowType.Reserve)
+            if (WorkflowType == Enums.WorkflowType.Reserve)
             {
                 users1 = users.Where(p => Convert.ToInt32(p.EstimateAuthority) == ApprovalsLimit && p.EstimateAuthority > 0).ToList();
             }
@@ -756,14 +786,14 @@ namespace MotorClaims.Models
                     ClaimNo = claims.FirstOrDefault().claims.ClaimNo + "/" + claims.FirstOrDefault().claimants.Serial,
                     WorkflowHeaderId = (int)WorkflowType
                 };
-                 setupClaimsRequestcs = new SetupClaimsRequestcs()
+                setupClaimsRequestcs = new SetupClaimsRequestcs()
                 {
                     TransactionType = CORE.Extensions.ClaimTransactionType.InsertWorkflowTransaction,
                     Request = workflowTransaction
-                 };
+                };
                 workflowTransaction = Helpers.ExcutePostAPI<WorkflowTransaction>(setupClaimsRequestcs, _appSettings.APIHubPrefix + "api/MotorClaim/ClaimsTransactions");
-                int ApproverLevel = 1;decimal? LevelAmt=0;
-                if (WorkflowType==Enums.WorkflowType.Reserve)
+                int ApproverLevel = 1; decimal? LevelAmt = 0;
+                if (WorkflowType == Enums.WorkflowType.Reserve)
                 {
                     users1 = users1.OrderBy(p => p.EstimateAuthority).ToList();
                 }
@@ -779,8 +809,8 @@ namespace MotorClaims.Models
                 {
                     if (WorkflowType == Enums.WorkflowType.Reserve)
                     {
-                        ApproverLevel = LevelAmt== user.EstimateAuthority? ApproverLevel : ++ApproverLevel;
-                        LevelAmt = LevelAmt== user.EstimateAuthority? LevelAmt: user.EstimateAuthority;
+                        ApproverLevel = LevelAmt == user.EstimateAuthority ? ApproverLevel : ++ApproverLevel;
+                        LevelAmt = LevelAmt == user.EstimateAuthority ? LevelAmt : user.EstimateAuthority;
                     }
                     else if (WorkflowType == Enums.WorkflowType.SettelmentAutherity)
                     {
@@ -796,16 +826,16 @@ namespace MotorClaims.Models
                     {
                         UpdateDate = DateTime.Now,
                         UserId = user.Id,
-                        UserName= user.UserName,
-                        WorkflowTransactionId= workflowTransaction.Id,
-                        ApproverLevel= ApproverLevel
+                        UserName = user.UserName,
+                        WorkflowTransactionId = workflowTransaction.Id,
+                        ApproverLevel = ApproverLevel
 
                     };
-                     setupClaimsRequestcs = new SetupClaimsRequestcs()
+                    setupClaimsRequestcs = new SetupClaimsRequestcs()
                     {
                         TransactionType = CORE.Extensions.ClaimTransactionType.InsertWorkflowTransactionApprovers,
                         Request = workflowTransactionApprovers
-                     };
+                    };
                     workflowTransactionApprovers = Helpers.ExcutePostAPI<WorkflowTransactionApprovers>(setupClaimsRequestcs, _appSettings.APIHubPrefix + "api/MotorClaim/ClaimsTransactions");
 
                 }
@@ -963,7 +993,7 @@ namespace MotorClaims.Models
             return documentInfos1;
         }
 
-        public static void HandleSurveyorPhoto(Dictionary<IFormFile, string> photos, Survoyer survoyer,string UserName,AppSettings _appSettings) 
+        public static void HandleSurveyorPhoto(Dictionary<IFormFile, string> photos, Survoyer survoyer, string UserName, AppSettings _appSettings)
         {
             SetupClaimsRequestcs mainSearch = new SetupClaimsRequestcs()
             {
@@ -973,7 +1003,7 @@ namespace MotorClaims.Models
                     Id = (int)survoyer.ClaimId
                 }
             };
-           var claims = Helpers.ExcutePostAPI<List<ClaimMaster>>(mainSearch, _appSettings.APIHubPrefix + "api/MotorClaim/ClaimsTransactions");
+            var claims = Helpers.ExcutePostAPI<List<ClaimMaster>>(mainSearch, _appSettings.APIHubPrefix + "api/MotorClaim/ClaimsTransactions");
 
             foreach (var item in photos)
             {
@@ -997,7 +1027,7 @@ namespace MotorClaims.Models
                 attachment = Helpers.ExcutePostAPI<Attachments>(setupClaimsRequestcs, _appSettings.APIHubPrefix + "api/MotorClaim/SetupMotorClaim");
                 string pathMDF = _appSettings.ClaimSubmissionPath;
                 string fieNameWithExt = item.Value + "_" + Path.GetFileName(item.Key.FileName);
-                string directory = Path.Combine(pathMDF, claims.FirstOrDefault().claims.ClaimNo,claims.Where(p=>p.claimants.Id==survoyer.ClaimantId).FirstOrDefault().claimants.Serial.ToString());
+                string directory = Path.Combine(pathMDF, claims.FirstOrDefault().claims.ClaimNo, claims.Where(p => p.claimants.Id == survoyer.ClaimantId).FirstOrDefault().claimants.Serial.ToString());
                 bool folderExists = Directory.Exists(directory);
                 if (!folderExists)
                     Directory.CreateDirectory(directory);
@@ -1005,7 +1035,7 @@ namespace MotorClaims.Models
                 string filePath = Path.Combine(directory, fieNameWithExt);
                 using (Stream fileStream = new FileStream(filePath, FileMode.Create))
                 {
-                     item.Key.CopyTo(fileStream);
+                    item.Key.CopyTo(fileStream);
                 }
             }
 
@@ -1016,7 +1046,7 @@ namespace MotorClaims.Models
             List<Attachments> attachments = new List<Attachments>();
             if (!string.IsNullOrEmpty(obj.AcciedentReport))
             {
-                attachments.Add( new Attachments()
+                attachments.Add(new Attachments()
                 {
                     ClaimantId = 0,
                     CreatedBy = "Online",
@@ -1098,7 +1128,7 @@ namespace MotorClaims.Models
                     CreatedBy = "Online",
                     CreationDate = DateTime.Now,
                     ModuleId = 2,
-                    ClaimId =0,
+                    ClaimId = 0,
                     FileName = obj.IBAN,
                     ContentType = "",
                     DocumentSetupId = 1011,
@@ -1109,7 +1139,7 @@ namespace MotorClaims.Models
             return attachments;
         }
 
-        public static void SaveFile(string obj,string Level)
+        public static void SaveFile(string obj, string Level)
         {
             try
             {
@@ -1124,42 +1154,50 @@ namespace MotorClaims.Models
 
         public static string BankCode(string? IBAN)
         {
+            if (string.IsNullOrEmpty(IBAN) || IBAN.Length<20)
+            {
+                return string.Empty;
+            }
             string Digit = !string.IsNullOrEmpty(IBAN) ? IBAN.Substring(4, 2) : "20";
             switch (Digit)
             {
-                case "10":return "B001";
-                case "45":return "B002";
-                case "65":return "B003";
-                case "05":return "B004";
-                case "55":return "B005";
-                case "20":return "B006";
-                case "40":return "B007";
-                case "50":return "B008";
-                case "80":return "B009";
-                case "30":return "B010";
-                case "15":return "B011";
-                case "60":return "B012";
-                case "83":return "B013";
-                case "90":return "B014";
-                case "95":return "B015";
-                case "71":return "B016";
-                case "75":return "B016";
-                case "76":return "B018";
-                case "81":return "B019";
-                case "82":return "B020";
-                case "87":return "B021";
-                case "98":return "B022";
-                case "84":return "B024";
-                case "01":return "B025";
-                case "86":return "B026";
-                case "03":return "B027";
-                 
+                case "10": return "B001";
+                case "45": return "B002";
+                case "65": return "B003";
+                case "05": return "B004";
+                case "55": return "B005";
+                case "20": return "B006";
+                case "40": return "B007";
+                case "50": return "B008";
+                case "80": return "B009";
+                case "30": return "B010";
+                case "15": return "B011";
+                case "60": return "B012";
+                case "83": return "B013";
+                case "90": return "B014";
+                case "95": return "B015";
+                case "71": return "B016";
+                case "75": return "B016";
+                case "76": return "B018";
+                case "81": return "B019";
+                case "82": return "B020";
+                case "87": return "B021";
+                case "98": return "B022";
+                case "84": return "B024";
+                case "01": return "B025";
+                case "86": return "B026";
+                case "03": return "B027";
+
             }
-             return "B006";
+            return "B006";
         }
 
         public static string PlateMapping(string Code)
         {
+            if (string.IsNullOrEmpty(Code))
+            {
+                return "";
+            }
             switch (Code)
             {
                 case "1": return "A";
@@ -1179,6 +1217,7 @@ namespace MotorClaims.Models
                 case "15": return "S";
                 case "16": return "U";
                 case "17": return "R";
+                default:return "A";
             }
             return Code;
         }
@@ -1209,12 +1248,70 @@ namespace MotorClaims.Models
 
         }
 
- 
-        public static void PublishWorkFlow(decimal TransactionAmount, Enums.WorkflowType workflowType,int claimTransactionsId,long ClaimId,int ClaimantID,string CreatedBy, List<Users> users,AppSettings _appSettings)
+
+        public static void PublishWorkFlow(decimal TransactionAmount, Enums.WorkflowType workflowType, int claimTransactionsId, long ClaimId, int ClaimantID, string CreatedBy, List<Users> users, AppSettings _appSettings)
         {
             PublishWorkflow(TransactionAmount, workflowType, claimTransactionsId, ClaimId, ClaimantID, CreatedBy, users, _appSettings);
             RegisterHistory(_appSettings, ClaimId, "Update Reserve to " + TransactionAmount + " SAR by " + CreatedBy + " Pending with Approval", CreatedBy, ClaimantID);
 
         }
+
+
+
+
+        public static string EncryptString( string plainText)
+        {
+            byte[] iv = new byte[16];
+            byte[] array;
+            string key = "b14ca5898a4e4133bbce2ea2315a1916";
+            using (Aes aes = Aes.Create())
+            {
+                aes.Key = Encoding.UTF8.GetBytes(key);
+                aes.IV = iv;
+
+                ICryptoTransform encryptor = aes.CreateEncryptor(aes.Key, aes.IV);
+
+                using (MemoryStream memoryStream = new MemoryStream())
+                {
+                    using (CryptoStream cryptoStream = new CryptoStream((Stream)memoryStream, encryptor, CryptoStreamMode.Write))
+                    {
+                        using (StreamWriter streamWriter = new StreamWriter((Stream)cryptoStream))
+                        {
+                            streamWriter.Write(plainText);
+                        }
+
+                        array = memoryStream.ToArray();
+                    }
+                }
+            }
+
+            return Convert.ToBase64String(array);
+        }
+        public static string DecryptString(string cipherText)
+        {
+            string key = "b14ca5898a4e4133bbce2ea2315a1916";
+            byte[] iv = new byte[16];
+            byte[] buffer = Convert.FromBase64String(cipherText);
+
+            using (Aes aes = Aes.Create())
+            {
+                aes.Key = Encoding.UTF8.GetBytes(key);
+                aes.IV = iv;
+                ICryptoTransform decryptor = aes.CreateDecryptor(aes.Key, aes.IV);
+
+                using (MemoryStream memoryStream = new MemoryStream(buffer))
+                {
+                    using (CryptoStream cryptoStream = new CryptoStream((Stream)memoryStream, decryptor, CryptoStreamMode.Read))
+                    {
+                        using (StreamReader streamReader = new StreamReader((Stream)cryptoStream))
+                        {
+                            return streamReader.ReadToEnd();
+                        }
+                    }
+                }
+            }
+        }
+
+
     }
 }

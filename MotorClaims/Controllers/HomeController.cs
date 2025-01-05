@@ -33,6 +33,16 @@ namespace MotorClaims.Controllers
 
         public IActionResult Index()
         {
+            //EmailInput emailInput = new EmailInput()
+            //{
+            //    ToEmail = "amqahtani@aicc.com.sa",
+            //    isApproval = true,
+            //    Subject = "Email Confirmation",
+            //    Body = "Test"
+            //};
+            //string resultNew = Helpers.ExcutePostAPI<string>(emailInput, _appSettings.APIHubPrefix + "api/ExternalAPIs/SendEmail");
+            //ViewData["Error"] = resultNew;
+
             List<WorkflowTransaction> workflowTransactions = new List<WorkflowTransaction>();
             MainSearchMC mainSearchMC = new MainSearchMC()
             {
@@ -76,8 +86,7 @@ namespace MotorClaims.Controllers
 
             ViewData["Approvals"] = workflowTransactions;
             ViewData["State"] = "Pass";
-            ViewData["Error"] = string.Empty;
-
+       
             if (string.IsNullOrEmpty(HttpContext.Session.getSessionData<string>("Lang")))
             {
                 CultureInfo cultureInfo = Thread.CurrentThread.CurrentCulture;
@@ -137,7 +146,7 @@ namespace MotorClaims.Controllers
         public IActionResult ChangeLogin(string id)
         {
             CORE.DTOs.APIs.Authenticator.LoginObj loginObj = new CORE.DTOs.APIs.Authenticator.LoginObj();
-            loginObj = Helpers.ExcutePostAPI<CORE.DTOs.APIs.Authenticator.LoginObj>(id, _appSettings.APIHubPrefix + query.services.Where(p => p.Name == "LoadUser").FirstOrDefault().Link);
+            loginObj = Helpers.ExcutePostAPI<CORE.DTOs.APIs.Authenticator.LoginObj>(id, _appSettings.APIHubPrefix + "api/Authenticator/LoadUser");
             HttpContext.Session.SetSessionData("LoggedUser", loginObj.Users);
             return RedirectToAction("Index");
         }

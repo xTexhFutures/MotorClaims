@@ -7,6 +7,7 @@
         public string Connection { get; set; }
         public string MemberUploadTemplateP { get; set; }
         public string MemberUploadTemplateQ { get; set; }
+        public string MissingDocsURL { get; set; }
         public string access_code { set; get; }
         public string language { set; get; }
         public string merchant_identifier { set; get; }
@@ -38,6 +39,7 @@
         public string ClaimSubmissionPath { set; get; }
         public string NajmImages { set; get; }
         public string NajmImagesPath { set; get; }
+        public string BasherImagesPath { set; get; }
         public string ClaimSubmissionURL { set; get; }
     }
 }

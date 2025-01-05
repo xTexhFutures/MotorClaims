@@ -57,9 +57,11 @@
 
         if (('@ViewData["Error"]').length > 0) {
             ErrorAlert('@ViewData["Error"]');
-        } else {
-            SuccessAlert("Transaction has been completed successfully");
-        }
+        } 
+        
+        // else {
+        //     SuccessAlert("Transaction has been completed successfully");
+        // }
     })
 
     $('.container-otp').find('input').each(function() {

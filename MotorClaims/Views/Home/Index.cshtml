@@ -11,7 +11,7 @@
 
 @{
     Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
-    List<WorkflowTransaction> Queue = (List<WorkflowTransaction>)ViewData["Queue"];    
+    List<WorkflowTransaction> Queue = (List<WorkflowTransaction>)ViewData["Queue"];
     List<WorkflowTransaction> Pending = (List<WorkflowTransaction>)ViewData["Pending"];
     List<WorkflowTransaction> Approvals = (List<WorkflowTransaction>)ViewData["Approvals"];
 }
@@ -28,21 +28,22 @@
                         <div class="heading-card">
                             <h2 class="heading">Pending Approvals</h2>
                         </div>
-                        <a class="view-link" href="/my-request.html">View All</a>
+                        <a class="view-link" href="/my-request.html">@_localizer["ViewAll"].Value</a>
                     </div>
                     <ul class="resent-list-items">
-                        @if (Approvals.Count>0)
+                        @if (Approvals.Count > 0)
                         {
                             @foreach (var item in Approvals)
                             {
                                 <li class="resent-list-item">
                                     @{
                                         ClaimSearchobj claimSearchobj = new ClaimSearchobj()
-                                                                        {
-                                                                            Id=item.Id,
-                                                                            ClaimId=item.ClaimId,
-                                                                            ClaimantId=item.ClaimantId
-                                                                        };
+                    {
+                        Id = item.Id,
+                        ClaimId = item.ClaimId,
+                        ClaimantId = item.ClaimantId,
+                        eClaimId = item.eClaimId
+                    };
                                     }
                                     <div class="request-card">
                                         <div class="request-card-header">
@@ -94,7 +95,7 @@
                                 <span>No results found.</span>
                             </div>
                         }
-               
+
                     </ul>
                 </div>
                 <div class="resent-column">
@@ -105,17 +106,18 @@
                         <a class="view-link" href="/my-request.html">View All</a>
                     </div>
                     <ul class="resent-list-items">
-                        @if (Pending.Count>0)
+                        @if (Pending.Count > 0)
                         {
                             @foreach (var item in Pending)
                             {
-                     
+
                                 <li class="resent-list-item">
                                     @{
                                         ClaimSearchobj claimSearchobj = new ClaimSearchobj()
-                                                                        {
-                                                                            ClaimId = item.ClaimId
-                                                                        };
+                    {
+                        ClaimId = item.ClaimId,
+                        eClaimId = item.eClaimId
+                    };
                                     }
                                     <div class="request-card">
                                         <div class="request-card-header">
@@ -167,8 +169,8 @@
                                 <span>No results found.</span>
                             </div>
                         }
-               
-                     
+
+
                     </ul>
                 </div>
                 <div class="resent-column">
@@ -179,16 +181,17 @@
                         <a class="view-link" href="/my-request.html">View All</a>
                     </div>
                     <ul class="resent-list-items">
-                        @if (Queue.Count>0)
+                        @if (Queue.Count > 0)
                         {
                             @foreach (var item in Queue)
                             {
                                 <li class="resent-list-item">
                                     @{
                                         ClaimSearchobj claimSearchobj = new ClaimSearchobj()
-                                                                        {
-                                                                            ClaimId = item.ClaimId
-                                                                        };
+                    {
+                        ClaimId = item.ClaimId,
+                        eClaimId = item.eClaimId
+                    };
                                     }
                                     <div class="request-card">
                                         <div class="request-card-header">
@@ -240,7 +243,7 @@
                                 <span>No results found.</span>
                             </div>
                         }
-                     
+
 
 
                     </ul>
@@ -250,13 +253,21 @@
         <div class="Toastify"></div>
     </div>
     <div class="right-sidebar false">
-        <div class="inner-wrapper">
-            <div class="resent-column">
-              
-     
-            </div>
-        </div>
+        @{
+            await Html.RenderPartialAsync("Right1", new { UserName = ViewData["UserName"] });
+        }
+
+
+
+
     </div>
 </div>
+<script>
 
+    $(function () {
 
+        if ('@ViewData["Error"]' != '' || '@ViewData["Error"]' != "") {
+            ErrorAlert('@ViewData["Error"]');
+        }
+    });
+</script>

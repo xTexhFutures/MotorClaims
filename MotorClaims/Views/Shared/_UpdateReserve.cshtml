@@ -260,7 +260,7 @@ ClaimantLevel=Model.claimants.ReserveBalance.HasValue?Model.claimants.ReserveBal
     //        });
     //}
 
-    $("form").submit(function(){
+    $("#frmUpdateReserve").submit(function () {
         $('#UpdateReserve').load("/Surveyor/UpdateReserveTransaction/", $("#frmUpdateReserve").serializeArray(),function(){
     if ('@ViewData["Error"]' == '' )
     {

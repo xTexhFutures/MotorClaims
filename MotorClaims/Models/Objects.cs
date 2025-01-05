@@ -16,7 +16,23 @@ namespace MotorClaims.Models
         public string? chassis { get; set; }
         public string? policy { get; set; }
     }
-
+    public class MissingDocuments
+    {
+        public int? Id { get; set; }
+        public long? ClaimId { get; set; }
+        public int? ClaimantId { get; set; }
+        public int? eClaimId { get; set; }
+        public int? Serial { get; set; }
+        public List<int> Docs { get; set; }
+    }
+    public class EmailInput
+    {
+        public string ToEmail { get; set; }
+        public string Subject { get; set; }
+        public string Body { get; set; }
+        public bool isApproval { get; set; }
+        public int? approvalID { get; set; }
+    }
     public class ClaimSearchobj
     {
         public int PolicyId { get; set; }
@@ -27,6 +43,7 @@ namespace MotorClaims.Models
         public int? RecoveryId { get; set; }
         public int? ApprovalId { get; set; }
         public long? ClaimId { get; set; }
+        public int? eClaimId { get; set; }
     }
 
     public class SearchObj

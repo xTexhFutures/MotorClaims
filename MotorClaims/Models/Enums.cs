@@ -137,7 +137,12 @@ namespace MotorClaims.Models
             [Display(Name = "Waiting Salvage Approvals")]
             WaitingSalvageApprovals = 12,
             [Display(Name = "Waiting Settelment Approvals")]
-            WaitingSettelmentApprovals = 13
+            WaitingSettelmentApprovals = 13,
+            [Display(Name = "Waiting Rejection Approvals")]
+            WaitingRejectionApprovals = 14,
+            [Display(Name = "All")]
+            All = 99
+
         }
 
 
@@ -268,7 +273,8 @@ namespace MotorClaims.Models
             Reserve = 1,
             RepairOrder = 2,
             TotalLoss = 3,
-            SettelmentAutherity = 4
+            SettelmentAutherity = 4,
+            RejectClaim=5
         }
         public enum ReserveType
         {

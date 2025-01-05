@@ -12,7 +12,7 @@ namespace PremiaEstimationProd
     
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.2.0-preview1.23462.5")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://estimate.service.claim.policy.arabia.com/")]
     public partial class WSExceptionBean
@@ -36,7 +36,7 @@ namespace PremiaEstimationProd
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.2.0-preview1.23462.5")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://estimate.service.claim.policy.arabia.com/")]
     public partial class estimateCreationFault
@@ -76,7 +76,7 @@ namespace PremiaEstimationProd
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.2.0-preview1.23462.5")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://estimate.service.claim.policy.arabia.com/")]
     public partial class estimateErrorResponseOut
@@ -116,7 +116,7 @@ namespace PremiaEstimationProd
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.2.0-preview1.23462.5")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://estimate.service.claim.policy.arabia.com/")]
     public partial class estimateClampDetailsOut
@@ -188,7 +188,7 @@ namespace PremiaEstimationProd
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.2.0-preview1.23462.5")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://estimate.service.claim.policy.arabia.com/")]
     public partial class estimateCreationResponseInfo
@@ -246,7 +246,7 @@ namespace PremiaEstimationProd
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.2.0-preview1.23462.5")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://estimate.service.claim.policy.arabia.com/")]
     public partial class claimEstimateDtls
@@ -574,7 +574,7 @@ namespace PremiaEstimationProd
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.2.0-preview1.23462.5")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://estimate.service.claim.policy.arabia.com/")]
     public partial class estimateCreationRequestInfo
@@ -646,7 +646,7 @@ namespace PremiaEstimationProd
         }
     }
     
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.2.0-preview1.23462.5")]
     [System.ServiceModel.ServiceContractAttribute(Namespace="http://estimate.service.claim.policy.arabia.com/", ConfigurationName="PremiaEstimationProd.EstimateCreationRequestService")]
     public interface EstimateCreationRequestService
     {
@@ -661,7 +661,7 @@ namespace PremiaEstimationProd
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.2.0-preview1.23462.5")]
     [System.ServiceModel.MessageContractAttribute(WrapperName="EstimateCreationService", WrapperNamespace="http://estimate.service.claim.policy.arabia.com/", IsWrapped=true)]
     public partial class EstimateCreationService
     {
@@ -680,7 +680,7 @@ namespace PremiaEstimationProd
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.2.0-preview1.23462.5")]
     [System.ServiceModel.MessageContractAttribute(WrapperName="EstimateCreationServiceResponse", WrapperNamespace="http://estimate.service.claim.policy.arabia.com/", IsWrapped=true)]
     public partial class EstimateCreationServiceResponse
     {
@@ -698,13 +698,13 @@ namespace PremiaEstimationProd
         }
     }
     
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.2.0-preview1.23462.5")]
     public interface EstimateCreationRequestServiceChannel : PremiaEstimationProd.EstimateCreationRequestService, System.ServiceModel.IClientChannel
     {
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.2.0-preview1.23462.5")]
     public partial class EstimateCreationRequestServiceClient : System.ServiceModel.ClientBase<PremiaEstimationProd.EstimateCreationRequestService>, PremiaEstimationProd.EstimateCreationRequestService
     {
         
@@ -781,7 +781,7 @@ namespace PremiaEstimationProd
         {
             if ((endpointConfiguration == EndpointConfiguration.EstimateCreationRequestServicePort))
             {
-                return new System.ServiceModel.EndpointAddress("http://192.168.201.56:8080/ArabiaPolicyClaimWebService/EstimateCreationRequestService");
+                return new System.ServiceModel.EndpointAddress("http://localhost:8080/ArabiaPolicyClaimWebService/EstimateCreationRequestService");
             }
             throw new System.InvalidOperationException(string.Format("Could not find endpoint with name \'{0}\'.", endpointConfiguration));
         }

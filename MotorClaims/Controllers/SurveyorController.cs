@@ -539,7 +539,7 @@ namespace MotorClaims.Controllers
             reserve = Helpers.ExcutePostAPI<Reserve>(setupClaimsRequestcs, _appSettings.APIHubPrefix + "api/MotorClaim/ClaimsTransactions");
 
             ReserveDetails reserveDetail = new ReserveDetails();
-            if (!string.IsNullOrEmpty(PremiaCode1) && SparePartCost.HasValue)
+            if (!string.IsNullOrEmpty(PremiaCode1) && SparePartCost.HasValue && SparePartCost.Value>0)
             {
                 reserveDetail = new ReserveDetails()
                 {
@@ -559,7 +559,7 @@ namespace MotorClaims.Controllers
                 reserveDetail = Helpers.ExcutePostAPI<ReserveDetails>(setupClaimsRequestcs, _appSettings.APIHubPrefix + "api/MotorClaim/ClaimsTransactions");
                 reserveDetails.Add(reserveDetail);
             }
-            if (!string.IsNullOrEmpty(PremiaCode2) && LaborCost.HasValue)
+            if (!string.IsNullOrEmpty(PremiaCode2) && LaborCost.HasValue && LaborCost.Value > 0)
             {
                 reserveDetail = new ReserveDetails()
                 {
@@ -580,7 +580,7 @@ namespace MotorClaims.Controllers
                 reserveDetails.Add(reserveDetail);
 
             }
-            if (!string.IsNullOrEmpty(PremiaCode3) && OtherCost.HasValue)
+            if (!string.IsNullOrEmpty(PremiaCode3) && OtherCost.HasValue && OtherCost.Value > 0)
             {
                 reserveDetail = new ReserveDetails()
                 {
@@ -601,7 +601,7 @@ namespace MotorClaims.Controllers
                 reserveDetails.Add(reserveDetail);
 
             }
-            if (!string.IsNullOrEmpty(PremiaCode4) && SheikhCost.HasValue)
+            if (!string.IsNullOrEmpty(PremiaCode4) && SheikhCost.HasValue && SheikhCost.Value > 0 )
             {
                 reserveDetail = new ReserveDetails()
                 {
@@ -622,7 +622,7 @@ namespace MotorClaims.Controllers
                 reserveDetails.Add(reserveDetail);
 
             }
-            if (!string.IsNullOrEmpty(PremiaCode5) && TowingCost.HasValue)
+            if (!string.IsNullOrEmpty(PremiaCode5) && TowingCost.HasValue && TowingCost.Value > 0)
             {
                 reserveDetail = new ReserveDetails()
                 {

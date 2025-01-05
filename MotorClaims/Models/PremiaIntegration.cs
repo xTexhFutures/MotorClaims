@@ -7,6 +7,7 @@ using PremiaEstimationProd;
 using TPPremiaProd;
 using PremiaSettlmentProd;
 using CORE.DTOs.MotorClaim.Integrations.APIs;
+using System.Globalization;
 
 namespace MotorClaims.Models
 {
@@ -27,8 +28,8 @@ namespace MotorClaims.Models
             //var Lookups = Helpers.ExcutePostAPI<List<ClaimMaster>>(setupClaimsRequestcs, _appSettings.APIHubPrefix + "api/MotorClaim/ClaimsTransactions");
 
             ClaimCreationRequestServiceClient serviceClient = new ClaimCreationRequestServiceClient();
-            ClaimCreationServiceResponse claimCreationServiceResponse = new ClaimCreationServiceResponse();
-            ClaimCreationService claimCreationService = new ClaimCreationService();
+            claimCreationResponseInfo claimCreationServiceResponse = new claimCreationResponseInfo();
+            //ClaimCreationService claimCreationService = new ClaimCreationService();
             claimCreationRequestInfo claimCreationRequestInfo = new claimCreationRequestInfo();
 
             claimCreationRequestInfo.p_c_tran_sys_id = claim.claims.ClaimNo + "/" + claim.claimants.Serial;
@@ -36,16 +37,19 @@ namespace MotorClaims.Models
             claimCreationRequestInfo.p_c_claim_sys_id = claim.claims.Id > 0 ? (claim.claims.PremiaClaimId.HasValue ? claim.claims.PremiaClaimId.Value.ToString() : "") : "";
             claimCreationRequestInfo.p_c_pol_no = claim.claims.PolicyNo;
             claimCreationRequestInfo.p_c_clm_type = "NORMAL";
-            claimCreationRequestInfo.p_c_loss_date = claim.claims.DateOfLoss.ToString("dd-MMM-yyyy");
-            claimCreationRequestInfo.p_c_intmt_date = claim.claims.RegistrationDate.ToString("dd-MMM-yyyy");
+            claimCreationRequestInfo.p_c_loss_date = claim.claims.DateOfLoss.ToString("dd-MMM-yyyy", new CultureInfo("en"));
+            claimCreationRequestInfo.p_c_intmt_date = claim.claims.RegistrationDate.ToString("dd-MMM-yyyy", new CultureInfo("en"));
             claimCreationRequestInfo.p_c_nat_of_loss = "TPPD";//Nature of loss
-            claimCreationRequestInfo.p_c_loss_desc = claim.claims.Notes;
+            claimCreationRequestInfo.p_c_loss_desc = !string.IsNullOrEmpty(claim.claims.Notes) ? claim.claims.Notes : "Loss Desc";
             claimCreationRequestInfo.p_c_acdnt_location = "RY";//City
             claimCreationRequestInfo.p_c_cause_of_loss = "506";//Cause of Loss
-            string[] CC = claim.claims.ClaimNo.Split('-');
-            claimCreationRequestInfo.p_c_user_division = CC[1];//City Division
+            claimCreationRequestInfo.p_c_user_division = claim.claims.BranchId.ToString();//City Division
             claimCreationRequestInfo.p_c_curr_code = "SAR";
 
+            claimCreationRequestInfo.p_c_clm_flexi_01 = claim.claims.AccidentNo;
+            claimCreationRequestInfo.p_c_clm_flexi_02 = claim.claimants.DriverName;
+            claimCreationRequestInfo.p_c_clm_flexi_07 = claim.claimants.MobileNo;
+            claimCreationRequestInfo.p_c_clm_flexi_06 = claim.claimants.DriverNationalId;
 
             SearchingObj searchingObj = new SearchingObj()
             {
@@ -54,7 +58,7 @@ namespace MotorClaims.Models
                 PolicyNo = claim.claims.PolicyNo,
             };
             searchingObj = Helpers.ExcutePostAPI<SearchingObj>(searchingObj, _appSettings.APIHubPrefix + "api/MotorClaim/GetCoverDetails");
-
+           
             claimRequestRiskDtlsIn claimRequestRiskDtlsIn = new claimRequestRiskDtlsIn()
             {
                 c_r_section_code = searchingObj.ProductCode + "01",
@@ -71,10 +75,13 @@ namespace MotorClaims.Models
 
             claimCreationRequestInfo.p_c_clm_tp_in = new claimRequestTpInIn[1];
 
+
+
+
             claimRequestTpInIn claimRequestTpInIn = new claimRequestTpInIn()
             {
                 c_tp_benf_name_arab = claim.claimants.BenefecieryName,
-                c_tp_benf_name_eng = claim.claimants.BenefecieryName,
+                c_tp_benf_name_eng = !string.IsNullOrEmpty(claim.claimants.BenefecieryNameEN) ? claim.claimants.BenefecieryNameEN : "AAAAABBBBB",
                 c_tp_driver_name = claim.claimants.DriverName,
                 c_tp_digit = !string.IsNullOrEmpty(claim.claimants.PlateNo) ? "" : "",
                 c_tp_arab = !string.IsNullOrEmpty(claim.claimants.PlateNo) ? "" : "",
@@ -101,25 +108,25 @@ namespace MotorClaims.Models
 
 
             claimCreationRequestInfo.p_c_clm_tp_in[0] = claimRequestTpInIn;
-            claimCreationService.ClaimCreationRequestInfo = claimCreationRequestInfo;
-            var yy = JsonConvert.SerializeObject(claimCreationService);
+            //claimCreationService.ClaimCreationRequestInfo = claimCreationRequestInfo;
+            var yy = JsonConvert.SerializeObject(claimCreationRequestInfo);
             Helpers.SaveFile(yy, claim.claims.ClaimNo + "_A");
-            claimCreationServiceResponse = serviceClient.ClaimCreationService(claimCreationService);
+            claimCreationServiceResponse = serviceClient.ClaimCreationService(claimCreationRequestInfo);
 
             var y1y = JsonConvert.SerializeObject(claimCreationServiceResponse);
             SetupClaimsRequestcs setupClaimsRequestcs = new SetupClaimsRequestcs();
             Claims clm = new Claims();
-            if (claimCreationServiceResponse != null && !string.IsNullOrEmpty(claimCreationServiceResponse.ClaimCreationResponse.p_c_clm_no))
+            if (claimCreationServiceResponse != null && !string.IsNullOrEmpty(claimCreationServiceResponse.p_c_clm_no))
             {
-                Result = true; error = claimCreationServiceResponse.ClaimCreationResponse.p_c_clm_no;
+                Result = true; error = claimCreationServiceResponse.p_c_clm_no;
                 clm = claim.claims;
-                clm.PremiaClaimId = !string.IsNullOrEmpty(claimCreationServiceResponse.ClaimCreationResponse.p_c_clm_sys_id) ? Convert.ToInt32(claimCreationServiceResponse.ClaimCreationResponse.p_c_clm_sys_id) : null;
-                clm.PremiaClaimSegmentCode = claimCreationServiceResponse.ClaimCreationResponse.p_c_clm_no;
-                clm.PremiaRiskLamp = claimCreationServiceResponse.ClaimCreationResponse.p_C_RISK_DTLS_OUT.Count() > 0 ? Convert.ToInt32(claimCreationServiceResponse.ClaimCreationResponse.p_C_RISK_DTLS_OUT.FirstOrDefault().c_lmap_sys_id) : null;
+                clm.PremiaClaimId = !string.IsNullOrEmpty(claimCreationServiceResponse.p_c_clm_sys_id) ? Convert.ToInt32(claimCreationServiceResponse.p_c_clm_sys_id) : null;
+                clm.PremiaClaimSegmentCode = claimCreationServiceResponse.p_c_clm_no;
+                clm.PremiaRiskLamp = claimCreationServiceResponse.p_C_RISK_DTLS_OUT.Count() > 0 ? Convert.ToInt32(claimCreationServiceResponse.p_C_RISK_DTLS_OUT.FirstOrDefault().c_lmap_sys_id) : null;
             }
             else
             {
-                Result = false; error = claimCreationServiceResponse.ClaimCreationResponse.p_C_ERROR_MSG[0].err_desc;
+                Result = false; error = claimCreationServiceResponse.p_C_ERROR_MSG[0].err_desc;
                 clm = claim.claims;
                 clm.PremiaClaimSegmentCode = error;
 
@@ -163,7 +170,6 @@ namespace MotorClaims.Models
             };
             attachments = Helpers.ExcutePostAPI<List<Attachments>>(setupClaimsRequestcs, _appSettings.APIHubPrefix + "api/MotorClaim/SetupMotorClaim");
 
-            string[] Plate = !string.IsNullOrEmpty(claim.claimants.PlateNo) ? claim.claimants.PlateNo.Split('-') : null;
             SearchLookUp searchLookUp = new SearchLookUp()
             {
                 MajorCode = SystemEnums.NajmMapping,
@@ -171,82 +177,81 @@ namespace MotorClaims.Models
             };
             var lookupTables = Helpers.ExcutePostAPI<List<LookupTable>>(searchLookUp, _appSettings.APIHubPrefix + "api/MotorClaim/Loadlookups");
 
-            var y = Plate.Count();
+
+            thirdPartyRequestTpInIn TP = new thirdPartyRequestTpInIn();
 
 
-            thirdPartyRequestTpInIn TP = new thirdPartyRequestTpInIn()
-            {
-                c_tp_sys_id = claim.claimants.PremiaClaimId.HasValue && claim.claimants.PremiaClaimId.Value > 0 ? claim.claimants.PremiaClaimId.ToString() : null,
-                c_tp_clm_sys_id = claim.claims.PremiaClaimId.ToString(),
-                c_tp_cfd_sys_id = claim.claims.PremiaClaimId.ToString(),
-                c_TP_ARAB = Plate != null ? (y == 3 ? Plate[0] : Helpers.PlateMapping(Plate[1]) + " " + Helpers.PlateMapping(Plate[2]) + " " + Helpers.PlateMapping(Plate[3])) : null,
-                c_tp_driver_name = claim.claimants.DriverName,
-                c_tp_benf_name_eng = "AAAABBBBBBBBB",// Helpers.TranslateText( claim.claimants.BenefecieryName, "ar|en"),
-                c_tp_benf_name_arab = claim.claimants.BenefecieryName,
-                c_tp_digit = Plate != null ? (y == 3 ? Plate[1] : Plate[0]) : null,
-                c_tp_make = lookupTables != null && lookupTables.Count > 0 ? lookupTables.FirstOrDefault().NameEnglish : "BMW0002",//MakeCode Premia,
-                c_tp_model = claim.claimants.Manifacturing.HasValue ? claim.claimants.Manifacturing.ToString() : "",
-                c_tp_sequence_no = claim.claimants.SequenceNo,
-                c_tp_mobile_no = !string.IsNullOrEmpty(claim.claimants.MobileNo) ? (claim.claimants.MobileNo.Length < 10 ? "0" + claim.claimants.MobileNo : (claim.claimants.MobileNo.Length > 10 ? "0" + claim.claimants.MobileNo.Substring(3, 9) : claim.claimants.MobileNo)) : null,
-                c_tp_insurer_name = !string.IsNullOrEmpty(claim.claimants.InsuranceCompanyName) ? claim.claimants.InsuranceCompanyName : null,
-                c_tp_more_details = claim.claimants.OwnerName,
-                c_tp_benificiary_id = claim.claimants.OwnerNationalId,
-                c_tp_discharge_remarks = "02",
-                c_tp_mode_of_pay = "BT",
-                c_tp_bank_name = Helpers.BankCode(claim.claimants.Iban),//Bank Name Mapping
-                c_tp_iban_no = !string.IsNullOrEmpty(claim.claimants.Iban) ? claim.claimants.Iban : "SA0420000001703106209940",
-                c_TP_PARTY_REF_NO = claim.claimants.OwnerNationalId,
-                c_DOB = claim.claimants.DriverBirthDate.HasValue ? claim.claimants.DriverBirthDate.Value.ToString("dd/MM/yyyy") : DateTime.Now.AddYears(-18).ToString("dd/MM/yyyy"),
-                c_tp_flex_02 = claim.claimants.OwnerNationalId,
-                c_tp_flex_03 = "A@A.com",
-                c_tp_flex_04 = "0",
-                //c_tp_flex_05 = DateTime.Now.ToString("dd-MMM-yyyy"),
-                //c_tp_flex_06 = DateTime.Now.ToString("dd-MMM-yyyy"),
+            TP.c_tp_sys_id = claim.claimants.PremiaClaimId.HasValue && claim.claimants.PremiaClaimId.Value > 0 ? claim.claimants.PremiaClaimId.ToString() : null;
+            TP.c_tp_clm_sys_id = claim.claims.PremiaClaimId.ToString();
+            TP.c_tp_cfd_sys_id = claim.claims.PremiaClaimId.ToString();
+            TP.c_TP_ARAB = string.IsNullOrEmpty(claim.claimants.PlateChar1) && string.IsNullOrEmpty(claim.claimants.PlateChar2) && string.IsNullOrEmpty(claim.claimants.PlateChar3) ? null : Helpers.PlateMapping(claim.claimants.PlateChar1) + " " + Helpers.PlateMapping(claim.claimants.PlateChar2) + " " + Helpers.PlateMapping(claim.claimants.PlateChar3);
+            TP.c_tp_driver_name = claim.claimants.DriverName;
+            TP.c_tp_benf_name_eng = !string.IsNullOrEmpty(claim.claimants.BenefecieryNameEN) ? claim.claimants.BenefecieryNameEN : "AAAABBBBBBBBB";// Helpers.TranslateText( claim.claimants.BenefecieryName, "ar|en"),
+            TP.c_tp_benf_name_arab = claim.claimants.BenefecieryName;
+            TP.c_tp_digit = !string.IsNullOrEmpty(claim.claimants.PlateNo) ? claim.claimants.PlateNo : null;
+            TP.c_tp_make = lookupTables != null && lookupTables.Count > 0 && claim.claimants.ModelId.HasValue && claim.claimants.ModelId.Value > 0 ? lookupTables.FirstOrDefault().NameEnglish : "BMW0002";//MakeCode Premia,
+            TP.c_tp_model = claim.claimants.Manifacturing.HasValue ? claim.claimants.Manifacturing.ToString() : "";
+            TP.c_tp_sequence_no = !string.IsNullOrEmpty(claim.claimants.SequenceNo) ? claim.claimants.SequenceNo : "111111000";
+            TP.c_tp_mobile_no = !string.IsNullOrEmpty(claim.claimants.MobileNo) ? (claim.claimants.MobileNo.Length < 10 ? "0" + claim.claimants.MobileNo : (claim.claimants.MobileNo.Length > 10 ? "0" + claim.claimants.MobileNo.Substring(3, 9) : claim.claimants.MobileNo)) : null;
+            TP.c_tp_insurer_name = !string.IsNullOrEmpty(claim.claimants.InsuranceCompanyName) ? claim.claimants.InsuranceCompanyName : "null";
+            TP.c_tp_more_details = claim.claimants.OwnerName;
+            TP.c_tp_benificiary_id = claim.claimants.OwnerNationalId;
+            TP.c_tp_discharge_remarks = "02";
+            TP.c_tp_mode_of_pay = "BT";
+            TP.c_tp_bank_name = Helpers.BankCode(claim.claimants.Iban);//Bank Name Mapping
+            TP.c_tp_iban_no = !string.IsNullOrEmpty(claim.claimants.Iban) ? claim.claimants.Iban.ToUpper() : "SA1111111111111111111111";
+            TP.c_TP_PARTY_REF_NO = claim.claimants.OwnerName;
+            TP.c_DOB = claim.claimants.DriverBirthDate.HasValue ? claim.claimants.DriverBirthDate.Value.ToString("dd/MM/yyyy", new CultureInfo("en")) : DateTime.Now.AddYears(-18).ToString("dd/MM/yyyy", new CultureInfo("en"));
+            TP.c_tp_flex_02 = claim.claimants.DriverNationalId;
+            TP.c_tp_flex_03 = "A@A.com";
+            TP.c_tp_flex_04 = "0";
+            //c_tp_flex_05 = DateTime.Now.ToString("dd-MMM-yyyy"),
+            //c_tp_flex_06 = DateTime.Now.ToString("dd-MMM-yyyy"),
 
-                //c_tp_flex_07 = "02~1~0~" + (attachments != null && attachments.Count > 0 ? attachments.FirstOrDefault().CreationDate.ToString("dd/MM/yyyy") : DateTime.Now.ToString("dd/MM/yyyy")) + "~NA~NA~1~" + (attachments != null && attachments.Count > 0 ? attachments.FirstOrDefault().CreationDate.ToString("dd/MM/yyyy") : DateTime.Now.ToString("dd/MM/yyyy")) + "~NA",
-                //c_tp_flex_08 = "03~1~0~" + (attachments != null && attachments.Count > 0 ? attachments.FirstOrDefault().CreationDate.ToString("dd/MM/yyyy") : DateTime.Now.ToString("dd/MM/yyyy")) + "~NA~NA~1~" + (attachments != null && attachments.Count > 0 ? attachments.FirstOrDefault().CreationDate.ToString("dd/MM/yyyy") : DateTime.Now.ToString("dd/MM/yyyy")) + "~NA",
-                //c_tp_flex_09 = "01~1~0~" + (attachments != null && attachments.Count > 0 ? attachments.FirstOrDefault().CreationDate.ToString("dd/MM/yyyy") : DateTime.Now.ToString("dd/MM/yyyy")) + "~NA~NA~1~" + (attachments != null && attachments.Count > 0 ? attachments.FirstOrDefault().CreationDate.ToString("dd/MM/yyyy") : DateTime.Now.ToString("dd/MM/yyyy")) + "~NA",
+            TP.c_tp_flex_07 = "02~1~0~" + (attachments != null && attachments.Count > 0 ? attachments.FirstOrDefault().CreationDate.ToString("dd/MM/yyyy") : DateTime.Now.ToString("dd/MM/yyyy")) + "~NA~NA~1~" + (attachments != null && attachments.Count > 0 ? attachments.FirstOrDefault().CreationDate.ToString("dd/MM/yyyy") : DateTime.Now.ToString("dd/MM/yyyy")) + "~NA~Verified";
+            TP.c_tp_flex_08 = "03~1~0~" + (attachments != null && attachments.Count > 0 ? attachments.FirstOrDefault().CreationDate.ToString("dd/MM/yyyy") : DateTime.Now.ToString("dd/MM/yyyy")) + "~NA~NA~1~" + (attachments != null && attachments.Count > 0 ? attachments.FirstOrDefault().CreationDate.ToString("dd/MM/yyyy") : DateTime.Now.ToString("dd/MM/yyyy")) + "~NA~Verified";
+            TP.c_tp_flex_09 = "01~1~0~" + (attachments != null && attachments.Count > 0 ? attachments.FirstOrDefault().CreationDate.ToString("dd/MM/yyyy") : DateTime.Now.ToString("dd/MM/yyyy")) + "~NA~NA~1~" + (attachments != null && attachments.Count > 0 ? attachments.FirstOrDefault().CreationDate.ToString("dd/MM/yyyy") : DateTime.Now.ToString("dd/MM/yyyy")) + "~NA~Verified";
 
-            };
-            foreach (var item in attachments)
-            {
-                if (item.DocumentSetupId == 1)
-                {
-                    TP.c_tp_flex_07 = "02~1~0~" + item.CreationDate.ToString("dd/MM/yyyy") + "~NA~NA~1~" + item.CreationDate.ToString("dd/MM/yyyy") + "~NA";
-                //}
-                //else if (item.DocumentSetupId == 2)
-                //{
-                    //05
-                    TP.c_tp_flex_08 = "02~1~0~" + item.CreationDate.ToString("dd/MM/yyyy") + "~NA~NA~1~" + item.CreationDate.ToString("dd/MM/yyyy") + "~NA";
-                //}
-                //else if (item.DocumentSetupId == 4)
-                //{
-                    //06
-                    TP.c_tp_flex_09 = "03~1~0~" + item.CreationDate.ToString("dd/MM/yyyy") + "~NA~NA~1~" + item.CreationDate.ToString("dd/MM/yyyy") + "~NA";
-                }
-                if (item.DocumentSetupId == 5)
-                {
-                    TP.c_tp_flex_10 = "04~1~0~" + item.CreationDate.ToString("dd/MM/yyyy") + "~NA~NA~1~" + item.CreationDate.ToString("dd/MM/yyyy") + "~NA";
-                }
-                if (item.DocumentSetupId == 1011)
-                {
-                    TP.c_tp_flex_11 = "16~1~0~" + item.CreationDate.ToString("dd/MM/yyyy") + "~NA~NA~1~" + item.CreationDate.ToString("dd/MM/yyyy") + "~NA";
-                }
-                if (item.DocumentSetupId == 11)
-                {
-                    TP.c_tp_flex_12 = "10~1~0~" + item.CreationDate.ToString("dd/MM/yyyy") + "~NA~NA~1~" + item.CreationDate.ToString("dd/MM/yyyy") + "~NA";
-                }
-                if (item.DocumentSetupId == 8)
-                {
-                    TP.c_tp_flex_13 = "19~1~0~" + item.CreationDate.ToString("dd/MM/yyyy") + "~NA~NA~1~" + item.CreationDate.ToString("dd/MM/yyyy") + "~NA";
-                }
-                if (item.DocumentSetupId == 12)
-                {
-                    TP.c_tp_flex_14 = "15~1~0~" + item.CreationDate.ToString("dd/MM/yyyy") + "~NA~NA~1~" + item.CreationDate.ToString("dd/MM/yyyy") + "~NA";
-                }
-            }
+            //foreach (var item in attachments)
+            //{
+            //    if (item.DocumentSetupId == 1)
+            //    {
+            //        TP.c_tp_flex_07 = "02~1~0~" + item.CreationDate.ToString("dd/MM/yyyy") + "~NA~NA~1~" + item.CreationDate.ToString("dd/MM/yyyy") + "~NA";
+            //    //}
+            //    //else if (item.DocumentSetupId == 2)
+            //    //{
+            //        //05
+            //        TP.c_tp_flex_08 = "03~1~0~" + item.CreationDate.ToString("dd/MM/yyyy") + "~NA~NA~1~" + item.CreationDate.ToString("dd/MM/yyyy") + "~NA";
+            //    //}
+            //    //else if (item.DocumentSetupId == 4)
+            //    //{
+            //        //06
+            //        TP.c_tp_flex_09 = "01~1~0~" + item.CreationDate.ToString("dd/MM/yyyy") + "~NA~NA~1~" + item.CreationDate.ToString("dd/MM/yyyy") + "~NA";
+            //    }
+            //    //if (item.DocumentSetupId == 5)
+            //    //{
+            //    //    TP.c_tp_flex_10 = "04~1~0~" + item.CreationDate.ToString("dd/MM/yyyy") + "~NA~NA~1~" + item.CreationDate.ToString("dd/MM/yyyy") + "~NA";
+            //    //}
+            //    //if (item.DocumentSetupId == 1011)
+            //    //{
+            //    //    TP.c_tp_flex_11 = "16~1~0~" + item.CreationDate.ToString("dd/MM/yyyy") + "~NA~NA~1~" + item.CreationDate.ToString("dd/MM/yyyy") + "~NA";
+            //    //}
+            //    //if (item.DocumentSetupId == 11)
+            //    //{
+            //    //    TP.c_tp_flex_12 = "10~1~0~" + item.CreationDate.ToString("dd/MM/yyyy") + "~NA~NA~1~" + item.CreationDate.ToString("dd/MM/yyyy") + "~NA";
+            //    //}
+            //    //if (item.DocumentSetupId == 8)
+            //    //{
+            //    //    TP.c_tp_flex_13 = "19~1~0~" + item.CreationDate.ToString("dd/MM/yyyy") + "~NA~NA~1~" + item.CreationDate.ToString("dd/MM/yyyy") + "~NA";
+            //    //}
+            //    //if (item.DocumentSetupId == 12)
+            //    //{
+            //    //    TP.c_tp_flex_14 = "15~1~0~" + item.CreationDate.ToString("dd/MM/yyyy") + "~NA~NA~1~" + item.CreationDate.ToString("dd/MM/yyyy") + "~NA";
+            //    //}
+            //}
             thirdPartyRequestTpInIns[0] = TP;
-
+           
+            
             request.p_c_clm_tp_in = thirdPartyRequestTpInIns;
 
             claimCreationRequestInfo.ThirdPartyCreationRequestInfo = request;
@@ -274,6 +279,7 @@ namespace MotorClaims.Models
             else
             {
                 Result = false;
+                clm = claim.claimants;
                 clm.PremiaStatus = claimCreationServiceResponse.ThirdPartyCreationResponse.p_C_ERROR_MSG.Count() > 0 ? claimCreationServiceResponse.ThirdPartyCreationResponse.p_C_ERROR_MSG.FirstOrDefault().err_desc : null;
                 setupClaimsRequestcs = new SetupClaimsRequestcs()
                 {
@@ -281,7 +287,7 @@ namespace MotorClaims.Models
                     Request = clm
                 };
                 clm = Helpers.ExcutePostAPI<Claimants>(setupClaimsRequestcs, _appSettings.APIHubPrefix + "api/MotorClaim/ClaimsTransactions");
-
+                error = claimCreationServiceResponse.ThirdPartyCreationResponse.p_C_ERROR_MSG[0].err_desc;
             }
         }
 
@@ -302,8 +308,8 @@ namespace MotorClaims.Models
             claimEstimateDtls estimate = new claimEstimateDtls()
             {
                 c_EST_CLMAP_SYS_ID = claim.claims.PremiaRiskLamp.HasValue && claim.claims.PremiaRiskLamp.Value > 0 ? claim.claims.PremiaRiskLamp.ToString() : null,
-                c_EST_PROVISION_DT = reserve.reserve.Creationdate<DateTime.Now?DateTime.Now.ToString("dd-MMM-yyyy"): reserve.reserve.Creationdate.ToString("dd-MMM-yyyy"),
-                c_EST_CODE = reserve.reserveDetails.Where(p=>p.ReserveType== TransType).FirstOrDefault()?.PremiaCode,//mapping with reserve codes
+                c_EST_PROVISION_DT = reserve.reserve.Creationdate < DateTime.Now ? DateTime.Now.ToString("dd-MMM-yyyy", new CultureInfo("en")) : reserve.reserve.Creationdate.ToString("dd-MMM-yyyy", new CultureInfo("en")),
+                c_EST_CODE = reserve.reserveDetails.Where(p => p.ReserveType == TransType).FirstOrDefault()?.PremiaCode,//mapping with reserve codes
                 c_EST_CUSTOMER_CODE = "027000001",//lookup customer master  
                 c_EST_CURR_CODE = "SAR",
                 c_EST_PROVISION_AMT = Convert.ToDecimal(Amount).ToString(),
@@ -332,7 +338,7 @@ namespace MotorClaims.Models
                     Result = true; error = Ids[0].CE_SYS_ID;
 
                     int PremiaId = !string.IsNullOrEmpty(Ids[0].CE_SYS_ID) ? Convert.ToInt32(Ids[0].CE_SYS_ID) : 0;
-                    ReserveDetails reserveDetails = reserve.reserveDetails.Where(p=>p.ReserveType==TransType).FirstOrDefault();
+                    ReserveDetails reserveDetails = reserve.reserveDetails.Where(p => p.ReserveType == TransType).FirstOrDefault();
 
                     reserveDetails.PremiaClaimId = PremiaId;
 
@@ -359,7 +365,7 @@ namespace MotorClaims.Models
 
         }
 
-        public static void CreateClaimSettlement(ClaimMaster claim, Settlements settlements, ReserveDetails reserve,  AppSettings _appSettings, out bool Result, out string error)
+        public static void CreateClaimSettlement(ClaimMaster claim, Settlements settlements, ReserveDetails reserve, AppSettings _appSettings, out bool Result, out string error)
         {
             Result = true; error = string.Empty;
 
@@ -379,7 +385,7 @@ namespace MotorClaims.Models
             {
                 c_setl_ce_sys_id = reserve.PremiaClaimId.ToString(),
                 c_setl_iban_no = claim.claimants.Iban,
-                c_setl_date = DateTime.Now.ToString("dd-MMM-yyyy"),
+                c_setl_date = DateTime.Now.ToString("dd-MMM-yyyy", new CultureInfo("en")),
                 c_setl_est_code = reserve.PremiaCode,//mapping with reserve codes
                 c_setl_cust_code = "027000001",//lookup customer master
                 c_setl_payee_code = "027000001",//lookup customer master
@@ -395,7 +401,7 @@ namespace MotorClaims.Models
                 c_setl_benf_name_arab = claim.claimants.BenefecieryName,
                 c_setl_clmap_sys_id_in = claim.claims.PremiaRiskLamp.ToString(),
                 c_setl_flex_29 = "INV" + DateTime.Now.Minute + "-" + DateTime.Now.Second + "-" + reserve.Id,
-                c_setl_flex_30 = DateTime.Now.ToString("dd-MMM-yyyy"),
+                c_setl_flex_30 = DateTime.Now.ToString("dd-MMM-yyyy", new CultureInfo("en")),
             };
             settlementRequestIns[0] = settlement;
 

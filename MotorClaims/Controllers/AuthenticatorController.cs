@@ -38,10 +38,9 @@ namespace MotorClaims.Controllers
         }
 
 
-
         public ActionResult Login(string? confirm = null)
         {
-            string a = Helpers.Decryption("dPed4MyFQs6s/qVIusFgzQ==");
+            //string a = Helpers.Decryption("dPed4MyFQs6s/qVIusFgzQ==");
             ViewData["State"] = "Pass";
             ViewData["confirm"] = confirm;
             if (!string.IsNullOrEmpty(confirm))
@@ -112,8 +111,8 @@ namespace MotorClaims.Controllers
                 message = "11"
             };
             CORE.DTOs.APIs.Unified_Response.Results results = new CORE.DTOs.APIs.Unified_Response.Results();
-            //results = Helpers.ExcutePostAPI<CORE.DTOs.APIs.Unified_Response.Results>(sMS,_appSettings.APIHubPrefix+ query.services.Where(p => p.Name == "SMS").FirstOrDefault().Link);
-
+            string results1 = Helpers.ExcutePostAPI<string>(sMS, _appSettings.APIHubPrefix + "api/ExternalAPIs/SendSMS_AICC");
+            ViewData["Error"] = results1;
 
             return Verify(usr.Mobile);
         }
@@ -284,7 +283,8 @@ namespace MotorClaims.Controllers
                 }
                 else
                 {
-                    loginObj = Helpers.Deserilize<CORE.DTOs.APIs.Authenticator.LoginObj>(Helpers.Decryption(headers.First<string>()));
+       
+                    loginObj = Helpers.Deserilize<CORE.DTOs.APIs.Authenticator.LoginObj>(headers.First<string>());
 
 
                     HttpContext.Session.SetSessionData("loginObj", loginObj);
@@ -363,15 +363,15 @@ namespace MotorClaims.Controllers
                 HttpContext.Session.SetSessionData("OTP", otpPick);
 
 
-                CORE.DTOs.APIs.TPServices.SMSInput sMS = new CORE.DTOs.APIs.TPServices.SMSInput()
-                {
-                    MessageBody = "Login password is : " + otpPick.ToString(),
-                    Mobile = loginObj.Users.Mobile,
-                    message = "11"
-                };
-                CORE.DTOs.APIs.Unified_Response.Results results = new CORE.DTOs.APIs.Unified_Response.Results();
-                //results = Helpers.ExcutePostAPI<CORE.DTOs.APIs.Unified_Response.Results>(sMS, _appSettings.APIHubPrefix + "api/ExternalAPIs/SendSms");
-
+                //CORE.DTOs.APIs.TPServices.SMSInput sMS = new CORE.DTOs.APIs.TPServices.SMSInput()
+                //{
+                //    MessageBody = "Login password is : " + otpPick.ToString(),
+                //    Mobile = loginObj.Users.Mobile,
+                //    message = "11"
+                //};
+                //CORE.DTOs.APIs.Unified_Response.Results results = new CORE.DTOs.APIs.Unified_Response.Results();
+                //string results1 = Helpers.ExcutePostAPI<string>(sMS, _appSettings.APIHubPrefix + "api/ExternalAPIs/SendSMS_AICC");
+                //ViewData["Error"] = results1;
                 return View("Authentication/_Verify", loginObj.Users.Mobile);
 
             }
@@ -512,7 +512,8 @@ namespace MotorClaims.Controllers
                     Mobile = loginObj.Users.Mobile,
                     message = "11"
                 };
-                results = Helpers.ExcutePostAPI<CORE.DTOs.APIs.Unified_Response.Results>(sMS, _appSettings.APIHubPrefix + "api/Authenticator/SMS");
+                string results1 = Helpers.ExcutePostAPI<string>(sMS, _appSettings.APIHubPrefix + "api/ExternalAPIs/SendSMS_AICC");
+                ViewData["Error"] = results1;
                 //sMSResponseModel = _svcSMS.SendSMS(_appSettings, "Reset password OTP is : " + otpPick, usr.Mobile);
                 // _svcSMS.InsertSMS(sMSResponseModel, out error);
                 //ViewData["Error"] = "OTP was sent";

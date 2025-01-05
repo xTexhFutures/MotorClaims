@@ -241,13 +241,13 @@ namespace MotorClaims.Controllers
                 claimants = Helpers.ExcutePostAPI<Claimants>(setupClaimsRequestcs, _appSettings.APIHubPrefix + "api/MotorClaim/ClaimsTransactions");
             }
 
-            //settlements.TransactionId = claimTransactions.Id;
-            //setupClaimsRequestcs = new SetupClaimsRequestcs()
-            //{
-            //    TransactionType = CORE.Extensions.ClaimTransactionType.InsertSettlement,
-            //    Request = settlements
-            //};
-            //settlements = Helpers.ExcutePostAPI<Settlements>(setupClaimsRequestcs, _appSettings.APIHubPrefix + "api/MotorClaim/ClaimsTransactions");
+            settlements.TransactionId = claimTransactions.Id;
+            setupClaimsRequestcs = new SetupClaimsRequestcs()
+            {
+                TransactionType = CORE.Extensions.ClaimTransactionType.InsertSettlement,
+                Request = settlements
+            };
+            settlements = Helpers.ExcutePostAPI<Settlements>(setupClaimsRequestcs, _appSettings.APIHubPrefix + "api/MotorClaim/ClaimsTransactions");
 
             return RedirectToAction("Index","Home", new { obj = obj });
         }

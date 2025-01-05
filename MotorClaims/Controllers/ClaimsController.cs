@@ -19,10 +19,13 @@ using Microsoft.Extensions.Options;
 using MotorClaims.Models;
 using Newtonsoft.Json;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
+using System.Net;
 using System.Net.Mail;
 using System.Reflection;
+using System.Security.AccessControl;
 using System.Security.Claims;
 using System.Security.Principal;
 
@@ -125,16 +128,27 @@ namespace MotorClaims.Controllers
         public IActionResult ClaimEntryFast(string obj)
         {
             ClaimSearchobj claimSearchobj = Helpers.Deserilize<ClaimSearchobj>(Helpers.Decryption(obj));
-            MainSearchMC mainSearchMC = new MainSearchMC()
+            List<ClaimMaster> claims = new List<ClaimMaster>();
+            if (claimSearchobj.ClaimId.HasValue && claimSearchobj.ClaimId.Value>0)
             {
-                Id = (int)claimSearchobj.ClaimId.Value
-            };
-            SetupClaimsRequestcs setupClaimsRequestcs = new SetupClaimsRequestcs()
+                MainSearchMC mainSearchMC = new MainSearchMC()
+                {
+                    Id = (int)claimSearchobj.ClaimId.Value
+                };
+                SetupClaimsRequestcs setupClaimsRequestcs = new SetupClaimsRequestcs()
+                {
+                    TransactionType = CORE.Extensions.ClaimTransactionType.LoadClaimsMaster,
+                    Request = mainSearchMC
+                };
+                 claims = Helpers.ExcutePostAPI<List<ClaimMaster>>(setupClaimsRequestcs, _appSettings.APIHubPrefix + "api/MotorClaim/ClaimsTransactions");
+            }
+            else if (claimSearchobj.eClaimId.HasValue && claimSearchobj.eClaimId.Value>0)
             {
-                TransactionType = CORE.Extensions.ClaimTransactionType.LoadClaimsMaster,
-                Request = mainSearchMC
-            };
-            var claims = Helpers.ExcutePostAPI<List<ClaimMaster>>(setupClaimsRequestcs, _appSettings.APIHubPrefix + "api/MotorClaim/ClaimsTransactions");
+                eClaims eClaims = new eClaims() { Id = claimSearchobj.eClaimId.Value };
+
+                return RedirectToAction("UpdateEClaim", "Operations", new { obj =Helpers.Encrypt(JsonConvert.SerializeObject(eClaims) )});
+            }
+
 
             SearchingObj searchingObj = new SearchingObj()
             {
@@ -231,7 +245,7 @@ namespace MotorClaims.Controllers
                 };
                 SetupClaimsRequestcs setupClaimsRequestcs = new SetupClaimsRequestcs()
                 {
-                    TransactionType = CORE.Extensions.ClaimTransactionType.LoadClaimsMaster,
+                    TransactionType = CORE.Extensions.ClaimTransactionType.LoadClaimsMaster2,
                     Request = mainSearchMC
                 };
                 claim = Helpers.ExcutePostAPI<List<ClaimMaster>>(setupClaimsRequestcs, _appSettings.APIHubPrefix + "api/MotorClaim/ClaimsTransactions");
@@ -259,6 +273,12 @@ namespace MotorClaims.Controllers
             DateTime LossDate = Helpers.ConvertDate(HttpContext.Request.Form["DateOfLoss"]);
             DateTime NotificationDate = Helpers.ConvertDate(HttpContext.Request.Form["NotificationDate"]);
             DateTime RegistrationDate = Helpers.ConvertDate(HttpContext.Request.Form["RegistrationDate"]);
+
+            string cityId = HttpContext.Request.Form["CityId"];
+            string SurveyCity = HttpContext.Request.Form["SurveyCity"];
+            claim.CityId = cityId;
+            claim.SurveyCity = SurveyCity;
+
             //int u =Convert.ToInt32(HttpContext.Request.Form["CityId"]);
             claim.DateOfLoss = LossDate;
             claim.RegistrationDate = RegistrationDate;
@@ -276,11 +296,11 @@ namespace MotorClaims.Controllers
             VehicleInfos Vehicle = new VehicleInfos();
             if (claimSearchResult == null)
             {
-                 mainSearchMC = new MainSearchMC()
+                mainSearchMC = new MainSearchMC()
                 {
                     PolicyId = PolicyId
                 };
-                 setupClaimsRequestcs = new SetupClaimsRequestcs()
+                setupClaimsRequestcs = new SetupClaimsRequestcs()
                 {
                     TransactionType = CORE.Extensions.ClaimTransactionType.LoadProductionInfo,
                     Request = mainSearchMC
@@ -305,8 +325,8 @@ namespace MotorClaims.Controllers
             }
             else
             {
-                 policy = claimSearchResult.Productions.Where(p => p.policy.Id == PolicyId).FirstOrDefault();
-                 Vehicle = policy.Vehicles.Where(p => p.Vehicle.Id == VehicleId).FirstOrDefault();
+                policy = claimSearchResult.Productions.Where(p => p.policy.Id == PolicyId).FirstOrDefault();
+                Vehicle = policy.Vehicles.Where(p => p.Vehicle.Id == VehicleId).FirstOrDefault();
             }
             List<Claims> claims = new List<Claims>();
             if (claim.ClaimReportType == (int)Models.Enums.ClaimReportType.Other)
@@ -317,11 +337,17 @@ namespace MotorClaims.Controllers
                 {
                     claim.AccidentNo = ReportNo;
                 }
-                else
+                else if (ManualReportType == (int)Models.Enums.ClaimReportType.Basher)
                 {
-                    claim.BasherNo = ReportNo;
+                    claim.AccidentNo = claim.BasherNo;
                 }
             }
+
+            if (claim.ClaimReportType == (int)Models.Enums.ClaimReportType.Basher)
+            {
+                claim.AccidentNo = claim.BasherNo;
+            }
+
             mainSearchMC = new MainSearchMC()
             {
                 AccidentNo = claim.AccidentNo
@@ -447,6 +473,26 @@ namespace MotorClaims.Controllers
             int PolicyId = Convert.ToInt32(HttpContext.Request.Form["PolicyId"]);
             int VehicleId = Convert.ToInt32(HttpContext.Request.Form["VehicleId"]);
             ClaimSearchResult claimSearchResult = HttpContext.Session.getSessionData<ClaimSearchResult>("SearchResult");
+
+
+            //if (!string.IsNullOrEmpty(claimants.PlateChar1))
+            //{
+            //    claimants.PlateChar1 = Helpers.PlateMapping(claimants.PlateChar1);
+            //}
+            //if (!string.IsNullOrEmpty(claimants.PlateChar2))
+            //{
+            //    claimants.PlateChar2 = Helpers.PlateMapping(claimants.PlateChar2);
+            //}
+            //if (!string.IsNullOrEmpty(claimants.PlateChar3))
+            //{
+            //    claimants.PlateChar3 = Helpers.PlateMapping(claimants.PlateChar3);
+            //}
+
+            if (!claimants.ClaimantStatus.HasValue)
+            {
+                claimants.ClaimantStatus = (int)Enums.ClaimantStatus.NeedMoreInfo;
+            }
+            claimants.AssignTo = HttpContext.Session.getSessionData<Users>("LoggedUser").Id;
             SetupClaimsRequestcs setupClaimsRequestcs = new SetupClaimsRequestcs()
             {
                 TransactionType = CORE.Extensions.ClaimTransactionType.InsertUpdateClaimants,
@@ -463,13 +509,13 @@ namespace MotorClaims.Controllers
             claimSearchResult = HttpContext.Session.getSessionData<ClaimSearchResult>("SearchResult");
             claimSearchResult = new ClaimSearchResult();
 
-            AutoAssignObj autoAssignObj = new AutoAssignObj()
-            {
-                ClaimantId = claimants.Id,
-                RoleId = (int)Models.Enums.ClaimantStatus.Operation,
-                Status = 2
-            };
-            claimants = Helpers.ExcutePostAPI<Claimants>(autoAssignObj, _appSettings.APIHubPrefix + "api/MotorClaim/AutoAssign");
+            //AutoAssignObj autoAssignObj = new AutoAssignObj()
+            //{
+            //    ClaimantId = claimants.Id,
+            //    RoleId = (int)Models.Enums.ClaimantStatus.Operation,
+            //    Status = 2
+            //};
+            //claimants = Helpers.ExcutePostAPI<Claimants>(autoAssignObj, _appSettings.APIHubPrefix + "api/MotorClaim/AutoAssign");
 
             MainSearchMC mainSearchMC = new MainSearchMC()
             {
@@ -496,7 +542,7 @@ namespace MotorClaims.Controllers
             //{
             //    PremiaIntegration.CreateTPClaim(claims.FirstOrDefault(), _appSettings, out Result, out error);
             //}
-            Helpers.UpdateClaimantStatus(claimants, _appSettings);
+            //Helpers.UpdateClaimantStatus(claimants, _appSettings);
             Helpers.RegisterHistory(_appSettings, claimants.ClaimId, "Update Claimant " + claimants.ClaimantName, HttpContext.Session.getSessionData<Users>("LoggedUser").UserName, claimants.Id);
             return RedirectToAction("ClaimEntry", new { obj = Helpers.Encrypt(JsonConvert.SerializeObject(claimSearchobj)) });
         }
@@ -692,6 +738,10 @@ namespace MotorClaims.Controllers
                         claims = Helpers.ExcutePostAPI<List<ClaimMaster>>(mainSearch, _appSettings.APIHubPrefix + "api/MotorClaim/ClaimsTransactions");
 
                         string directory = Path.Combine(pathMDF, claims.FirstOrDefault().claims.ClaimNo, serial.ToString());
+                        NetworkCredential networkCredential = new NetworkCredential("Administrator", "P@ssw0rd");
+                        CredentialCache credentialCache = new CredentialCache();
+                        credentialCache.Add(new Uri(@"\\networkshare\"), "Basic", networkCredential);
+
                         bool folderExists = Directory.Exists(directory);
                         if (!folderExists)
                             Directory.CreateDirectory(directory);
@@ -706,7 +756,7 @@ namespace MotorClaims.Controllers
                 ViewData["Link"] = _appSettings.DocumentsLink + claims.FirstOrDefault().claims.ClaimNo;
 
                 ViewData["documentInfos"] = Helpers.GetClaimantDocuments(claims.FirstOrDefault().claimants, _appSettings);
-                Helpers.UpdateClaimantStatus(claims.FirstOrDefault().claimants, _appSettings);
+                //Helpers.UpdateClaimantStatus(claims.FirstOrDefault().claimants, _appSettings);
             }
         }
         [HttpPost]
@@ -734,7 +784,7 @@ namespace MotorClaims.Controllers
                 if (City != null)
                 {
                     claims.City = City.NameEnglish;
-                    claims.CityId = Convert.ToInt32(City.Code);
+                    claims.CityId = City.Code;
                 }
 
                 taqdeerResponse = Helpers.ExcutePostAPI<TaqdeerResponse>(Taqdeer, _appSettings.APIHubPrefix + "api/MotorClaim/TaqdeerDetails");
@@ -782,7 +832,7 @@ namespace MotorClaims.Controllers
                 if (City != null)
                 {
                     claims.City = City.NameEnglish;
-                    claims.CityId = Convert.ToInt32(City.Code);
+                    claims.CityId = City.Code;
                 }
 
                 if (!string.IsNullOrEmpty(Taqdeer))
@@ -967,13 +1017,30 @@ namespace MotorClaims.Controllers
                 Request = mainSearchMC
             };
             var claim = Helpers.ExcutePostAPI<List<Claims>>(setupClaimsRequestcs, _appSettings.APIHubPrefix + "api/MotorClaim/ClaimsTransactions");
-            DirectoryInfo d = new DirectoryInfo(string.Concat(_appSettings.NajmImagesPath, "\\LD\\", claim.FirstOrDefault().AccidentNo)); //Assuming Test is your Folder
+            string FolderName = string.Empty;
+            DirectoryInfo direc;
+            if (claim.FirstOrDefault().ClaimReportType == 1)
+            {
+                FolderName = "LD";
+                ViewData["FolderName"] = "LD";
+                direc = new DirectoryInfo(string.Concat(_appSettings.NajmImagesPath, "\\" + FolderName + "\\", claim.FirstOrDefault().AccidentNo)); //Assuming Test is your Folder
+            }
+            else
+            {
+                FolderName = "BasherImages";
+                ViewData["FolderName"] = "BasherImages";
+                direc = new DirectoryInfo(string.Concat(_appSettings.BasherImagesPath, "\\" + FolderName + "\\", claim.FirstOrDefault().AccidentNo)); //Assuming Test is your Folder
+            }
+
             List<string> location = new List<string>();
             ViewData["Claims"] = claim.FirstOrDefault();
             try
             {
-                FileInfo[] Files = d.GetFiles("*.jpg"); //Getting Text files
-
+                FileInfo[] Files = direc.GetFiles("*.jpg"); //Getting Text files
+                if (Files.Count() == 0)
+                {
+                    Files = direc.GetFiles("*.jpeg");
+                }
                 string str = "";
 
                 foreach (FileInfo file in Files)
@@ -983,9 +1050,9 @@ namespace MotorClaims.Controllers
                 ViewData["location"] = location;
 
 
-                d = new DirectoryInfo(string.Concat(_appSettings.NajmImagesPath, "\\DA\\", claim.FirstOrDefault().TaqdeerNo)); //Assuming Test is your Folder
+                direc = new DirectoryInfo(string.Concat(_appSettings.NajmImagesPath, "\\DA\\", claim.FirstOrDefault().TaqdeerNo)); //Assuming Test is your Folder
 
-                Files = d.GetFiles("*.jpg"); //Getting Text files
+                Files = direc.GetFiles("*.jpg"); //Getting Text files
                 location = new List<string>();
 
                 foreach (FileInfo file in Files)
@@ -1009,9 +1076,17 @@ namespace MotorClaims.Controllers
         }
 
         [HttpPost]
-        public void SendSMS(int DocId, int SMSTemplateId, int ClaimId, int ClaimantId, string? MobileNo)
+        public void SendSMS(int DocId, int SMSTemplateId, int? ClaimId, int? ClaimantId, string? MobileNo,int? eClaimId,int? Serial)
         {
+
             SMSTemplates sMSTemplates = new SMSTemplates();
+            MissingDocuments missingDocuments = new MissingDocuments()
+            {
+                ClaimantId = ClaimantId,
+                ClaimId = ClaimId,
+                eClaimId=eClaimId,
+                Serial= Serial
+            };
             MainSearchMC mainSearchMC = new MainSearchMC()
             {
                 Id = SMSTemplateId
@@ -1022,6 +1097,10 @@ namespace MotorClaims.Controllers
                 Request = mainSearchMC
             };
             sMSTemplates = Helpers.ExcutePostAPI<SMSTemplates>(setupClaimsRequestcs, _appSettings.APIHubPrefix + "api/MotorClaim/ClaimsTransactions");
+
+            string a = Helpers.Encrypt(JsonConvert.SerializeObject(missingDocuments)).Replace("+", "-");
+            string SMSBody = sMSTemplates.ArSMS.Replace("{Link}", _appSettings.MissingDocsURL + a);
+
             SMSLog sMSLog = new SMSLog()
             {
                 ClaimantId = ClaimantId,
@@ -1030,7 +1109,8 @@ namespace MotorClaims.Controllers
                 SendDate = DateTime.Now,
                 SentBy = HttpContext.Session.getSessionData<Users>("LoggedUser").UserName,
                 SMSTemplateId = SMSTemplateId,
-                SMSText = sMSTemplates.ArSMS
+                SMSText = SMSBody,
+                eClaimId=eClaimId
             };
             setupClaimsRequestcs = new SetupClaimsRequestcs()
             {
@@ -1038,7 +1118,44 @@ namespace MotorClaims.Controllers
                 Request = sMSLog
             };
             sMSLog = Helpers.ExcutePostAPI<SMSLog>(setupClaimsRequestcs, _appSettings.APIHubPrefix + "api/MotorClaim/ClaimsTransactions");
+
+
             Helpers.SendSms(MobileNo, sMSTemplates.ArSMS, _appSettings);
+
+            if (ClaimantId.HasValue && ClaimantId.Value>0)
+            {
+                mainSearchMC = new MainSearchMC()
+                {
+                    ClaimId = Convert.ToInt32(missingDocuments.ClaimId),
+                    ClaimantId = missingDocuments.ClaimantId
+
+                };
+                setupClaimsRequestcs = new SetupClaimsRequestcs()
+                {
+                    TransactionType = CORE.Extensions.ClaimTransactionType.LoadClaimsMaster,
+                    Request = mainSearchMC
+                };
+                var claim = Helpers.ExcutePostAPI<List<ClaimMaster>>(setupClaimsRequestcs, _appSettings.APIHubPrefix + "api/MotorClaim/ClaimsTransactions");
+                Claimants claimants = new Claimants();
+                claimants = claim.FirstOrDefault().claimants;
+                claimants.ClaimantStatus = (int)Enums.ClaimantStatus.MissingDocuments;
+                setupClaimsRequestcs = new SetupClaimsRequestcs()
+                {
+                    TransactionType = CORE.Extensions.ClaimTransactionType.InsertUpdateClaimants,
+                    Request = claimants
+                };
+                claimants = Helpers.ExcutePostAPI<Claimants>(setupClaimsRequestcs, _appSettings.APIHubPrefix + "api/MotorClaim/ClaimsTransactions");
+
+
+                Helpers.RegisterHistory(_appSettings, claimants.ClaimId, "Update Claimant Status to " + Enums.ClaimantStatus.MissingDocuments.DisplayName(), HttpContext.Session.getSessionData<Users>("LoggedUser").UserName, claimants.Id);
+
+            }
+            else
+            {
+
+                Helpers.RegisterHistory(_appSettings, eClaimId.Value, "Update Claimant Status to " + Enums.ClaimantStatus.MissingDocuments.DisplayName(), HttpContext.Session.getSessionData<Users>("LoggedUser").UserName, eClaimId.Value);
+
+            }
 
         }
 
@@ -1172,8 +1289,8 @@ namespace MotorClaims.Controllers
             if (Result)
             {
                 ReserveDetails details = new ReserveDetails();
-                details=reserveDetails.FirstOrDefault();
-                details.IsClosed=true;
+                details = reserveDetails.FirstOrDefault();
+                details.IsClosed = true;
                 setupClaimsRequestcs = new SetupClaimsRequestcs()
                 {
                     TransactionType = CORE.Extensions.ClaimTransactionType.InsertReserveDetail,

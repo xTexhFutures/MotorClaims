@@ -27,6 +27,8 @@
     <input type="hidden" name="Id" value="@(Model!=null? Model.Id:0)" />
     <input type="hidden" name="ClaimId" value="@Model.ClaimId" />
     <input type="hidden" name="Serial" value="@(Model!=null? Model.Serial:0)" />
+    <input type="hidden" name="ClaimantStatus" value="@(Model!=null? Model.ClaimantStatus:0)" />
+    <input type="hidden" name="AssignTo" value="@(Model!=null?Model.AssignTo:null)" />
 
 
     <div class="add-member-detail">
@@ -207,6 +209,10 @@
                                             <div class="form-container Full">
                                                 <span class="label">@_localizer["BeneficiaryName"].Value </span>
                                                 <input class="form-controlar" autocomplete="off" type="text" id="txtBenefecieryName" maxlength="150" placeholder="Beneficiary Name" name="BenefecieryName" value="@Model.BenefecieryName" />
+                                            </div>
+                                            <div class="form-container Full">
+                                                <span class="label">@_localizer["BeneficiaryNameEN"].Value </span>
+                                                <input class="form-controlar" autocomplete="off" type="text" id="txtBenefecieryNameEN" maxlength="150" onkeypress="return (event.charCode >= 65 && event.charCode <= 90) || (event.charCode >= 97 && event.charCode <= 122) || (event.charCode >= 48 && event.charCode <= 57)" placeholder="Beneficiary Name English" name="BenefecieryNameEN" value="@Model.BenefecieryNameEN" />
                                             </div>
                                             <div class="form-container Full">
                                                 <span class="label">@_localizer["DriverName"].Value </span>

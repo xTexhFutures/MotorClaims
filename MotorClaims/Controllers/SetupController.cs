@@ -129,7 +129,7 @@ namespace MotorClaims.Controllers
             printReportInput = new PrintReportInput()
             {
                 ReportCode = "MCC001",
-                Parameters = "",
+                Parameters = Id.ToString(),
                 ReportOutputType = 1
             };
             string[] p = null;
@@ -142,7 +142,7 @@ namespace MotorClaims.Controllers
             {
             }
             //var result = Helpers.ExcutePostAPI<CORE.DTOs.APIs.Unified_Response.Results>(reportInput, _appSettings.APIHubPrefix + query.services.Where(p => p.Name == "GenerateCoreReport").FirstOrDefault().Link);
-            string i = reportOut.Path.Replace("E:\\MCReportsPortal\\Files\\ReportsStoragePath", "http://172.16.1.24:8077").Replace("\\", "/");
+            string i = reportOut.Path.Replace("E:\\MCReportsPortal\\Files\\ReportsStoragePath", "https://najmclaim.aicc.com.sa:4436/").Replace("\\", "/");
             //byte[] content =await GetUrlContent(i);
             return i;
 

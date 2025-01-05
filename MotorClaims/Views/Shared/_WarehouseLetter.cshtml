@@ -1,4 +1,13 @@
 ﻿@using CORE.DTOs.MotorClaim.Claims;
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.AspNetCore.Builder
+@using Microsoft.AspNetCore.Localization
+@using Microsoft.Extensions.Options
+@using Microsoft.AspNetCore.Http.Features
+@using System.Globalization
+@using Newtonsoft.Json;
+
+@inject IViewLocalizer _localizer
 @model ClaimMaster
 @{
     Layout = null;
@@ -12,7 +21,7 @@
     <div class="slide-popup-inner">
         <div class="slide-header">
             <div class="heading-card">
-                <h2 class="heading">Towing Letter</h2>
+                <h2 class="heading">@_localizer["Towing Letter"].Value</h2>
             </div>
         </div>
         <div class="slide-body">

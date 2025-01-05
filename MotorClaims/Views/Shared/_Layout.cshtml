@@ -96,7 +96,7 @@
                         </li>
 
                         @*  }*@
-                        @if (users.Roles.Id == 16|| users.Roles.Id == 2||users.Roles.Id == 4)
+                        @if (users.Roles.Id == 16|| users.Roles.Id == 2)
                         {
                             <li class="navigation-item">
                                 <a class="menu-item-wrapper" href="@Url.Action("Index","Search")" title="Search" aria-current="page">
@@ -104,13 +104,18 @@
                                 </a>
                             </li>
                         }
-                        @if (users.Roles.Id == 16|| users.Roles.Id == 4)
+                        @if (users.Roles.Id == 16 || users.Roles.Id == 4 || users.Roles.Id == 2)
                         {
                          <li class="navigation-item">
                             <a class="menu-item-wrapper" href="@Url.Action("Index","Operations")" title="Operation" aria-current="page">
                                 <img src="~/assets/icons/Operation.png" class="menu-icon" />
                             </a>
                         </li>
+                            <li class="navigation-item">
+                                <a class="menu-item-wrapper" href="@Url.Action("MissingDocuments","Operations")" title="Missing Documents" aria-current="page">
+                                    <img src="~/assets/icons/ManualEntry.png" class="menu-icon" />
+                                </a>
+                            </li>
                         }
                     
                          @if ((users.Roles.Id==15 || users.Roles.Id==16||users.Roles.Id==4) && 1==2)
@@ -121,7 +126,7 @@
                                 </a>
                             </li>
                         }
-                        @if ((3 == 1 || users.Roles.Id==16) && 1==2)
+                        @if (users.Roles.Id == 16)
                         {
                             <li class="navigation-item">
                                 <a class="menu-item-wrapper" href="@Url.Action("Index","Surveyor")" title="Surveyor" aria-current="page">
@@ -147,7 +152,7 @@
                                 </a>
                             </li>
                         }
-                        @if (users.Roles.Id != 15)
+                        @if (users.Roles.Id == 2 || users.Roles.Id == 16 || users.Roles.Id == 4)
                         {
                             <li class="navigation-item">
                                 <a class="menu-item-wrapper" href="@Url.Action("eClaims","Operations")" title="@_localizer["eClaims"]" aria-current="page">
@@ -155,7 +160,7 @@
                                 </a>
                             </li>
                         }
-                        @if ((3 == 1 || users.Roles.Id==16) && 1==2)
+                        @if (users.Roles.Id==16)
                         {
                             <li class="navigation-item">
                                 <a class="menu-item-wrapper" href="@Url.Action("Index","WareHouse")" title="@_localizer["WareHouse"]" aria-current="page">
@@ -175,12 +180,15 @@
                                 </a>
                             </li>
                         }
-
-                           <li class="navigation-item">
+                        @if (users.Roles.Id==16)
+                        {
+                            <li class="navigation-item">
                                 <a class="menu-item-wrapper" href="@Url.Action("Index","Payments")" title="Payments" aria-current="page">
-                                    <img src="~/assets/icons/payment-method.png" class="menu-icon"  />
+                                    <img src="~/assets/icons/payment-method.png" class="menu-icon" />
                                 </a>
                             </li>
+                        }
+                     
                     </ul>
                 </nav>
             </aside>

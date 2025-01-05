@@ -117,4 +117,22 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ViewAll" xml:space="preserve">
+    <value>View All</value>
+  </data>
+  <data name="WrongClaimNumber" xml:space="preserve">
+    <value>رقم الحادث غير صحيح</value>
+  </data>
+  <data name="ClaimNotRelatedToAICC" xml:space="preserve">
+    <value>رقم المطالبة غير مسجل لدى العربية للتامين</value>
+  </data>
+  <data name="TPClaimWith100" xml:space="preserve">
+    <value>المطالبة لتامين ضد الغير مع نسبة مسؤولية 100%</value>
+  </data>
+  <data name="ClaimOutSidePolicyPeriod" xml:space="preserve">
+    <value>تاريخ المطالبة خارج فترة الوثيقة</value>
+  </data>
+  <data name="WrongOwnerDetails" xml:space="preserve">
+    <value>رقم هوية المالك غير صحيح</value>
+  </data>
 </root>

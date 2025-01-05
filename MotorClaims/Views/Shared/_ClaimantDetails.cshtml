@@ -19,7 +19,7 @@
     List<LookupTable> dClaimantType = (List<LookupTable>)ViewData["ClaimantType"];
     List<LookupTable> dClaimantResult = (List<LookupTable>)ViewData["ClaimantResult"];
     List<LookupTable> dDamageType = (List<LookupTable>)ViewData["DamageType"];
-      List<VehileCovers> PremiaCovers=(List<VehileCovers>)ViewData["PremiaCovers"];
+    List<VehileCovers> PremiaCovers = (List<VehileCovers>)ViewData["PremiaCovers"];
 }
 @model Claimants
 <form method="post" asp-action="InsertClaimant" asp-controller="Claims">
@@ -33,393 +33,464 @@
 
 
     <div class="member-summary-container">
-                        <div class="total-member-list">
+        <div class="total-member-list">
             <h6 class="title">@_localizer["ClaimantInfo"].Value </h6>
-                            <div class="member-list-container">
-                                <div class="member-collapse">
-                                    <div class="member-collapse-header" style="display:block">
-                                        <div class="vehicle-owner-grid">
-                                            <div class="form-container Full">
+            <div class="member-list-container">
+                <div class="member-collapse">
+                    <div class="member-collapse-header" style="display:block">
+                        <div class="vehicle-owner-grid">
+                            <div class="form-container Full">
                                 <span class="label">@_localizer["ClaimantType"].Value </span>
-                                                <select class="form-controlar" required name="ClaimantType" id="ddlClaimantType">
-                                                    <option value=""></option>
-                                                    @foreach (var item in dClaimantType)
-                                                    {
-                                                        <option value="@item.Code">@item.NameEnglish</option>
-                                                    }
-                                                </select>
-                                            </div>
-                                            <div class="form-container Full">
+                                <select class="form-controlar" required name="ClaimantType" id="ddlClaimantType">
+                                    <option value=""></option>
+                                    @foreach (var item in dClaimantType)
+                                    {
+                                        <option value="@item.Code">@item.NameEnglish</option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="form-container Full">
                                 <span class="label">
                                     @_localizer["ClaimantResult"].Value
-                                    
+
                                 </span>
-                                                <select class="form-controlar" required name="DamageType" id="ddlDamageType">
-                                                    <option value=""></option>
-                                                    @foreach (var item in dDamageType)
-                                                    {
-                                                        <option value="@item.Code">@item.NameEnglish</option>
-                                                    }
-                                                </select>
-                                            </div>
-                                            <div class="form-container Full">
+                                <select class="form-controlar" required name="DamageType" id="ddlDamageType">
+                                    <option value=""></option>
+                                    @foreach (var item in dDamageType)
+                                    {
+                                        <option value="@item.Code">@item.NameEnglish</option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="form-container Full">
                                 <span class="label">
                                     @_localizer["NatureofLoss"].Value
-                                    
+
                                 </span>
-                                                <select class="form-controlar"  name="NatureofLoss" id="ddlNatureofLoss">
-                                                    <option value=""></option>
+                                <select class="form-controlar" name="NatureofLoss" id="ddlNatureofLoss">
+                                    <option value=""></option>
                                     <option value="1">
                                         @_localizer["Vehicle"].Value
-                                        
+
                                     </option>
                                     <option value="2">
                                         @_localizer["PrivateProperties"].Value
-                                        
+
                                     </option>
                                     <option value="3">
                                         @_localizer["PublicProperties"].Value
-                                        
+
                                     </option>
 
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="vehicle-owner-grid">
+                                </select>
+                            </div>
+                        </div>
+                        <div class="vehicle-owner-grid">
 
-                                            <div class="vehicle-owner-grid" style="width:100%">
-                                                <div class="checkbox-wrapper-34">
+                            <div class="vehicle-owner-grid" style="width:100%">
+                                <div class="checkbox-wrapper-34">
                                     <span class="label">
                                         @_localizer["PremiaCover"].Value
-                                        
-                                    </span>
-                                                 <select class="form-controlar" required name="PremiaCoverCode" id="ddlPremiaCover">
-                                                    <option value=""></option>
-                                                    @foreach (var item in PremiaCovers)
-                                                    {
-                                                        <option value="@item.CoverCode">@item.CoverCode - @item.CoverName</option>
-                                                    }
-                                                </select>
 
-                                                <input type="hidden" name="PremiaCoverName" id="txtPremiaCoverName"/>
-                                                </div>
-                                            </div>
-                                            <div class="form-container Full" id="najm">
+                                    </span>
+                                    <select class="form-controlar" required name="PremiaCoverCode" id="ddlPremiaCover">
+                                        <option value=""></option>
+                                        @foreach (var item in PremiaCovers)
+                                        {
+                                            <option value="@item.CoverCode">@item.CoverCode - @item.CoverName</option>
+                                        }
+                                    </select>
+
+                                    <input type="hidden" name="PremiaCoverName" id="txtPremiaCoverName" />
+                                </div>
+                            </div>
+                            <div class="form-container Full" id="najm">
                                 <span class="label">
                                     @_localizer["ClaimantName"].Value
-                                    
-                                </span>
-                                                <input class="form-controlar" autocomplete="off" required type="text" id="txtClaimantName" maxlength="150" placeholder="Claimant Name" name="ClaimantName" value="@Model.ClaimantName" />
-                                            </div>
 
-                                            <div class="form-container Full">
+                                </span>
+                                <input class="form-controlar" autocomplete="off" required type="text" id="txtClaimantName" maxlength="150" placeholder="Claimant Name" name="ClaimantName" value="@Model.ClaimantName" />
+                            </div>
+
+                            <div class="form-container Full">
                                 <span class="label">
                                     @_localizer["NationalID"].Value
-                                    
+
                                 </span>
-                                                <input class="form-controlar" autocomplete="off" type="text" id="txtNationalId" maxlength="10" placeholder="National Id" name="NationalId" value="@Model.NationalId" />
-                                            </div>
-                                            <div class="form-container Full">
-                                                <span class="label">Our %</span>
-                                                <select class="form-controlar" name="OurPercent" id="ddlOurPercent">
-                                                    <option value=""></option>
-                                                    <option value="0">0</option>
-                                                    <option value="25">25</option>
-                                                    <option value="50">50</option>
-                                                    <option value="75">75</option>
-                                                    <option value="100">100</option>
-                                                </select>
-                                            </div>
+                                <input class="form-controlar" autocomplete="off" type="text" id="txtNationalId" maxlength="10" placeholder="National Id" name="NationalId" value="@Model.NationalId" />
+                            </div>
+                            <div class="form-container Full">
+                                <span class="label">Our %</span>
+                                <select class="form-controlar" name="OurPercent" id="ddlOurPercent">
+                                    <option value=""></option>
+                                    <option value="0">0</option>
+                                    <option value="25">25</option>
+                                    <option value="50">50</option>
+                                    <option value="75">75</option>
+                                    <option value="100">100</option>
+                                </select>
+                            </div>
 
 
-                                        </div>
-                                        <div class="vehicle-owner-grid">
+                        </div>
+                        <div class="vehicle-owner-grid">
 
-                                            <div class="form-container Full">
+                            <div class="form-container Full">
                                 <span class="label">@_localizer["Responsipility"].Value </span>
-                                                <select class="form-controlar" style="pointer-events: none;background-color:rgb(225,225,225) !important" onclick="return false;" onkeydown="return false;" name="Responsipility" id="txtResponsipility">
-                                                    <option value=""></option>
+                                <select class="form-controlar" style="pointer-events: none;background-color:rgb(225,225,225) !important" onclick="return false;" onkeydown="return false;" name="Responsipility" id="txtResponsipility">
+                                    <option value=""></option>
                                     <option value="1">
                                         @_localizer["US"].Value
-                                        
+
                                     </option>
                                     <option value="2">
                                         @_localizer["Shared"].Value
-                                        
+
                                     </option>
                                     <option value="3">
                                         @_localizer["They"].Value
-                                        
-                                    </option>
-                                                </select>
 
-                                            </div>
-                                            <div class="form-container Full">
+                                    </option>
+                                </select>
+
+                            </div>
+                            <div class="form-container Full">
                                 <span class="label">
                                     @_localizer["Mobile"].Value
-                                    
-                                </span>
-                                                <input class="form-controlar" autocomplete="off" type="text" maxlength="9" id="txtMobileNo" placeholder="5XXXXXXXX" name="MobileNo" value="@Model.MobileNo" />
-                                            </div>
 
-                                            <div class="form-container Full">
+                                </span>
+                                <input class="form-controlar" autocomplete="off" type="text" maxlength="9" id="txtMobileNo" placeholder="5XXXXXXXX" name="MobileNo" value="@Model.MobileNo" />
+                            </div>
+
+                            <div class="form-container Full">
                                 <span class="label">
                                     @_localizer["IBANNo"].Value
-                                    
+
                                 </span>
-                                                <input class="form-controlar" style="text-transform:uppercase" autocomplete="off" type="text" id="txtIban" maxlength="50" placeholder="IBAN No" name="Iban" value="@Model.Iban" />
-                                            </div>
-                                            <div class="form-container Full">
+                                <input class="form-controlar" style="text-transform:uppercase" autocomplete="off" type="text" id="txtIban" maxlength="50" placeholder="IBAN No" name="Iban" value="@Model.Iban" />
+                            </div>
+                            <div class="form-container Full">
                                 <span class="label">
                                     @_localizer["BankName"].Value
-                                    
+
                                 </span>
-                                                <input class="form-controlar" style="text-transform:uppercase" autocomplete="off" type="text" id="txtBankName" maxlength="50" placeholder="Bank Name" name="BankName" value="@(Helpers.BankCode(Model.Iban))" />
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                </div>
+                                <input class="form-controlar" style="text-transform:uppercase" autocomplete="off" type="text" id="txtBankName" maxlength="50" placeholder="Bank Name" name="BankName" value="@(Helpers.BankCode(Model.Iban))" />
                             </div>
+
                         </div>
-
-
-
                     </div>
+                </div>
+            </div>
+        </div>
 
-                    <div class="member-summary-container">
-                        <div class="total-member-list">
+
+
+    </div>
+
+    <div class="member-summary-container">
+        <div class="total-member-list">
             <h6 class="title">
                 @_localizer["DriverInfo"].Value
-                
+
             </h6>
-                            <div class="member-list-container">
-                                <div class="member-collapse">
-                                    <div class="member-collapse-header" style="display:block">
+            <div class="member-list-container">
+                <div class="member-collapse">
+                    <div class="member-collapse-header" style="display:block">
 
 
-                                        <div class="vehicle-owner-grid">
-                                            <div class="form-container Full">
+                        <div class="vehicle-owner-grid">
+                            <div class="form-container Full">
                                 <span class="label">
                                     @_localizer["DriverBirthDate"].Value
-                                    
+
                                 </span>
-                                                <input class="form-controlar calendar-input" autocomplete="off"  type="text" placeholder="Driver Birth Date" id="txtDriverBirthDate" name="DriverBirthDate" value="@(Model.DriverBirthDate.HasValue? HelpersDate.FormatDateNoTime(Model.DriverBirthDate.Value):string.Empty)" />
-                                            </div>
-                                            <div class="form-container Full">
+                                <input class="form-controlar calendar-input" autocomplete="off" type="text" placeholder="Driver Birth Date" id="txtDriverBirthDate" name="DriverBirthDate" value="@(Model.DriverBirthDate.HasValue? HelpersDate.FormatDateNoTime(Model.DriverBirthDate.Value):string.Empty)" />
+                            </div>
+                            <div class="form-container Full">
                                 <span class="label">
                                     @_localizer["Age"].Value
-                                    
+
                                 </span>
-                                                <input class="form-controlar" readonly autocomplete="off"  type="text" maxlength="3" placeholder="Driver Age" id="txtDriverAge" name="DriverAge" value="@Model.DriverAge" />
-                                            </div>
-                                            <div class="form-container Full">
+                                <input class="form-controlar" readonly autocomplete="off" type="text" maxlength="3" placeholder="Driver Age" id="txtDriverAge" name="DriverAge" value="@Model.DriverAge" />
+                            </div>
+                            <div class="form-container Full">
                                 <span class="label">
                                     @_localizer["DriverLicenseExpiry"].Value
-                                    
+
                                 </span>
-                                                <input class="form-controlar calendar-input" autocomplete="off"  type="text" placeholder="Driver License Expiry Date" id="txtDriverLicenseExpiryDate" name="DriverLicenseExpiryDate" value="@(Model.DriverLicenseExpiryDate.HasValue? HelpersDate.FormatDateNoTime(Model.DriverLicenseExpiryDate.Value):string.Empty)" />
-                                            </div>
-                                            <div class="form-container Full">
+                                <input class="form-controlar calendar-input" autocomplete="off" type="text" placeholder="Driver License Expiry Date" id="txtDriverLicenseExpiryDate" name="DriverLicenseExpiryDate" value="@(Model.DriverLicenseExpiryDate.HasValue? HelpersDate.FormatDateNoTime(Model.DriverLicenseExpiryDate.Value):string.Empty)" />
+                            </div>
+                            <div class="form-container Full">
                                 <span class="label">
                                     @_localizer["DriverNationalId"].Value
-                                    
-                                </span>
-                                                <input class="form-controlar" autocomplete="off" type="text" maxlength="10" id="txtDriverNationalId" placeholder="Driver National Id" name="DriverNationalId" value="@Model.DriverNationalId" />
-                                            </div>
-                                        </div>
-                                        <div class="vehicle-owner-grid">
 
-                                            <div class="form-container Full">
+                                </span>
+                                <input class="form-controlar" autocomplete="off" type="text" maxlength="10" id="txtDriverNationalId" placeholder="Driver National Id" name="DriverNationalId" value="@Model.DriverNationalId" />
+                            </div>
+                        </div>
+                        <div class="vehicle-owner-grid">
+
+                            <div class="form-container Full">
                                 <span class="label">
                                     @_localizer["OwnerNationalId"].Value
-                                    
+
                                 </span>
-                                                <input class="form-controlar" autocomplete="off" type="text" maxlength="10" id="txtOwnerNationalId" placeholder="Owner National Id" name="OwnerNationalId" value="@Model.OwnerNationalId" />
-                                            </div>
-                                            <div class="form-container Full">
+                                <input class="form-controlar" autocomplete="off" type="text" maxlength="10" id="txtOwnerNationalId" placeholder="Owner National Id" name="OwnerNationalId" value="@Model.OwnerNationalId" />
+                            </div>
+
+                            <div class="form-container Full">
                                 <span class="label">
                                     @_localizer["BeneficiaryName"].Value
-                                    
+
                                 </span>
-                                                <input class="form-controlar" autocomplete="off" type="text" id="txtBenefecieryName" maxlength="150" placeholder="Beneficiary Name" name="BenefecieryName" value="@Model.BenefecieryName" />
-                                            </div>
-                                            <div class="form-container Full">
+                                <input class="form-controlar" autocomplete="off" type="text" id="txtBenefecieryName" maxlength="150" placeholder="Beneficiary Name" name="BenefecieryName" value="@Model.BenefecieryName" />
+                            </div>
+                            <div class="form-container Full">
+                                <span class="label">@_localizer["BeneficiaryNameEN"].Value </span>
+                                <input class="form-controlar" autocomplete="off" type="text" id="txtBenefecieryNameEN" maxlength="150" onkeypress="return (event.charCode >= 65 && event.charCode <= 90) || (event.charCode >= 97 && event.charCode <= 122) || (event.charCode >= 48 && event.charCode <= 57)" placeholder="Beneficiary Name English" name="BenefecieryNameEN" value="@Model.BenefecieryNameEN" />
+                            </div>
+                            <div class="form-container Full">
                                 <span class="label">
                                     @_localizer["DriverName"].Value
-                                    
+
                                 </span>
-                                                <input class="form-controlar" autocomplete="off" type="text" maxlength="150" id="txtDriverName" placeholder="Driver Name" name="DriverName" value="@Model.DriverName" />
-                                            </div>
-                                            <div class="form-container Full">
+                                <input class="form-controlar" autocomplete="off" type="text" maxlength="150" id="txtDriverName" placeholder="Driver Name" name="DriverName" value="@Model.DriverName" />
+                            </div>
+                            <div class="form-container Full">
                                 <span class="label">
                                     @_localizer["OwnerName"].Value
-                                    
+
                                 </span>
-                                                <input class="form-controlar" autocomplete="off" type="text" maxlength="150" id="txtOwnerName" placeholder="Owner Name" name="OwnerName" value="@Model.OwnerName" />
-                                            </div>
-
-                             
+                                <input class="form-controlar" autocomplete="off" type="text" maxlength="150" id="txtOwnerName" placeholder="Owner Name" name="OwnerName" value="@Model.OwnerName" />
+                            </div>
 
 
-                                        </div>
-                                        <div class="vehicle-owner-grid">
 
-                                            <div class="vehicle-owner-grid" style="width:50%">
-                                                <div class="checkbox-wrapper-34">
+
+                        </div>
+                        <div class="vehicle-owner-grid">
+
+                            <div class="vehicle-owner-grid" style="width:50%">
+                                <div class="checkbox-wrapper-34">
                                     <span class="label">
                                         @_localizer["SurveyRequired"].Value
-                                        
-                                    </span>
-                                                    <input class='tgl tgl-ios' name="IsSurveyRequired" id="IsSurveyRequired" type='checkbox' value="true" @(Model.IsSurveyRequired.HasValue && Model.IsSurveyRequired.Value ? "checked" : "")>
-                                                    <label class='tgl-btn' for='IsSurveyRequired'></label>
-                                                </div>
-                                            </div>
-                            
-                                    
-                                                 <div class="form-container Full" >
 
-                                                <label for="BeneficiaryType1" class="radio-card-v2" >
-                                                    <div class="card-content-wrapper" style="background-color:@(Model.ClaimantStatus==(int)Enums.ClaimantStatus.Rejected?"red":"");color:@(Model.ClaimantStatus==(int)Enums.ClaimantStatus.Rejected?"white":"")">
-                                                        <span class="label" >@(((Enums.ClaimantStatus)Model.ClaimantStatus).ToString()) / </span>
-                                                        <div class="card-content" >
-                                                            <h4 class="title" style="color:@(Model.ClaimantStatus==(int)Enums.ClaimantStatus.Rejected?"white":"")"> @Model.StatusReason</h4>
-                                                        </div>
-                                                    </div>
-                                                </label> 
-                                                
-                                            </div>
-                          
-                                        </div>
-                               
-                                    </div>
+                                    </span>
+                                    <input class='tgl tgl-ios' name="IsSurveyRequired" id="IsSurveyRequired" type='checkbox' value="true" @(Model.IsSurveyRequired.HasValue && Model.IsSurveyRequired.Value ? "checked" : "")>
+                                    <label class='tgl-btn' for='IsSurveyRequired'></label>
                                 </div>
                             </div>
+
+
+                            <div class="form-container Full">
+
+                                <label for="BeneficiaryType1" class="radio-card-v2">
+                                    <div class="card-content-wrapper" style="background-color:@(Model.ClaimantStatus==(int)Enums.ClaimantStatus.Rejected?"red":"");color:@(Model.ClaimantStatus==(int)Enums.ClaimantStatus.Rejected?"white":"")">
+                                        <span class="label">@(((Enums.ClaimantStatus)Model.ClaimantStatus).ToString()) / </span>
+                                        <div class="card-content">
+                                            <h4 class="title" style="color:@(Model.ClaimantStatus==(int)Enums.ClaimantStatus.Rejected?"white":"")"> @Model.StatusReason</h4>
+                                        </div>
+                                    </div>
+                                </label>
+
+                            </div>
+
                         </div>
 
-
                     </div>
-                    <div class="member-summary-container" id="TPRegion">
-                        <div class="total-member-list">
-                            <div class="member-list-container">
-                                <div class="member-collapse">
-                                    <div class="member-collapse-header" style="display:block">
+                </div>
+            </div>
+        </div>
 
-                                        <div class="vehicle-owner-grid">
-                                            <div class="form-container Full">
+
+    </div>
+
+    <div class="member-summary-container" id="TPRegion">
+        <div class="total-member-list">
+            <div class="member-list-container">
+                <div class="member-collapse">
+                    <div class="member-collapse-header" style="display:block">
+
+                        <div class="vehicle-owner-grid">
+                            <div class="form-container Full">
                                 <span class="label">
                                     @_localizer["VehicleMake"].Value
-                                    
+
                                 </span>
-                                                <input class="form-controlar ui-autocomplete-input" autocomplete="off" type="text" id="txtMakeDesc" placeholder="Vehicle Make" name="MakeDesc" value="@Model.MakeDesc" />
-                                                <input class="form-controlar" type="hidden" id="txtMakeId" name="MakeId" value="@Model.MakeId" />
-                                            </div>
-                                            <div class="form-container Full">
+                                <input class="form-controlar ui-autocomplete-input" autocomplete="off" type="text" id="txtMakeDesc" placeholder="Vehicle Make" name="MakeDesc" value="@Model.MakeDesc" />
+                                <input class="form-controlar" type="hidden" id="txtMakeId" name="MakeId" value="@Model.MakeId" />
+                            </div>
+                            <div class="form-container Full">
                                 <span class="label">
                                     @_localizer["TPInsuranceCompanyName"].Value
-                                    
+
                                 </span>
-                                                <input class="form-controlar ui-autocomplete-input" autocomplete="off" type="text" id="txtTpInsuranceCompany" placeholder="Tp Insurance Company" name="InsuranceCompanyName" value="@Model.InsuranceCompanyName" />
-                                                <input class="form-controlar" type="hidden" id="txtInsuranceCompanyNameId" name="InsuranceCompanyNameId" />
-                                            </div>
-                                            <div class="form-container Full">
+                                <input class="form-controlar ui-autocomplete-input" autocomplete="off" type="text" id="txtTpInsuranceCompany" placeholder="Tp Insurance Company" name="InsuranceCompanyName" value="@Model.InsuranceCompanyName" />
+                                <input class="form-controlar" type="hidden" id="txtInsuranceCompanyNameId" name="InsuranceCompanyNameId" />
+                            </div>
+                            <div class="form-container Full">
                                 <span class="label">
                                     @_localizer["TPInsurancePolicyNumber"].Value
-                                    
+
                                 </span>
-                                                <input class="form-controlar" style="text-transform:uppercase" autocomplete="off" type="text" id="txtInsurancePolicyNumber" placeholder="TP Insurance Policy Number" name="InsurancePolicyNumber" maxlength="100" value="@Model.InsurancePolicyNumber" />
-                                            </div>
-                                            <div class="form-container Full">
+                                <input class="form-controlar" style="text-transform:uppercase" autocomplete="off" type="text" id="txtInsurancePolicyNumber" placeholder="TP Insurance Policy Number" name="InsurancePolicyNumber" maxlength="100" value="@Model.InsurancePolicyNumber" />
+                            </div>
+                            <div class="form-container Full">
                                 <span class="label">
                                     @_localizer["SequanceNo"].Value
-                                    
+
                                 </span>
-                                                <input class="form-controlar" autocomplete="off" type="text" maxlength="20" id="txtSequenceNo" placeholder="Sequence No" name="SequenceNo" value="@Model.SequenceNo" />
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="vehicle-owner-grid">
-
-                                        <div class="form-container Full">
-                            <span class="label">
-                                @_localizer["VehicleModel"].Value
-                                
-                            </span>
-                                            <input class="form-controlar ui-autocomplete-input" autocomplete="off" type="text" id="txtModelDesc" placeholder="Vehicle Model" name="ModelDesc" value="@Model.ModelDesc" />
-                                            <input class="form-controlar" type="hidden" id="txtModelId" name="ModelId" value="@Model.ModelId" />
-                                        </div>
-                                        <div class="form-container Full">
-                            <span class="label">
-                                @_localizer["ProductionYear"].Value
-                                
-                            </span>
-                                            <input class="form-controlar" autocomplete="off" type="text" maxlength="4" id="txtManifacturing" placeholder="Production Year" name="Manifacturing" value="@Model.Manifacturing" />
-                                        </div>
-
-                                        <div class="form-container Full">
-                            <span class="label">
-                                @_localizer["VehicleColor"].Value
-                                
-                            </span>
-                                            <input class="form-controlar ui-autocomplete-input" autocomplete="off" type="text" id="txtColorDesc" placeholder="Vehicle Color" name="ColorDesc" value="@Model.ColorDesc" />
-                                            <input class="form-controlar" type="hidden" id="txtColorId" name="ColorId" value="@Model.ColorId" />
-                                        </div>
-                                        <div class="form-container Full">
-                            <span class="label">
-                                @_localizer["PlateNo"].Value
-                                
-                            </span>
-                                            <input class="form-controlar" autocomplete="off" type="text" id="txtPlateNo" placeholder="Plate No" name="PlateNo" value="@Model.PlateNo" />
-                                        </div>
-                                        <div class="form-container Full">
-                            <span class="label">
-                                @_localizer["ChassisNumber"].Value
-                                
-                            </span>
-                                            <input class="form-controlar" autocomplete="off" type="text" id="txtChassisNo" placeholder="Chassis Number" name="ChassisNo" value="@Model.ChassisNo" />
-                                        </div>
-                                    </div>
-                                </div>
+                                <input class="form-controlar" autocomplete="off" type="text" maxlength="20" id="txtSequenceNo" placeholder="Sequence No" name="SequenceNo" value="@Model.SequenceNo" />
                             </div>
                         </div>
-
-
                     </div>
 
-                        <div class="footer-actions-handle" style="position:inherit !important; width:100%">
-          <div class="next-button" style="margin-right:5px">
-              @if (Model.Id>0)
+                    <div class="vehicle-owner-grid">
+
+                        <div class="form-container Full">
+                            <span class="label">
+                                @_localizer["VehicleModel"].Value
+
+                            </span>
+                            <input class="form-controlar ui-autocomplete-input" autocomplete="off" type="text" id="txtModelDesc" placeholder="Vehicle Model" name="ModelDesc" value="@Model.ModelDesc" />
+                            <input class="form-controlar" type="hidden" id="txtModelId" name="ModelId" value="@Model.ModelId" />
+                        </div>
+                        <div class="form-container Full">
+                            <span class="label">
+                                @_localizer["ProductionYear"].Value
+
+                            </span>
+                            <input class="form-controlar" autocomplete="off" type="text" maxlength="4" id="txtManifacturing" placeholder="Production Year" name="Manifacturing" value="@Model.Manifacturing" />
+                        </div>
+
+                        <div class="form-container Full">
+                            <span class="label">
+                                @_localizer["VehicleColor"].Value
+
+                            </span>
+                            <input class="form-controlar ui-autocomplete-input" autocomplete="off" type="text" id="txtColorDesc" placeholder="Vehicle Color" name="ColorDesc" value="@Model.ColorDesc" />
+                            <input class="form-controlar" type="hidden" id="txtColorId" name="ColorId" value="@Model.ColorId" />
+                        </div>
+                        <div class="form-container Full">
+                            <span class="label">
+                                @_localizer["PlateNo"].Value
+
+                            </span>
+                            <input class="form-controlar" autocomplete="off" type="text" id="txtPlateNo" placeholder="Plate No" name="PlateNo" value="@Model.PlateNo" />
+                            <select class="form-controlar" name="PlateChar1" id="selPlateChar1">
+                                <option value=""></option>
+                                <option value="1">A</option>
+                                <option value="2">B</option>
+                                <option value="3">D</option>
+                                <option value="4">J</option>
+                                <option value="5">H</option>
+                                <option value="6">E</option>
+                                <option value="7">G</option>
+                                <option value="8">X</option>
+                                <option value="9">T</option>
+                                <option value="10">K</option>
+                                <option value="11">Z</option>
+                                <option value="12">N</option>
+                                <option value="13">L</option>
+                                <option value="14">V</option>
+                                <option value="15">S</option>
+                                <option value="16">U</option>
+                                <option value="17">R</option>
+
+                            </select>
+                            <select class="form-controlar" name="PlateChar2" id="selPlateChar2">
+                                <option value=""></option>
+                                <option value="1">A</option>
+                                <option value="2">B</option>
+                                <option value="3">D</option>
+                                <option value="4">J</option>
+                                <option value="5">H</option>
+                                <option value="6">E</option>
+                                <option value="7">G</option>
+                                <option value="8">X</option>
+                                <option value="9">T</option>
+                                <option value="10">K</option>
+                                <option value="11">Z</option>
+                                <option value="12">N</option>
+                                <option value="13">L</option>
+                                <option value="14">V</option>
+                                <option value="15">S</option>
+                                <option value="16">U</option>
+                                <option value="17">R</option>
+
+                            </select>
+                            <select class="form-controlar" name="PlateChar3" id="selPlateChar3">
+                                <option value=""></option>
+                                <option value="1">A</option>
+                                <option value="2">B</option>
+                                <option value="3">D</option>
+                                <option value="4">J</option>
+                                <option value="5">H</option>
+                                <option value="6">E</option>
+                                <option value="7">G</option>
+                                <option value="8">X</option>
+                                <option value="9">T</option>
+                                <option value="10">K</option>
+                                <option value="11">Z</option>
+                                <option value="12">N</option>
+                                <option value="13">L</option>
+                                <option value="14">V</option>
+                                <option value="15">S</option>
+                                <option value="16">U</option>
+                                <option value="17">R</option>
+
+                            </select>
+                        </div>
+                        <div class="form-container Full">
+                            <span class="label">
+                                @_localizer["ChassisNumber"].Value
+
+                            </span>
+                            <input class="form-controlar" autocomplete="off" type="text" id="txtChassisNo" placeholder="Chassis Number" name="ChassisNo" value="@Model.ChassisNo" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+    <div class="footer-actions-handle" style="position:inherit !important; width:100%">
+        <div class="next-button" style="margin-right:5px">
+            @if (Model.Id > 0)
             {
-                <button type="submit" class="button button-primary" @(Model.ClaimantStatus==(int)Enums.ClaimantStatus.Rejected?"disabled":"")>
+                <button type="submit" class="button button-primary" @(Model.ClaimantStatus == (int)Enums.ClaimantStatus.Rejected ? "disabled" : "")>
                     Update
                 </button>
             }
             else
             {
-                  <button type="submit" class="button button-primary">
-                                    Save
-                                </button>
+                <button type="submit" class="button button-primary">
+                    Save
+                </button>
             }
-                              
-                        
-
-                        </div>
-                                </div>
-                             </form>
 
 
-                                             <script>
-      $(function(){
-      
-          if ('@Model.ClaimantType' == '1'){
- $('#TPRegion').hide();
-          }else{
-               $('#TPRegion').show();
-          }
-         
-      
-      });
+
+        </div>
+    </div>
+</form>
+
+
+<script>
+    $(function () {
+            $('#selPlateChar1').val('@Model.PlateChar1');
+            $('#selPlateChar2').val('@Model.PlateChar2');
+            $('#selPlateChar3').val('@Model.PlateChar3');
+        if ('@Model.ClaimantType' == '1') {
+            $('#TPRegion').hide();
+        } else {
+            $('#TPRegion').show();
+        }
+
+
+    });
     if ('@Model.Id' != '0') {
         $('#ddlDamageType').val('@Model.DamageType');
         $('#ddlClaimantType').val('@Model.ClaimantType');
@@ -428,7 +499,7 @@
         $('#txtResponsipility').val('@Model.Responsipility');
 
     }
-    $('#ddlNatureofLoss').attr('readonly',true);
+    $('#ddlNatureofLoss').attr('readonly', true);
     $('#txtNationalId').ForceIntegerEntry();
     $('#txtDriverNationalId').ForceIntegerEntry();
     $('#txtOwnerNationalId').ForceIntegerEntry();
@@ -439,15 +510,15 @@
     $('#txtDriverBirthDate').ForceDateEntry();
     $('#txtDriverLicenseExpiryDate').ForceDateEntry();
     $('#ddlPremiaCover').val('@Model.PremiaCoverCode');
-    $("#ddlDamageType").change(function () {                              
-   if(this.value==1 || this.value==4||this.value==5||this.value==10){
-       $('#ddlNatureofLoss').attr('readonly',false);
-       $('#ddlNatureofLoss').attr('required',true);
-   }else{
-        $('#ddlNatureofLoss').attr('readonly',true);
-       $('#ddlNatureofLoss').attr('required',false);
-   }
-});
+    $("#ddlDamageType").change(function () {
+        if (this.value == 1 || this.value == 4 || this.value == 5 || this.value == 10) {
+            $('#ddlNatureofLoss').attr('readonly', false);
+            $('#ddlNatureofLoss').attr('required', true);
+        } else {
+            $('#ddlNatureofLoss').attr('readonly', true);
+            $('#ddlNatureofLoss').attr('required', false);
+        }
+    });
     $("#ddlOurPercent").change(function () {
         var end = this.value;
         if (end == 25 || end == 50 || end == 75) {
@@ -462,7 +533,7 @@
 
     $('#txtTpInsuranceCompany').autocomplete({
         source: function (request, response) {
-            $.getJSON("/api/Services/GetLookup/", { name: request.term ,enums:@((int)SystemEnums.TPInsuranceCompany)}, function (data) {
+            $.getJSON("/api/Services/GetLookup/", { name: request.term, enums: @((int)SystemEnums.TPInsuranceCompany)}, function (data) {
                 response($.map(data, function (val, i) {
                     return {
                         label: val.nameEnglish,
@@ -571,10 +642,10 @@
         }
     });
 
-//                            function LoadClaimantEntryPartial(Id)
-//{
-//    $('#ClaimantEntry').load('/Claims/ClaimantsEntry/',{obj:Id});
-//}
+    //                            function LoadClaimantEntryPartial(Id)
+    //{
+    //    $('#ClaimantEntry').load('/Claims/ClaimantsEntry/',{obj:Id});
+    //}
     $("#ddlPremiaCover").change(function () {
         var end = $(this).find("option:selected").text();
         $('#txtPremiaCoverName').val(end);

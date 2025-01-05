@@ -12,7 +12,7 @@ namespace TPPremiaProd
     
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.2.0-preview1.23462.5")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://thirdparty.services.insurance.arabia.com/")]
     public partial class WSExceptionBean
@@ -36,7 +36,7 @@ namespace TPPremiaProd
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.2.0-preview1.23462.5")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://thirdparty.services.insurance.arabia.com/")]
     public partial class thirdPartyCreationFault
@@ -76,7 +76,7 @@ namespace TPPremiaProd
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.2.0-preview1.23462.5")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://thirdparty.services.insurance.arabia.com/")]
     public partial class thirdPartyErrorResponseOut
@@ -116,7 +116,7 @@ namespace TPPremiaProd
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.2.0-preview1.23462.5")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://thirdparty.services.insurance.arabia.com/")]
     public partial class thirdPartyResponseTpOut
@@ -156,7 +156,7 @@ namespace TPPremiaProd
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.2.0-preview1.23462.5")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://thirdparty.services.insurance.arabia.com/")]
     public partial class thirdPartyCreationResponseInfo
@@ -246,7 +246,7 @@ namespace TPPremiaProd
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.2.0-preview1.23462.5")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://thirdparty.services.insurance.arabia.com/")]
     public partial class thirdPartyRequestTpInIn
@@ -1070,7 +1070,7 @@ namespace TPPremiaProd
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.2.0-preview1.23462.5")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://thirdparty.services.insurance.arabia.com/")]
     public partial class thirdPartyCreationRequestInfo
@@ -1942,7 +1942,7 @@ namespace TPPremiaProd
         }
     }
     
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.2.0-preview1.23462.5")]
     [System.ServiceModel.ServiceContractAttribute(Namespace="http://thirdparty.services.insurance.arabia.com/", ConfigurationName="TPPremiaProd.ThirdPartyCreationRequestService")]
     public interface ThirdPartyCreationRequestService
     {
@@ -1957,7 +1957,7 @@ namespace TPPremiaProd
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.2.0-preview1.23462.5")]
     [System.ServiceModel.MessageContractAttribute(WrapperName="ThirdPartyCreationService", WrapperNamespace="http://thirdparty.services.insurance.arabia.com/", IsWrapped=true)]
     public partial class ThirdPartyCreationService
     {
@@ -1976,7 +1976,7 @@ namespace TPPremiaProd
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.2.0-preview1.23462.5")]
     [System.ServiceModel.MessageContractAttribute(WrapperName="ThirdPartyCreationServiceResponse", WrapperNamespace="http://thirdparty.services.insurance.arabia.com/", IsWrapped=true)]
     public partial class ThirdPartyCreationServiceResponse
     {
@@ -1994,13 +1994,13 @@ namespace TPPremiaProd
         }
     }
     
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.2.0-preview1.23462.5")]
     public interface ThirdPartyCreationRequestServiceChannel : TPPremiaProd.ThirdPartyCreationRequestService, System.ServiceModel.IClientChannel
     {
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.2.0-preview1.23462.5")]
     public partial class ThirdPartyCreationRequestServiceClient : System.ServiceModel.ClientBase<TPPremiaProd.ThirdPartyCreationRequestService>, TPPremiaProd.ThirdPartyCreationRequestService
     {
         
@@ -2077,7 +2077,7 @@ namespace TPPremiaProd
         {
             if ((endpointConfiguration == EndpointConfiguration.ThirdPartyCreationRequestServicePort))
             {
-                return new System.ServiceModel.EndpointAddress("http://192.168.201.56:8080/ArabiaPolicyClaimWebService/ThirdPartyCreationRequestServic" +
+                return new System.ServiceModel.EndpointAddress("http://localhost:8080/ArabiaPolicyClaimWebService/ThirdPartyCreationRequestServic" +
                         "e");
             }
             throw new System.InvalidOperationException(string.Format("Could not find endpoint with name \'{0}\'.", endpointConfiguration));

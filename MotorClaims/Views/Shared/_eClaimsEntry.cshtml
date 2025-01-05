@@ -4,7 +4,7 @@
 @using Microsoft.Extensions.Options
 @using Microsoft.AspNetCore.Http.Features
 @using System.Globalization
-
+@using CORE.DTOs.MotorClaim.WorkFlow;
 @inject IViewLocalizer _localizer
 @model CORE.DTOs.MotorClaim.eClaims
 
@@ -12,56 +12,60 @@
     string policyNumber = (string)ViewData["policyNumber"];
     int? Serial = (int?)ViewData["Serial"];
     Serial = Serial.HasValue ? Serial : 1;
+    List<DocumentInfo> MissingDocs = (List<DocumentInfo>)ViewData["MissingDocs"];
+    List<SMSLog> sMSLogs = (List<SMSLog>)ViewData["SMSLog"];
+    int eClaimId = (int)ViewData["eClaimId"];
 }
 
 
-<div class="policy-detail-wrapper" >
-    <form method="post" asp-controller="Operations" >
- <input type="hidden" name="Id" value="@Model.Id"/>
- <input type="hidden" name="MobileNo" value="@Model.MobileNo"/>
+<div class="policy-detail-wrapper">
+    <form method="post" asp-controller="Operations">
+        <input type="hidden" name="Id" value="@Model.Id" />
+        <input type="hidden" name="MobileNo" value="@Model.MobileNo" />
+        <input type="hidden" name="AssignTo" value="@Model.AssignTo" />
         <div class="policy-members">
             <div class="accordion-wrapper">
 
 
-      
+
                 <div class="accordion-item-wrapper active">
-                    <div class="accordion-header" >
+                    <div class="accordion-header">
                         <div class="accordion-heaing-content">
                             <div class="heading-wrap">
                                 <h2 class="heading">
                                     @_localizer["eClaims"].Value
-                                    
+
                                 </h2>
                             </div>
 
                         </div>
                     </div>
                     <div class="accordion-body active" id="Repair_1">
-                          <ul class="dates-and-conpany-wrapper">
+                        <ul class="dates-and-conpany-wrapper">
 
                             <li class="column-item">
 
                                 <span class="value">@_localizer["ClaimType"].Value</span>
-                                 <label for="InsuranceType1" class="radio-card-v2" style="min-width:24% !important">
-                                    <input type="radio" value="1" name="InsuranceType" id="InsuranceType1"  @(Model.InsuranceType==1?"checked":"")/>
+                                <label for="InsuranceType1" class="radio-card-v2" style="min-width:24% !important">
+                                    <input type="radio" value="1" name="InsuranceType" id="InsuranceType1" @(Model.InsuranceType == 1 ? "checked" : "") />
                                     <div class="card-content-wrapper">
                                         <span class="check-icon"></span>
                                         <div class="card-content">
                                             <h4 class="title">
                                                 @_localizer["TPL"].Value
-                                                
+
                                             </h4>
                                         </div>
                                     </div>
                                 </label>
-                                 <label for="InsuranceType2" class="radio-card-v2" style="min-width:24% !important">
-                                    <input type="radio" value="2" name="InsuranceType" id="InsuranceType2"   @(Model.InsuranceType==2?"checked":"")/>
+                                <label for="InsuranceType2" class="radio-card-v2" style="min-width:24% !important">
+                                    <input type="radio" value="2" name="InsuranceType" id="InsuranceType2" @(Model.InsuranceType == 2 ? "checked" : "") />
                                     <div class="card-content-wrapper">
                                         <span class="check-icon"></span>
                                         <div class="card-content">
                                             <h4 class="title">
                                                 @_localizer["Comprehensive"].Value
-                                                
+
                                             </h4>
                                         </div>
                                     </div>
@@ -75,7 +79,7 @@
 
                                 <span class="value">@_localizer["AccidentSurveyedBy"].Value</span>
                                 <label for="InsuranceSurveyed1" class="radio-card-v2" style="min-width:24% !important">
-                                    <input type="radio" value="1" name="InsuranceSurveyed" id="InsuranceSurveyed1"  @(Model.InsuranceSurveyed==0?"checked":( Model.InsuranceSurveyed==1?"checked":""))/>
+                                    <input type="radio" value="1" name="InsuranceSurveyed" id="InsuranceSurveyed1" @(Model.InsuranceSurveyed == 0 ? "checked" : (Model.InsuranceSurveyed == 1 ? "checked" : "")) />
                                     <div class="card-content-wrapper">
                                         <span class="check-icon"></span>
                                         <div class="card-content">
@@ -84,7 +88,7 @@
                                     </div>
                                 </label>
                                 <label for="InsuranceSurveyed2" class="radio-card-v2" style="min-width:24% !important">
-                                    <input type="radio" value="2" name="InsuranceSurveyed" id="InsuranceSurveyed2" @(Model.InsuranceSurveyed==2?"checked":"")/>
+                                    <input type="radio" value="2" name="InsuranceSurveyed" id="InsuranceSurveyed2" @(Model.InsuranceSurveyed == 2 ? "checked" : "") />
                                     <div class="card-content-wrapper">
                                         <span class="check-icon"></span>
                                         <div class="card-content">
@@ -93,7 +97,7 @@
                                     </div>
                                 </label>
                                 <label for="InsuranceSurveyed3" class="radio-card-v2" style="min-width:24% !important">
-                                    <input type="radio" value="3" name="InsuranceSurveyed" id="InsuranceSurveyed3" @(Model.InsuranceSurveyed==3?"checked":"")/>
+                                    <input type="radio" value="3" name="InsuranceSurveyed" id="InsuranceSurveyed3" @(Model.InsuranceSurveyed == 3 ? "checked" : "") />
                                     <div class="card-content-wrapper">
                                         <span class="check-icon"></span>
                                         <div class="card-content">
@@ -110,7 +114,7 @@
 
                                 <span class="value">@_localizer["RecoveryType"].Value</span>
                                 <label for="RecoveryType1" class="radio-card-v2" style="min-width:24% !important">
-                                    <input type="radio" value="1" name="RecoveryType" id="RecoveryType1" @(Model.RecoveryType==0?"checked":( Model.RecoveryType==1?"checked":""))/>
+                                    <input type="radio" value="1" name="RecoveryType" id="RecoveryType1" @(Model.RecoveryType == 0 ? "checked" : (Model.RecoveryType == 1 ? "checked" : "")) />
                                     <div class="card-content-wrapper">
                                         <span class="check-icon"></span>
                                         <div class="card-content">
@@ -119,7 +123,7 @@
                                     </div>
                                 </label>
                                 <label for="RecoveryType2" class="radio-card-v2" style="min-width:24% !important">
-                                    <input type="radio" value="2" name="RecoveryType" id="RecoveryType2" @( Model.RecoveryType==2?"checked":"")/>
+                                    <input type="radio" value="2" name="RecoveryType" id="RecoveryType2" @(Model.RecoveryType == 2 ? "checked" : "") />
                                     <div class="card-content-wrapper">
                                         <span class="check-icon"></span>
                                         <div class="card-content">
@@ -136,7 +140,7 @@
 
                                 <span class="value">
                                     @_localizer["AccidentReport"].Value
-                                    
+
                                 </span>
                                 <div class="form-field-wrapper">
                                     <div class="form-input-wrapper">
@@ -150,7 +154,7 @@
 
                                 <span class="value">
                                     @_localizer["OwnerNationalID"].Value
-                                    
+
                                 </span>
                                 <div class="form-field-wrapper">
                                     <div class="form-input-wrapper">
@@ -163,7 +167,7 @@
 
                                 <span class="value">
                                     @_localizer["SequenceNumber"].Value
-                                    
+
                                 </span>
                                 <div class="form-field-wrapper">
                                     <div class="form-input-wrapper">
@@ -172,20 +176,32 @@
                                 </div>
 
                             </li>
-                     
+                            <li class="column-item">
+
+                                <span class="value">
+                                    @_localizer["MobileNo"].Value
+
+                                </span>
+                                <div class="form-field-wrapper">
+                                    <div class="form-input-wrapper">
+                                        <input class="form-inputbox" data-toggle="tooltip" autocomplete="off" required maxlength="10" id="txtMobileNo" type="text" placeholder="@_localizer["MobileNo"]" name="MobileNo" value="@Model.MobileNo" />
+                                    </div>
+                                </div>
+
+                            </li>
                         </ul>
-               
-                         <ul class="dates-and-conpany-wrapper">
-   
+
+                        <ul class="dates-and-conpany-wrapper">
+
                             <li class="column-item">
 
                                 <span class="value">
                                     @_localizer["TaqdeerNumber"].Value
-                                    
+
                                 </span>
                                 <div class="form-field-wrapper">
                                     <div class="form-input-wrapper">
-                                        <input class="form-inputbox" autocomplete="off" style="text-transform:uppercase" maxlength="20" id="txtTaqdeerNumber" type="text" placeholder="@_localizer["TaqdeerNumber"]" name="TaqdeerNumber"  value="@Model.TaqdeerNumber"/>
+                                        <input class="form-inputbox" autocomplete="off" style="text-transform:uppercase" maxlength="20" id="txtTaqdeerNumber" type="text" placeholder="@_localizer["TaqdeerNumber"]" name="TaqdeerNumber" value="@Model.TaqdeerNumber" />
                                     </div>
                                 </div>
 
@@ -194,11 +210,11 @@
 
                                 <span class="value">
                                     @_localizer["LicenseExpiryDate"].Value
-                                    
+
                                 </span>
                                 <div class="form-field-wrapper">
                                     <div class="form-input-wrapper">
-                                        <input class="form-inputbox calendar-input" autocomplete="off" maxlength="15" id="txtLicenseExpiryDate" type="text" name="LicenseExpiryDate"  value="@Model.LicenseExpiryDate"/>
+                                        <input class="form-inputbox calendar-input" autocomplete="off" maxlength="15" id="txtLicenseExpiryDate" type="text" name="LicenseExpiryDate" value="@Model.LicenseExpiryDate" />
                                     </div>
                                 </div>
 
@@ -207,71 +223,98 @@
 
                                 <span class="value">
                                     @_localizer["IBANNo"].Value
-                                    
+
                                 </span>
                                 <div class="form-field-wrapper">
                                     <div class="form-input-wrapper">
-                                     <input class="form-inputbox" autocomplete="off" maxlength="30" id="txtIBANNo" type="text" placeholder="@_localizer["IBANNo"]" name="IBANNo"  oninput="/^IT\d{2}[ ][a-zA-Z]\d{3}[ ]\d{4}[ ]\d{4}[ ]\d{4}[ ]\d{4}[ ]\d{3}|IT\d{2}[a-zA-Z]\d{22}$/" value="@Model.IBANNo"/>
-  </div>
+                                        <input class="form-inputbox" autocomplete="off" style="text-transform:uppercase" maxlength="30" id="txtIBANNo" type="text" placeholder="@_localizer["IBANNo"]" name="IBANNo" oninput="/^IT\d{2}[ ][a-zA-Z]\d{3}[ ]\d{4}[ ]\d{4}[ ]\d{4}[ ]\d{4}[ ]\d{3}|IT\d{2}[a-zA-Z]\d{22}$/" value="@Model.IBANNo" />
+                                    </div>
                                 </div>
 
                             </li>
-               
+
                         </ul>
 
-                         <ul class="dates-and-conpany-wrapper">
-   
-                        
+                        <ul class="dates-and-conpany-wrapper">
+
+
                             <li class="column-item">
 
                                 <span class="value">
                                     @_localizer["Reference"].Value
-                                    
+
                                 </span>
                                 <div class="form-field-wrapper">
                                     <div class="form-input-wrapper">
-                                     <input class="form-inputbox" autocomplete="off" readonly id="txtReference" type="text" placeholder="@_localizer["Reference"]" name="Reference"   value="@Model.Reference"/>
-  </div>
+                                        <input class="form-inputbox" autocomplete="off" readonly id="txtReference" type="text" placeholder="@_localizer["Reference"]" name="Reference" value="@Model.Reference" />
+                                    </div>
                                 </div>
 
                             </li>
-                              <li class="column-item">
+                            <li class="column-item">
 
                                 <span class="value">
                                     @_localizer["RejectionReason"].Value
-                                    
+
                                 </span>
                                 <div class="form-field-wrapper">
                                     <div class="form-input-wrapper">
-                                        <textarea class="form-inputbox" autocomplete="off" maxlength="1024" name="RejectionReason">@Model.RejectionReason</textarea>
-  </div>
+                                        <textarea class="form-inputbox" autocomplete="off" maxlength="1024" id="txtRejectionReason" name="RejectionReason">@Model.RejectionReason</textarea>
+                                    </div>
                                 </div>
 
-                            </li>      
-                            
-                              <li class="column-item">
+                            </li>
+
+                            <li class="column-item">
 
                                 <span class="value">
                                     @_localizer["PolicyNumber"].Value
-                                    
+
                                 </span>
                                 <div class="form-field-wrapper">
                                     <div class="form-input-wrapper">
-                                    <input class="form-inputbox" autocomplete="off"  id="txtPolicyNumber" type="text" placeholder="@_localizer["PolicyNumber"]" name="PolicyNumber"   value="@policyNumber?.Trim()"/>
+                                        <textarea class="form-inputbox" autocomplete="off" maxlength="50" name="PolicyNumber" cols="5" rows="5" id="txtPolicyNumber">@policyNumber?.Trim()</textarea>
 
-  </div>
+
+                                    </div>
                                 </div>
 
-                            </li> 
+                            </li>
                             <li class="column-item">
-                                  <span class="value">
+                                <span class="value">
                                     @_localizer["RejecteClaim"].Value
-                                    
+
                                 </span>
-                                         <label for="RejecteClaim" class="switch">
-                                                            <input id="RejecteClaim" name="IsRejected" type="checkbox" class="switch-check-box"  value="true">
-                                                            <span class="slider round"></span>
-                                          </label>
+                                <label for="RejecteClaim" class="switch">
+                                    <input id="RejecteClaim" name="IsRejected" type="checkbox" class="switch-check-box" value="true">
+                                    <span class="slider round"></span>
+                                </label>
+
+                            </li>
+                            <li class="column-item">
+                                <span class="value">
+                                    @_localizer["ManualClaim"].Value
+
+                                </span>
+                                <label for="IsManual" class="switch">
+                                    <input id="IsManual" name="IsManual" type="checkbox" class="switch-check-box" value="true">
+                                    <span class="slider round"></span>
+                                </label>
+
+                            </li>
+                            <li class="column-item" id="liSel">
+                                <div class="form-field-wrapper">
+                                    <div class="form-input-wrapper">
+                                        <select class="form-inputbox" id="selRejectionOptions">
+                                            <option value=""></option>
+                                            <option value="1">@_localizer["WrongClaimNumber"].Value</option>
+                                            <option value="2">@_localizer["ClaimNotRelatedToAICC"].Value</option>
+                                            <option value="3">@_localizer["TPClaimWith100"].Value</option>
+                                            <option value="4">@_localizer["ClaimOutSidePolicyPeriod"].Value</option>
+                                            <option value="5">@_localizer["WrongOwnerDetails"].Value</option>
+                                        </select>
+                                    </div>
+                                </div>
 
                             </li>
                         </ul>
@@ -281,13 +324,20 @@
         </div>
         <div class="footer-actions-handle-Full">
             <div class="next-button">
-
-                      <button asp-action="UpdateEclaimProccess" type="submit" class="button button-primary">
+                @if (Model.Status != 9)
+                {
+                    <button asp-action="UpdateEclaimProccess" type="submit" class="button button-primary">
                         @_localizer["Update"].Value
-                          
-                </button> 
-                
-             
+
+                    </button>
+                }
+                else
+                {
+                    <label style="color:red;font-weight:bold;font-size:20px;"> @_localizer["Waiting For Approval"].Value</label>
+                }
+
+
+
 
             </div>
         </div>
@@ -296,11 +346,36 @@
 
 
 @{
-    List<Attachments> attachments=(List<Attachments>) ViewData["Attachments"];
-    string DocumentsLink=(string)ViewData["DocumentsLink"];
-    await Html.RenderPartialAsync("_eClaimDocuments", new { attachments = attachments, Link = DocumentsLink ,ClaimNo=string.Concat(Model.Reference,"/",Serial)});
+    await Html.RenderPartialAsync("_MissingDocumentsEclaims", new { Documents = MissingDocs, SMS = sMSLogs, eClaimId = eClaimId,  MobileNo = Model.MobileNo });
+
+    List<Attachments> attachments = (List<Attachments>)ViewData["Attachments"];
+    string DocumentsLink = (string)ViewData["DocumentsLink"];
+    await Html.RenderPartialAsync("_eClaimDocuments", new { attachments = attachments, Link = DocumentsLink, ClaimNo = string.Concat(Model.Reference, "/", Serial) });
 }
 <script>
-      $('#txtOwnerNationalID').ForceIntegerEntry();
-     $('#txtLicenseExpiryDate').ForceDateEntry();
+    $(function () {
+        $('#liSel').hide();
+        $('#RejecteClaim').change(function () {
+            if ($(this).is(':checked')) {
+                $("#selRejectionOptions").attr("required", true);
+                $('#liSel').show();
+            }
+            else {
+                $("#selRejectionOptions").attr("required", false);
+                $('#liSel').hide();
+            }
+        });
+        $('#selRejectionOptions').on('change', function () {
+            // alert($("#selRejectionOptions option:selected").text());
+            $("#txtRejectionReason").text($("#selRejectionOptions option:selected").text());
+        });
+       
+        $('#txtIBANNo').bind('input', function () {
+            $(this).val(function (_, v) {
+                return v.replace(/\s+/g, '');
+            });
+        });
+    });
+    $('#txtOwnerNationalID').ForceIntegerEntry();
+    $('#txtLicenseExpiryDate').ForceDateEntry();
 </script>

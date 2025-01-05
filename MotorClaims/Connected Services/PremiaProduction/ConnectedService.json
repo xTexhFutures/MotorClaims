@@ -7,7 +7,6 @@
       "System.Array",
       "System.Collections.Generic.Dictionary`2"
     ],
-    "messageContract": true,
     "namespaceMappings": [
       "*, PremiaProduction"
     ],

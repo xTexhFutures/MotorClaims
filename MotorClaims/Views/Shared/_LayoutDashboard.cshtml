@@ -73,8 +73,7 @@
                     <ul class="naigation-list">
                         @*   @if ((int)MotorClaims.Models.Enums.Roles.Admin == users?.Roles?.Id || (int)MotorClaims.Models.Enums.Roles.Sales == users?.Roles?.Id || (int)MotorClaims.Models.Enums.Roles.Broker == users?.Roles?.Id || (int)MotorClaims.Models.Enums.Roles.Agent == users?.Roles?.Id)
                         {*@
-
-                        <li class="navigation-item">
+   <li class="navigation-item">
 
                             <a class="menu-item-wrapper active" title="Home" href="@Url.Action("Index","Home")">
                                 <img src="~/assets/icons/home.png" class="menu-icon" />
@@ -82,91 +81,98 @@
                         </li>
 
                         @*  }*@
-                        @if (users.Roles.Id == 16|| users.Roles.Id == 2||users.Roles.Id == 4)
+                        @if (users.Roles.Id == 16 || users.Roles.Id == 2)
                         {
-                            <li class="navigation-item">
-                                <a class="menu-item-wrapper" href="@Url.Action("Index","Search")" title="Search" aria-current="page">
-                                    <img src="~/assets/icons/search.svg" class="menu-icon" />
-                                </a>
-                            </li>
+                                <li class="navigation-item">
+                                    <a class="menu-item-wrapper" href="@Url.Action("Index","Search")" title="Search" aria-current="page">
+                                        <img src="~/assets/icons/search.svg" class="menu-icon" />
+                                    </a>
+                                </li>
                         }
-                        @if (users.Roles.Id == 16|| users.Roles.Id == 4)
+                        @if (users.Roles.Id == 16 || users.Roles.Id == 4 || users.Roles.Id == 2)
                         {
-                         <li class="navigation-item">
-                            <a class="menu-item-wrapper" href="@Url.Action("Index","Operations")" title="Operation" aria-current="page">
-                                <img src="~/assets/icons/Operation.png" class="menu-icon" />
-                            </a>
-                        </li>
-                        }
-                    
-                         @if ((users.Roles.Id==15 || users.Roles.Id==16||users.Roles.Id==4) && 1==2)
-                        {
-                           <li class="navigation-item">
-                                <a class="menu-item-wrapper" href="@Url.Action("Workshops","Surveyor")" title="Workshops" aria-current="page">
-                                    <img src="~/assets/icons/Workshops.jpg" class="menu-icon" />
-                                </a>
-                            </li>
-                        }
-                        @if ((3 == 1 || users.Roles.Id==16) && 1==2)
-                        {
-                            <li class="navigation-item">
-                                <a class="menu-item-wrapper" href="@Url.Action("Index","Surveyor")" title="Surveyor" aria-current="page">
-                                    <img src="~/assets/icons/Survoyer.png" class="menu-icon" />
-                                </a>
-                            </li>
-
-                            <li class="navigation-item">
-                                <a class="menu-item-wrapper" href="@Url.Action("Index","Towing")" title="Towing" aria-current="page">
-                                    <img src="~/assets/icons/Towing.png" class="menu-icon"  />
-                                </a>
-                            </li>              <li class="navigation-item">
-                                <a class="menu-item-wrapper" href="@Url.Action("Index","Approvals")" title="Approvals" aria-current="page">
-                                    <img src="~/assets/icons/Approvals.png" class="menu-icon"  />
-                                </a>
-                            </li>
-
-                         
-
-                            <li class="navigation-item">
-                                <a class="menu-item-wrapper" href="@Url.Action("Index","Delegation")" title="@_localizer["Setup"]" aria-current="page">
-                                    <img src="~/assets/icons/Setup.png" class="menu-icon" />
-                                </a>
-                            </li>
-                        }
-                        @if (users.Roles.Id != 15)
-                        {
-                            <li class="navigation-item">
-                                <a class="menu-item-wrapper" href="@Url.Action("eClaims","Operations")" title="@_localizer["eClaims"]" aria-current="page">
-                                    <img src="~/assets/icons/eclaim.png" class="menu-icon" />
-                                </a>
-                            </li>
-                        }
-                        @if ((3 == 1 || users.Roles.Id==16) && 1==2)
-                        {
-                            <li class="navigation-item">
-                                <a class="menu-item-wrapper" href="@Url.Action("Index","WareHouse")" title="@_localizer["WareHouse"]" aria-current="page">
-                                    <img src="~/assets/icons/warehouse.jpg" class="menu-icon" />
-                                </a>
-                            </li>
-
-                            <li class="navigation-item">
-                                <a class="menu-item-wrapper" href="@Url.Action("Index","Collections")" title="@_localizer["Collections"]" aria-current="page">
-                                    <img src="~/assets/icons/Collections.png" class="menu-icon" />
-                                </a>
-                            </li>
-
-                            <li class="navigation-item">
-                                <a class="menu-item-wrapper" href="@Url.Action("Reports","Setup")" title="@_localizer["Reports"]" aria-current="page">
-                                    <img src="~/assets/icons/empty-file.svg" class="menu-icon" />
-                                </a>
-                            </li>
-                        }
-
                              <li class="navigation-item">
-                                <a class="menu-item-wrapper" href="@Url.Action("Index","Payments")" title="Payments" aria-current="page">
-                                    <img src="~/assets/icons/payment-method.png" class="menu-icon"  />
+                                <a class="menu-item-wrapper" href="@Url.Action("Index","Operations")" title="Operation" aria-current="page">
+                                    <img src="~/assets/icons/Operation.png" class="menu-icon" />
                                 </a>
                             </li>
+                                <li class="navigation-item">
+                                    <a class="menu-item-wrapper" href="@Url.Action("MissingDocuments","Operations")" title="Missing Documents" aria-current="page">
+                                        <img src="~/assets/icons/ManualEntry.png" class="menu-icon" />
+                                    </a>
+                                </li>
+                        }
+
+                        @if ((users.Roles.Id == 15 || users.Roles.Id == 16 || users.Roles.Id == 4) && 1 == 2)
+                        {
+                               <li class="navigation-item">
+                                    <a class="menu-item-wrapper" href="@Url.Action("Workshops","Surveyor")" title="Workshops" aria-current="page">
+                                        <img src="~/assets/icons/Workshops.jpg" class="menu-icon" />
+                                    </a>
+                                </li>
+                        }
+                        @if (users.Roles.Id == 16)
+                        {
+                                <li class="navigation-item">
+                                    <a class="menu-item-wrapper" href="@Url.Action("Index","Surveyor")" title="Surveyor" aria-current="page">
+                                        <img src="~/assets/icons/Survoyer.png" class="menu-icon" />
+                                    </a>
+                                </li>
+
+                                <li class="navigation-item">
+                                    <a class="menu-item-wrapper" href="@Url.Action("Index","Towing")" title="Towing" aria-current="page">
+                                        <img src="~/assets/icons/Towing.png" class="menu-icon"  />
+                                    </a>
+                                </li>              <li class="navigation-item">
+                                    <a class="menu-item-wrapper" href="@Url.Action("Index","Approvals")" title="Approvals" aria-current="page">
+                                        <img src="~/assets/icons/Approvals.png" class="menu-icon"  />
+                                    </a>
+                                </li>
+
+
+
+                                <li class="navigation-item">
+                                    <a class="menu-item-wrapper" href="@Url.Action("Index","Delegation")" title="@_localizer["Setup"]" aria-current="page">
+                                        <img src="~/assets/icons/Setup.png" class="menu-icon" />
+                                    </a>
+                                </li>
+                        }
+                        @if (users.Roles.Id == 2 || users.Roles.Id == 16 || users.Roles.Id == 4)
+                        {
+                                <li class="navigation-item">
+                                    <a class="menu-item-wrapper" href="@Url.Action("eClaims","Operations")" title="@_localizer["eClaims"]" aria-current="page">
+                                        <img src="~/assets/icons/eclaim.png" class="menu-icon" />
+                                    </a>
+                                </li>
+                        }
+                        @if (users.Roles.Id == 16)
+                        {
+                                <li class="navigation-item">
+                                    <a class="menu-item-wrapper" href="@Url.Action("Index","WareHouse")" title="@_localizer["WareHouse"]" aria-current="page">
+                                        <img src="~/assets/icons/warehouse.jpg" class="menu-icon" />
+                                    </a>
+                                </li>
+
+                                <li class="navigation-item">
+                                    <a class="menu-item-wrapper" href="@Url.Action("Index","Collections")" title="@_localizer["Collections"]" aria-current="page">
+                                        <img src="~/assets/icons/Collections.png" class="menu-icon" />
+                                    </a>
+                                </li>
+
+                                <li class="navigation-item">
+                                    <a class="menu-item-wrapper" href="@Url.Action("Reports","Setup")" title="@_localizer["Reports"]" aria-current="page">
+                                        <img src="~/assets/icons/empty-file.svg" class="menu-icon" />
+                                    </a>
+                                </li>
+                        }
+                        @if (users.Roles.Id == 16)
+                        {
+                                <li class="navigation-item">
+                                    <a class="menu-item-wrapper" href="@Url.Action("Index","Payments")" title="Payments" aria-current="page">
+                                        <img src="~/assets/icons/payment-method.png" class="menu-icon" />
+                                    </a>
+                                </li>
+                        }
                     </ul>
                 </nav>
             </aside>

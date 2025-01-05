@@ -12,18 +12,17 @@
 @{
     SearchObj searchObj = (SearchObj)ViewData["searchObj"];
     List<Users> users = (List<Users>)ViewData["AllUsers"];
-    List<WorkflowTransaction> workflowTransactions = (List<WorkflowTransaction>)ViewData["Approvals"];
 }
 @using X.PagedList.Mvc.Core;
 @using X.PagedList;
 @model IPagedList<ClaimMaster>
 
-@* <div class="add-member-detail"> *@
+<div class="add-member-detail">
     <div class="policy-wrapper">
         <div class="basic-detail" style="background:none !important">
             <h2 class="heading">@_localizer["Operations"].Value </h2>
             <div class="search-member">
-                <form method="post" asp-action="SearchOperations" asp-controller="Operations" style="display:flow-root">
+                <form method="post" asp-action="SearchMissingDocuments" asp-controller="Operations" style="display:flow-root">
                     <div class="search-filter-wrapper">
                         <div class="search-wrapper">
                             <span class="label">@_localizer["ClaimNo"].Value </span>
@@ -144,7 +143,6 @@
                         <th>@_localizer["AssignTo"].Value </th>
                         <th>@_localizer["Recovery"].Value </th>
                         <th>@_localizer["Re-Open"].Value </th>
-                        <th>@_localizer["Status"].Value </th>
 
                     </tr>
 
@@ -162,7 +160,7 @@
 
                                 string UserName = users.Where(p => p.Id == clm.claimants.AssignTo).FirstOrDefault().UserName;
                             }
-                            <td class="tran"><a href="@Url.Action("OperationEntry","Operations",new{obj=MotorClaims.Models.Helpers.Encrypt(JsonConvert.SerializeObject(claimSearchobj))})">@clm.claims.ClaimNo/@clm.claimants.Serial</a></td>
+                            <td class="tran"><a href="@Url.Action("MissingDocsEntry","Operations",new{obj=MotorClaims.Models.Helpers.Encrypt(JsonConvert.SerializeObject(claimSearchobj))})">@clm.claims.ClaimNo/@clm.claimants.Serial</a></td>
 
                             <td>@clm.claimants.ClaimantName</td>
                             <td>@UserName</td>
@@ -193,19 +191,15 @@
                                     @(clm.claimants.ClaimantStatus == (int)Enums.ClaimantStatus.Closed ? "Re-Open" : "")
                                 </a>
                             </td>
-                
-                                @{
-                            var t = workflowTransactions!=null && workflowTransactions.Count > 0 ? workflowTransactions.Where(p => p.ClaimantId == clm.claimants.Id)?.FirstOrDefault() : null;
 
-                                }
-                            <td>@(t != null && t.Id > 0 ? "Waiting Approval" : "")</td>
+
 
                         </tr>
 
 
                     }
                 </table>
-                @Html.PagedListPager((IPagedList)Model, Page => Url.Action("Index", "Operations", new { Page }))
+                @Html.PagedListPager((IPagedList)Model, Page => Url.Action("SearchMissingDocuments", "Operations", new { Page }))
                 Showing @Model.FirstItemOnPage to @Model.LastItemOnPage of @Model.TotalItemCount Claims
             </div>
         </div>
@@ -217,8 +211,8 @@
             <span>No results found.</span>
         </div>
     }
-@* </div> *@
-@* <div class="aside-right">
+</div>
+<div class="aside-right">
     <div class="inner-wrapper">
         <div class="vehicle-item">
             <div class="vehicle-header">
@@ -271,7 +265,7 @@
         </div>
     </div>
 </div>
- *@
+
 
 <div class="common-slide-popup" id="UpdateReserve"></div>
 <div class="common-slide-popup" id="UpdateRecovery"></div>

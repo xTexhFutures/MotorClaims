@@ -14,207 +14,245 @@
     List<LookupTable> lookupTables = (List<LookupTable>)ViewData["query"];
     List<Users> workshops = (List<Users>)ViewData["workshops"];
     List<SMSLog> sMSLogs = (List<SMSLog>)ViewData["SMSLog"];
-    List<DocumentInfo>  MissingDocuments= (List<DocumentInfo>)ViewData["MissingDocuments"];
-    string obj=(string)ViewData["obj"];
-    string DocumentsLink=(string)ViewData["DocumentsLink"];
-    await Html.RenderPartialAsync("_PolicyInfo",Model.productionInfo);
-      await Html.RenderPartialAsync("_VehicleInfo",new {Vehicle= Model.vehiclesInfo ,UserType=true});
+    List<DocumentInfo> MissingDocuments = (List<DocumentInfo>)ViewData["MissingDocuments"];
+    string obj = (string)ViewData["obj"];
+    string DocumentsLink = (string)ViewData["DocumentsLink"];
+    await Html.RenderPartialAsync("_PolicyInfo", Model.productionInfo);
+    await Html.RenderPartialAsync("_VehicleInfo", new { Vehicle = Model.vehiclesInfo, UserType = true });
     await Html.RenderPartialAsync("_ClaimInfo", Model.claims);
-    await Html.RenderPartialAsync("_ClaimantInfo",new { Model = Model.claimants,Lookups = lookupTables,UserType=true,vehiclesInfo=Model.vehiclesInfo});
-    await Html.RenderPartialAsync("_DocumentsInfo",new { Model = Model.attachments, Link = DocumentsLink,ClaimNo=string.Concat(Model.claims.ClaimNo,"/",Model.claimants.Serial),Documents=Model.documentInfos});
-    await Html.RenderPartialAsync("_MissingDocuments",new { Documents=MissingDocuments,SMS=sMSLogs,ClaimId=Model.claims.Id,ClaimantId=Model.claimants.Id,MobileNo=Model.claimants.MobileNo,Serial=Model.claimants.Serial});
+    await Html.RenderPartialAsync("_ClaimantInfo", new { Model = Model.claimants, Lookups = lookupTables, UserType = true, vehiclesInfo = Model.vehiclesInfo });
+    await Html.RenderPartialAsync("_DocumentsInfo", new { Model = Model.attachments, Link = DocumentsLink, ClaimNo = string.Concat(Model.claims.ClaimNo, "/", Model.claimants.Serial), Documents = Model.documentInfos });
+    await Html.RenderPartialAsync("_MissingDocuments", new { Documents = MissingDocuments, SMS = sMSLogs, ClaimId = Model.claims.Id, ClaimantId = Model.claimants.Id, MobileNo = Model.claimants.MobileNo, Serial = Model.claimants.Serial });
     await Html.RenderPartialAsync("_ClaimsHistory", Model.claimHistories);
-    if(Model.claimants.ClaimantStatus!=(int)Enums.ClaimantStatus.Closed)
-    await Html.RenderPartialAsync("_OperationDocuments");
-    if (Model.settlements.Count>0)
+    if (Model.claimants.ClaimantStatus != (int)Enums.ClaimantStatus.Closed)
+        await Html.RenderPartialAsync("_OperationDocuments", new { Id = Model.claimants.Id });
+    if (Model.settlements.Count > 0)
     {
-           await Html.RenderPartialAsync("_PaymentsList", Model.settlements);
+        await Html.RenderPartialAsync("_PaymentsList", Model.settlements);
     }
-   
+
 }
-   <form id="frmClaimantStatus" method="post" asp-controller="Operations" enctype="multipart/form-data">
+<form id="frmClaimantStatus" method="post" asp-controller="Operations" enctype="multipart/form-data">
 
-    <input type="hidden"  name="Id" value="@Model.claims.Id" />
-    <input type="hidden"  name="ClaimantId" value="@Model.claimants.Id" />
-    <input type="hidden"  name="obj" value="@obj" />
-    <input type="hidden"  name="ClaimNo" value="@Model.claims.ClaimNo" />
+    <input type="hidden" name="Id" value="@Model.claims.Id" />
+    <input type="hidden" name="ClaimantId" value="@Model.claimants.Id" />
+    <input type="hidden" name="obj" value="@obj" />
+    <input type="hidden" name="ClaimNo" value="@Model.claims.ClaimNo" />
 
-@if (Model.claimants.ClaimantStatus==(int)Enums.ClaimantStatus.NeedMoreInfo || Model.claimants.ClaimantStatus==(int)Enums.ClaimantStatus.Rejected)
-{
+    @if (Model.claimants.ClaimantStatus == (int)Enums.ClaimantStatus.NeedMoreInfo || Model.claimants.ClaimantStatus == (int)Enums.ClaimantStatus.Rejected)
+    {
 
 
-    <div class="add-member-detail" style="max-width:100% !important;pointer-events:@(Model.claimants.ClaimantStatus==(int)Enums.ClaimantStatus.Rejected?"none":"")">
+        <div class="add-member-detail" style="max-width:100% !important;pointer-events:@(Model.claimants.ClaimantStatus==(int)Enums.ClaimantStatus.Rejected?"none":"")">
 
-        <div class="tabs-wrapper">
-            <ul class="tabs-navigation-wrap">
-                <li class="tab-navigation tab-custom-two active" id="tabTwoOne" onclick="selectTabsTwo('tabTwoOne','one_1'); ">
-                    <div class="tab-item-text">
-                        <a href="#">@_localizer["Operationentry"].Value </a>
-                    </div>
-                </li>
-            </ul>
-            <div class="tabbs-content-wrapper">
-                <div class="tab-items-container tabs-one-content-two active" id="one_1">
-                    <div class="member-summary-container">
-                        <div class="total-member-list">
-                            <div class="member-list-container">
-
-                                <div class="member-collapse">
-                                    <div class="member-collapse-header" style="display:block">
-                                        <div class="vehicle-owner-grid">
-                                            <label for="radio-card-v2-11" class="radio-card-v2" style="min-width:30% !important">
-                                                <input required type="radio" value="@((int)MotorClaims.Models.Enums.ClaimantStatus.Operation)" name="ClaimStatus" id="radio-card-v2-11" @(Model.claimants.Id == 0 ? "checked" : (Model.claimants.ClaimantStatus == (int)MotorClaims.Models.Enums.ClaimantStatus.Operation ? "checked" : "")) />
-                                                <div class="card-content-wrapper">
-                                                    <span class="check-icon"></span>
-                                                    <div class="card-content">
-                                                        <h4 class="title">@(MotorClaims.Models.Enums.ClaimantStatus.Operation)</h4>
-                                                    </div>
-                                                </div>
-                                            </label>
-                                            <!-- /.radio-card -->
-
-                                            <label for="radio-card-v2-12" class="radio-card-v2" style="min-width:30% !important">
-                                                <input type="radio" value="@((int)MotorClaims.Models.Enums.ClaimantStatus.Rejected)" name="ClaimStatus" id="radio-card-v2-12" @(Model.claimants.ClaimantStatus == (int)MotorClaims.Models.Enums.ClaimantStatus.Rejected ? "checked" : "") />
-                                                <div class="card-content-wrapper">
-                                                    <span class="check-icon"></span>
-                                                    <div class="card-content">
-                                                        <h4 class="title">@(MotorClaims.Models.Enums.ClaimantStatus.Rejected)</h4>
-                                                    </div>
-                                                </div>
-                                            </label>
-
-                                    
-                                        </div>
-                                      
-                                          <div class="vehicle-owner-grid">
-                                            <span class="label" id="lblRejectionReason">@_localizer["RejectionReason"].Value </span>
-                                           <textarea name="RejectionReason" rows="7" id="txtRejectionReason" class="form-inputbox" maxlength="1024">@Model.claimants.StatusReason</textarea>
-
-                                    
-                                        </div>
-
-                                      
-                                       
-                                    </div>
-                                 
-                                </div>
-
-                                
-                        <div class="footer-actions-handle" style="position:inherit !important; width:100%">
-          <div class="next-button" style="margin-right:5px">
-
-                                        <button type="submit" asp-action="UpdateClaimStatus" class="button button-primary">
-                                            @_localizer["Save"].Value
-                                    
-                                </button>
-        
-                              
-                        
-
+            <div class="tabs-wrapper">
+                <ul class="tabs-navigation-wrap">
+                    <li class="tab-navigation tab-custom-two active" id="tabTwoOne" onclick="selectTabsTwo('tabTwoOne','one_1'); ">
+                        <div class="tab-item-text">
+                            <a href="#">@_localizer["Operationentry"].Value </a>
                         </div>
-                                </div>
+                    </li>
+                </ul>
+                <div class="tabbs-content-wrapper">
+                    <div class="tab-items-container tabs-one-content-two active" id="one_1">
+                        <div class="member-summary-container">
+                            <div class="total-member-list">
+                                <div class="member-list-container">
 
+                                    <div class="member-collapse">
+                                        <div class="member-collapse-header" style="display:block">
+                                            <div class="vehicle-owner-grid">
+                                                <label for="radio-card-v2-11" class="radio-card-v2" style="min-width:30% !important">
+                                                    <input required type="radio" value="@((int)MotorClaims.Models.Enums.ClaimantStatus.Operation)" name="ClaimStatus" id="radio-card-v2-11" @(Model.claimants.Id == 0 ? "checked" : (Model.claimants.ClaimantStatus == (int)MotorClaims.Models.Enums.ClaimantStatus.Operation ? "checked" : "")) />
+                                                    <div class="card-content-wrapper">
+                                                        <span class="check-icon"></span>
+                                                        <div class="card-content">
+                                                            <h4 class="title">@(MotorClaims.Models.Enums.ClaimantStatus.Operation)</h4>
+                                                        </div>
+                                                    </div>
+                                                </label>
+                                                <!-- /.radio-card -->
+
+                                                <label for="radio-card-v2-12" class="radio-card-v2" style="min-width:30% !important">
+                                                    <input type="radio" value="@((int)MotorClaims.Models.Enums.ClaimantStatus.Rejected)" name="ClaimStatus" id="radio-card-v2-12" @(Model.claimants.ClaimantStatus == (int)MotorClaims.Models.Enums.ClaimantStatus.Rejected ? "checked" : "") />
+                                                    <div class="card-content-wrapper">
+                                                        <span class="check-icon"></span>
+                                                        <div class="card-content">
+                                                            <h4 class="title">@(MotorClaims.Models.Enums.ClaimantStatus.Rejected)</h4>
+                                                        </div>
+                                                    </div>
+                                                </label>
+
+
+                                            </div>
+
+                                            <div class="vehicle-owner-grid">
+                                                <span class="label" id="lblRejectionReason">@_localizer["RejectionReason"].Value </span>
+                                                <textarea name="RejectionReason" rows="7" id="txtRejectionReason" class="form-inputbox" maxlength="1024">@Model.claimants.StatusReason</textarea>
+
+
+                                            </div>
+
+                                            <div class="vehicle-owner-grid">
+                                                <span class="label" id="lblNote">@_localizer["Note"].Value </span>
+                                                <textarea name="Note" rows="7" id="txtNote" class="form-inputbox" maxlength="1024">@Model.claimants.Note</textarea>
+
+
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+
+                                    <div class="footer-actions-handle" style="position:inherit !important; width:100%">
+                                        <div class="next-button" style="margin-right:5px">
+
+                                            <button type="submit" asp-action="UpdateClaimStatus" class="button button-primary">
+                                                @_localizer["Save"].Value
+
+                                            </button>
+
+
+
+
+                                        </div>
+                                    </div>
+
+                                </div>
                             </div>
                         </div>
+
                     </div>
 
                 </div>
-            
             </div>
+
         </div>
 
-    </div>
-
-}
-else if(Model.claimants.ClaimantStatus!=(int)Enums.ClaimantStatus.Closed)
-{
+    }
+    else if (Model.claimants.ClaimantStatus != (int)Enums.ClaimantStatus.Closed)
+    {
 
 
 
-    <div class="add-member-detail" style="max-width: 100% !important;">
-        <div class="tabs-wrapper">
-            <ul class="tabs-navigation-wrap">
-                <li class="tab-navigation tab-custom-two active" id="tabTwoOne" onclick="selectTabsTwo('tabTwoOne','one_1'); ">
-                    <div class="tab-item-text">
-                        <a href="#">@_localizer["Operationentry"].Value </a>
-                    </div>
-                </li>
-            </ul>
-            <div class="tabbs-content-wrapper">
-                <div class="tab-items-container tabs-one-content-two active">
-                    <div class="member-summary-container">
-                        <div class="total-member-list">
-                            <div class="member-list-container">
-                                <div class="member-collapse">
-                                    <div class="member-collapse-header" style="display: block;">
-                                        <div class="vehicle-owner-grid">
-                                            <span class="label"> @_localizer["ClaimantStatus"].Value </span>
-                                            <select class="form-controlar" required name="ClaimantStatus" id="ddlClaimantStatus">
-                                                <option value=""></option>
-                                                <option value="@((int)MotorClaims.Models.Enums.ClaimantStatus.MissingDocuments)">@(MotorClaims.Models.Enums.ClaimantStatus.MissingDocuments.DisplayName())</option>
-                                                <option value="@((int)MotorClaims.Models.Enums.ClaimantStatus.Surveyor)">@(MotorClaims.Models.Enums.ClaimantStatus.Surveyor.DisplayName())</option>
-                                                <option value="@((int)MotorClaims.Models.Enums.ClaimantStatus.Salvage)">@(MotorClaims.Models.Enums.ClaimantStatus.Salvage.DisplayName())</option>
-                                                <option value="@((int)MotorClaims.Models.Enums.ClaimantStatus.Workshop)">@(MotorClaims.Models.Enums.ClaimantStatus.Workshop.DisplayName())</option>
-                                                <option value="@((int)MotorClaims.Models.Enums.ClaimantStatus.Payment)">@(MotorClaims.Models.Enums.ClaimantStatus.Payment.DisplayName())</option>
-                                                <option value="@((int)MotorClaims.Models.Enums.ClaimantStatus.Closed)">@(MotorClaims.Models.Enums.ClaimantStatus.Closed.DisplayName())</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="member-collapse" id="divWorkshop">
-                                    <div class="member-collapse-header" style="display: flow-root;">
-                                        <div class="vehicle-owner-grid">
-                                            <span class="label"> @_localizer["ClaimStage"].Value </span>
-                                            <select class="form-controlar" name="TransactionType" id="ddlTransactionType">
-                                                <option value=""></option>
-                                                <option value="1">Repair Estimation</option>
-                                                <option value="2">Repair Approval</option>
-                                            </select>
-                                        </div>
-
-                                        <div class="vehicle-owner-grid">
-                                            <span class="label"> @_localizer["AssignTo"].Value </span>
-                                            <select class="form-controlar" name="Workshops" id="ddlWorkshops">
-                                                <option value=""></option>
-                                                @foreach (var item in workshops) {
-                                                <option value="@item.Id">@item.Name</option>
-                                                }
-                                            </select>
-                                        </div>
-
-                                        <div class="vehicle-owner-grid">
-                                            <span class="label"> @_localizer["UploadForm"].Value </span>
-                                            <div class="ducument-detaild-Attachment">
-                                                <label for="fromFilesWorkshop" class="document-card">
-                                                    <img src="/assets/icons/upload.svg" class="docuemet-icon" alt="" />
-                                                    <p id="AttachmentForm" class="document-tile-text">
-                                                        @_localizer["Upload"].Value
-                                                    </p>
-                                                    <input accept="image/*,application/pdf" class="ducument-control" id="fromFilesWorkshop" name="fromFiles" type="file" onchange="UploadWorkshopDocument()" />
-                                                </label>
+        <div class="add-member-detail" style="max-width: 100% !important;">
+            <div class="tabs-wrapper">
+                <ul class="tabs-navigation-wrap">
+                    <li class="tab-navigation tab-custom-two active" id="tabTwoOne" onclick="selectTabsTwo('tabTwoOne','one_1'); ">
+                        <div class="tab-item-text">
+                            <a href="#">@_localizer["Operationentry"].Value </a>
+                        </div>
+                    </li>
+                </ul>
+                <div class="tabbs-content-wrapper">
+                    <div class="tab-items-container tabs-one-content-two active">
+                        <div class="member-summary-container">
+                            <div class="total-member-list">
+                                <div class="member-list-container">
+                                    <div class="member-collapse">
+                                        <div class="member-collapse-header" style="display: block;">
+                                            <div class="vehicle-owner-grid">
+                                                <span class="label"> @_localizer["ClaimantStatus"].Value </span>
+                                                <select class="form-controlar" required name="ClaimantStatus" id="ddlClaimantStatus">
+                                                    <option value=""></option>
+                                                    <option value="@((int)MotorClaims.Models.Enums.ClaimantStatus.MissingDocuments)">@(MotorClaims.Models.Enums.ClaimantStatus.MissingDocuments.DisplayName())</option>
+                                                    <option value="@((int)MotorClaims.Models.Enums.ClaimantStatus.Surveyor)">@(MotorClaims.Models.Enums.ClaimantStatus.Surveyor.DisplayName())</option>
+                                                    <option value="@((int)MotorClaims.Models.Enums.ClaimantStatus.Salvage)">@(MotorClaims.Models.Enums.ClaimantStatus.Salvage.DisplayName())</option>
+                                                    <option value="@((int)MotorClaims.Models.Enums.ClaimantStatus.Workshop)">@(MotorClaims.Models.Enums.ClaimantStatus.Workshop.DisplayName())</option>
+                                                    <option value="@((int)MotorClaims.Models.Enums.ClaimantStatus.Payment)">@(MotorClaims.Models.Enums.ClaimantStatus.Payment.DisplayName())</option>
+                                                    <option value="@((int)MotorClaims.Models.Enums.ClaimantStatus.Closed)">@(MotorClaims.Models.Enums.ClaimantStatus.Closed.DisplayName())</option>
+                                                </select>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
 
-                                     <div class="member-collapse" id="divClose">
-                                    <div class="member-collapse-header" style="display: flow-root;">
-                        
+                                    <div class="member-collapse" id="divWorkshop">
+                                        <div class="member-collapse-header" style="display: flow-root;">
+                                            <div class="vehicle-owner-grid">
+                                                <span class="label"> @_localizer["ClaimStage"].Value </span>
+                                                <select class="form-controlar" name="TransactionType" id="ddlTransactionType">
+                                                    <option value=""></option>
+                                                    <option value="1">Repair Estimation</option>
+                                                    <option value="2">Repair Approval</option>
+                                                </select>
+                                            </div>
 
-                                        <div class="vehicle-owner-grid">
-                                            <span class="label"> @_localizer["Reason"].Value </span>
-                                            <textarea class="form-controlar" rows="5" name="CloseReason" id="txtCloseReason"></textarea>
-                                         
+                                            <div class="vehicle-owner-grid">
+                                                <span class="label"> @_localizer["AssignTo"].Value </span>
+                                                <select class="form-controlar" name="Workshops" id="ddlWorkshops">
+                                                    <option value=""></option>
+                                                    @foreach (var item in workshops)
+                                                    {
+                                                        <option value="@item.Id">@item.Name</option>
+                                                    }
+                                                </select>
+                                            </div>
+
+                                            <div class="vehicle-owner-grid">
+                                                <span class="label"> @_localizer["UploadForm"].Value </span>
+                                                <div class="ducument-detaild-Attachment">
+                                                    <label for="fromFilesWorkshop" class="document-card">
+                                                        <img src="/assets/icons/upload.svg" class="docuemet-icon" alt="" />
+                                                        <p id="AttachmentForm" class="document-tile-text">
+                                                            @_localizer["Upload"].Value
+                                                        </p>
+                                                        <input accept="image/*,application/pdf" class="ducument-control" id="fromFilesWorkshop" name="fromFiles" type="file" onchange="UploadWorkshopDocument()" />
+                                                    </label>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
 
-                                <div class="footer-actions-handle" style="position: inherit !important; width: 100%;">
-                                    <div class="next-button" style="margin-right: 5px;">
-                                        <button type="submit" asp-action="UpdateClaimStatus" class="button button-primary">
-                                            @_localizer["Save"].Value
-                                        </button>
+                                    <div class="member-collapse" id="divClose">
+                                        <div class="member-collapse-header" style="display: flow-root;">
+
+
+                                            <div class="vehicle-owner-grid">
+                                                <span class="label"> @_localizer["Reason"].Value </span>
+                                                <textarea class="form-controlar" rows="5" name="CloseReason" id="txtCloseReason"></textarea>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="member-collapse" id="divReserve">
+                                        <div class="transaction-details">
+                                            <table class="universal-table">
+                                                @foreach (var clm in Model.reserve)
+                                                {
+                                                    @foreach (var item in clm.reserveDetails.Where(p => p.IsSettled == false))
+                                                    {
+                                                        <tr>
+                                                            <td><input type="checkbox" value="@item.Id" name="ReserveId" /></td>
+                                                            <td>@item.Amount</td>
+                                                            @{
+                                                                var y = Enum.TryParse(item.ReserveType.ToString(), out Enums.ReserveType parsedEnumValue);
+                                                            }
+                                                            <td>@parsedEnumValue</td>
+                                                        </tr>
+                                                    }
+
+
+
+                                                }
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="footer-actions-handle" style="position: inherit !important; width: 100%;">
+                                        <div class="next-button" style="margin-right: 5px;">
+                                            @if (Model.claimants.ClaimantStatus != (int)Enums.ClaimantStatus.WaitingRejectionApprovals)
+                                            {
+                                                <button type="submit" asp-action="UpdateClaimStatus" class="button button-primary">
+                                                    @_localizer["Save"].Value
+                                                </button>
+                                            }
+                                            else
+                                            {
+                                                <label style="color:red;font-weight:bold;font-size:20px;"> @_localizer["Waiting For Approval"].Value</label>
+                                            }
+
+
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -223,73 +261,82 @@ else if(Model.claimants.ClaimantStatus!=(int)Enums.ClaimantStatus.Closed)
                 </div>
             </div>
         </div>
-    </div>
 
 
-}
-    </form>
+    }
+</form>
 
-                  <script>
+<script>
 
-             $(function(){
-                  if ('@ViewData["Error"]' != '' || '@ViewData["Error"]' != "") {
+    $(function () {
+        $('#divReserve').hide();
+        if ('@ViewData["Error"]' != '' || '@ViewData["Error"]' != "") {
+            alert('@ViewData["Error"]');
             ErrorAlert('@ViewData["Error"]');
         }
 
 
-                   if ('@ViewData["Error2"]' != '' || '@ViewData["Error2"]' != "") {
+        if ('@ViewData["Error2"]' != '' || '@ViewData["Error2"]' != "") {
             SuccessAlert('@ViewData["Error2"]');
         }
-                 $('#divWorkshop').hide();
-                 $('#divClose').hide();
-                     $('#ddlTransactionType').attr('required',false);
-    $('#ddlWorkshops').attr('required',false);
+        $('#divWorkshop').hide();
+        $('#divClose').hide();
+        $('#ddlTransactionType').attr('required', false);
+        $('#ddlWorkshops').attr('required', false);
 
 
 
-$('#ddlClaimantStatus').on('change', function() {
-var selectedVal = $(this).val();
- $('#divWorkshop').hide();
- $('#divClose').hide();
-if(selectedVal=='@((int)Enums.ClaimantStatus.Workshop)')
-{
-    $('#divWorkshop').show();
-      $('#txtCloseReason').attr('required',false);
-    $('#ddlTransactionType').attr('required',true);
-    $('#ddlWorkshops').attr('required',true);
+        $('#ddlClaimantStatus').on('change', function () {
+            var selectedVal = $(this).val();
+            $('#divWorkshop').hide();
+            $('#divClose').hide();
+            if (selectedVal == '@((int)Enums.ClaimantStatus.Workshop)') {
+                $('#divWorkshop').show();
+                $('#divReserve').hide();
+                $('#txtCloseReason').attr('required', false);
+                $('#ddlTransactionType').attr('required', true);
+                $('#ddlWorkshops').attr('required', true);
 
-}else{
-     $('#ddlTransactionType').attr('required',false);
-    $('#ddlWorkshops').attr('required',false);
-    $('#txtCloseReason').attr('required',true);
- $('#divClose').show();
-}
-});
-             });
+            } else if (selectedVal == '@((int)Enums.ClaimantStatus.Payment)') {
+                $('#ddlTransactionType').attr('required', false);
+                $('#ddlWorkshops').attr('required', false);
+                $('#txtCloseReason').attr('required', false);
+                $('#divClose').hide();
+                $('#divReserve').show();
+            }
+            else {
+                $('#ddlTransactionType').attr('required', false);
+                $('#ddlWorkshops').attr('required', false);
+                $('#txtCloseReason').attr('required', true);
+                $('#divReserve').hide();
+                $('#divClose').show();
+            }
+        });
+    });
 
-      $('input:radio[name="ClaimStatus"]').change(function() {
-        if ($(this).val() == '@((int)MotorClaims.Models.Enums.ClaimantStatus.Rejected)') {     
-              $('#txtRejectionReason').prop('required', true);
-              $('#txtRejectionReason').show();
+    $('input:radio[name="ClaimStatus"]').change(function () {
+        if ($(this).val() == '@((int)MotorClaims.Models.Enums.ClaimantStatus.Rejected)') {
+            $('#txtRejectionReason').prop('required', true);
+            $('#txtRejectionReason').show();
 
         } else {
 
-              $('#txtRejectionReason').prop('required', false);
-              $('#txtRejectionReason').hide();
-              $('#lblRejectionReason').hide();
+            $('#txtRejectionReason').prop('required', false);
+            $('#txtRejectionReason').hide();
+            $('#lblRejectionReason').hide();
         }
     });
 
 
-    function UploadWorkshopDocument(){
-         const input = document.getElementById('fromFilesWorkshop')
-            var files = input.files;
-            var $formdata = new FormData();
+    function UploadWorkshopDocument() {
+        const input = document.getElementById('fromFilesWorkshop')
+        var files = input.files;
+        var $formdata = new FormData();
 
-            for (var i = 0; i != files.length; i++) {
-                $formdata.append("files", files[i]);
-            }
+        for (var i = 0; i != files.length; i++) {
+            $formdata.append("files", files[i]);
+        }
 
-             $('#AttachmentForm').text($formdata.get("files").name);
+        $('#AttachmentForm').text($formdata.get("files").name);
     }
-                  </script>
+</script>
